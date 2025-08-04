@@ -6,27 +6,150 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    <x-notification />
-                    {{-- Di sini akan ditambahkan form pemesanan yang lebih interaktif dengan Javascript/AJAX --}}
-                    {{-- Untuk sementara, kita bisa tampilkan daftar dokter --}}
-                    <h3 class="text-lg font-medium mb-4">Pilih Dokter</h3>
-                    <ul>
-                        @foreach($dokters as $dokter)
-                            <li class="mb-2 p-3 border rounded-md">
-                                <p class="font-semibold">{{ $dokter->user->name }}</p>
-                                <p class="text-sm text-gray-600">{{ $dokter->spesialisasi }}</p>
-                                {{-- Form untuk booking akan ditambahkan di sini --}}
-                            </li>
-                        @endforeach
-                    </ul>
-                    <p class="mt-6 text-sm text-gray-600">
-                        *Fitur pemilihan jadwal dan waktu akan dikembangkan lebih lanjut dengan Javascript untuk pengalaman yang lebih baik.
-                    </p>
-                </div>
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 md:p-8" 
+                 x-data="bookingForm()">
+                
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">Formulir Janji Temu</h3>
+
+                <form method="POST" action="{{ route('pasien.pemesanan.store') }}" @submit.prevent="submitForm">
+                    @csrf
+                    
+                    <!-- Step 1: Pilih Dokter -->
+                    <div class="mb-6">
+                        <label class="block font-medium text-sm text-gray-700 mb-2">1. Pilih Dokter</label>
+                        <select x-model="selectedDokter" @change="fetchJadwalDokter" name="id_dokter" class="block w-full border-gray-300 focus:border-purple-500 focus:ring-purple-500 rounded-md shadow-sm">
+                            <option value="">-- Silakan Pilih Dokter --</option>
+                            @foreach($dokters as $dokter)
+                                <option value="{{ $dokter->id }}">{{ $dokter->user->name }} ({{ $dokter->spesialisasi }})</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Step 2: Pilih Tanggal -->
+                    <div class="mb-6" x-show="selectedDokter" x-transition>
+                        <label class="block font-medium text-sm text-gray-700 mb-2">2. Pilih Tanggal</label>
+                        <div x-text="loadingJadwal" class="text-sm text-gray-500" x-show="loadingJadwal"></div>
+                        <input type="date" x-model="selectedTanggal" @change="fetchSlotWaktu" name="tanggal_pesan" 
+                               :min="today"
+                               class="block w-full border-gray-300 focus:border-purple-500 focus:ring-purple-500 rounded-md shadow-sm">
+                        <p class="text-xs text-gray-500 mt-1">Hanya tanggal praktek dokter yang akan menampilkan slot waktu.</p>
+                    </div>
+
+                    <!-- Step 3: Pilih Jam -->
+                    <div class="mb-6" x-show="selectedTanggal && !loadingSlot" x-transition>
+                        <label class="block font-medium text-sm text-gray-700 mb-2">3. Pilih Jam Tersedia</label>
+                        <div x-text="loadingSlot" class="text-sm text-gray-500" x-show="loadingSlot"></div>
+                        
+                        <div x-show="availableSlots.length > 0" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
+                            <template x-for="slot in availableSlots" :key="slot">
+                                <label :class="{'bg-purple-600 text-white': selectedSlot === slot, 'bg-gray-100 hover:bg-purple-100': selectedSlot !== slot}"
+                                       class="cursor-pointer text-center p-3 rounded-md transition-colors duration-200">
+                                    <input type="radio" x-model="selectedSlot" name="waktu_pesan" :value="slot" class="hidden">
+                                    <span x-text="slot"></span>
+                                </label>
+                            </template>
+                        </div>
+                        <div x-show="availableSlots.length === 0 && selectedTanggal" class="text-sm text-red-500 p-3 bg-red-50 rounded-md">
+                            Tidak ada slot tersedia pada tanggal ini atau dokter tidak praktek. Silakan pilih tanggal lain.
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Catatan & Submit -->
+                    <div class="mb-6" x-show="selectedSlot" x-transition>
+                        <label for="catatan" class="block font-medium text-sm text-gray-700 mb-2">4. Catatan (Opsional)</label>
+                        <textarea name="catatan" id="catatan" rows="3" class="block w-full border-gray-300 focus:border-purple-500 focus:ring-purple-500 rounded-md shadow-sm" placeholder="Contoh: Sakit gigi di bagian kanan bawah..."></textarea>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <x-primary-button type="submit" ::disabled="!isFormComplete()"
+                            class="bg-purple-600 hover:bg-purple-700 focus:bg-purple-700 active:bg-purple-800 disabled:bg-gray-400">
+                            Buat Janji Temu
+                        </x-primary-button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+
+    <script>
+        function bookingForm() {
+            return {
+                selectedDokter: '',
+                jadwalDokter: [],
+                loadingJadwal: '',
+                selectedTanggal: '',
+                today: new Date().toISOString().split('T')[0],
+                availableSlots: [],
+                loadingSlot: '',
+                selectedSlot: '',
+
+                fetchJadwalDokter() {
+                    this.resetTanggalDanSlot();
+                    if (!this.selectedDokter) return;
+
+                    this.loadingJadwal = 'Memuat jadwal dokter...';
+                    fetch(`/pasien/get-jadwal-dokter/${this.selectedDokter}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            this.jadwalDokter = data;
+                            this.loadingJadwal = '';
+                        })
+                        .catch(() => {
+                            this.loadingJadwal = 'Gagal memuat jadwal.';
+                        });
+                },
+
+                fetchSlotWaktu() {
+                    this.availableSlots = [];
+                    this.selectedSlot = '';
+                    if (!this.selectedTanggal || !this.selectedDokter) return;
+
+                    this.loadingSlot = 'Mencari slot waktu...';
+                    fetch(`/pasien/get-slot-waktu/${this.selectedDokter}/${this.selectedTanggal}`)
+                        .then(response => {
+                            if (!response.ok) throw new Error('Jadwal tidak ditemukan');
+                            return response.json();
+                        })
+                        .then(data => {
+                            this.availableSlots = data;
+                            this.loadingSlot = '';
+                        })
+                        .catch(() => {
+                            this.loadingSlot = '';
+                        });
+                },
+                
+                isFormComplete() {
+                    return this.selectedDokter && this.selectedTanggal && this.selectedSlot;
+                },
+
+                submitForm(event) {
+                    if (!this.isFormComplete()) {
+                        alert('Harap lengkapi semua pilihan sebelum membuat janji temu.');
+                        return;
+                    }
+                    // Menambahkan id_jadwal ke form sebelum submit
+                    // Logika ini perlu disempurnakan jika satu dokter punya >1 jadwal di hari yg sama
+                    const form = event.target;
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = 'id_jadwal'; 
+                    // NOTE: This is a simplification. A more robust solution would be needed
+                    // if a doctor can have multiple schedules on the same day of the week.
+                    // For now, we assume one schedule per day of the week per doctor.
+                    // We'll find the schedule ID on the server side based on doctor and day.
+                    // Let's adjust the controller logic for this.
+                    
+                    form.submit();
+                },
+
+                resetTanggalDanSlot() {
+                    this.selectedTanggal = '';
+                    this.availableSlots = [];
+                    this.selectedSlot = '';
+                }
+            }
+        }
+    </script>
 </x-app-layout>

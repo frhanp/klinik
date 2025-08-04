@@ -30,7 +30,7 @@ Route::get('/', function () {
 // Route default untuk dashboard setelah login
 // Akan diarahkan berdasarkan peran di controller
 Route::get('/dashboard', function () {
-    $user = Auth::user();   
+    $user = Auth::user();
     if ($user->peran == 'admin') {
         return redirect()->route('admin.dashboard');
     } elseif ($user->peran == 'dokter') {
@@ -63,6 +63,12 @@ Route::middleware(['auth', 'cekperan:dokter'])->prefix('dokter')->name('dokter.'
 Route::middleware(['auth', 'cekperan:pasien'])->prefix('pasien')->name('pasien.')->group(function () {
     Route::get('dashboard', [PasienDashboardController::class, 'index'])->name('dashboard');
     Route::resource('pemesanan', PasienPemesananController::class);
+    // --- TAMBAHKAN DUA ROUTE DI BAWAH INI ---
+    // Route untuk mendapatkan jadwal hari seorang dokter
+    Route::get('/get-jadwal-dokter/{dokter}', [PasienPemesananController::class, 'getJadwalDokter'])->name('pemesanan.getJadwalDokter');
+
+    // Route untuk mendapatkan slot waktu yang tersedia pada tanggal tertentu
+    Route::get('/get-slot-waktu/{dokter}/{tanggal}', [PasienPemesananController::class, 'getSlotWaktu'])->name('pemesanan.getSlotWaktu');
 });
 
 
