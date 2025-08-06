@@ -27,4 +27,11 @@ class RekamMedis extends Model
     {
         return $this->hasMany(FotoRekamMedis::class, 'id_rekam_medis');
     }
+
+    public function tindakan()
+    {
+        return $this->belongsToMany(Tindakan::class, 'rekam_medis_tindakan', 'rekam_medis_id', 'tindakan_id')
+                    ->withPivot('harga_saat_itu') // Ambil juga harga saat tindakan dilakukan
+                    ->withTimestamps();
+    }
 }

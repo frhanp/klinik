@@ -33,4 +33,9 @@ class Pemesanan extends Model
     {
         return $this->hasOne(RekamMedis::class, 'id_pemesanan');
     }
+
+    public function pembayaran()
+    {
+        return $this->hasOne(Pembayaran::class, 'pemesanan_id');
+    }
 }

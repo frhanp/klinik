@@ -1,0 +1,95 @@
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Detail Pembayaran Pasien') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 md:p-8 bg-white border-b border-gray-200">
+                    <!-- Informasi Pasien & Dokter -->
+                    <div class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b">
+                        <div>
+                            <h3 class="text-sm text-gray-500">Pasien</h3>
+                            <p class="font-bold text-lg text-gray-800">{{ $pemesanan->pasien->name }}</p>
+                        </div>
+                        <div>
+                            <h3 class="text-sm text-gray-500">Dokter</h3>
+                            <p class="font-bold text-lg text-gray-800">{{ $pemesanan->dokter->user->name }}</p>
+                        </div>
+                        <div>
+                            <h3 class="text-sm text-gray-500">Tanggal Kunjungan</h3>
+                            <p class="font-bold text-lg text-gray-800">
+                                {{ \Carbon\Carbon::parse($pemesanan->tanggal_pesan)->translatedFormat('d F Y') }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Rincian Biaya -->
+                    <h3 class="text-lg font-semibold mb-4 text-gray-800">Rincian Biaya Tindakan</h3>
+                    <div class="space-y-2 mb-6">
+                        @forelse($pemesanan->rekamMedis->tindakan as $tindakan)
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">{{ $tindakan->nama_tindakan }}</span>
+                                <span class="font-medium text-gray-800">Rp
+                                    {{ number_format($tindakan->pivot->harga_saat_itu, 0, ',', '.') }}</span>
+                            </div>
+                        @empty
+                            <p class="text-gray-500">Tidak ada tindakan yang dikenakan biaya.</p>
+                        @endforelse
+                    </div>
+
+                    <!-- Total Biaya -->
+                    <div class="flex justify-between items-center p-4 bg-purple-50 rounded-lg mb-8">
+                        <span class="font-bold text-xl text-purple-800">Total Tagihan</span>
+                        <span class="font-bold text-2xl text-purple-900">Rp
+                            {{ number_format($pemesanan->pembayaran->total_biaya, 0, ',', '.') }}</span>
+                    </div>
+
+                    <!-- Form Konfirmasi Pembayaran -->
+                    @if ($pemesanan->pembayaran->status == 'Belum Lunas')
+                        <form method="POST" action="{{ route('admin.pembayaran.store', $pemesanan->id) }}">
+                            @csrf
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                                <div>
+                                    <x-input-label for="metode_pembayaran" :value="__('Pilih Metode Pembayaran')" />
+                                    <select id="metode_pembayaran" name="metode_pembayaran"
+                                        class="block mt-1 w-full border-gray-300 focus:border-purple-500 focus:ring-purple-500 rounded-md shadow-sm"
+                                        required>
+                                        <option value="Tunai">Tunai</option>
+                                        <option value="Transfer">Transfer</option>
+                                        <option value="Kartu Debit/Kredit">Kartu Debit/Kredit</option>
+                                    </select>
+                                </div>
+                                <div class="md:text-right mt-4 md:mt-0">
+                                    <x-primary-button
+                                        class="w-full md:w-auto justify-center bg-green-600 hover:bg-green-700 text-lg px-8 py-3">
+                                        {{ __('Konfirmasi Pembayaran') }}
+                                    </x-primary-button>
+                                </div>
+                            </div>
+                        </form>
+                    @else
+                        <!-- Status Lunas -->
+                        <div class="text-center p-6 bg-green-50 rounded-lg">
+                            <h3 class="text-xl font-bold text-green-800">LUNAS</h3>
+                            <p class="text-green-700 mt-1">
+                                Dibayar pada
+                                {{ \Carbon\Carbon::parse($pemesanan->pembayaran->tanggal_bayar)->translatedFormat('d F Y, H:i') }}
+                                melalui {{ $pemesanan->pembayaran->metode_pembayaran }}.
+                            </p>
+                            <div class="mt-4">
+                                <a href="{{ route('admin.pembayaran.cetak', $pemesanan->id) }}" target="_blank"
+                                    class="inline-block px-5 py-2 bg-gray-600 text-white text-sm font-semibold rounded-md hover:bg-gray-700">
+                                    Cetak Struk
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>

@@ -9,7 +9,7 @@ class FotoRekamMedis extends Model
 {
     use HasFactory;
     protected $table = 'foto_rekam_medis';
-    protected $fillable = ['id_rekam_medis', 'foto'];
+    protected $fillable = ['id_rekam_medis', 'path_foto'];
 
     public function rekamMedis()
     {

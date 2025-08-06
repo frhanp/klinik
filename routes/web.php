@@ -9,10 +9,11 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\DokterController as AdminDokterController;
 use App\Http\Controllers\Admin\JadwalController as AdminJadwalController;
 use App\Http\Controllers\Admin\PemesananController as AdminPemesananController;
-
+use App\Http\Controllers\Admin\TindakanController as AdminTindakanController;
 use App\Http\Controllers\Dokter\DashboardController as DokterDashboardController;
 use App\Http\Controllers\Dokter\JadwalController as DokterJadwalController;
 use App\Http\Controllers\Dokter\RekamMedisController as DokterRekamMedisController;
+use App\Http\Controllers\Admin\PembayaranController as AdminPembayaranController;
 
 use App\Http\Controllers\Pasien\DashboardController as PasienDashboardController;
 use App\Http\Controllers\Pasien\PemesananController as PasienPemesananController;
@@ -48,6 +49,12 @@ Route::middleware(['auth', 'cekperan:admin'])->prefix('admin')->name('admin.')->
     Route::resource('dokter', AdminDokterController::class);
     Route::resource('jadwal', AdminJadwalController::class);
     Route::resource('pemesanan', AdminPemesananController::class);
+    Route::resource('tindakan', AdminTindakanController::class);
+    Route::get('pembayaran/{pemesanan}/cetak', [AdminPembayaranController::class, 'cetak'])->name('pembayaran.cetak');
+
+    Route::get('pembayaran', [AdminPembayaranController::class, 'index'])->name('pembayaran.index');
+    Route::get('pembayaran/{pemesanan}', [AdminPembayaranController::class, 'show'])->name('pembayaran.show');
+    Route::post('pembayaran/{pemesanan}', [AdminPembayaranController::class, 'store'])->name('pembayaran.store');
 });
 
 
