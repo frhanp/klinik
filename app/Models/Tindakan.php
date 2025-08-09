@@ -21,4 +21,9 @@ class Tindakan extends Model
                     ->withPivot('harga_saat_itu') // Ambil juga harga saat tindakan dilakukan
                     ->withTimestamps();
     }
+
+    public function pemesananAwal()
+    {
+        return $this->belongsToMany(Pemesanan::class, 'pemesanan_tindakan', 'tindakan_id', 'pemesanan_id');
+    }
 }

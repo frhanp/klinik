@@ -9,11 +9,16 @@ class Pemesanan extends Model
 {
     use HasFactory;
     protected $table = 'pemesanan';
-    protected $fillable = ['id_pasien', 'id_dokter', 'id_jadwal', 'tanggal_pesan', 'waktu_pesan', 'catatan', 'status'];
+    protected $fillable = ['id_pasien', 'id_dokter', 'id_jadwal', 'tanggal_pesan', 'waktu_pesan', 'catatan', 'status',];
 
     public function pasien()
     {
         return $this->belongsTo(User::class, 'id_pasien');
+    }
+
+    public function tindakanAwal()
+    {
+        return $this->belongsToMany(Tindakan::class, 'pemesanan_tindakan', 'pemesanan_id', 'tindakan_id');
     }
 
     // Relasi: Setiap pemesanan ditujukan untuk satu dokter.

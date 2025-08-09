@@ -9,7 +9,9 @@ use App\Models\Pemesanan;
 use App\Models\Dokter;
 use App\Models\Jadwal;
 use App\Models\RekamMedis;
+use App\Models\Tindakan;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class PemesananController extends Controller
 {
@@ -127,7 +129,8 @@ class PemesananController extends Controller
     public function create()
     {
         $dokters = Dokter::with('user')->get();
-        return view('pasien.pemesanan.create', compact('dokters'));
+        $tindakans = Tindakan::all(); // <-- Ambil semua data tindakan
+        return view('pasien.pemesanan.create', compact('dokters', 'tindakans')); // <-- Kirim ke view
     }
 
     public function store(Request $request)
@@ -136,31 +139,39 @@ class PemesananController extends Controller
             'id_dokter' => ['required', 'exists:dokter,id'],
             'tanggal_pesan' => ['required', 'date', 'after_or_equal:today'],
             'waktu_pesan' => ['required', 'date_format:H:i'],
+            'tindakan_awal' => ['nullable', 'array'], // Ubah nama menjadi 'tindakan_awal' (array)
+            'tindakan_awal.*' => ['exists:tindakan,id'], // Validasi setiap item dalam array
             'catatan' => ['nullable', 'string'],
         ]);
 
-        // --- LOGIKA BARU UNTUK MENCARI ID JADWAL ---
         $tanggal = Carbon::parse($request->tanggal_pesan);
-        $hariPraktek = $tanggal->translatedFormat('l'); // e.g., "Senin"
+        $hariPraktek = $tanggal->translatedFormat('l');
 
         $jadwal = Jadwal::where('id_dokter', $request->id_dokter)
                         ->where('hari', $hariPraktek)
                         ->first();
 
         if (!$jadwal) {
-            return back()->with('error', 'Dokter tidak memiliki jadwal pada hari yang dipilih.');
+            return back()->with('error', 'Dokter tidak memiliki jadwal pada hari yang dipilih.')->withInput();
         }
-        // -----------------------------------------
 
-        Pemesanan::create([
-            'id_pasien' => Auth::id(),
-            'id_dokter' => $request->id_dokter,
-            'id_jadwal' => $jadwal->id, // <-- Gunakan id_jadwal yang ditemukan
-            'tanggal_pesan' => $request->tanggal_pesan,
-            'waktu_pesan' => $request->waktu_pesan,
-            'catatan' => $request->catatan,
-            'status' => 'Dipesan',
-        ]);
+        // Gunakan transaction untuk keamanan data
+        DB::transaction(function () use ($request, $jadwal) {
+            $pemesanan = Pemesanan::create([
+                'id_pasien' => Auth::id(),
+                'id_dokter' => $request->id_dokter,
+                'id_jadwal' => $jadwal->id,
+                'tanggal_pesan' => $request->tanggal_pesan,
+                'waktu_pesan' => $request->waktu_pesan,
+                'catatan' => $request->catatan,
+                'status' => 'Dipesan',
+            ]);
+    
+            // Simpan data ke tabel pivot jika ada tindakan yang dipilih
+            if ($request->has('tindakan_awal')) {
+                $pemesanan->tindakanAwal()->attach($request->tindakan_awal);
+            }
+        });
 
         return redirect()->route('pasien.pemesanan.index')->with('success', 'Pemesanan berhasil dibuat.');
     }

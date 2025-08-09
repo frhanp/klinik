@@ -1,4 +1,11 @@
 <x-app-layout>
+
+    {{-- Tambahkan CSS Tom Select di header --}}
+    <x-slot name="header_scripts">
+        <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+    </x-slot>
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Buat Pemesanan Baru') }}
@@ -12,7 +19,7 @@
                 
                 <h3 class="text-2xl font-bold text-gray-800 mb-6">Formulir Janji Temu</h3>
 
-                <form method="POST" action="{{ route('pasien.pemesanan.store') }}" @submit.prevent="submitForm">
+                <form method="POST" action="{{ route('pasien.pemesanan.store') }}">
                     @csrf
                     
                     <!-- Step 1: Pilih Dokter -->
@@ -50,14 +57,25 @@
                                 </label>
                             </template>
                         </div>
-                        <div x-show="availableSlots.length === 0 && selectedTanggal" class="text-sm text-red-500 p-3 bg-red-50 rounded-md">
+                        <div x-show="availableSlots.length === 0 && selectedTanggal && !loadingSlot" class="text-sm text-red-500 p-3 bg-red-50 rounded-md">
                             Tidak ada slot tersedia pada tanggal ini atau dokter tidak praktek. Silakan pilih tanggal lain.
                         </div>
                     </div>
 
-                    <!-- Step 4: Catatan & Submit -->
+                    <!-- Step 4: Pilih Tindakan Awal -->
                     <div class="mb-6" x-show="selectedSlot" x-transition>
-                        <label for="catatan" class="block font-medium text-sm text-gray-700 mb-2">4. Catatan (Opsional)</label>
+                        <label for="tindakan_awal" class="block font-medium text-sm text-gray-700 mb-2">4. Keluhan / Tindakan Awal</label>
+                        <select name="tindakan_awal[]" id="tindakan_awal" multiple>
+                            <option value="">-- Pilih Keluhan Utama (Bisa lebih dari satu) --</option>
+                            @foreach($tindakans as $tindakan)
+                                <option value="{{ $tindakan->id }}" data-harga="{{ $tindakan->harga }}">{{ $tindakan->nama_tindakan }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Step 5: Catatan & Submit -->
+                    <div class="mb-6" x-show="selectedSlot" x-transition>
+                        <label for="catatan" class="block font-medium text-sm text-gray-700 mb-2">5. Catatan Tambahan (Opsional)</label>
                         <textarea name="catatan" id="catatan" rows="3" class="block w-full border-gray-300 focus:border-purple-500 focus:ring-purple-500 rounded-md shadow-sm" placeholder="Contoh: Sakit gigi di bagian kanan bawah..."></textarea>
                     </div>
 
@@ -73,6 +91,27 @@
     </div>
 
     <script>
+
+        // Inisialisasi Tom Select
+        document.addEventListener('DOMContentLoaded', function() {
+            new TomSelect('#tindakan_awal', {
+                plugins: ['remove_button'],
+                render: {
+                    // Custom render untuk menampilkan harga
+                    option: function(data, escape) {
+                        const harga = data.harga ? new Intl.NumberFormat('id-ID').format(data.harga) : 'N/A';
+                        return `<div>
+                                    <span class="font-medium">${escape(data.text)}</span>
+                                    <span class="text-sm text-gray-500 ml-2">(Rp ${harga})</span>
+                                </div>`;
+                    },
+                    item: function(data, escape) {
+                        return `<div>${escape(data.text)}</div>`;
+                    }
+                }
+            });
+        });
+        
         function bookingForm() {
             return {
                 selectedDokter: '',
@@ -122,26 +161,6 @@
                 
                 isFormComplete() {
                     return this.selectedDokter && this.selectedTanggal && this.selectedSlot;
-                },
-
-                submitForm(event) {
-                    if (!this.isFormComplete()) {
-                        alert('Harap lengkapi semua pilihan sebelum membuat janji temu.');
-                        return;
-                    }
-                    // Menambahkan id_jadwal ke form sebelum submit
-                    // Logika ini perlu disempurnakan jika satu dokter punya >1 jadwal di hari yg sama
-                    const form = event.target;
-                    const hiddenInput = document.createElement('input');
-                    hiddenInput.type = 'hidden';
-                    hiddenInput.name = 'id_jadwal'; 
-                    // NOTE: This is a simplification. A more robust solution would be needed
-                    // if a doctor can have multiple schedules on the same day of the week.
-                    // For now, we assume one schedule per day of the week per doctor.
-                    // We'll find the schedule ID on the server side based on doctor and day.
-                    // Let's adjust the controller logic for this.
-                    
-                    form.submit();
                 },
 
                 resetTanggalDanSlot() {
