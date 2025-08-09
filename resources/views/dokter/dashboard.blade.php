@@ -16,7 +16,7 @@
                             <thead class="bg-gray-200">
                                 <tr>
                                     <th class="py-2 px-4 border-b">Waktu</th>
-                                    <th class="py-2 px-4 border-b">Nama Pasien</th>
+                                    <th class="py-2 px-4 border-b">Nama Pasien & Keluhan</th> {{-- Ubah Judul Kolom --}}
                                     <th class="py-2 px-4 border-b">Status</th>
                                     <th class="py-2 px-4 border-b">Aksi</th>
                                 </tr>
@@ -24,12 +24,24 @@
                             <tbody>
                                 @forelse ($pemesananHariIni as $pemesanan)
                                     <tr class="hover:bg-gray-50">
-                                        <td class="py-2 px-4 border-b">{{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</td>
-                                        <td class="py-2 px-4 border-b">{{ $pemesanan->pasien->name }}</td>
-                                        <td class="py-2 px-4 border-b">{{ $pemesanan->status }}</td>
-                                        <td class="py-2 px-4 border-b">
-                                            <a href="{{ route('dokter.rekam-medis.create', ['id_pemesanan' => $pemesanan->id]) }}" class="text-green-600 hover:text-green-900">
-                                                Buat Rekam Medis
+                                        <td class="py-2 px-4 border-b align-top">{{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</td>
+                                        <td class="py-2 px-4 border-b align-top">
+                                            {{-- Tampilkan Nama Pasien --}}
+                                            <div class="font-semibold">{{ $pemesanan->pasien->name }}</div>
+                                            {{-- Tampilkan Keluhan Awal --}}
+                                            @if($pemesanan->tindakanAwal->isNotEmpty())
+                                                <div class="text-xs text-gray-600 mt-1">
+                                                    Keluhan: 
+                                                    @foreach($pemesanan->tindakanAwal as $tindakan)
+                                                        <span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full">{{ $tindakan->nama_tindakan }}</span>
+                                                    @endforeach
+                                                </div>
+                                            @endif
+                                        </td>
+                                        <td class="py-2 px-4 border-b align-top">{{ $pemesanan->status }}</td>
+                                        <td class="py-2 px-4 border-b align-top">
+                                            <a href="{{ route('dokter.rekam-medis.create', ['id_pemesanan' => $pemesanan->id]) }}" class="text-green-600 hover:text-green-900 font-semibold">
+                                                Proses
                                             </a>
                                         </td>
                                     </tr>

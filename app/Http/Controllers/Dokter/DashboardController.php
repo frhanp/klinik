@@ -15,7 +15,9 @@ class DashboardController extends Controller
         $pemesananHariIni = Pemesanan::where('id_dokter', $idDokter)
             ->whereDate('tanggal_pesan', today())
             ->whereIn('status', ['Dipesan', 'Dikonfirmasi'])
-            ->with('pasien')
+            // --- UBAH BARIS DI BAWAH INI ---
+            ->with('pasien', 'tindakanAwal') // Tambahkan 'tindakanAwal'
+            // -----------------------------
             ->orderBy('waktu_pesan', 'asc')
             ->get();
 

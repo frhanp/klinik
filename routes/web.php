@@ -17,6 +17,8 @@ use App\Http\Controllers\Admin\PembayaranController as AdminPembayaranController
 
 use App\Http\Controllers\Pasien\DashboardController as PasienDashboardController;
 use App\Http\Controllers\Pasien\PemesananController as PasienPemesananController;
+use App\Http\Controllers\Admin\LaporanController as AdminLaporanController;
+use App\Http\Controllers\Admin\ObatController as AdminObatController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,10 +53,11 @@ Route::middleware(['auth', 'cekperan:admin'])->prefix('admin')->name('admin.')->
     Route::resource('pemesanan', AdminPemesananController::class);
     Route::resource('tindakan', AdminTindakanController::class);
     Route::get('pembayaran/{pemesanan}/cetak', [AdminPembayaranController::class, 'cetak'])->name('pembayaran.cetak');
-
+    Route::get('laporan', [AdminLaporanController::class, 'index'])->name('laporan.index'); 
     Route::get('pembayaran', [AdminPembayaranController::class, 'index'])->name('pembayaran.index');
     Route::get('pembayaran/{pemesanan}', [AdminPembayaranController::class, 'show'])->name('pembayaran.show');
     Route::post('pembayaran/{pemesanan}', [AdminPembayaranController::class, 'store'])->name('pembayaran.store');
+    Route::resource('obat', AdminObatController::class);
 });
 
 
