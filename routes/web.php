@@ -70,6 +70,7 @@ Route::middleware(['auth', 'cekperan:dokter'])->prefix('dokter')->name('dokter.'
 Route::middleware(['auth', 'cekperan:pasien'])->prefix('pasien')->name('pasien.')->group(function () {
     Route::get('dashboard', [PasienDashboardController::class, 'index'])->name('dashboard');
     Route::resource('pemesanan', PasienPemesananController::class);
+    Route::get('rekam-medis/{rekamMedis}', [PasienPemesananController::class, 'showRekamMedis'])->name('rekamMedis.show');
     // --- TAMBAHKAN DUA ROUTE DI BAWAH INI ---
     // Route untuk mendapatkan jadwal hari seorang dokter
     Route::get('/get-jadwal-dokter/{dokter}', [PasienPemesananController::class, 'getJadwalDokter'])->name('pemesanan.getJadwalDokter');

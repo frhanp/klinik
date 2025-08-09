@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Pemesanan;
 use App\Models\Dokter;
 use App\Models\Jadwal;
+use App\Models\RekamMedis;
 use Carbon\Carbon;
 
 class PemesananController extends Controller
@@ -48,6 +49,20 @@ class PemesananController extends Controller
         })->filter();
 
         return response()->json($englishDays);
+    }
+
+    public function showRekamMedis(RekamMedis $rekamMedis)
+    {
+        // --- OTORISASI PENTING ---
+        // Memastikan rekam medis ini benar-benar milik pasien yang sedang login.
+        if ($rekamMedis->pemesanan->id_pasien !== Auth::id()) {
+            abort(403, 'AKSES DITOLAK');
+        }
+
+        // Memuat semua relasi yang dibutuhkan untuk ditampilkan di view
+        $rekamMedis->load(['pemesanan.dokter.user', 'tindakan', 'resep', 'foto', 'pemesanan.pembayaran']);
+
+        return view('pasien.rekam-medis.show', compact('rekamMedis'));
     }
 
     /**

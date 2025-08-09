@@ -35,7 +35,7 @@
                                         </td>
                                         <td class="py-2 px-4 border-b">
                                             @if($pemesanan->status == 'Selesai' && $pemesanan->rekamMedis)
-                                                <a href="{{ route('dokter.rekam-medis.show', $pemesanan->rekamMedis->id) }}" class="text-blue-600 hover:text-blue-900">Lihat Rekam Medis</a>
+                                            <a href="{{ route('pasien.rekamMedis.show', $pemesanan->rekamMedis->id) }}" class="text-blue-600 hover:text-blue-900">Lihat Rekam Medis</a>
                                             @elseif(in_array($pemesanan->status, ['Dipesan', 'Dikonfirmasi']))
                                                 <form action="{{ route('pasien.pemesanan.destroy', $pemesanan->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan pemesanan ini?');">
                                                     @csrf
