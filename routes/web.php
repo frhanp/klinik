@@ -19,6 +19,9 @@ use App\Http\Controllers\Pasien\DashboardController as PasienDashboardController
 use App\Http\Controllers\Pasien\PemesananController as PasienPemesananController;
 use App\Http\Controllers\Admin\LaporanController as AdminLaporanController;
 use App\Http\Controllers\Admin\ObatController as AdminObatController;
+use App\Http\Controllers\Admin\PasienController as AdminPasienController;
+use App\Http\Controllers\Pasien\BiodataController as PasienBiodataController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -58,6 +61,10 @@ Route::middleware(['auth', 'cekperan:admin'])->prefix('admin')->name('admin.')->
     Route::get('pembayaran/{pemesanan}', [AdminPembayaranController::class, 'show'])->name('pembayaran.show');
     Route::post('pembayaran/{pemesanan}', [AdminPembayaranController::class, 'store'])->name('pembayaran.store');
     Route::resource('obat', AdminObatController::class);
+
+    Route::get('pasien', [AdminPasienController::class, 'index'])->name('pasien.index');
+    Route::get('pasien/{user}/edit', [AdminPasienController::class, 'edit'])->name('pasien.edit');
+    Route::put('pasien/{user}', [AdminPasienController::class, 'update'])->name('pasien.update');
 });
 
 
@@ -80,6 +87,9 @@ Route::middleware(['auth', 'cekperan:pasien'])->prefix('pasien')->name('pasien.'
 
     // Route untuk mendapatkan slot waktu yang tersedia pada tanggal tertentu
     Route::get('/get-slot-waktu/{dokter}/{tanggal}', [PasienPemesananController::class, 'getSlotWaktu'])->name('pemesanan.getSlotWaktu');
+
+    Route::get('biodata', [PasienBiodataController::class, 'edit'])->name('biodata.edit');
+    Route::put('biodata', [PasienBiodataController::class, 'update'])->name('biodata.update');
 });
 
 

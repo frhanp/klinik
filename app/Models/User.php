@@ -59,4 +59,8 @@ class User extends Authenticatable
         // User sebagai pasien bisa punya banyak pemesanan
         return $this->hasMany(Pemesanan::class, 'id_pasien');
     }
+    public function biodata()
+    {
+        return $this->hasOne(BiodataPasien::class, 'user_id');
+    }
 }
