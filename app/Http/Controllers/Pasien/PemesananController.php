@@ -75,11 +75,28 @@ class PemesananController extends Controller
     {
         try {
             $date = Carbon::parse($tanggal);
-            $dayName = $date->translatedFormat('l');
+
+            // --- PERUBAHAN LOGIKA DI SINI ---
+            // 1. Dapatkan nomor hari (Minggu=0, Senin=1, ..., Sabtu=6)
+            $dayOfWeekNumber = $date->dayOfWeek;
+
+            // 2. Buat pemetaan dari nomor ke nama hari dalam Bahasa Indonesia
+            $dayMap = [
+                1 => 'Senin',
+                2 => 'Selasa',
+                3 => 'Rabu',
+                4 => 'Kamis',
+                5 => 'Jumat',
+                6 => 'Sabtu',
+                0 => 'Minggu',
+            ];
+
+            // 3. Dapatkan nama hari yang benar
+            $dayName = $dayMap[$dayOfWeekNumber] ?? null;
+            // --- AKHIR PERUBAHAN ---
 
             $jadwal = $dokter->jadwal()->where('hari', $dayName)->first();
 
-            // Jika tidak ada jadwal sama sekali, langsung kembalikan array kosong.
             if (!$jadwal) {
                 return response()->json([]);
             }
@@ -101,25 +118,19 @@ class PemesananController extends Controller
                 ->whereIn('status', ['Dipesan', 'Dikonfirmasi'])
                 ->pluck('waktu_pesan')
                 ->map(function ($time) {
-                    // VERSI AMAN: Pastikan format waktu valid sebelum di-parse
                     try {
                         return Carbon::parse($time)->format('H:i');
                     } catch (\Exception $e) {
-                        return null; // Abaikan jika format waktu tidak valid
+                        return null;
                     }
                 })
-                ->filter() // Hapus nilai null dari koleksi
+                ->filter()
                 ->toArray();
-            
-            // Filter untuk mendapatkan slot yang tersedia
+
             $availableSlots = array_diff($allSlots, $bookedSlots);
 
-            // Mengembalikan response JSON yang valid
             return response()->json(array_values($availableSlots));
-
         } catch (\Exception $e) {
-            // Jika terjadi error lain, kembalikan response error yang jelas
-            // Anda bisa cek file storage/logs/laravel.log untuk detail errornya
             return response()->json(['error' => 'Terjadi kesalahan di server.', 'message' => $e->getMessage()], 500);
         }
     }
@@ -148,8 +159,8 @@ class PemesananController extends Controller
         $hariPraktek = $tanggal->translatedFormat('l');
 
         $jadwal = Jadwal::where('id_dokter', $request->id_dokter)
-                        ->where('hari', $hariPraktek)
-                        ->first();
+            ->where('hari', $hariPraktek)
+            ->first();
 
         if (!$jadwal) {
             return back()->with('error', 'Dokter tidak memiliki jadwal pada hari yang dipilih.')->withInput();
@@ -166,7 +177,7 @@ class PemesananController extends Controller
                 'catatan' => $request->catatan,
                 'status' => 'Dipesan',
             ]);
-    
+
             // Simpan data ke tabel pivot jika ada tindakan yang dipilih
             if ($request->has('tindakan_awal')) {
                 $pemesanan->tindakanAwal()->attach($request->tindakan_awal);
