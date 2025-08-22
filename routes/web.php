@@ -52,7 +52,8 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'cekperan:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('dokter', AdminDokterController::class);
-    Route::resource('jadwal', AdminJadwalController::class);
+    Route::get('jadwal/dokter/{dokter}', [AdminJadwalController::class, 'show'])->name('admin.jadwal.show.dokter');
+    Route::resource('jadwal', AdminJadwalController::class)->except(['show']);
     Route::resource('pemesanan', AdminPemesananController::class);
     Route::resource('tindakan', AdminTindakanController::class);
     Route::get('pembayaran/{pemesanan}/cetak', [AdminPembayaranController::class, 'cetak'])->name('pembayaran.cetak');
