@@ -7,17 +7,6 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @if(!Auth::user()->biodata || !Auth::user()->biodata->nik)
-            <div class="mb-6 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 rounded-r-lg">
-                <div class="flex">
-                    <div class="py-1"><svg class="fill-current h-6 w-6 text-yellow-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zM9 5v6h2V5H9zm0 8h2v2H9v-2z"/></svg></div>
-                    <div>
-                        <p class="font-bold">Biodata Anda Belum Lengkap</p>
-                        <p class="text-sm">Untuk mempercepat proses pelayanan di klinik, mohon lengkapi data diri Anda. <a href="{{ route('pasien.biodata.edit') }}" class="font-semibold underline hover:text-yellow-800">Klik di sini untuk melengkapi.</a></p>
-                    </div>
-                </div>
-            </div>
-            @endif
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h3 class="text-lg font-semibold mb-4">Pemesanan Aktif Anda</h3>

@@ -10,6 +10,7 @@ use App\Models\Dokter;
 use App\Models\Jadwal;
 use App\Models\RekamMedis;
 use App\Models\Tindakan;
+use App\Models\BiodataPasien;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -140,21 +141,28 @@ class PemesananController extends Controller
     public function create()
     {
         $dokters = Dokter::with('user')->get();
-        $tindakans = Tindakan::all(); // <-- Ambil semua data tindakan
-        return view('pasien.pemesanan.create', compact('dokters', 'tindakans')); // <-- Kirim ke view
+        $tindakans = Tindakan::all();
+        return view('pasien.pemesanan.create', compact('dokters', 'tindakans'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
+            // Validasi untuk data diri (Langkah 1)
+            'nama_pasien_booking' => ['required', 'string', 'max:255'],
+            'nik' => ['nullable', 'string', 'digits:16'],
+            'status_pasien' => ['required', 'in:BPJS,Umum,Inhealth'],
+
+            // Validasi untuk jadwal (Langkah 2)
             'id_dokter' => ['required', 'exists:dokter,id'],
             'tanggal_pesan' => ['required', 'date', 'after_or_equal:today'],
             'waktu_pesan' => ['required', 'date_format:H:i'],
-            'tindakan_awal' => ['nullable', 'array'], // Ubah nama menjadi 'tindakan_awal' (array)
-            'tindakan_awal.*' => ['exists:tindakan,id'], // Validasi setiap item dalam array
+            'tindakan_awal' => ['nullable', 'array'],
+            'tindakan_awal.*' => ['exists:tindakan,id'],
             'catatan' => ['nullable', 'string'],
         ]);
 
+        $user = Auth::user();
         $tanggal = Carbon::parse($request->tanggal_pesan);
         $hariPraktek = $tanggal->translatedFormat('l');
 
@@ -166,19 +174,29 @@ class PemesananController extends Controller
             return back()->with('error', 'Dokter tidak memiliki jadwal pada hari yang dipilih.')->withInput();
         }
 
-        // Gunakan transaction untuk keamanan data
-        DB::transaction(function () use ($request, $jadwal) {
+        DB::transaction(function () use ($request, $user, $jadwal) {
+            // 1. Update atau buat NIK di biodata
+            if ($request->filled('nik')) {
+                BiodataPasien::updateOrCreate(
+                    ['user_id' => $user->id],
+                    ['nik' => $request->nik]
+                );
+            }
+
+            // 2. Buat data pemesanan
             $pemesanan = Pemesanan::create([
-                'id_pasien' => Auth::id(),
+                'id_pasien' => $user->id,
+                'nama_pasien_booking' => $request->nama_pasien_booking,
                 'id_dokter' => $request->id_dokter,
                 'id_jadwal' => $jadwal->id,
                 'tanggal_pesan' => $request->tanggal_pesan,
                 'waktu_pesan' => $request->waktu_pesan,
+                'status_pasien' => $request->status_pasien,
                 'catatan' => $request->catatan,
                 'status' => 'Dipesan',
             ]);
 
-            // Simpan data ke tabel pivot jika ada tindakan yang dipilih
+            // 3. Simpan data tindakan awal ke tabel pivot
             if ($request->has('tindakan_awal')) {
                 $pemesanan->tindakanAwal()->attach($request->tindakan_awal);
             }
@@ -186,6 +204,7 @@ class PemesananController extends Controller
 
         return redirect()->route('pasien.pemesanan.index')->with('success', 'Pemesanan berhasil dibuat.');
     }
+
 
 
     public function show(Pemesanan $pemesanan)
