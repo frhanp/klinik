@@ -34,17 +34,19 @@
                             </select>
                         </div>
 
+                        {{-- BAGIAN YANG DIPERBAIKI --}}
                         <!-- Jam Mulai -->
                         <div class="mt-4">
                             <x-input-label for="jam_mulai" :value="__('Jam Mulai')" />
-                            <x-text-input id="jam_mulai" class="block mt-1 w-full" type="time" name="jam_mulai" :value="old('jam_mulai', $jadwal->jam_mulai)" required />
+                            <x-text-input id="jam_mulai" class="block mt-1 w-full" type="time" name="jam_mulai" :value="old('jam_mulai', \Carbon\Carbon::parse($jadwal->jam_mulai)->format('H:i'))" required />
                         </div>
 
                         <!-- Jam Selesai -->
                         <div class="mt-4">
                             <x-input-label for="jam_selesai" :value="__('Jam Selesai')" />
-                            <x-text-input id="jam_selesai" class="block mt-1 w-full" type="time" name="jam_selesai" :value="old('jam_selesai', $jadwal->jam_selesai)" required />
+                            <x-text-input id="jam_selesai" class="block mt-1 w-full" type="time" name="jam_selesai" :value="old('jam_selesai', \Carbon\Carbon::parse($jadwal->jam_selesai)->format('H:i'))" required />
                         </div>
+                        {{-- AKHIR PERBAIKAN --}}
 
                         <!-- Durasi Slot -->
                         <div class="mt-4">

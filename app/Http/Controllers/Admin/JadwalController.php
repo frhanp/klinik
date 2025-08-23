@@ -112,9 +112,13 @@ class JadwalController extends Controller
         $hariPraktek = $jadwals->pluck('hari')->implode(', ');
 
         // Ringkas Jam (ambil yang paling umum)
-        $jamPraktek = $jadwals->groupBy(function($item) {
+        $jamData = $jadwals->groupBy(function ($item) {
             return Carbon::parse($item->jam_mulai)->format('H:i') . ' - ' . Carbon::parse($item->jam_selesai)->format('H:i');
-        })->map->count()->sortDesc()->keys()->first();
+        })->map->count()->sortDesc();
+
+        
+
+        $jamPraktek = $jamData->keys()->first();
 
         return ['hari' => $hariPraktek, 'jam' => $jamPraktek];
     }
