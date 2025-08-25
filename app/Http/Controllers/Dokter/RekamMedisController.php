@@ -9,6 +9,7 @@ use App\Models\Pemesanan;
 use App\Models\RekamMedis;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tindakan;
+use App\Models\User;
 
 class RekamMedisController extends Controller
 {
@@ -17,24 +18,45 @@ class RekamMedisController extends Controller
     {
         $dokterId = Auth::user()->dokter->id;
 
-        // Query dasar untuk mengambil rekam medis milik dokter yang login
+        // tambahan: query ringkasan per pasien
         $query = RekamMedis::query()
-            ->whereHas('pemesanan', function ($q) use ($dokterId) {
-                $q->where('id_dokter', $dokterId);
-            })
-            ->with('pemesanan.pasien') // Eager load relasi untuk efisiensi
-            ->latest(); // Urutkan dari yang terbaru
+            ->selectRaw('u.id as pasien_id, u.name as nama_pasien,
+            COUNT(rm.id) as jumlah_kunjungan,
+            MAX(rm.created_at) as terakhir_kunjungan,
+            MAX(rm.diagnosis) as diagnosis_terakhir')
+            ->from('rekam_medis as rm')
+            ->join('pemesanan as p', 'p.id', '=', 'rm.id_pemesanan')
+            ->join('users as u', 'u.id', '=', 'p.id_pasien')
+            ->where('p.id_dokter', $dokterId)
+            ->groupBy('u.id', 'u.name')
+            ->orderByDesc('terakhir_kunjungan');
 
-        // Fitur Pencarian berdasarkan nama pasien
+        // tambahan: pencarian pasien
         if ($request->has('search') && $request->search != '') {
-            $query->whereHas('pemesanan.pasien', function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->search . '%');
-            });
+            $query->where('u.name', 'like', '%' . $request->search . '%');
         }
 
-        $rekamMedisList = $query->paginate(10); // Tampilkan 10 data per halaman
+        $pasienRingkas = $query->paginate(10)->withQueryString();
 
-        return view('dokter.rekam-medis.index', compact('rekamMedisList'));
+        return view('dokter.rekam-medis.index', compact('pasienRingkas')); // tambahan: ganti variabel
+    }
+
+    // tambahan: tampilkan semua rekam medis milik pasien tertentu
+    public function showByPasien(User $pasien)
+    {
+        $dokterId = Auth::user()->dokter->id;
+
+        $rekamMedisList = RekamMedis::with(['pemesanan', 'tindakan', 'resep', 'foto'])
+            ->whereHas(
+                'pemesanan',
+                fn($q) =>
+                $q->where('id_pasien', $pasien->id)
+                    ->where('id_dokter', $dokterId)
+            )
+            ->orderByDesc('created_at')
+            ->paginate(10);
+
+        return view('dokter.rekam-medis.pasien', compact('pasien', 'rekamMedisList'));
     }
     public function create(Request $request)
     {

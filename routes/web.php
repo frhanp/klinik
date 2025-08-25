@@ -72,6 +72,9 @@ Route::middleware(['auth', 'cekperan:dokter'])->prefix('dokter')->name('dokter.'
     Route::get('dashboard', [DokterDashboardController::class, 'index'])->name('dashboard');
     Route::resource('jadwal', DokterJadwalController::class)->only(['index', 'show']); // Dokter hanya bisa melihat
     Route::resource('rekam-medis', DokterRekamMedisController::class);
+    Route::get('rekam-medis/pasien/{pasien}', [DokterRekamMedisController::class, 'showByPasien'])
+            ->name('rekam-medis.pasien');
+    
 });
 
 
