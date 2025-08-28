@@ -20,7 +20,9 @@ use App\Http\Controllers\Pasien\PemesananController as PasienPemesananController
 use App\Http\Controllers\Admin\LaporanController as AdminLaporanController;
 use App\Http\Controllers\Admin\ObatController as AdminObatController;
 use App\Http\Controllers\Admin\PasienController as AdminPasienController;
+use App\Http\Controllers\Admin\LaporanController as LaporanController;
 use App\Http\Controllers\Pasien\BiodataController as PasienBiodataController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +66,7 @@ Route::middleware(['auth', 'cekperan:admin'])->prefix('admin')->name('admin.')->
     Route::resource('obat', AdminObatController::class);
 
     Route::resource('pasien', AdminPasienController::class)->except(['show', 'destroy']);
+    Route::get('laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
 });
 
 

@@ -1,0 +1,6502 @@
+﻿# Project Digest (Full Content)
+_Generated: 2025-08-27 11:45:21_
+**Root:** D:\Laragon\www\klinik
+
+
+## Struktur Proyek (filtered, no depth limit)
+```
+.git
+app
+bootstrap
+config
+database
+node_modules
+public
+resources
+routes
+storage
+tests
+vendor
+.editorconfig
+.env
+.env.example
+.gitattributes
+.gitignore
+artisan
+composer.json
+composer.lock
+digest.ps1
+package-lock.json
+package.json
+phpunit.xml
+postcss.config.js
+project_digest.md
+project_digest_full.md
+README.md
+routes.txt
+structure.txt
+tailwind.config.js
+vite.config.js
+app\Http
+app\Models
+app\Providers
+app\View
+app\Http\Controllers
+app\Http\Middleware
+app\Http\Requests
+app\Http\Controllers\Admin
+app\Http\Controllers\Auth
+app\Http\Controllers\Dokter
+app\Http\Controllers\Pasien
+app\Http\Controllers\Controller.php
+app\Http\Controllers\ProfileController.php
+app\Http\Controllers\Admin\DashboardController.php
+app\Http\Controllers\Admin\DokterController.php
+app\Http\Controllers\Admin\JadwalController.php
+app\Http\Controllers\Admin\LaporanController.php
+app\Http\Controllers\Admin\ObatController.php
+app\Http\Controllers\Admin\PasienController.php
+app\Http\Controllers\Admin\PembayaranController.php
+app\Http\Controllers\Admin\PemesananController.php
+app\Http\Controllers\Admin\TindakanController.php
+app\Http\Controllers\Auth\AuthenticatedSessionController.php
+app\Http\Controllers\Auth\ConfirmablePasswordController.php
+app\Http\Controllers\Auth\EmailVerificationNotificationController.php
+app\Http\Controllers\Auth\EmailVerificationPromptController.php
+app\Http\Controllers\Auth\NewPasswordController.php
+app\Http\Controllers\Auth\PasswordController.php
+app\Http\Controllers\Auth\PasswordResetLinkController.php
+app\Http\Controllers\Auth\RegisteredUserController.php
+app\Http\Controllers\Auth\VerifyEmailController.php
+app\Http\Controllers\Dokter\DashboardController.php
+app\Http\Controllers\Dokter\JadwalController.php
+app\Http\Controllers\Dokter\RekamMedisController.php
+app\Http\Controllers\Pasien\DashboardController.php
+app\Http\Controllers\Pasien\PemesananController.php
+app\Http\Middleware\CekPeran.php
+app\Http\Requests\Auth
+app\Http\Requests\ProfileUpdateRequest.php
+app\Http\Requests\Auth\LoginRequest.php
+app\Models\BiodataPasien.php
+app\Models\Dokter.php
+app\Models\FotoRekamMedis.php
+app\Models\Jadwal.php
+app\Models\Obat.php
+app\Models\Pembayaran.php
+app\Models\Pemesanan.php
+app\Models\RekamMedis.php
+app\Models\Resep.php
+app\Models\Tindakan.php
+app\Models\User.php
+app\Providers\AppServiceProvider.php
+app\View\Components
+app\View\Components\AppLayout.php
+app\View\Components\GuestLayout.php
+bootstrap\cache
+bootstrap\app.php
+bootstrap\providers.php
+bootstrap\cache\.gitignore
+bootstrap\cache\packages.php
+bootstrap\cache\services.php
+config\app.php
+config\auth.php
+config\cache.php
+config\database.php
+config\filesystems.php
+config\logging.php
+config\mail.php
+config\queue.php
+config\services.php
+config\session.php
+database\factories
+database\migrations
+database\seeders
+database\.gitignore
+database\factories\UserFactory.php
+database\migrations\0001_01_01_000000_create_users_table.php
+database\migrations\0001_01_01_000001_create_cache_table.php
+database\migrations\0001_01_01_000002_create_jobs_table.php
+database\migrations\2025_07_09_014252_tambah_kolom_peran_ke_tabel_pengguna.php
+database\migrations\2025_07_09_014441_buat_tabel_dokter.php
+database\migrations\2025_07_09_014514_buat_tabel_jadwal.php
+database\migrations\2025_07_09_014536_buat_tabel_pemesanan.php
+database\migrations\2025_07_09_014555_buat_tabel_rekam_medis.php
+database\migrations\2025_07_09_014620_buat_tabel_resep_dan_foto.php
+database\migrations\2025_08_04_220850_buat_tabel_tindakan_dan_pembayaran.php
+database\migrations\2025_08_04_225320_buat_tabel_resep_dan_foto.php
+database\migrations\2025_08_09_211458_buat_tabel_pivot_pemesanan_tindakan.php
+database\migrations\2025_08_09_233426_buat_tabel_obat.php
+database\migrations\2025_08_18_132946_buat_tabel_biodata_pasien.php
+database\migrations\2025_08_22_172827_hapus_tabel_biodata_pasien.php
+database\migrations\2025_08_22_180149_buat_tabel_biodata_sederhana_dan_tambah_status_ke_pemesanan.php
+database\seeders\DatabaseSeeder.php
+database\seeders\DokterSeeder.php
+database\seeders\JadwalSeeder.php
+database\seeders\PenggunaSeeder.php
+database\seeders\TindakanSeeder.php
+public\build
+public\.htaccess
+public\favicon.ico
+public\hot
+public\index.php
+public\robots.txt
+resources\css
+resources\js
+resources\views
+resources\css\app.css
+resources\js\app.js
+resources\js\bootstrap.js
+resources\views\admin
+resources\views\auth
+resources\views\components
+resources\views\dokter
+resources\views\layouts
+resources\views\pasien
+resources\views\profile
+resources\views\dashboard.blade.php
+resources\views\welcome.blade.php
+resources\views\admin\dokter
+resources\views\admin\jadwal
+resources\views\admin\laporan
+resources\views\admin\obat
+resources\views\admin\pasien
+resources\views\admin\pembayaran
+resources\views\admin\pemesanan
+resources\views\admin\tindakan
+resources\views\admin\dashboard.blade.php
+resources\views\admin\dokter\create.blade.php
+resources\views\admin\dokter\edit.blade.php
+resources\views\admin\dokter\index.blade.php
+resources\views\admin\jadwal\create.blade.php
+resources\views\admin\jadwal\edit.blade.php
+resources\views\admin\jadwal\index.blade.php
+resources\views\admin\jadwal\show.blade.php
+resources\views\admin\laporan\index.blade.php
+resources\views\admin\obat\create.blade.php
+resources\views\admin\obat\edit.blade.php
+resources\views\admin\obat\index.blade.php
+resources\views\admin\pasien\create.blade.php
+resources\views\admin\pasien\edit.blade.php
+resources\views\admin\pasien\index.blade.php
+resources\views\admin\pembayaran\cetak.blade.php
+resources\views\admin\pembayaran\index.blade.php
+resources\views\admin\pembayaran\show.blade.php
+resources\views\admin\pemesanan\edit.blade.php
+resources\views\admin\pemesanan\index.blade.php
+resources\views\admin\tindakan\create.blade.php
+resources\views\admin\tindakan\edit.blade.php
+resources\views\admin\tindakan\index.blade.php
+resources\views\auth\confirm-password.blade.php
+resources\views\auth\forgot-password.blade.php
+resources\views\auth\login.blade.php
+resources\views\auth\register.blade.php
+resources\views\auth\reset-password.blade.php
+resources\views\auth\verify-email.blade.php
+resources\views\components\application-logo.blade.php
+resources\views\components\auth-session-status.blade.php
+resources\views\components\danger-button.blade.php
+resources\views\components\dropdown-link.blade.php
+resources\views\components\dropdown.blade.php
+resources\views\components\input-error.blade.php
+resources\views\components\input-label.blade.php
+resources\views\components\modal.blade.php
+resources\views\components\nav-link.blade.php
+resources\views\components\notification.blade.php
+resources\views\components\primary-button.blade.php
+resources\views\components\print-layout.blade.php
+resources\views\components\responsive-nav-link.blade.php
+resources\views\components\secondary-button.blade.php
+resources\views\components\text-input.blade.php
+resources\views\dokter\jadwal
+resources\views\dokter\rekam-medis
+resources\views\dokter\dashboard.blade.php
+resources\views\dokter\jadwal\index.blade.php
+resources\views\dokter\rekam-medis\create.blade.php
+resources\views\dokter\rekam-medis\index.blade.php
+resources\views\dokter\rekam-medis\pasien.blade.php
+resources\views\dokter\rekam-medis\show.blade.php
+resources\views\layouts\app.blade.php
+resources\views\layouts\guest.blade.php
+resources\views\layouts\navigation.blade.php
+resources\views\pasien\pemesanan
+resources\views\pasien\rekam-medis
+resources\views\pasien\dashboard.blade.php
+resources\views\pasien\pemesanan\create.blade.php
+resources\views\pasien\pemesanan\index.blade.php
+resources\views\pasien\rekam-medis\show.blade.php
+resources\views\profile\partials
+resources\views\profile\edit.blade.php
+resources\views\profile\partials\delete-user-form.blade.php
+resources\views\profile\partials\update-password-form.blade.php
+resources\views\profile\partials\update-profile-information-form.blade.php
+routes\auth.php
+routes\console.php
+routes\web.php
+storage\app
+storage\debugbar
+storage\framework
+storage\logs
+storage\app\private
+storage\app\public
+storage\app\.gitignore
+storage\app\private\.gitignore
+storage\app\public\foto-rekam-medis
+storage\app\public\.gitignore
+storage\app\public\foto-rekam-medis\0tOHnUgGChxO2YNFYs5dWmcVSvclVXlZZxVXvT8U.png
+storage\app\public\foto-rekam-medis\fX2p89itG43tIY33kbaiBgXp0Ux1xHCZfi3vCOOw.jpg
+storage\app\public\foto-rekam-medis\kiB0ZTydzOi6eYAuRC8s4Wf0OVhY3dqkQo7kkzLw.jpg
+storage\app\public\foto-rekam-medis\LFsUArqiXUnS9hctaC88djCWjKnPfcg3hkYwmLxs.jpg
+storage\app\public\foto-rekam-medis\rAYFSWvDqjTJLYAEOQGCRyTzF10L6WmsZfLOB0y2.jpg
+storage\app\public\foto-rekam-medis\VzhDeEN3UR3Gk4CA7k0B6xkVIYMEM24BbTs47PUS.png
+storage\framework\cache
+storage\framework\sessions
+storage\framework\testing
+storage\framework\views
+storage\framework\.gitignore
+storage\framework\cache\data
+storage\framework\cache\.gitignore
+storage\framework\cache\data\.gitignore
+storage\framework\sessions\.gitignore
+storage\framework\testing\.gitignore
+storage\framework\views\.gitignore
+storage\framework\views\099c916a77d38b4857b9622613938d44.php
+storage\framework\views\0b1239d75d2de431037266d08ed4f703.php
+storage\framework\views\0dde4a8697d8768fbaa33a58a45b8550.php
+storage\framework\views\0f94cf5be5b5b0de823208f18f66a4ab.php
+storage\framework\views\14f333af3f64fc5dbad9e5850c525a64.php
+storage\framework\views\1846ad195a36ec593251411dc8172134.php
+storage\framework\views\1d50ad26fa9db2f8e498ce54859823a5.php
+storage\framework\views\1e837dfe9fa57a9b4c37dae5b1a3f0b5.php
+storage\framework\views\209b15fabc9ac3380a395651e05ea398.php
+storage\framework\views\216f214d3eefe72fdbc68b0fc29323da.php
+storage\framework\views\224d5991eef2ead468479abfc7745e16.php
+storage\framework\views\23252b336e2a10f982cf45ffb9b4e68a.php
+storage\framework\views\25b164ca6d9b35899e445c3243b63643.php
+storage\framework\views\26019b94edbe1c23ccddae68839d38e0.php
+storage\framework\views\28b33f8e5c03e7fb8682fc9b72d32f2d.php
+storage\framework\views\299587ca44dda6d5134f2a25d08020f3.php
+storage\framework\views\2a830ecd468f435f1747c72e21677166.php
+storage\framework\views\30b1c19e0a7e8f356ba46eb87bbfd8b7.php
+storage\framework\views\35b948da9e966c78a172e74616518c9c.php
+storage\framework\views\391ebb746ed9d90abf51620fa811007f.php
+storage\framework\views\3c2589d59eeea174b043b4970b0dbb98.php
+storage\framework\views\404699709136b23da37e07bb6b93c777.php
+storage\framework\views\4226155521e5bcb508f11fbc6ffb499c.php
+storage\framework\views\43cd2c320e451f9a26231447b724fcfe.php
+storage\framework\views\45a511ac94b858088f8c488900084c75.php
+storage\framework\views\49d2988d7ab7a37f316ac97460cf0d4f.php
+storage\framework\views\4b50d759db4c428ed5a03be84a9ed913.php
+storage\framework\views\4e5d1e7a637f21bb73bb39e4daac3d76.php
+storage\framework\views\523d555e5519213c7f65005b1c2ecc79.php
+storage\framework\views\6476e2ef62b06efca0dc001eff659fea.php
+storage\framework\views\662ec6b9fc235e3b098c2320dafe372c.php
+storage\framework\views\668a2ece4a1ac7e48394b27d4e519e47.php
+storage\framework\views\6702457c4b34bc4666866b4bbcd1439a.php
+storage\framework\views\6787602fc1fe7c2d5934c9d12634bc91.php
+storage\framework\views\6a08ce534097ba81157bc6e83c44a78c.php
+storage\framework\views\6a29ecd21ebae639e72bd8efeeed7a2f.php
+storage\framework\views\6be2f5489bab8ec1b18ad1484bc444cc.php
+storage\framework\views\6f99de5660a2ce6fcab43b45591e19aa.php
+storage\framework\views\71555e52960fc6410084a8f55b21390e.php
+storage\framework\views\7b7091f5a95344deb1c9fc06cc5be79e.php
+storage\framework\views\7eb153b6ce5d90142951569fb36af2d5.php
+storage\framework\views\7f8ea05fa5ed27510431c21464520fe8.php
+storage\framework\views\8a8c75978fc25ce10731b8c47d60e7f0.php
+storage\framework\views\939765e98ee99ea6c3678ae15afd18a4.php
+storage\framework\views\94b64436a3a632efca44aa3abf323c28.php
+storage\framework\views\9a480b0fba443393c56b5664d5a8cb00.php
+storage\framework\views\9dc1191835caef2454dba92e93d09e03.php
+storage\framework\views\9e62399cfa0826aae9058d6317f05beb.php
+storage\framework\views\a8e896af52f3b928bd5b4710bd88d53e.php
+storage\framework\views\ae0523d13e73cef276c10bcb952d6d6b.php
+storage\framework\views\b15c1c717568cd4fb1c9fbc2e3cea052.php
+storage\framework\views\b9de74b4b9c066a89043f5e1c38c6960.php
+storage\framework\views\bb4b1fb801bbaeca186516088ac54e1e.php
+storage\framework\views\bb81c05887fc4897ea0b8a4be4d2931a.php
+storage\framework\views\bc0c85a243c6659e6e934a4d0259ad9a.php
+storage\framework\views\be5779b819f9903611be5ef8b4c91b6b.php
+storage\framework\views\bebbcc12d82febc3d9d74e01e7ce326d.php
+storage\framework\views\c05084a2686c20935959c3419b4ff8dc.php
+storage\framework\views\c0cb1c2254e2f73325c9b89c03f94db5.php
+storage\framework\views\c50a061998722a7ab0910c20b71469b6.php
+storage\framework\views\db1babe5d66f2504b7d3d3dde40548c6.php
+storage\framework\views\ddac27db3c0539b7d2822063d7ec6bb7.php
+storage\framework\views\df7c8d03deaec504e7226da044cc9385.php
+storage\framework\views\df9f8e03031713776f7951a3bdc95946.php
+storage\framework\views\e4230712cc46b6a4b60cb1d2adcdf49b.php
+storage\framework\views\e916b2526dec9c2c9c8950b27d414b0f.php
+storage\framework\views\e92955e7d3642302f6a51929236518ae.php
+storage\framework\views\ea406da005b4cd76dccac7b20424e182.php
+storage\framework\views\ea43987bcde4437a96cf2ec8399e8758.php
+storage\framework\views\ee3a40a42db5fc8f3b6f46d1bfa55b60.php
+storage\framework\views\f3b03175780f346293b384b6d476d4f4.php
+storage\framework\views\f4f0e45db0792760bb2c5ec050ed8ea1.php
+storage\framework\views\f97a950f1ee4517c7a6d7794bd304b7a.php
+storage\framework\views\faf56ae91916039096754864d30e515d.php
+storage\framework\views\fe989a9fa0b3ba0128fe9d5a63322909.php
+storage\framework\views\fee8b7affbea0b617c158a4aabf516f5.php
+tests\Feature
+tests\Unit
+tests\TestCase.php
+tests\Feature\Auth
+tests\Feature\ExampleTest.php
+tests\Feature\ProfileTest.php
+tests\Feature\Auth\AuthenticationTest.php
+tests\Feature\Auth\EmailVerificationTest.php
+tests\Feature\Auth\PasswordConfirmationTest.php
+tests\Feature\Auth\PasswordResetTest.php
+tests\Feature\Auth\PasswordUpdateTest.php
+tests\Feature\Auth\RegistrationTest.php
+tests\Unit\ExampleTest.php
+```
+
+
+## Info Git
+```
+Remote:
+origin	https://github.com/frhanp/klinik.git (fetch)
+origin	https://github.com/frhanp/klinik.git (push)
+
+Branch:
+main
+
+Last 5 commits:
+36741bf ringkas rekam medis
+4493f83 ringkas kelola jadwal
+a77cd54 test 1
+ebb0485 buat 2 langkah daftar
+b608aa5 fitur tambah pasien offline
+```
+
+
+## Dependencies (summary)
+```
+composer.json (require):
+  (parse error / none)
+composer.json (require-dev):
+  (parse error / none)
+
+package.json (dependencies):
+  (parse error / none)
+package.json (devDependencies):
+  (parse error / none)
+```
+
+
+## Routes Files Content
+```
+===== routes\auth.php =====
+<?php
+
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\ConfirmablePasswordController;
+use App\Http\Controllers\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\VerifyEmailController;
+use Illuminate\Support\Facades\Route;
+
+Route::middleware('guest')->group(function () {
+    Route::get('register', [RegisteredUserController::class, 'create'])
+        ->name('register');
+
+    Route::post('register', [RegisteredUserController::class, 'store']);
+
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])
+        ->name('login');
+
+    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
+        ->name('password.request');
+
+    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+        ->name('password.email');
+
+    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
+        ->name('password.reset');
+
+    Route::post('reset-password', [NewPasswordController::class, 'store'])
+        ->name('password.store');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('verify-email', EmailVerificationPromptController::class)
+        ->name('verification.notice');
+
+    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
+        ->middleware(['signed', 'throttle:6,1'])
+        ->name('verification.verify');
+
+    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+        ->middleware('throttle:6,1')
+        ->name('verification.send');
+
+    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
+        ->name('password.confirm');
+
+    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+
+    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+
+    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+        ->name('logout');
+});
+
+===== routes\console.php =====
+<?php
+
+use Illuminate\Foundation\Inspiring;
+use Illuminate\Support\Facades\Artisan;
+
+Artisan::command('inspire', function () {
+    $this->comment(Inspiring::quote());
+})->purpose('Display an inspiring quote');
+
+===== routes\web.php =====
+<?php
+
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
+// Import semua controller yang baru dibuat
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\DokterController as AdminDokterController;
+use App\Http\Controllers\Admin\JadwalController as AdminJadwalController;
+use App\Http\Controllers\Admin\PemesananController as AdminPemesananController;
+use App\Http\Controllers\Admin\TindakanController as AdminTindakanController;
+use App\Http\Controllers\Dokter\DashboardController as DokterDashboardController;
+use App\Http\Controllers\Dokter\JadwalController as DokterJadwalController;
+use App\Http\Controllers\Dokter\RekamMedisController as DokterRekamMedisController;
+use App\Http\Controllers\Admin\PembayaranController as AdminPembayaranController;
+
+use App\Http\Controllers\Pasien\DashboardController as PasienDashboardController;
+use App\Http\Controllers\Pasien\PemesananController as PasienPemesananController;
+use App\Http\Controllers\Admin\LaporanController as AdminLaporanController;
+use App\Http\Controllers\Admin\ObatController as AdminObatController;
+use App\Http\Controllers\Admin\PasienController as AdminPasienController;
+use App\Http\Controllers\Pasien\BiodataController as PasienBiodataController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
+
+// Halaman utama untuk semua pengunjung
+Route::get('/', function () {
+    return view('welcome');
+});
+
+// Route default untuk dashboard setelah login
+// Akan diarahkan berdasarkan peran di controller
+Route::get('/dashboard', function () {
+    $user = Auth::user();
+    if ($user->peran == 'admin') {
+        return redirect()->route('admin.dashboard');
+    } elseif ($user->peran == 'dokter') {
+        return redirect()->route('dokter.dashboard');
+    } elseif ($user->peran == 'pasien') {
+        return redirect()->route('pasien.dashboard');
+    }
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+
+// === GROUP ROUTE UNTUK ADMIN ===
+Route::middleware(['auth', 'cekperan:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('dokter', AdminDokterController::class);
+    Route::get('jadwal/dokter/{dokter}', [AdminJadwalController::class, 'show'])->name('jadwal.show');
+    Route::resource('jadwal', AdminJadwalController::class)->except(['show']);
+    Route::resource('pemesanan', AdminPemesananController::class);
+    Route::resource('tindakan', AdminTindakanController::class);
+    Route::get('pembayaran/{pemesanan}/cetak', [AdminPembayaranController::class, 'cetak'])->name('pembayaran.cetak');
+    Route::get('laporan', [AdminLaporanController::class, 'index'])->name('laporan.index'); 
+    Route::get('pembayaran', [AdminPembayaranController::class, 'index'])->name('pembayaran.index');
+    Route::get('pembayaran/{pemesanan}', [AdminPembayaranController::class, 'show'])->name('pembayaran.show');
+    Route::post('pembayaran/{pemesanan}', [AdminPembayaranController::class, 'store'])->name('pembayaran.store');
+    Route::resource('obat', AdminObatController::class);
+
+    Route::resource('pasien', AdminPasienController::class)->except(['show', 'destroy']);
+});
+
+
+// === GROUP ROUTE UNTUK DOKTER ===
+Route::middleware(['auth', 'cekperan:dokter'])->prefix('dokter')->name('dokter.')->group(function () {
+    Route::get('dashboard', [DokterDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('jadwal', DokterJadwalController::class)->only(['index', 'show']); // Dokter hanya bisa melihat
+    Route::resource('rekam-medis', DokterRekamMedisController::class);
+    Route::get('rekam-medis/pasien/{pasien}', [DokterRekamMedisController::class, 'showByPasien'])
+            ->name('rekam-medis.pasien');
+    
+});
+
+
+// === GROUP ROUTE UNTUK PASIEN ===
+Route::middleware(['auth', 'cekperan:pasien'])->prefix('pasien')->name('pasien.')->group(function () {
+    Route::get('dashboard', [PasienDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('pemesanan', PasienPemesananController::class);
+    Route::get('rekam-medis/{rekamMedis}', [PasienPemesananController::class, 'showRekamMedis'])->name('rekamMedis.show');
+    // --- TAMBAHKAN DUA ROUTE DI BAWAH INI ---
+    // Route untuk mendapatkan jadwal hari seorang dokter
+    Route::get('/get-jadwal-dokter/{dokter}', [PasienPemesananController::class, 'getJadwalDokter'])->name('pemesanan.getJadwalDokter');
+
+    // Route untuk mendapatkan slot waktu yang tersedia pada tanggal tertentu
+    Route::get('/get-slot-waktu/{dokter}/{tanggal}', [PasienPemesananController::class, 'getSlotWaktu'])->name('pemesanan.getSlotWaktu');
+});
+
+
+// Route default untuk profil pengguna (semua peran bisa akses)
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+
+// Meng-include route otentikasi (login, register, dll.)
+require __DIR__ . '/auth.php';
+
+```
+
+
+## Routes (from command)
+```
+
+  GET|HEAD        / ............................................................................................... 
+  GET|HEAD        _debugbar/assets/javascript ......... debugbar.assets.js ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@js
+  GET|HEAD        _debugbar/assets/stylesheets ...... debugbar.assets.css ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@css
+  DELETE          _debugbar/cache/{key}/{tags?} debugbar.cache.delete ΓÇ║ Barryvdh\Debugbar ΓÇ║ CacheController@delete
+  GET|HEAD        _debugbar/clockwork/{id} debugbar.clockwork ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@clockwork
+  GET|HEAD        _debugbar/open .......... debugbar.openhandler ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@handle
+  POST            _debugbar/queries/explain debugbar.queries.explain ΓÇ║ Barryvdh\Debugbar ΓÇ║ QueriesController@explaΓÇª
+  GET|HEAD        admin/dashboard ............................... admin.dashboard ΓÇ║ Admin\DashboardController@index
+  GET|HEAD        admin/dokter .................................. admin.dokter.index ΓÇ║ Admin\DokterController@index
+  POST            admin/dokter .................................. admin.dokter.store ΓÇ║ Admin\DokterController@store
+  GET|HEAD        admin/dokter/create ......................... admin.dokter.create ΓÇ║ Admin\DokterController@create
+  GET|HEAD        admin/dokter/{dokter} ........................... admin.dokter.show ΓÇ║ Admin\DokterController@show
+  PUT|PATCH       admin/dokter/{dokter} ....................... admin.dokter.update ΓÇ║ Admin\DokterController@update
+  DELETE          admin/dokter/{dokter} ..................... admin.dokter.destroy ΓÇ║ Admin\DokterController@destroy
+  GET|HEAD        admin/dokter/{dokter}/edit ...................... admin.dokter.edit ΓÇ║ Admin\DokterController@edit
+  GET|HEAD        admin/jadwal .................................. admin.jadwal.index ΓÇ║ Admin\JadwalController@index
+  POST            admin/jadwal .................................. admin.jadwal.store ΓÇ║ Admin\JadwalController@store
+  GET|HEAD        admin/jadwal/create ......................... admin.jadwal.create ΓÇ║ Admin\JadwalController@create
+  GET|HEAD        admin/jadwal/dokter/{dokter} .................... admin.jadwal.show ΓÇ║ Admin\JadwalController@show
+  PUT|PATCH       admin/jadwal/{jadwal} ....................... admin.jadwal.update ΓÇ║ Admin\JadwalController@update
+  DELETE          admin/jadwal/{jadwal} ..................... admin.jadwal.destroy ΓÇ║ Admin\JadwalController@destroy
+  GET|HEAD        admin/jadwal/{jadwal}/edit ...................... admin.jadwal.edit ΓÇ║ Admin\JadwalController@edit
+  GET|HEAD        admin/laporan ............................... admin.laporan.index ΓÇ║ Admin\LaporanController@index
+  GET|HEAD        admin/obat ........................................ admin.obat.index ΓÇ║ Admin\ObatController@index
+  POST            admin/obat ........................................ admin.obat.store ΓÇ║ Admin\ObatController@store
+  GET|HEAD        admin/obat/create ............................... admin.obat.create ΓÇ║ Admin\ObatController@create
+  GET|HEAD        admin/obat/{obat} ................................... admin.obat.show ΓÇ║ Admin\ObatController@show
+  PUT|PATCH       admin/obat/{obat} ............................... admin.obat.update ΓÇ║ Admin\ObatController@update
+  DELETE          admin/obat/{obat} ............................. admin.obat.destroy ΓÇ║ Admin\ObatController@destroy
+  GET|HEAD        admin/obat/{obat}/edit .............................. admin.obat.edit ΓÇ║ Admin\ObatController@edit
+  GET|HEAD        admin/pasien .................................. admin.pasien.index ΓÇ║ Admin\PasienController@index
+  POST            admin/pasien .................................. admin.pasien.store ΓÇ║ Admin\PasienController@store
+  GET|HEAD        admin/pasien/create ......................... admin.pasien.create ΓÇ║ Admin\PasienController@create
+  PUT|PATCH       admin/pasien/{pasien} ....................... admin.pasien.update ΓÇ║ Admin\PasienController@update
+  GET|HEAD        admin/pasien/{pasien}/edit ...................... admin.pasien.edit ΓÇ║ Admin\PasienController@edit
+  GET|HEAD        admin/pembayaran ...................... admin.pembayaran.index ΓÇ║ Admin\PembayaranController@index
+  GET|HEAD        admin/pembayaran/{pemesanan} ............ admin.pembayaran.show ΓÇ║ Admin\PembayaranController@show
+  POST            admin/pembayaran/{pemesanan} .......... admin.pembayaran.store ΓÇ║ Admin\PembayaranController@store
+  GET|HEAD        admin/pembayaran/{pemesanan}/cetak .... admin.pembayaran.cetak ΓÇ║ Admin\PembayaranController@cetak
+  GET|HEAD        admin/pemesanan ......................... admin.pemesanan.index ΓÇ║ Admin\PemesananController@index
+  POST            admin/pemesanan ......................... admin.pemesanan.store ΓÇ║ Admin\PemesananController@store
+  GET|HEAD        admin/pemesanan/create ................ admin.pemesanan.create ΓÇ║ Admin\PemesananController@create
+  GET|HEAD        admin/pemesanan/{pemesanan} ............... admin.pemesanan.show ΓÇ║ Admin\PemesananController@show
+  PUT|PATCH       admin/pemesanan/{pemesanan} ........... admin.pemesanan.update ΓÇ║ Admin\PemesananController@update
+  DELETE          admin/pemesanan/{pemesanan} ......... admin.pemesanan.destroy ΓÇ║ Admin\PemesananController@destroy
+  GET|HEAD        admin/pemesanan/{pemesanan}/edit .......... admin.pemesanan.edit ΓÇ║ Admin\PemesananController@edit
+  GET|HEAD        admin/tindakan ............................ admin.tindakan.index ΓÇ║ Admin\TindakanController@index
+  POST            admin/tindakan ............................ admin.tindakan.store ΓÇ║ Admin\TindakanController@store
+  GET|HEAD        admin/tindakan/create ................... admin.tindakan.create ΓÇ║ Admin\TindakanController@create
+  GET|HEAD        admin/tindakan/{tindakan} ................... admin.tindakan.show ΓÇ║ Admin\TindakanController@show
+  PUT|PATCH       admin/tindakan/{tindakan} ............... admin.tindakan.update ΓÇ║ Admin\TindakanController@update
+  DELETE          admin/tindakan/{tindakan} ............. admin.tindakan.destroy ΓÇ║ Admin\TindakanController@destroy
+  GET|HEAD        admin/tindakan/{tindakan}/edit .............. admin.tindakan.edit ΓÇ║ Admin\TindakanController@edit
+  GET|HEAD        confirm-password ..................... password.confirm ΓÇ║ Auth\ConfirmablePasswordController@show
+  POST            confirm-password ....................................... Auth\ConfirmablePasswordController@store
+  GET|HEAD        dashboard ............................................................................. dashboard
+  GET|HEAD        dokter/dashboard ............................ dokter.dashboard ΓÇ║ Dokter\DashboardController@index
+  GET|HEAD        dokter/jadwal ............................... dokter.jadwal.index ΓÇ║ Dokter\JadwalController@index
+  GET|HEAD        dokter/jadwal/{jadwal} ........................ dokter.jadwal.show ΓÇ║ Dokter\JadwalController@show
+  GET|HEAD        dokter/rekam-medis ................. dokter.rekam-medis.index ΓÇ║ Dokter\RekamMedisController@index
+  POST            dokter/rekam-medis ................. dokter.rekam-medis.store ΓÇ║ Dokter\RekamMedisController@store
+  GET|HEAD        dokter/rekam-medis/create ........ dokter.rekam-medis.create ΓÇ║ Dokter\RekamMedisController@create
+  GET|HEAD        dokter/rekam-medis/pasien/{pasien} dokter.rekam-medis.pasien ΓÇ║ Dokter\RekamMedisController@showBΓÇª
+  GET|HEAD        dokter/rekam-medis/{rekam_medi} ...... dokter.rekam-medis.show ΓÇ║ Dokter\RekamMedisController@show
+  PUT|PATCH       dokter/rekam-medis/{rekam_medi} .. dokter.rekam-medis.update ΓÇ║ Dokter\RekamMedisController@update
+  DELETE          dokter/rekam-medis/{rekam_medi} dokter.rekam-medis.destroy ΓÇ║ Dokter\RekamMedisController@destroy
+  GET|HEAD        dokter/rekam-medis/{rekam_medi}/edit . dokter.rekam-medis.edit ΓÇ║ Dokter\RekamMedisController@edit
+  POST            email/verification-notification verification.send ΓÇ║ Auth\EmailVerificationNotificationControllerΓÇª
+  GET|HEAD        forgot-password ...................... password.request ΓÇ║ Auth\PasswordResetLinkController@create
+  POST            forgot-password ......................... password.email ΓÇ║ Auth\PasswordResetLinkController@store
+  GET|HEAD        login ........................................ login ΓÇ║ Auth\AuthenticatedSessionController@create
+  POST            login ................................................. Auth\AuthenticatedSessionController@store
+  POST            logout ..................................... logout ΓÇ║ Auth\AuthenticatedSessionController@destroy
+  GET|HEAD        pasien/dashboard ............................ pasien.dashboard ΓÇ║ Pasien\DashboardController@index
+  GET|HEAD        pasien/get-jadwal-dokter/{dokter} pasien.pemesanan.getJadwalDokter ΓÇ║ Pasien\PemesananController@ΓÇª
+  GET|HEAD        pasien/get-slot-waktu/{dokter}/{tanggal} pasien.pemesanan.getSlotWaktu ΓÇ║ Pasien\PemesananControlΓÇª
+  GET|HEAD        pasien/pemesanan ...................... pasien.pemesanan.index ΓÇ║ Pasien\PemesananController@index
+  POST            pasien/pemesanan ...................... pasien.pemesanan.store ΓÇ║ Pasien\PemesananController@store
+  GET|HEAD        pasien/pemesanan/create ............. pasien.pemesanan.create ΓÇ║ Pasien\PemesananController@create
+  GET|HEAD        pasien/pemesanan/{pemesanan} ............ pasien.pemesanan.show ΓÇ║ Pasien\PemesananController@show
+  PUT|PATCH       pasien/pemesanan/{pemesanan} ........ pasien.pemesanan.update ΓÇ║ Pasien\PemesananController@update
+  DELETE          pasien/pemesanan/{pemesanan} ...... pasien.pemesanan.destroy ΓÇ║ Pasien\PemesananController@destroy
+  GET|HEAD        pasien/pemesanan/{pemesanan}/edit ....... pasien.pemesanan.edit ΓÇ║ Pasien\PemesananController@edit
+  GET|HEAD        pasien/rekam-medis/{rekamMedis} pasien.rekamMedis.show ΓÇ║ Pasien\PemesananController@showRekamMedΓÇª
+  PUT             password ....................................... password.update ΓÇ║ Auth\PasswordController@update
+  GET|HEAD        profile ................................................... profile.edit ΓÇ║ ProfileController@edit
+  PATCH           profile ............................................... profile.update ΓÇ║ ProfileController@update
+  DELETE          profile ............................................. profile.destroy ΓÇ║ ProfileController@destroy
+  GET|HEAD        register ........................................ register ΓÇ║ Auth\RegisteredUserController@create
+  POST            register .................................................... Auth\RegisteredUserController@store
+  POST            reset-password ................................ password.store ΓÇ║ Auth\NewPasswordController@store
+  GET|HEAD        reset-password/{token} ....................... password.reset ΓÇ║ Auth\NewPasswordController@create
+  GET|HEAD        storage/{path} .................................................................... storage.local
+  GET|HEAD        up .............................................................................................. 
+  GET|HEAD        verify-email ....................... verification.notice ΓÇ║ Auth\EmailVerificationPromptController
+  GET|HEAD        verify-email/{id}/{hash} ....................... verification.verify ΓÇ║ Auth\VerifyEmailController
+
+                                                                                                Showing [96] routes
+
+```
+
+
+## Controllers Content
+```
+===== app\Http\Controllers\Admin\DashboardController.php =====
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Dokter;
+use App\Models\Pemesanan;
+use App\Models\Pembayaran;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
+class DashboardController extends Controller
+{
+    public function index()
+    {
+        $jumlahPasien = User::where('peran', 'pasien')->count();
+        $jumlahDokter = Dokter::count();
+        $pemesananHariIni = Pemesanan::whereDate('tanggal_pesan', today())->count();
+
+        // Query untuk data chart pendapatan 6 bulan terakhir
+        $pendapatanPerBulan = Pembayaran::select(
+                DB::raw('SUM(total_biaya) as total'),
+                DB::raw("DATE_FORMAT(tanggal_bayar, '%Y-%m') as bulan")
+            )
+            ->where('status', 'Lunas')
+            ->where('tanggal_bayar', '>=', Carbon::now()->subMonths(5)->startOfMonth())
+            ->groupBy('bulan')
+            ->orderBy('bulan', 'asc')
+            ->get();
+        
+        // Format data untuk Chart.js
+        $labels = $pendapatanPerBulan->pluck('bulan')->map(function($bulan) {
+            return Carbon::createFromFormat('Y-m', $bulan)->translatedFormat('F Y');
+        });
+        $data = $pendapatanPerBulan->pluck('total');
+
+        return view('admin.dashboard', compact('jumlahPasien', 'jumlahDokter', 'pemesananHariIni', 'labels', 'data'));
+    }
+}
+
+===== app\Http\Controllers\Admin\DokterController.php =====
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Dokter;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Storage;
+
+class DokterController extends Controller
+{
+    public function index()
+    {
+        $dokters = Dokter::with('user')->latest()->get();
+        return view('admin.dokter.index', compact('dokters'));
+    }
+
+    public function create()
+    {
+        return view('admin.dokter.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'nomor_telepon' => ['required', 'string', 'max:20'],
+            'spesialisasi' => ['required', 'string', 'max:255'],
+            'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'nomor_telepon' => $request->nomor_telepon,
+            'peran' => 'dokter',
+        ]);
+
+        $pathFoto = $request->hasFile('foto') ? $request->file('foto')->store('foto-dokter', 'public') : null;
+
+        Dokter::create([
+            'user_id' => $user->id,
+            'spesialisasi' => $request->spesialisasi,
+            'foto' => $pathFoto,
+        ]);
+
+        return redirect()->route('admin.dokter.index')->with('success', 'Data dokter berhasil ditambahkan.');
+    }
+
+    public function show(Dokter $dokter)
+    {
+        return view('admin.dokter.show', compact('dokter'));
+    }
+
+    public function edit(Dokter $dokter)
+    {
+        return view('admin.dokter.edit', compact('dokter'));
+    }
+
+    public function update(Request $request, Dokter $dokter)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class.',email,'.$dokter->user_id],
+            'nomor_telepon' => ['required', 'string', 'max:20'],
+            'spesialisasi' => ['required', 'string', 'max:255'],
+            'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+        ]);
+
+        $dokter->user->update($request->only('name', 'email', 'nomor_telepon'));
+
+        $pathFoto = $dokter->foto;
+        if ($request->hasFile('foto')) {
+            if ($pathFoto) Storage::disk('public')->delete($pathFoto);
+            $pathFoto = $request->file('foto')->store('foto-dokter', 'public');
+        }
+
+        $dokter->update([
+            'spesialisasi' => $request->spesialisasi,
+            'foto' => $pathFoto,
+        ]);
+
+        return redirect()->route('admin.dokter.index')->with('success', 'Data dokter berhasil diperbarui.');
+    }
+
+    public function destroy(Dokter $dokter)
+    {
+        if ($dokter->foto) Storage::disk('public')->delete($dokter->foto);
+        $dokter->user->delete(); // Ini akan otomatis menghapus profil dokter karena relasi cascade
+        return redirect()->route('admin.dokter.index')->with('success', 'Data dokter berhasil dihapus.');
+    }
+}
+
+===== app\Http\Controllers\Admin\JadwalController.php =====
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Jadwal;
+use App\Models\Dokter;
+use Carbon\Carbon;
+
+class JadwalController extends Controller
+{
+    public function index()
+    {
+        $dokters = Dokter::with('user', 'jadwal')->get()->map(function ($dokter) {
+            $jadwalRingkas = $this->ringkasJadwal($dokter->jadwal);
+            $dokter->hari_praktek = $jadwalRingkas['hari'];
+            $dokter->jam_praktek = $jadwalRingkas['jam'];
+            return $dokter;
+        });
+
+        return view('admin.jadwal.index', compact('dokters'));
+    }
+
+    public function show(Dokter $dokter)
+    {
+        // Di Laravel, jika parameter route adalah {jadwal}, kita harus menerima Dokter
+        // karena resource 'jadwal' terikat pada model Jadwal.
+        // Kita ubah cara memanggilnya di view nanti.
+        // Untuk sekarang, kita terima ID dan cari dokternya.
+        // Solusi lebih baik: ubah parameter route. Mari kita lakukan itu.
+        // Route akan diubah menjadi jadwal/{dokter}
+
+        $dokter->load('user', 'jadwal');
+        return view('admin.jadwal.show', compact('dokter'));
+    }
+
+    /**
+     * Menampilkan form untuk membuat jadwal baru.
+     */
+    public function create(Request $request)
+    {
+        $dokters = Dokter::with('user')->get();
+        $selectedDokterId = $request->query('dokter_id'); // Ambil ID dokter dari URL
+        return view('admin.jadwal.create', compact('dokters', 'selectedDokterId'));
+    }
+
+    /**
+     * Menyimpan jadwal baru.
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'id_dokter' => ['required', 'exists:dokter,id'],
+            'hari' => ['required', 'string'],
+            'jam_mulai' => ['required', 'date_format:H:i'],
+            'jam_selesai' => ['required', 'date_format:H:i', 'after:jam_mulai'],
+        ]);
+
+        Jadwal::create($request->all());
+
+        // Redirect kembali ke halaman detail dokter tersebut
+        return redirect()->route('admin.jadwal.show', $request->id_dokter)->with('success', 'Jadwal baru berhasil ditambahkan.');
+    }
+
+    /**
+     * Menampilkan form untuk mengedit jadwal.
+     */
+    public function edit(Jadwal $jadwal)
+    {
+        return view('admin.jadwal.edit', compact('jadwal'));
+    }
+
+    /**
+     * Memperbarui jadwal.
+     */
+    public function update(Request $request, Jadwal $jadwal)
+    {
+        $request->validate([
+            'hari' => ['required', 'string'],
+            'jam_mulai' => ['required', 'date_format:H:i'],
+            'jam_selesai' => ['required', 'date_format:H:i', 'after:jam_mulai'],
+        ]);
+
+        $jadwal->update($request->all());
+
+        // Redirect kembali ke halaman detail dokter tersebut
+        return redirect()->route('admin.jadwal.show', $jadwal->id_dokter)->with('success', 'Jadwal berhasil diperbarui.');
+    }
+
+    /**
+     * Menghapus jadwal.
+     */
+    public function destroy(Jadwal $jadwal)
+    {
+        $idDokter = $jadwal->id_dokter;
+        $jadwal->delete();
+        // Redirect kembali ke halaman detail dokter tersebut
+        return redirect()->route('admin.jadwal.show', $idDokter)->with('success', 'Jadwal berhasil dihapus.');
+    }
+
+    /**
+     * Helper function untuk meringkas jadwal.
+     */
+    private function ringkasJadwal($jadwals)
+    {
+        if ($jadwals->isEmpty()) {
+            return ['hari' => 'Belum diatur', 'jam' => '-'];
+        }
+
+        // Ringkas Hari
+        $hariPraktek = $jadwals->pluck('hari')->implode(', ');
+
+        // Ringkas Jam (ambil yang paling umum)
+        $jamData = $jadwals->groupBy(function ($item) {
+            return Carbon::parse($item->jam_mulai)->format('H:i') . ' - ' . Carbon::parse($item->jam_selesai)->format('H:i');
+        })->map->count()->sortDesc();
+
+        
+
+        $jamPraktek = $jamData->keys()->first();
+
+        return ['hari' => $hariPraktek, 'jam' => $jamPraktek];
+    }
+}
+
+===== app\Http\Controllers\Admin\LaporanController.php =====
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\Models\Pembayaran;
+use App\Models\Pemesanan;
+
+class LaporanController extends Controller
+{
+    public function index(Request $request)
+    {
+        // Tentukan rentang tanggal default (bulan ini)
+        $tanggalMulai = $request->input('tanggal_mulai', Carbon::now()->startOfMonth()->toDateString());
+        $tanggalSelesai = $request->input('tanggal_selesai', Carbon::now()->endOfMonth()->toDateString());
+
+        // 1. Query untuk Laporan Pendapatan
+        $laporanPembayaran = Pembayaran::where('status', 'Lunas')
+            ->whereBetween('tanggal_bayar', [$tanggalMulai, $tanggalSelesai . ' 23:59:59'])
+            ->with('pemesanan.pasien', 'pemesanan.dokter.user')
+            ->latest('tanggal_bayar')
+            ->get();
+
+        // 2. Query untuk Laporan Kunjungan
+        $laporanKunjungan = Pemesanan::whereIn('status', ['Selesai', 'Menunggu Pembayaran']) // Asumsikan yang belum bayar tetap dihitung kunjungan
+            ->whereBetween('tanggal_pesan', [$tanggalMulai, $tanggalSelesai])
+            ->get();
+
+        // 3. Hitung Total
+        $totalPendapatan = $laporanPembayaran->sum('total_biaya');
+        $totalTransaksi = $laporanPembayaran->count();
+        $totalKunjungan = $laporanKunjungan->count();
+
+        return view('admin.laporan.index', compact(
+            'laporanPembayaran',
+            'totalPendapatan',
+            'totalTransaksi',
+            'totalKunjungan',
+            'tanggalMulai',
+            'tanggalSelesai'
+        ));
+    }
+}
+
+===== app\Http\Controllers\Admin\ObatController.php =====
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Obat;
+
+class ObatController extends Controller
+{
+    public function index()
+    {
+        $obats = Obat::latest()->paginate(10);
+        return view('admin.obat.index', compact('obats'));
+    }
+
+    public function create()
+    {
+        return view('admin.obat.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama_obat' => 'required|string|max:255|unique:obat,nama_obat',
+            'satuan' => 'required|string|max:50',
+            'stok' => 'required|integer|min:0',
+        ]);
+
+        Obat::create($request->all());
+
+        return redirect()->route('admin.obat.index')->with('success', 'Data obat berhasil ditambahkan.');
+    }
+
+    public function edit(Obat $obat)
+    {
+        return view('admin.obat.edit', compact('obat'));
+    }
+
+    public function update(Request $request, Obat $obat)
+    {
+        $request->validate([
+            'nama_obat' => 'required|string|max:255|unique:obat,nama_obat,' . $obat->id,
+            'satuan' => 'required|string|max:50',
+            'stok' => 'required|integer|min:0',
+        ]);
+
+        $obat->update($request->all());
+
+        return redirect()->route('admin.obat.index')->with('success', 'Data obat berhasil diperbarui.');
+    }
+
+    public function destroy(Obat $obat)
+    {
+        $obat->delete();
+        return redirect()->route('admin.obat.index')->with('success', 'Data obat berhasil dihapus.');
+    }
+}
+
+===== app\Http\Controllers\Admin\PasienController.php =====
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+
+class PasienController extends Controller
+{
+    /**
+     * Menampilkan daftar semua pasien.
+     */
+    public function index(Request $request)
+    {
+        $query = User::where('peran', 'pasien');
+
+        // Fitur Pencarian yang disederhanakan
+        if ($request->has('search') && $request->search != '') {
+            $query->where(function($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%')
+                  ->orWhere('email', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        $pasiens = $query->latest()->paginate(15);
+
+        return view('admin.pasien.index', compact('pasiens'));
+    }
+
+    /**
+     * Menampilkan form untuk membuat pasien baru secara offline.
+     */
+    public function create()
+    {
+        return view('admin.pasien.create');
+    }
+
+    /**
+     * Menyimpan data pasien baru (hanya akun).
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', Rules\Password::defaults()],
+            'nomor_telepon' => ['nullable', 'string', 'max:20'],
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'nomor_telepon' => $request->nomor_telepon,
+            'peran' => 'pasien',
+        ]);
+
+        return redirect()->route('admin.pasien.index')->with('success', 'Akun pasien baru berhasil didaftarkan.');
+    }
+
+    /**
+     * Menampilkan form untuk mengedit data dasar pasien.
+     */
+     /**
+     * Menampilkan form untuk mengedit data dasar pasien.
+     */
+    public function edit(User $pasien) // <-- Ubah $user menjadi $pasien
+    {
+        if ($pasien->peran !== 'pasien') {
+            abort(404);
+        }
+        return view('admin.pasien.edit', ['user' => $pasien]); // Kirim dengan nama 'user' agar view tidak error
+    }
+
+    /**
+     * Memperbarui data dasar pasien.
+     */
+    public function update(Request $request, User $pasien) // <-- Ubah $user menjadi $pasien
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'nomor_telepon' => 'nullable|string|max:20',
+        ]);
+
+        $pasien->update($request->only('name', 'nomor_telepon'));
+
+        return redirect()->route('admin.pasien.index')->with('success', 'Data pasien berhasil diperbarui.');
+    }
+}
+
+===== app\Http\Controllers\Admin\PembayaranController.php =====
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Pemesanan;
+use Carbon\Carbon;
+
+class PembayaranController extends Controller
+{
+    /**
+     * Menampilkan daftar pemesanan yang menunggu pembayaran atau sudah lunas.
+     */
+    public function index()
+    {
+        $pemesanans = Pemesanan::whereIn('status', ['Menunggu Pembayaran', 'Selesai'])
+                                ->with(['pasien', 'pembayaran'])
+                                ->latest()
+                                ->get();
+        return view('admin.pembayaran.index', compact('pemesanans'));
+    }
+
+    public function cetak(Pemesanan $pemesanan)
+    {
+        // Pastikan semua data yang dibutuhkan sudah ter-load
+        $pemesanan->load(['pasien', 'dokter.user', 'rekamMedis.tindakan', 'pembayaran']);
+
+        // Pastikan pemesanan ini memang memiliki tagihan
+        if (!$pemesanan->pembayaran) {
+            return redirect()->route('admin.pembayaran.index')->with('error', 'Struk tidak dapat dicetak karena tidak ada tagihan.');
+        }
+
+        return view('admin.pembayaran.cetak', compact('pemesanan'));
+    }
+
+    /**
+     * Menampilkan halaman detail untuk memproses pembayaran.
+     */
+    public function show(Pemesanan $pemesanan)
+    {
+        // Memuat relasi yang dibutuhkan untuk menampilkan detail tagihan
+        $pemesanan->load(['pasien', 'dokter.user', 'rekamMedis.tindakan', 'pembayaran']);
+
+        // Pastikan pemesanan ini memang memiliki tagihan
+        if (!$pemesanan->pembayaran) {
+            return redirect()->route('admin.pembayaran.index')->with('error', 'Pemesanan ini tidak memiliki tagihan.');
+        }
+
+        return view('admin.pembayaran.show', compact('pemesanan'));
+    }
+
+    /**
+     * Menyimpan data pembayaran dan menyelesaikan transaksi.
+     */
+    public function store(Request $request, Pemesanan $pemesanan)
+    {
+        $request->validate([
+            'metode_pembayaran' => 'required|string|in:Tunai,Transfer,Kartu Debit/Kredit',
+        ]);
+
+        $pembayaran = $pemesanan->pembayaran;
+
+        if ($pembayaran && $pembayaran->status == 'Belum Lunas') {
+            // Update status pembayaran
+            $pembayaran->update([
+                'status' => 'Lunas',
+                'metode_pembayaran' => $request->metode_pembayaran,
+                'tanggal_bayar' => Carbon::now(),
+            ]);
+
+            // Update status pemesanan menjadi Selesai
+            $pemesanan->update([
+                'status' => 'Selesai',
+            ]);
+
+            return redirect()->route('admin.pembayaran.index')->with('success', 'Pembayaran berhasil dikonfirmasi.');
+        }
+
+        return redirect()->route('admin.pembayaran.index')->with('error', 'Pembayaran ini sudah lunas atau tidak valid.');
+    }
+}
+
+===== app\Http\Controllers\Admin\PemesananController.php =====
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Pemesanan;
+use App\Models\User;
+use App\Models\Dokter;
+
+class PemesananController extends Controller
+{
+     /**
+     * Menampilkan semua data pemesanan.
+     */
+    public function index()
+    {
+        $pemesanans = Pemesanan::with(['pasien', 'dokter.user'])->latest()->get();
+        return view('admin.pemesanan.index', compact('pemesanans'));
+    }
+
+    /**
+     * Menampilkan form untuk membuat pemesanan manual (walk-in).
+     */
+    public function create()
+    {
+        $pasiens = User::where('peran', 'pasien')->get();
+        $dokters = Dokter::with('user')->get();
+        // Logika untuk mengambil jadwal akan lebih kompleks, bisa ditambahkan dengan AJAX nanti
+        return view('admin.pemesanan.create', compact('pasiens', 'dokters'));
+    }
+
+    /**
+     * Menyimpan pemesanan manual dari admin.
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'id_pasien' => ['required', 'exists:users,id'],
+            'id_dokter' => ['required', 'exists:dokter,id'],
+            'id_jadwal' => ['required', 'exists:jadwal,id'],
+            'tanggal_pesan' => ['required', 'date'],
+            'waktu_pesan' => ['required', 'date_format:H:i'],
+            'status' => ['required', 'in:Dikonfirmasi,Selesai'], // Admin bisa langsung konfirmasi
+        ]);
+
+        Pemesanan::create($request->all());
+
+        return redirect()->route('admin.pemesanan.index')->with('success', 'Pemesanan manual berhasil ditambahkan.');
+    }
+
+    /**
+     * Menampilkan detail spesifik pemesanan.
+     */
+    public function show(Pemesanan $pemesanan)
+    {
+        $pemesanan->load(['pasien', 'dokter.user', 'jadwal']);
+        return view('admin.pemesanan.show', compact('pemesanan'));
+    }
+
+    /**
+     * Menampilkan form untuk mengedit status pemesanan.
+     */
+    public function edit(Pemesanan $pemesanan)
+    {
+        return view('admin.pemesanan.edit', compact('pemesanan'));
+    }
+
+    /**
+     * Memperbarui status pemesanan.
+     */
+    public function update(Request $request, Pemesanan $pemesanan)
+    {
+        $request->validate([
+            'status' => ['required', 'in:Dipesan,Dikonfirmasi,Dibatalkan,Selesai'],
+        ]);
+
+        $pemesanan->update(['status' => $request->status]);
+
+        return redirect()->route('admin.pemesanan.index')->with('success', 'Status pemesanan berhasil diperbarui.');
+    }
+
+    /**
+     * Menghapus data pemesanan.
+     */
+    public function destroy(Pemesanan $pemesanan)
+    {
+        // Sebaiknya pemesanan tidak dihapus permanen jika sudah ada rekam medis.
+        // Opsi yang lebih aman adalah membatalkannya.
+        if ($pemesanan->rekamMedis) {
+            return back()->with('error', 'Pemesanan tidak dapat dihapus karena sudah memiliki rekam medis.');
+        }
+        $pemesanan->delete();
+        return redirect()->route('admin.pemesanan.index')->with('success', 'Pemesanan berhasil dihapus.');
+    }
+}
+
+===== app\Http\Controllers\Admin\TindakanController.php =====
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Tindakan;
+use Illuminate\Http\Request;
+
+class TindakanController extends Controller
+{
+    public function index()
+    {
+        $tindakans = Tindakan::latest()->get();
+        return view('admin.tindakan.index', compact('tindakans'));
+    }
+
+    public function create()
+    {
+        return view('admin.tindakan.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama_tindakan' => 'required|string|max:255',
+            'harga' => 'required|integer|min:0',
+            'deskripsi' => 'nullable|string',
+        ]);
+
+        Tindakan::create($request->all());
+
+        return redirect()->route('admin.tindakan.index')->with('success', 'Tindakan baru berhasil ditambahkan.');
+    }
+
+    public function edit(Tindakan $tindakan)
+    {
+        return view('admin.tindakan.edit', compact('tindakan'));
+    }
+
+    public function update(Request $request, Tindakan $tindakan)
+    {
+        $request->validate([
+            'nama_tindakan' => 'required|string|max:255',
+            'harga' => 'required|integer|min:0',
+            'deskripsi' => 'nullable|string',
+        ]);
+
+        $tindakan->update($request->all());
+
+        return redirect()->route('admin.tindakan.index')->with('success', 'Data tindakan berhasil diperbarui.');
+    }
+
+    public function destroy(Tindakan $tindakan)
+    {
+        $tindakan->delete();
+        return redirect()->route('admin.tindakan.index')->with('success', 'Tindakan berhasil dihapus.');
+    }
+}
+
+===== app\Http\Controllers\Auth\AuthenticatedSessionController.php =====
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
+
+class AuthenticatedSessionController extends Controller
+{
+    /**
+     * Display the login view.
+     */
+    public function create(): View
+    {
+        return view('auth.login');
+    }
+
+    /**
+     * Handle an incoming authentication request.
+     */
+    public function store(LoginRequest $request): RedirectResponse
+    {
+        $request->authenticate();
+
+        $request->session()->regenerate();
+
+        return redirect()->intended(route('dashboard', absolute: false));
+    }
+
+    /**
+     * Destroy an authenticated session.
+     */
+    public function destroy(Request $request): RedirectResponse
+    {
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+    }
+}
+
+===== app\Http\Controllers\Auth\ConfirmablePasswordController.php =====
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
+
+class ConfirmablePasswordController extends Controller
+{
+    /**
+     * Show the confirm password view.
+     */
+    public function show(): View
+    {
+        return view('auth.confirm-password');
+    }
+
+    /**
+     * Confirm the user's password.
+     */
+    public function store(Request $request): RedirectResponse
+    {
+        if (! Auth::guard('web')->validate([
+            'email' => $request->user()->email,
+            'password' => $request->password,
+        ])) {
+            throw ValidationException::withMessages([
+                'password' => __('auth.password'),
+            ]);
+        }
+
+        $request->session()->put('auth.password_confirmed_at', time());
+
+        return redirect()->intended(route('dashboard', absolute: false));
+    }
+}
+
+===== app\Http\Controllers\Auth\EmailVerificationNotificationController.php =====
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+
+class EmailVerificationNotificationController extends Controller
+{
+    /**
+     * Send a new email verification notification.
+     */
+    public function store(Request $request): RedirectResponse
+    {
+        if ($request->user()->hasVerifiedEmail()) {
+            return redirect()->intended(route('dashboard', absolute: false));
+        }
+
+        $request->user()->sendEmailVerificationNotification();
+
+        return back()->with('status', 'verification-link-sent');
+    }
+}
+
+===== app\Http\Controllers\Auth\EmailVerificationPromptController.php =====
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+
+class EmailVerificationPromptController extends Controller
+{
+    /**
+     * Display the email verification prompt.
+     */
+    public function __invoke(Request $request): RedirectResponse|View
+    {
+        return $request->user()->hasVerifiedEmail()
+                    ? redirect()->intended(route('dashboard', absolute: false))
+                    : view('auth.verify-email');
+    }
+}
+
+===== app\Http\Controllers\Auth\NewPasswordController.php =====
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rules;
+use Illuminate\View\View;
+
+class NewPasswordController extends Controller
+{
+    /**
+     * Display the password reset view.
+     */
+    public function create(Request $request): View
+    {
+        return view('auth.reset-password', ['request' => $request]);
+    }
+
+    /**
+     * Handle an incoming new password request.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function store(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'token' => ['required'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        // Here we will attempt to reset the user's password. If it is successful we
+        // will update the password on an actual user model and persist it to the
+        // database. Otherwise we will parse the error and return the response.
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user) use ($request) {
+                $user->forceFill([
+                    'password' => Hash::make($request->password),
+                    'remember_token' => Str::random(60),
+                ])->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        // If the password was successfully reset, we will redirect the user back to
+        // the application's home authenticated view. If there is an error we can
+        // redirect them back to where they came from with their error message.
+        return $status == Password::PASSWORD_RESET
+                    ? redirect()->route('login')->with('status', __($status))
+                    : back()->withInput($request->only('email'))
+                        ->withErrors(['email' => __($status)]);
+    }
+}
+
+===== app\Http\Controllers\Auth\PasswordController.php =====
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
+
+class PasswordController extends Controller
+{
+    /**
+     * Update the user's password.
+     */
+    public function update(Request $request): RedirectResponse
+    {
+        $validated = $request->validateWithBag('updatePassword', [
+            'current_password' => ['required', 'current_password'],
+            'password' => ['required', Password::defaults(), 'confirmed'],
+        ]);
+
+        $request->user()->update([
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        return back()->with('status', 'password-updated');
+    }
+}
+
+===== app\Http\Controllers\Auth\PasswordResetLinkController.php =====
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
+use Illuminate\View\View;
+
+class PasswordResetLinkController extends Controller
+{
+    /**
+     * Display the password reset link request view.
+     */
+    public function create(): View
+    {
+        return view('auth.forgot-password');
+    }
+
+    /**
+     * Handle an incoming password reset link request.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function store(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'email' => ['required', 'email'],
+        ]);
+
+        // We will send the password reset link to this user. Once we have attempted
+        // to send the link, we will examine the response then see the message we
+        // need to show to the user. Finally, we'll send out a proper response.
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        return $status == Password::RESET_LINK_SENT
+                    ? back()->with('status', __($status))
+                    : back()->withInput($request->only('email'))
+                        ->withErrors(['email' => __($status)]);
+    }
+}
+
+===== app\Http\Controllers\Auth\RegisteredUserController.php =====
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+use Illuminate\View\View;
+
+class RegisteredUserController extends Controller
+{
+    /**
+     * Display the registration view.
+     */
+    public function create(): View
+    {
+        return view('auth.register');
+    }
+
+    /**
+     * Handle an incoming registration request.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function store(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        event(new Registered($user));
+
+        Auth::login($user);
+
+        return redirect(route('dashboard', absolute: false));
+    }
+}
+
+===== app\Http\Controllers\Auth\VerifyEmailController.php =====
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\RedirectResponse;
+
+class VerifyEmailController extends Controller
+{
+    /**
+     * Mark the authenticated user's email address as verified.
+     */
+    public function __invoke(EmailVerificationRequest $request): RedirectResponse
+    {
+        if ($request->user()->hasVerifiedEmail()) {
+            return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
+        }
+
+        if ($request->user()->markEmailAsVerified()) {
+            event(new Verified($request->user()));
+        }
+
+        return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
+    }
+}
+
+===== app\Http\Controllers\Dokter\DashboardController.php =====
+<?php
+
+namespace App\Http\Controllers\Dokter;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Pemesanan;
+
+class DashboardController extends Controller
+{
+    public function index()
+    {
+        $idDokter = Auth::user()->dokter->id;
+        $pemesananHariIni = Pemesanan::where('id_dokter', $idDokter)
+            ->whereDate('tanggal_pesan', today())
+            ->whereIn('status', ['Dipesan', 'Dikonfirmasi'])
+            // --- UBAH BARIS DI BAWAH INI ---
+            ->with('pasien', 'tindakanAwal') // Tambahkan 'tindakanAwal'
+            // -----------------------------
+            ->orderBy('waktu_pesan', 'asc')
+            ->get();
+
+        return view('dokter.dashboard', compact('pemesananHariIni'));
+    }
+}
+
+===== app\Http\Controllers\Dokter\JadwalController.php =====
+<?php
+
+namespace App\Http\Controllers\Dokter;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Jadwal;
+
+class JadwalController extends Controller
+{
+    /**
+     * Menampilkan daftar jadwal milik dokter yang sedang login.
+     */
+    public function index()
+    {
+        $idDokter = Auth::user()->dokter->id;
+        $jadwals = Jadwal::where('id_dokter', $idDokter)->orderBy('hari')->get();
+        
+        return view('dokter.jadwal.index', compact('jadwals'));
+    }
+
+    /**
+     * Menampilkan detail jadwal (jika diperlukan).
+     */
+    public function show(Jadwal $jadwal)
+    {
+        // Memastikan dokter hanya bisa melihat jadwal miliknya sendiri
+        if ($jadwal->id_dokter !== Auth::user()->dokter->id) {
+            abort(403, 'AKSES DITOLAK');
+        }
+
+        return view('dokter.jadwal.show', compact('jadwal'));
+    }
+}
+
+===== app\Http\Controllers\Dokter\RekamMedisController.php =====
+<?php
+
+namespace App\Http\Controllers\Dokter;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Pemesanan;
+use App\Models\RekamMedis;
+use Illuminate\Support\Facades\DB;
+use App\Models\Tindakan;
+use App\Models\User;
+
+class RekamMedisController extends Controller
+{
+
+    public function index(Request $request)
+    {
+        $dokterId = Auth::user()->dokter->id;
+
+        // tambahan: query ringkasan per pasien
+        $query = RekamMedis::query()
+            ->selectRaw('u.id as pasien_id, u.name as nama_pasien,
+            COUNT(rm.id) as jumlah_kunjungan,
+            MAX(rm.created_at) as terakhir_kunjungan,
+            MAX(rm.diagnosis) as diagnosis_terakhir')
+            ->from('rekam_medis as rm')
+            ->join('pemesanan as p', 'p.id', '=', 'rm.id_pemesanan')
+            ->join('users as u', 'u.id', '=', 'p.id_pasien')
+            ->where('p.id_dokter', $dokterId)
+            ->groupBy('u.id', 'u.name')
+            ->orderByDesc('terakhir_kunjungan');
+
+        // tambahan: pencarian pasien
+        if ($request->has('search') && $request->search != '') {
+            $query->where('u.name', 'like', '%' . $request->search . '%');
+        }
+
+        $pasienRingkas = $query->paginate(10)->withQueryString();
+
+        return view('dokter.rekam-medis.index', compact('pasienRingkas')); // tambahan: ganti variabel
+    }
+
+    // tambahan: tampilkan semua rekam medis milik pasien tertentu
+    public function showByPasien(User $pasien)
+    {
+        $dokterId = Auth::user()->dokter->id;
+
+        $rekamMedisList = RekamMedis::with(['pemesanan', 'tindakan', 'resep', 'foto'])
+            ->whereHas(
+                'pemesanan',
+                fn($q) =>
+                $q->where('id_pasien', $pasien->id)
+                    ->where('id_dokter', $dokterId)
+            )
+            ->orderByDesc('created_at')
+            ->paginate(10);
+
+        return view('dokter.rekam-medis.pasien', compact('pasien', 'rekamMedisList'));
+    }
+    public function create(Request $request)
+    {
+        $pemesanan = Pemesanan::with('pasien')->findOrFail($request->query('id_pemesanan'));
+        if ($pemesanan->id_dokter !== Auth::user()->dokter->id) abort(403);
+
+        $tindakans = Tindakan::all(); // <-- Ambil semua data tindakan
+
+        return view('dokter.rekam-medis.create', compact('pemesanan', 'tindakans')); // <-- Kirim ke view
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'id_pemesanan' => ['required', 'exists:pemesanan,id'],
+            'diagnosis' => ['required', 'string'],
+            'perawatan' => ['required', 'string'],
+            'catatan' => ['nullable', 'string'],
+            'tindakans' => ['nullable', 'array'],
+            'tindakans.*' => ['exists:tindakan,id'],
+            'resep.*.nama_obat' => ['nullable', 'string', 'max:255'],
+            'resep.*.dosis' => ['nullable', 'string', 'max:100'],
+            'resep.*.instruksi' => ['nullable', 'string'],
+            'foto.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+        ]);
+
+        $pemesanan = Pemesanan::findOrFail($request->id_pemesanan);
+        if ($pemesanan->id_dokter !== Auth::user()->dokter->id) abort(403);
+
+        DB::transaction(function () use ($request, $pemesanan) {
+            $rekamMedis = RekamMedis::create($request->only('id_pemesanan', 'diagnosis', 'perawatan', 'catatan'));
+
+            $totalBiaya = 0;
+            if ($request->has('tindakans')) {
+                $tindakansTerpilih = Tindakan::find($request->tindakans);
+                foreach ($tindakansTerpilih as $tindakan) {
+                    $rekamMedis->tindakan()->attach($tindakan->id, ['harga_saat_itu' => $tindakan->harga]);
+                    $totalBiaya += $tindakan->harga;
+                }
+            }
+
+            if ($totalBiaya > 0) {
+                $pemesanan->pembayaran()->create([
+                    'total_biaya' => $totalBiaya,
+                    'status' => 'Belum Lunas',
+                ]);
+            }
+
+            // Proses Resep (hanya jika ada dan valid)
+            if ($request->has('resep') && is_array($request->resep)) {
+                foreach ($request->resep as $item) {
+                    if (is_array($item) && !empty($item['nama_obat'])) {
+                        $rekamMedis->resep()->create([
+                            'nama_obat' => $item['nama_obat'],
+                            'dosis' => $item['dosis'] ?? '',
+                            'instruksi' => $item['instruksi'] ?? ''
+                        ]);
+                    }
+                }
+            }
+
+            if ($request->hasFile('foto')) {
+                foreach ($request->file('foto') as $file) {
+                    if ($file instanceof \Illuminate\Http\UploadedFile && $file->isValid()) {
+                        $path = $file->store('foto-rekam-medis', 'public');
+                        $rekamMedis->foto()->create(['path_foto' => $path]);
+                    }
+                }
+            }
+
+            $statusAkhir = ($totalBiaya > 0) ? 'Menunggu Pembayaran' : 'Selesai';
+            $pemesanan->update(['status' => $statusAkhir]);
+        });
+
+        return redirect()->route('dokter.dashboard')->with('success', 'Rekam medis berhasil disimpan.');
+    }
+
+    public function show(RekamMedis $rekamMedi)
+    {
+        $rekamMedis = $rekamMedi;
+        // Pastikan dokter hanya bisa melihat rekam medis dari pasiennya
+        if ($rekamMedis->pemesanan->id_dokter !== Auth::user()->dokter->id) abort(403);
+
+        $rekamMedis->load(['pemesanan.pasien', 'resep', 'foto', 'tindakan']); // Muat juga data tindakan
+        return view('dokter.rekam-medis.show', compact('rekamMedis'));
+    }
+}
+
+===== app\Http\Controllers\Pasien\DashboardController.php =====
+<?php
+
+namespace App\Http\Controllers\Pasien;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Pemesanan;
+
+class DashboardController extends Controller
+{
+    public function index()
+    {
+        $pemesananAktif = Pemesanan::where('id_pasien', Auth::id())
+            ->whereIn('status', ['Dipesan', 'Dikonfirmasi'])
+            ->with('dokter.user')
+            ->get();
+            
+        return view('pasien.dashboard', compact('pemesananAktif'));
+    }
+}
+
+===== app\Http\Controllers\Pasien\PemesananController.php =====
+<?php
+
+namespace App\Http\Controllers\Pasien;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Pemesanan;
+use App\Models\Dokter;
+use App\Models\Jadwal;
+use App\Models\RekamMedis;
+use App\Models\Tindakan;
+use App\Models\BiodataPasien;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
+class PemesananController extends Controller
+{
+    public function index()
+    {
+        $pemesanans = Pemesanan::where('id_pasien', Auth::id())
+            ->with('dokter.user', 'jadwal')
+            ->latest()
+            ->get();
+        return view('pasien.pemesanan.index', compact('pemesanans'));
+    }
+
+    //----------------------------------
+    /**
+     * Mengambil hari-hari praktek seorang dokter.
+     * Akan mengembalikan response JSON.
+     */
+    public function getJadwalDokter(Dokter $dokter)
+    {
+        // Mengambil semua jadwal untuk dokter yang dipilih
+        // dan hanya mengambil kolom 'hari' yang unik.
+        $jadwal = $dokter->jadwal()->select('hari')->distinct()->pluck('hari');
+
+        // Mengubah nama hari dari Bahasa Indonesia ke Bahasa Inggris untuk dicocokkan dengan Carbon
+        $dayMap = [
+            'Senin' => 'Monday',
+            'Selasa' => 'Tuesday',
+            'Rabu' => 'Wednesday',
+            'Kamis' => 'Thursday',
+            'Jumat' => 'Friday',
+            'Sabtu' => 'Saturday',
+            'Minggu' => 'Sunday',
+        ];
+
+        $englishDays = $jadwal->map(function ($hari) use ($dayMap) {
+            return $dayMap[$hari] ?? null;
+        })->filter();
+
+        return response()->json($englishDays);
+    }
+
+    public function showRekamMedis(RekamMedis $rekamMedis)
+    {
+        // --- OTORISASI PENTING ---
+        // Memastikan rekam medis ini benar-benar milik pasien yang sedang login.
+        if ($rekamMedis->pemesanan->id_pasien !== Auth::id()) {
+            abort(403, 'AKSES DITOLAK');
+        }
+
+        // Memuat semua relasi yang dibutuhkan untuk ditampilkan di view
+        $rekamMedis->load(['pemesanan.dokter.user', 'tindakan', 'resep', 'foto', 'pemesanan.pembayaran']);
+
+        return view('pasien.rekam-medis.show', compact('rekamMedis'));
+    }
+
+    /**
+     * Mengambil slot waktu yang tersedia untuk dokter pada tanggal tertentu.
+     * Akan mengembalikan response JSON.
+     */
+    public function getSlotWaktu(Dokter $dokter, $tanggal)
+    {
+        try {
+            $date = Carbon::parse($tanggal);
+
+            // --- PERUBAHAN LOGIKA DI SINI ---
+            // 1. Dapatkan nomor hari (Minggu=0, Senin=1, ..., Sabtu=6)
+            $dayOfWeekNumber = $date->dayOfWeek;
+
+            // 2. Buat pemetaan dari nomor ke nama hari dalam Bahasa Indonesia
+            $dayMap = [
+                1 => 'Senin',
+                2 => 'Selasa',
+                3 => 'Rabu',
+                4 => 'Kamis',
+                5 => 'Jumat',
+                6 => 'Sabtu',
+                0 => 'Minggu',
+            ];
+
+            // 3. Dapatkan nama hari yang benar
+            $dayName = $dayMap[$dayOfWeekNumber] ?? null;
+            // --- AKHIR PERUBAHAN ---
+
+            $jadwal = $dokter->jadwal()->where('hari', $dayName)->first();
+
+            if (!$jadwal) {
+                return response()->json([]);
+            }
+
+            // Generate semua slot waktu yang mungkin
+            $startTime = Carbon::parse($jadwal->jam_mulai);
+            $endTime = Carbon::parse($jadwal->jam_selesai);
+            $slotDuration = $jadwal->durasi_slot_menit;
+            $allSlots = [];
+
+            while ($startTime < $endTime) {
+                $allSlots[] = $startTime->format('H:i');
+                $startTime->addMinutes($slotDuration);
+            }
+
+            // Cek slot yang sudah dipesan pada tanggal tersebut
+            $bookedSlots = Pemesanan::where('id_dokter', $dokter->id)
+                ->where('tanggal_pesan', $date->format('Y-m-d'))
+                ->whereIn('status', ['Dipesan', 'Dikonfirmasi'])
+                ->pluck('waktu_pesan')
+                ->map(function ($time) {
+                    try {
+                        return Carbon::parse($time)->format('H:i');
+                    } catch (\Exception $e) {
+                        return null;
+                    }
+                })
+                ->filter()
+                ->toArray();
+
+            $availableSlots = array_diff($allSlots, $bookedSlots);
+
+            return response()->json(array_values($availableSlots));
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan di server.', 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    //----------------------------------
+
+    public function create()
+    {
+        $dokters = Dokter::with('user')->get();
+        $tindakans = Tindakan::all();
+        return view('pasien.pemesanan.create', compact('dokters', 'tindakans'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            // Validasi untuk data diri (Langkah 1)
+            'nama_pasien_booking' => ['required', 'string', 'max:255'],
+            'nik' => ['nullable', 'string', 'digits:16'],
+            'status_pasien' => ['required', 'in:BPJS,Umum,Inhealth'],
+
+            // Validasi untuk jadwal (Langkah 2)
+            'id_dokter' => ['required', 'exists:dokter,id'],
+            'tanggal_pesan' => ['required', 'date', 'after_or_equal:today'],
+            'waktu_pesan' => ['required', 'date_format:H:i'],
+            'tindakan_awal' => ['nullable', 'array'],
+            'tindakan_awal.*' => ['exists:tindakan,id'],
+            'catatan' => ['nullable', 'string'],
+        ]);
+
+        $user = Auth::user();
+        $tanggal = Carbon::parse($request->tanggal_pesan);
+        $hariPraktek = $tanggal->translatedFormat('l');
+
+        $jadwal = Jadwal::where('id_dokter', $request->id_dokter)
+            ->where('hari', $hariPraktek)
+            ->first();
+
+        if (!$jadwal) {
+            return back()->with('error', 'Dokter tidak memiliki jadwal pada hari yang dipilih.')->withInput();
+        }
+
+        DB::transaction(function () use ($request, $user, $jadwal) {
+            // 1. Update atau buat NIK di biodata
+            if ($request->filled('nik')) {
+                BiodataPasien::updateOrCreate(
+                    ['user_id' => $user->id],
+                    ['nik' => $request->nik]
+                );
+            }
+
+            // 2. Buat data pemesanan
+            $pemesanan = Pemesanan::create([
+                'id_pasien' => $user->id,
+                'nama_pasien_booking' => $request->nama_pasien_booking,
+                'id_dokter' => $request->id_dokter,
+                'id_jadwal' => $jadwal->id,
+                'tanggal_pesan' => $request->tanggal_pesan,
+                'waktu_pesan' => $request->waktu_pesan,
+                'status_pasien' => $request->status_pasien,
+                'catatan' => $request->catatan,
+                'status' => 'Dipesan',
+            ]);
+
+            // 3. Simpan data tindakan awal ke tabel pivot
+            if ($request->has('tindakan_awal')) {
+                $pemesanan->tindakanAwal()->attach($request->tindakan_awal);
+            }
+        });
+
+        return redirect()->route('pasien.pemesanan.index')->with('success', 'Pemesanan berhasil dibuat.');
+    }
+
+
+
+    public function show(Pemesanan $pemesanan)
+    {
+        if ($pemesanan->id_pasien !== Auth::id()) abort(403);
+        return view('pasien.pemesanan.show', compact('pemesanan'));
+    }
+
+    public function destroy(Pemesanan $pemesanan)
+    {
+        if ($pemesanan->id_pasien !== Auth::id()) abort(403);
+
+        if (in_array($pemesanan->status, ['Dipesan', 'Dikonfirmasi'])) {
+            $pemesanan->update(['status' => 'Dibatalkan']);
+            return redirect()->route('pasien.pemesanan.index')->with('success', 'Pemesanan berhasil dibatalkan.');
+        }
+
+        return redirect()->route('pasien.pemesanan.index')->with('error', 'Pemesanan yang sudah selesai tidak dapat dibatalkan.');
+    }
+}
+
+===== app\Http\Controllers\Controller.php =====
+<?php
+
+namespace App\Http\Controllers;
+
+abstract class Controller
+{
+    //
+}
+
+===== app\Http\Controllers\ProfileController.php =====
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
+
+class ProfileController extends Controller
+{
+    /**
+     * Display the user's profile form.
+     */
+    public function edit(Request $request): View
+    {
+        return view('profile.edit', [
+            'user' => $request->user(),
+        ]);
+    }
+
+    /**
+     * Update the user's profile information.
+     */
+    public function update(ProfileUpdateRequest $request): RedirectResponse
+    {
+        $request->user()->fill($request->validated());
+
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
+        }
+
+        $request->user()->save();
+
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    /**
+     * Delete the user's account.
+     */
+    public function destroy(Request $request): RedirectResponse
+    {
+        $request->validateWithBag('userDeletion', [
+            'password' => ['required', 'current_password'],
+        ]);
+
+        $user = $request->user();
+
+        Auth::logout();
+
+        $user->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return Redirect::to('/');
+    }
+}
+
+```
+
+
+## Models Content
+```
+===== app\Models\BiodataPasien.php =====
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class BiodataPasien extends Model
+{
+    use HasFactory;
+
+    protected $table = 'biodata_pasien';
+
+    protected $fillable = [
+        'user_id',
+        'nik',
+    ];
+
+    /**
+     * Setiap biodata dimiliki oleh satu user.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+}
+
+===== app\Models\Dokter.php =====
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class Dokter extends Model
+{
+    use HasFactory;
+    protected $table = 'dokter';
+    protected $fillable = ['user_id', 'spesialisasi', 'foto'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function jadwal()
+    {
+        // Setiap dokter bisa punya banyak jadwal
+        return $this->hasMany(Jadwal::class, 'id_dokter');
+    }
+
+    // Relasi: Setiap dokter bisa memiliki banyak pemesanan dari pasien.
+    public function pemesananDokter()
+    {
+        return $this->hasMany(Pemesanan::class, 'id_dokter');
+    }
+}
+
+===== app\Models\FotoRekamMedis.php =====
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class FotoRekamMedis extends Model
+{
+    use HasFactory;
+    protected $table = 'foto_rekam_medis';
+    protected $fillable = ['id_rekam_medis', 'path_foto'];
+
+    public function rekamMedis()
+    {
+        return $this->belongsTo(RekamMedis::class, 'id_rekam_medis');
+    }
+}
+
+===== app\Models\Jadwal.php =====
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class Jadwal extends Model
+{
+    use HasFactory;
+    protected $table = 'jadwal';
+    protected $fillable = ['id_dokter', 'hari', 'jam_mulai', 'jam_selesai', 'durasi_slot_menit'];
+
+    public function dokter()
+    {
+        return $this->belongsTo(Dokter::class, 'id_dokter');
+    }
+
+    // Relasi: Setiap jadwal bisa memiliki banyak pemesanan.
+    public function pemesanan()
+    {
+        return $this->hasMany(Pemesanan::class, 'id_jadwal');
+    }
+}
+
+===== app\Models\Obat.php =====
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class Obat extends Model
+{
+    use HasFactory;
+    protected $table = 'obat';
+    protected $fillable = ['nama_obat', 'satuan', 'stok'];
+}
+
+===== app\Models\Pembayaran.php =====
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class Pembayaran extends Model
+{
+    use HasFactory;
+    protected $table = 'pembayaran';
+    protected $fillable = ['pemesanan_id', 'total_biaya', 'metode_pembayaran', 'status', 'tanggal_bayar'];
+
+    /**
+     * Relasi one-to-one ke Pemesanan.
+     * Setiap pembayaran dimiliki oleh satu pemesanan.
+     */
+    public function pemesanan()
+    {
+        return $this->belongsTo(Pemesanan::class, 'pemesanan_id');
+    }
+}
+
+===== app\Models\Pemesanan.php =====
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class Pemesanan extends Model
+{
+    use HasFactory;
+    protected $table = 'pemesanan';
+    protected $fillable = ['id_pasien', 'id_dokter', 'id_jadwal', 'tanggal_pesan', 'waktu_pesan', 'catatan', 'status', 'status_pasien', 'nama_pasien_booking'];
+
+    public function pasien()
+    {
+        return $this->belongsTo(User::class, 'id_pasien');
+    }
+
+    public function tindakanAwal()
+    {
+        return $this->belongsToMany(Tindakan::class, 'pemesanan_tindakan', 'pemesanan_id', 'tindakan_id');
+    }
+
+    // Relasi: Setiap pemesanan ditujukan untuk satu dokter.
+    public function dokter()
+    {
+        return $this->belongsTo(Dokter::class, 'id_dokter');
+    }
+
+    // Relasi: Setiap pemesanan terikat pada satu jadwal.
+    public function jadwal()
+    {
+        return $this->belongsTo(Jadwal::class, 'id_jadwal');
+    }
+
+    // Relasi: Setiap pemesanan akan memiliki satu rekam medis.
+    public function rekamMedis()
+    {
+        return $this->hasOne(RekamMedis::class, 'id_pemesanan');
+    }
+
+    public function pembayaran()
+    {
+        return $this->hasOne(Pembayaran::class, 'pemesanan_id');
+    }
+}
+
+===== app\Models\RekamMedis.php =====
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class RekamMedis extends Model
+{
+    use HasFactory;
+    protected $table = 'rekam_medis';
+    protected $fillable = ['id_pemesanan', 'diagnosis', 'perawatan', 'catatan'];
+
+    public function pemesanan()
+    {
+        return $this->belongsTo(Pemesanan::class, 'id_pemesanan');
+    }
+
+    // Relasi: Setiap rekam medis bisa memiliki banyak resep.
+    public function resep()
+    {
+        return $this->hasMany(Resep::class, 'id_rekam_medis');
+    }
+
+    // Relasi: Setiap rekam medis bisa memiliki banyak foto.
+    public function foto()
+    {
+        return $this->hasMany(FotoRekamMedis::class, 'id_rekam_medis');
+    }
+
+    public function tindakan()
+    {
+        return $this->belongsToMany(Tindakan::class, 'rekam_medis_tindakan', 'rekam_medis_id', 'tindakan_id')
+                    ->withPivot('harga_saat_itu') // Ambil juga harga saat tindakan dilakukan
+                    ->withTimestamps();
+    }
+}
+
+===== app\Models\Resep.php =====
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class Resep extends Model
+{
+    use HasFactory;
+    protected $table = 'resep';
+    protected $fillable = ['id_rekam_medis', 'nama_obat', 'dosis', 'instruksi'];
+
+    public function rekamMedis()
+    {
+        return $this->belongsTo(RekamMedis::class, 'id_rekam_medis');
+    }
+}
+
+===== app\Models\Tindakan.php =====
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class Tindakan extends Model
+{
+    use HasFactory;
+    protected $table = 'tindakan';
+    protected $fillable = ['nama_tindakan', 'harga', 'deskripsi'];
+
+    /**
+     * Relasi many-to-many ke RekamMedis.
+     * Satu tindakan bisa ada di banyak rekam medis.
+     */
+    public function rekamMedis()
+    {
+        return $this->belongsToMany(RekamMedis::class, 'rekam_medis_tindakan', 'tindakan_id', 'rekam_medis_id')
+                    ->withPivot('harga_saat_itu') // Ambil juga harga saat tindakan dilakukan
+                    ->withTimestamps();
+    }
+
+    public function pemesananAwal()
+    {
+        return $this->belongsToMany(Pemesanan::class, 'pemesanan_tindakan', 'tindakan_id', 'pemesanan_id');
+    }
+}
+
+```
+
+
+## Views & UI Files Content
+```
+===== resources\views\admin\dokter\create.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Tambah Dokter Baru') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 bg-white border-b border-gray-200">
+                    <x-notification />
+                    <form method="POST" action="{{ route('admin.dokter.store') }}" enctype="multipart/form-data">
+                        @csrf
+
+                        <!-- Nama Lengkap -->
+                        <div>
+                            <x-input-label for="name" :value="__('Nama Lengkap')" />
+                            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mt-4">
+                            <x-input-label for="email" :value="__('Email')" />
+                            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                        </div>
+
+                        <!-- Nomor Telepon -->
+                        <div class="mt-4">
+                            <x-input-label for="nomor_telepon" :value="__('Nomor Telepon')" />
+                            <x-text-input id="nomor_telepon" class="block mt-1 w-full" type="text" name="nomor_telepon" :value="old('nomor_telepon')" required />
+                        </div>
+
+                        <!-- Spesialisasi -->
+                        <div class="mt-4">
+                            <x-input-label for="spesialisasi" :value="__('Spesialisasi')" />
+                            <x-text-input id="spesialisasi" class="block mt-1 w-full" type="text" name="spesialisasi" :value="old('spesialisasi')" required />
+                        </div>
+                        
+                        <!-- Foto -->
+                        <div class="mt-4">
+                            <x-input-label for="foto" :value="__('Foto')" />
+                            <input id="foto" class="block mt-1 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" type="file" name="foto">
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mt-4">
+                            <x-input-label for="password" :value="__('Password')" />
+                            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required />
+                        </div>
+
+                        <!-- Konfirmasi Password -->
+                        <div class="mt-4">
+                            <x-input-label for="password_confirmation" :value="__('Konfirmasi Password')" />
+                            <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required />
+                        </div>
+
+                        <div class="flex items-center justify-end mt-4">
+                            <x-primary-button>
+                                {{ __('Simpan Dokter') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\dokter\edit.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Edit Data Dokter') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 bg-white border-b border-gray-200">
+                    <x-notification />
+                    <form method="POST" action="{{ route('admin.dokter.update', $dokter->id) }}" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+
+                        <!-- Nama Lengkap -->
+                        <div>
+                            <x-input-label for="name" :value="__('Nama Lengkap')" />
+                            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name', $dokter->user->name)" required autofocus />
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mt-4">
+                            <x-input-label for="email" :value="__('Email')" />
+                            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $dokter->user->email)" required />
+                        </div>
+
+                        <!-- Nomor Telepon -->
+                        <div class="mt-4">
+                            <x-input-label for="nomor_telepon" :value="__('Nomor Telepon')" />
+                            <x-text-input id="nomor_telepon" class="block mt-1 w-full" type="text" name="nomor_telepon" :value="old('nomor_telepon', $dokter->user->nomor_telepon)" required />
+                        </div>
+
+                        <!-- Spesialisasi -->
+                        <div class="mt-4">
+                            <x-input-label for="spesialisasi" :value="__('Spesialisasi')" />
+                            <x-text-input id="spesialisasi" class="block mt-1 w-full" type="text" name="spesialisasi" :value="old('spesialisasi', $dokter->spesialisasi)" required />
+                        </div>
+                        
+                        <!-- Foto -->
+                        <div class="mt-4">
+                            <x-input-label for="foto" :value="__('Ganti Foto (Opsional)')" />
+                            @if($dokter->foto)
+                                <img src="{{ asset('storage/' . $dokter->foto) }}" alt="Foto {{ $dokter->user->name }}" class="w-24 h-24 rounded-md object-cover mb-2">
+                            @endif
+                            <input id="foto" class="block mt-1 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" type="file" name="foto">
+                        </div>
+
+                        <div class="flex items-center justify-end mt-4">
+                            <x-primary-button>
+                                {{ __('Perbarui Data') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\dokter\index.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Kelola Dokter') }}
+            </h2>
+            <a href="{{ route('admin.dokter.create') }}" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+                Tambah Dokter
+            </a>
+        </div>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <x-notification />
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-200">
+                                <tr>
+                                    <th class="py-2 px-4 border-b">Nama</th>
+                                    <th class="py-2 px-4 border-b">Email</th>
+                                    <th class="py-2 px-4 border-b">Spesialisasi</th>
+                                    <th class="py-2 px-4 border-b">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($dokters as $dokter)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-2 px-4 border-b">{{ $dokter->user->name }}</td>
+                                        <td class="py-2 px-4 border-b">{{ $dokter->user->email }}</td>
+                                        <td class="py-2 px-4 border-b">{{ $dokter->spesialisasi }}</td>
+                                        <td class="py-2 px-4 border-b flex gap-2">
+                                            <a href="{{ route('admin.dokter.edit', $dokter->id) }}" class="text-yellow-500 hover:text-yellow-700">Edit</a>
+                                            <form action="{{ route('admin.dokter.destroy', $dokter->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus dokter ini?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-500 hover:text-red-700">Hapus</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="py-4 px-4 text-center">Tidak ada data dokter.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\jadwal\create.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Tambah Jadwal Baru') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 md:p-8 bg-white border-b border-gray-200">
+                    <x-notification />
+                    <form method="POST" action="{{ route('admin.jadwal.store') }}">
+                        @csrf
+
+                        <!-- Pilih Dokter -->
+                        <div>
+                            <x-input-label for="id_dokter" :value="__('Dokter')" />
+                            <select id="id_dokter" name="id_dokter" class="block mt-1 w-full border-gray-300 focus:border-purple-500 focus:ring-purple-500 rounded-md shadow-sm" required>
+                                <option value="">-- Pilih Dokter --</option>
+                                @foreach($dokters as $dokter)
+                                    <option value="{{ $dokter->id }}" @selected(old('id_dokter', $selectedDokterId) == $dokter->id)>
+                                        {{ $dokter->user->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Hari -->
+                        <div class="mt-4">
+                            <x-input-label for="hari" :value="__('Hari Praktek')" />
+                            <select id="hari" name="hari" class="block mt-1 w-full border-gray-300 focus:border-purple-500 focus:ring-purple-500 rounded-md shadow-sm" required>
+                                <option value="">-- Pilih Hari --</option>
+                                <option value="Senin" @selected(old('hari') == 'Senin')>Senin</option>
+                                <option value="Selasa" @selected(old('hari') == 'Selasa')>Selasa</option>
+                                <option value="Rabu" @selected(old('hari') == 'Rabu')>Rabu</option>
+                                <option value="Kamis" @selected(old('hari') == 'Kamis')>Kamis</option>
+                                <option value="Jumat" @selected(old('hari') == 'Jumat')>Jumat</option>
+                                <option value="Sabtu" @selected(old('hari') == 'Sabtu')>Sabtu</option>
+                                <option value="Minggu" @selected(old('hari') == 'Minggu')>Minggu</option>
+                            </select>
+                        </div>
+
+                        <!-- Jam Mulai -->
+                        <div class="mt-4">
+                            <x-input-label for="jam_mulai" :value="__('Jam Mulai')" />
+                            <x-text-input id="jam_mulai" class="block mt-1 w-full" type="time" name="jam_mulai" :value="old('jam_mulai')" required />
+                        </div>
+
+                        <!-- Jam Selesai -->
+                        <div class="mt-4">
+                            <x-input-label for="jam_selesai" :value="__('Jam Selesai')" />
+                            <x-text-input id="jam_selesai" class="block mt-1 w-full" type="time" name="jam_selesai" :value="old('jam_selesai')" required />
+                        </div>
+
+                        <!-- Durasi Slot -->
+                        <div class="mt-4">
+                            <x-input-label for="durasi_slot_menit" :value="__('Durasi Slot (Menit)')" />
+                            <x-text-input id="durasi_slot_menit" class="block mt-1 w-full" type="number" name="durasi_slot_menit" value="{{ old('durasi_slot_menit', 30) }}" required />
+                        </div>
+
+                        <div class="flex items-center justify-end mt-6 border-t pt-6">
+                            <a href="{{ url()->previous() }}" class="text-gray-600 hover:text-gray-900 mr-4">
+                                Batal
+                            </a>
+                            <x-primary-button class="bg-purple-600 hover:bg-purple-700">
+                                {{ __('Simpan Jadwal') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\jadwal\edit.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Edit Jadwal untuk ') . $jadwal->dokter->user->name }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 md:p-8 bg-white border-b border-gray-200">
+                    <x-notification />
+                    <form method="POST" action="{{ route('admin.jadwal.update', $jadwal->id) }}">
+                        @csrf
+                        @method('PUT')
+
+                        <!-- Info Dokter (Read-only) -->
+                        <div>
+                            <x-input-label for="dokter_name" :value="__('Dokter')" />
+                            <x-text-input id="dokter_name" class="block mt-1 w-full bg-gray-100" type="text" :value="$jadwal->dokter->user->name" disabled />
+                        </div>
+
+                        <!-- Hari -->
+                        <div class="mt-4">
+                            <x-input-label for="hari" :value="__('Hari Praktek')" />
+                            <select id="hari" name="hari" class="block mt-1 w-full border-gray-300 focus:border-purple-500 focus:ring-purple-500 rounded-md shadow-sm" required>
+                                <option value="Senin" @selected(old('hari', $jadwal->hari) == 'Senin')>Senin</option>
+                                <option value="Selasa" @selected(old('hari', $jadwal->hari) == 'Selasa')>Selasa</option>
+                                <option value="Rabu" @selected(old('hari', $jadwal->hari) == 'Rabu')>Rabu</option>
+                                <option value="Kamis" @selected(old('hari', $jadwal->hari) == 'Kamis')>Kamis</option>
+                                <option value="Jumat" @selected(old('hari', $jadwal->hari) == 'Jumat')>Jumat</option>
+                                <option value="Sabtu" @selected(old('hari', $jadwal->hari) == 'Sabtu')>Sabtu</option>
+                                <option value="Minggu" @selected(old('hari', $jadwal->hari) == 'Minggu')>Minggu</option>
+                            </select>
+                        </div>
+
+                        {{-- BAGIAN YANG DIPERBAIKI --}}
+                        <!-- Jam Mulai -->
+                        <div class="mt-4">
+                            <x-input-label for="jam_mulai" :value="__('Jam Mulai')" />
+                            <x-text-input id="jam_mulai" class="block mt-1 w-full" type="time" name="jam_mulai" :value="old('jam_mulai', \Carbon\Carbon::parse($jadwal->jam_mulai)->format('H:i'))" required />
+                        </div>
+
+                        <!-- Jam Selesai -->
+                        <div class="mt-4">
+                            <x-input-label for="jam_selesai" :value="__('Jam Selesai')" />
+                            <x-text-input id="jam_selesai" class="block mt-1 w-full" type="time" name="jam_selesai" :value="old('jam_selesai', \Carbon\Carbon::parse($jadwal->jam_selesai)->format('H:i'))" required />
+                        </div>
+                        {{-- AKHIR PERBAIKAN --}}
+
+                        <!-- Durasi Slot -->
+                        <div class="mt-4">
+                            <x-input-label for="durasi_slot_menit" :value="__('Durasi Slot (Menit)')" />
+                            <x-text-input id="durasi_slot_menit" class="block mt-1 w-full" type="number" name="durasi_slot_menit" :value="old('durasi_slot_menit', $jadwal->durasi_slot_menit)" required />
+                        </div>
+
+                        <div class="flex items-center justify-end mt-6 border-t pt-6">
+                            <a href="{{ route('admin.jadwal.show', $jadwal->id_dokter) }}" class="text-gray-600 hover:text-gray-900 mr-4">
+                                Batal
+                            </a>
+                            <x-primary-button class="bg-purple-600 hover:bg-purple-700">
+                                {{ __('Perbarui Jadwal') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\jadwal\index.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Ringkasan Jadwal Dokter') }}
+            </h2>
+            <a href="{{ route('admin.jadwal.create') }}" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 shadow-md">
+                Tambah Jadwal Baru
+            </a>
+        </div>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <x-notification />
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-3 px-4 border-b text-left">Nama Dokter</th>
+                                    <th class="py-3 px-4 border-b text-left">Hari Praktek</th>
+                                    <th class="py-3 px-4 border-b text-left">Jam Praktek (Umum)</th>
+                                    <th class="py-3 px-4 border-b text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($dokters as $dokter)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-3 px-4 border-b font-semibold">{{ $dokter->user->name }}</td>
+                                        <td class="py-3 px-4 border-b">{{ $dokter->hari_praktek }}</td>
+                                        <td class="py-3 px-4 border-b">{{ $dokter->jam_praktek }}</td>
+                                        <td class="py-3 px-4 border-b text-center">
+                                            <a href="{{ route('admin.jadwal.show', $dokter->id) }}" class="text-purple-600 hover:text-purple-800 font-semibold">
+                                                Kelola Jadwal
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="py-4 px-4 text-center text-gray-500">Belum ada data dokter. Silakan tambahkan dokter terlebih dahulu.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\jadwal\show.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex justify-between items-center">
+            <div>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    Kelola Jadwal: <span class="font-bold">{{ $dokter->user->name }}</span>
+                </h2>
+            </div>
+            <a href="{{ route('admin.jadwal.create', ['dokter_id' => $dokter->id]) }}" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 shadow-md">
+                Tambah Jadwal untuk Dokter Ini
+            </a>
+        </div>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <x-notification />
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-3 px-4 border-b text-left">Hari</th>
+                                    <th class="py-3 px-4 border-b text-left">Jam Mulai</th>
+                                    <th class="py-3 px-4 border-b text-left">Jam Selesai</th>
+                                    <th class="py-3 px-4 border-b text-left">Durasi Slot</th>
+                                    <th class="py-3 px-4 border-b text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($dokter->jadwal as $jadwal)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-3 px-4 border-b">{{ $jadwal->hari }}</td>
+                                        <td class="py-3 px-4 border-b">{{ \Carbon\Carbon::parse($jadwal->jam_mulai)->format('H:i') }}</td>
+                                        <td class="py-3 px-4 border-b">{{ \Carbon\Carbon::parse($jadwal->jam_selesai)->format('H:i') }}</td>
+                                        <td class="py-3 px-4 border-b">{{ $jadwal->durasi_slot_menit }} Menit</td>
+                                        <td class="py-3 px-4 border-b text-center">
+                                            <div class="flex justify-center gap-4">
+                                                <a href="{{ route('admin.jadwal.edit', $jadwal->id) }}" class="text-yellow-500 hover:text-yellow-700 font-semibold">Edit</a>
+                                                <form action="{{ route('admin.jadwal.destroy', $jadwal->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus jadwal ini?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-500 hover:text-red-700 font-semibold">Hapus</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="py-4 px-4 text-center text-gray-500">Dokter ini belum memiliki jadwal.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6">
+                <a href="{{ route('admin.jadwal.index') }}" class="text-purple-600 hover:text-purple-800 font-semibold">
+                    &larr; Kembali ke Ringkasan Jadwal
+                </a>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\laporan\index.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Laporan Klinik') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <!-- Filter Tanggal -->
+                    <form method="GET" action="{{ route('admin.laporan.index') }}" class="mb-6 p-4 border rounded-lg bg-gray-50">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+                            <div>
+                                <x-input-label for="tanggal_mulai" :value="__('Dari Tanggal')" />
+                                <x-text-input id="tanggal_mulai" type="date" name="tanggal_mulai" class="w-full" value="{{ $tanggalMulai }}" />
+                            </div>
+                            <div>
+                                <x-input-label for="tanggal_selesai" :value="__('Sampai Tanggal')" />
+                                <x-text-input id="tanggal_selesai" type="date" name="tanggal_selesai" class="w-full" value="{{ $tanggalSelesai }}" />
+                            </div>
+                            <x-primary-button class="w-full md:w-auto justify-center">
+                                Tampilkan Laporan
+                            </x-primary-button>
+                        </div>
+                    </form>
+
+                    <!-- Ringkasan Data -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <div class="bg-purple-100 p-6 rounded-lg shadow">
+                            <h3 class="text-sm font-medium text-purple-800">Total Pendapatan</h3>
+                            <p class="mt-2 text-3xl font-bold text-purple-900">Rp {{ number_format($totalPendapatan, 0, ',', '.') }}</p>
+                        </div>
+                        <div class="bg-blue-100 p-6 rounded-lg shadow">
+                            <h3 class="text-sm font-medium text-blue-800">Total Transaksi Lunas</h3>
+                            <p class="mt-2 text-3xl font-bold text-blue-900">{{ $totalTransaksi }}</p>
+                        </div>
+                        <div class="bg-green-100 p-6 rounded-lg shadow">
+                            <h3 class="text-sm font-medium text-green-800">Total Kunjungan Pasien</h3>
+                            <p class="mt-2 text-3xl font-bold text-green-900">{{ $totalKunjungan }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Tabel Detail Transaksi -->
+                    <h3 class="text-lg font-semibold mb-4">Detail Transaksi Lunas</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-3 px-4 border-b text-left">Tanggal Bayar</th>
+                                    <th class="py-3 px-4 border-b text-left">Pasien</th>
+                                    <th class="py-3 px-4 border-b text-left">Dokter</th>
+                                    <th class="py-3 px-4 border-b text-right">Total Biaya</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($laporanPembayaran as $pembayaran)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-3 px-4 border-b">{{ \Carbon\Carbon::parse($pembayaran->tanggal_bayar)->translatedFormat('d M Y, H:i') }}</td>
+                                        <td class="py-3 px-4 border-b">{{ $pembayaran->pemesanan->pasien->name }}</td>
+                                        <td class="py-3 px-4 border-b">{{ $pembayaran->pemesanan->dokter->user->name }}</td>
+                                        <td class="py-3 px-4 border-b text-right">Rp {{ number_format($pembayaran->total_biaya, 0, ',', '.') }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="py-4 px-4 text-center text-gray-500">Tidak ada data transaksi lunas pada rentang tanggal ini.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\obat\create.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Tambah Data Obat Baru') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 md:p-8 bg-white border-b border-gray-200">
+                    <x-notification />
+                    <form method="POST" action="{{ route('admin.obat.store') }}">
+                        @csrf
+
+                        <!-- Nama Obat -->
+                        <div>
+                            <x-input-label for="nama_obat" :value="__('Nama Obat')" />
+                            <x-text-input id="nama_obat" class="block mt-1 w-full" type="text" name="nama_obat" :value="old('nama_obat')" required autofocus />
+                        </div>
+
+                        <!-- Satuan -->
+                        <div class="mt-4">
+                            <x-input-label for="satuan" :value="__('Satuan')" />
+                            <x-text-input id="satuan" class="block mt-1 w-full" type="text" name="satuan" :value="old('satuan')" required placeholder="Contoh: Tablet, Botol, Strip" />
+                        </div>
+
+                        <!-- Stok -->
+                        <div class="mt-4">
+                            <x-input-label for="stok" :value="__('Jumlah Stok')" />
+                            <x-text-input id="stok" class="block mt-1 w-full" type="number" name="stok" :value="old('stok')" required />
+                        </div>
+
+                        <div class="flex items-center justify-end mt-6">
+                            <a href="{{ route('admin.obat.index') }}" class="text-gray-600 hover:text-gray-900 mr-4">
+                                Batal
+                            </a>
+                            <x-primary-button class="bg-purple-600 hover:bg-purple-700">
+                                {{ __('Simpan Obat') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\obat\edit.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Edit Data Obat: ') . $obat->nama_obat }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 md:p-8 bg-white border-b border-gray-200">
+                    <x-notification />
+                    <form method="POST" action="{{ route('admin.obat.update', $obat->id) }}">
+                        @csrf
+                        @method('PUT')
+
+                        <!-- Nama Obat -->
+                        <div>
+                            <x-input-label for="nama_obat" :value="__('Nama Obat')" />
+                            <x-text-input id="nama_obat" class="block mt-1 w-full" type="text" name="nama_obat" :value="old('nama_obat', $obat->nama_obat)" required autofocus />
+                        </div>
+
+                        <!-- Satuan -->
+                        <div class="mt-4">
+                            <x-input-label for="satuan" :value="__('Satuan')" />
+                            <x-text-input id="satuan" class="block mt-1 w-full" type="text" name="satuan" :value="old('satuan', $obat->satuan)" required />
+                        </div>
+
+                        <!-- Stok -->
+                        <div class="mt-4">
+                            <x-input-label for="stok" :value="__('Jumlah Stok')" />
+                            <x-text-input id="stok" class="block mt-1 w-full" type="number" name="stok" :value="old('stok', $obat->stok)" required />
+                        </div>
+
+                        <div class="flex items-center justify-end mt-6">
+                            <a href="{{ route('admin.obat.index') }}" class="text-gray-600 hover:text-gray-900 mr-4">
+                                Batal
+                            </a>
+                            <x-primary-button class="bg-purple-600 hover:bg-purple-700">
+                                {{ __('Perbarui Obat') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\obat\index.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Kelola Stok Obat') }}
+            </h2>
+            <a href="{{ route('admin.obat.create') }}" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 shadow-md">
+                Tambah Obat Baru
+            </a>
+        </div>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <x-notification />
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-3 px-4 border-b text-left">Nama Obat</th>
+                                    <th class="py-3 px-4 border-b text-left">Satuan</th>
+                                    <th class="py-3 px-4 border-b text-left">Stok</th>
+                                    <th class="py-3 px-4 border-b">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($obats as $obat)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-3 px-4 border-b">{{ $obat->nama_obat }}</td>
+                                        <td class="py-3 px-4 border-b">{{ $obat->satuan }}</td>
+                                        <td class="py-3 px-4 border-b">{{ $obat->stok }}</td>
+                                        <td class="py-3 px-4 border-b text-center">
+                                            <div class="flex justify-center gap-4">
+                                                <a href="{{ route('admin.obat.edit', $obat->id) }}" class="text-yellow-500 hover:text-yellow-700 font-semibold">Edit</a>
+                                                <form action="{{ route('admin.obat.destroy', $obat->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus obat ini?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-500 hover:text-red-700 font-semibold">Hapus</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="py-4 px-4 text-center text-gray-500">Belum ada data obat. Silakan tambahkan data baru.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-4">
+                        {{ $obats->links() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\pasien\create.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Daftarkan Akun Pasien Baru (Offline)') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 md:p-8 bg-white border-b border-gray-200">
+                    <x-notification />
+                    <form method="POST" action="{{ route('admin.pasien.store') }}">
+                        @csrf
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Nama Pasien -->
+                            <div>
+                                <x-input-label for="name" :value="__('Nama Pasien')" />
+                                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required />
+                            </div>
+                            <!-- Email -->
+                            <div>
+                                <x-input-label for="email" :value="__('Email')" />
+                                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                            </div>
+                            <!-- Nomor HP -->
+                            <div>
+                                <x-input-label for="nomor_telepon" :value="__('Nomor HP')" />
+                                <x-text-input id="nomor_telepon" class="block mt-1 w-full" type="text" name="nomor_telepon" :value="old('nomor_telepon')" />
+                            </div>
+                             <!-- Password -->
+                             <div>
+                                <x-input-label for="password" :value="__('Password Sementara')" />
+                                <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required />
+                                <p class="text-xs text-gray-500 mt-1">Pasien dapat mengubah password ini nanti.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-end mt-6 border-t pt-6">
+                            <a href="{{ route('admin.pasien.index') }}" class="text-gray-600 hover:text-gray-900 mr-4">
+                                Batal
+                            </a>
+                            <x-primary-button class="bg-purple-600 hover:bg-purple-700">
+                                {{ __('Simpan Akun Pasien') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\pasien\edit.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Edit Data Pasien: <span class="font-bold">{{ $user->name }}</span>
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 md:p-8 bg-white border-b border-gray-200">
+                    <x-notification />
+                    <form method="POST" action="{{ route('admin.pasien.update', $user->id) }}">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Nama Pasien -->
+                            <div>
+                                <x-input-label for="name" :value="__('Nama Pasien')" />
+                                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name', $user->name)" required />
+                            </div>
+
+                            <!-- Nomor HP -->
+                            <div>
+                                <x-input-label for="nomor_telepon" :value="__('Nomor HP')" />
+                                <x-text-input id="nomor_telepon" class="block mt-1 w-full" type="text" name="nomor_telepon" :value="old('nomor_telepon', $user->nomor_telepon)" />
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-end mt-6 border-t pt-6">
+                            <a href="{{ route('admin.pasien.index') }}" class="text-gray-600 hover:text-gray-900 mr-4">
+                                Batal
+                            </a>
+                            <x-primary-button class="bg-purple-600 hover:bg-purple-700">
+                                {{ __('Simpan Perubahan') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\pasien\index.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Daftar Pasien') }}
+            </h2>
+            <a href="{{ route('admin.pasien.create') }}" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 shadow-md">
+                Daftarkan Pasien Baru
+            </a>
+        </div>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <x-notification />
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <form method="GET" action="{{ route('admin.pasien.index') }}" class="mb-6">
+                        <div class="flex items-center">
+                            <x-text-input type="text" name="search" placeholder="Cari nama atau email..." class="w-full md:w-1/3" value="{{ request('search') }}" />
+                            <x-primary-button class="ms-3">
+                                Cari
+                            </x-primary-button>
+                        </div>
+                    </form>
+
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-3 px-4 border-b text-left">Nama Pasien</th>
+                                    <th class="py-3 px-4 border-b text-left">Kontak</th>
+                                    <th class="py-3 px-4 border-b text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($pasiens as $pasien)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-3 px-4 border-b">{{ $pasien->name }}</td>
+                                        <td class="py-3 px-4 border-b">{{ $pasien->email }} <br> <span class="text-sm text-gray-500">{{ $pasien->nomor_telepon }}</span></td>
+                                        <td class="py-3 px-4 border-b text-center">
+                                            <a href="{{ route('admin.pasien.edit', $pasien->id) }}" class="text-purple-600 hover:text-purple-800 font-semibold">
+                                                Edit
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="3" class="py-4 px-4 text-center text-gray-500">Tidak ada data pasien.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-4">
+                        {{ $pasiens->links() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\pembayaran\cetak.blade.php =====
+<x-print-layout>
+    <x-slot name="title">Struk Pembayaran {{ $pemesanan->pasien->name }}</x-slot>
+
+    <div class="max-w-2xl mx-auto my-8 bg-white shadow-lg">
+        <div class="p-8">
+            <!-- Header Struk -->
+            <div class="flex justify-between items-start pb-4 border-b">
+                <div>
+                    <h1 class="text-2xl font-bold text-purple-700">INVOICE</h1>
+                    <p class="text-gray-500">Deliyana Dental Care</p>
+                    <p class="text-xs text-gray-500">Jl. Kesehatan Gigi No. 123, Kota Anda</p>
+                </div>
+                <div class="text-right">
+                    <p class="font-semibold">Invoice #{{ str_pad($pemesanan->pembayaran->id, 6, '0', STR_PAD_LEFT) }}</p>
+                    <p class="text-sm text-gray-600">Tanggal: {{ \Carbon\Carbon::parse($pemesanan->pembayaran->tanggal_bayar ?? now())->translatedFormat('d F Y') }}</p>
+                </div>
+            </div>
+
+            <!-- Info Pasien -->
+            <div class="mt-6">
+                <p class="text-sm text-gray-500">Tagihan Untuk:</p>
+                <p class="font-semibold text-gray-800">{{ $pemesanan->pasien->name }}</p>
+            </div>
+
+            <!-- Tabel Rincian -->
+            <div class="mt-6">
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="py-2 px-4 text-left text-sm font-semibold text-gray-600">Layanan / Tindakan</th>
+                            <th class="py-2 px-4 text-right text-sm font-semibold text-gray-600">Biaya</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($pemesanan->rekamMedis->tindakan as $tindakan)
+                        <tr class="border-b">
+                            <td class="py-3 px-4">{{ $tindakan->nama_tindakan }}</td>
+                            <td class="py-3 px-4 text-right">Rp {{ number_format($tindakan->pivot->harga_saat_itu, 0, ',', '.') }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Total -->
+            <div class="mt-6 flex justify-end">
+                <div class="w-full max-w-xs">
+                    <div class="flex justify-between py-2 border-b">
+                        <span class="text-gray-600">Subtotal</span>
+                        <span class="font-semibold">Rp {{ number_format($pemesanan->pembayaran->total_biaya, 0, ',', '.') }}</span>
+                    </div>
+                    <div class="flex justify-between py-3 bg-purple-50 px-4 rounded-b-lg">
+                        <span class="font-bold text-purple-800">TOTAL</span>
+                        <span class="font-bold text-purple-800">Rp {{ number_format($pemesanan->pembayaran->total_biaya, 0, ',', '.') }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status & Footer -->
+            <div class="mt-8 text-center">
+                @if($pemesanan->pembayaran->status == 'Lunas')
+                    <p class="text-2xl font-bold text-green-600">LUNAS</p>
+                    <p class="text-sm text-gray-500">Metode Pembayaran: {{ $pemesanan->pembayaran->metode_pembayaran }}</p>
+                @endif
+                <p class="mt-4 text-sm text-gray-600">Terima kasih atas kunjungan Anda!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tombol Aksi -->
+    <div class="max-w-2xl mx-auto my-8 text-center no-print">
+        <button onclick="window.print()" class="px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
+            Cetak Struk
+        </button>
+        <a href="{{ route('admin.pembayaran.show', $pemesanan->id) }}" class="ml-4 text-gray-600 hover:text-gray-800">
+            Kembali
+        </a>
+    </div>
+</x-print-layout>
+
+===== resources\views\admin\pembayaran\index.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Kelola Pembayaran') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <x-notification />
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <h3 class="text-lg font-semibold mb-4">Daftar Transaksi Pasien</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-3 px-4 border-b text-left">Tanggal</th>
+                                    <th class="py-3 px-4 border-b text-left">Nama Pasien</th>
+                                    <th class="py-3 px-4 border-b text-left">Total Biaya</th>
+                                    <th class="py-3 px-4 border-b text-center">Status Pembayaran</th>
+                                    <th class="py-3 px-4 border-b text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($pemesanans as $pemesanan)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-3 px-4 border-b">{{ $pemesanan->tanggal_pesan }}</td>
+                                        <td class="py-3 px-4 border-b">{{ $pemesanan->pasien->name }}</td>
+                                        <td class="py-3 px-4 border-b">
+                                            @if($pemesanan->pembayaran)
+                                                Rp {{ number_format($pemesanan->pembayaran->total_biaya, 0, ',', '.') }}
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                        <td class="py-3 px-4 border-b text-center">
+                                            @if($pemesanan->pembayaran && $pemesanan->pembayaran->status == 'Lunas')
+                                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                    Lunas
+                                                </span>
+                                            @else
+                                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                                    Belum Lunas
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td class="py-3 px-4 border-b text-center">
+                                            @if($pemesanan->pembayaran && $pemesanan->pembayaran->status == 'Belum Lunas')
+                                                <a href="{{ route('admin.pembayaran.show', $pemesanan->id) }}" class="px-4 py-2 bg-purple-600 text-white text-xs font-semibold rounded-md hover:bg-purple-700">
+                                                    Proses Bayar
+                                                </a>
+                                            @else
+                                                <a href="{{ route('admin.pembayaran.show', $pemesanan->id) }}" class="text-gray-500 hover:text-gray-700 text-xs font-semibold">
+                                                    Lihat Detail
+                                                </a>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="py-4 px-4 text-center text-gray-500">Tidak ada transaksi yang perlu diproses.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\pembayaran\show.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Detail Pembayaran Pasien') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 md:p-8 bg-white border-b border-gray-200">
+                    <!-- Informasi Pasien & Dokter -->
+                    <div class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b">
+                        <div>
+                            <h3 class="text-sm text-gray-500">Pasien</h3>
+                            <p class="font-bold text-lg text-gray-800">{{ $pemesanan->pasien->name }}</p>
+                        </div>
+                        <div>
+                            <h3 class="text-sm text-gray-500">Dokter</h3>
+                            <p class="font-bold text-lg text-gray-800">{{ $pemesanan->dokter->user->name }}</p>
+                        </div>
+                        <div>
+                            <h3 class="text-sm text-gray-500">Tanggal Kunjungan</h3>
+                            <p class="font-bold text-lg text-gray-800">
+                                {{ \Carbon\Carbon::parse($pemesanan->tanggal_pesan)->translatedFormat('d F Y') }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Rincian Biaya -->
+                    <h3 class="text-lg font-semibold mb-4 text-gray-800">Rincian Biaya Tindakan</h3>
+                    <div class="space-y-2 mb-6">
+                        @forelse($pemesanan->rekamMedis->tindakan as $tindakan)
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">{{ $tindakan->nama_tindakan }}</span>
+                                <span class="font-medium text-gray-800">Rp
+                                    {{ number_format($tindakan->pivot->harga_saat_itu, 0, ',', '.') }}</span>
+                            </div>
+                        @empty
+                            <p class="text-gray-500">Tidak ada tindakan yang dikenakan biaya.</p>
+                        @endforelse
+                    </div>
+
+                    <!-- Total Biaya -->
+                    <div class="flex justify-between items-center p-4 bg-purple-50 rounded-lg mb-8">
+                        <span class="font-bold text-xl text-purple-800">Total Tagihan</span>
+                        <span class="font-bold text-2xl text-purple-900">Rp
+                            {{ number_format($pemesanan->pembayaran->total_biaya, 0, ',', '.') }}</span>
+                    </div>
+
+                    <!-- Form Konfirmasi Pembayaran -->
+                    @if ($pemesanan->pembayaran->status == 'Belum Lunas')
+                        <form method="POST" action="{{ route('admin.pembayaran.store', $pemesanan->id) }}">
+                            @csrf
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                                <div>
+                                    <x-input-label for="metode_pembayaran" :value="__('Pilih Metode Pembayaran')" />
+                                    <select id="metode_pembayaran" name="metode_pembayaran"
+                                        class="block mt-1 w-full border-gray-300 focus:border-purple-500 focus:ring-purple-500 rounded-md shadow-sm"
+                                        required>
+                                        <option value="Tunai">Tunai</option>
+                                        <option value="Transfer">Transfer</option>
+                                        <option value="Kartu Debit/Kredit">Kartu Debit/Kredit</option>
+                                    </select>
+                                </div>
+                                <div class="md:text-right mt-4 md:mt-0">
+                                    <x-primary-button
+                                        class="w-full md:w-auto justify-center bg-green-600 hover:bg-green-700 text-lg px-8 py-3">
+                                        {{ __('Konfirmasi Pembayaran') }}
+                                    </x-primary-button>
+                                </div>
+                            </div>
+                        </form>
+                    @else
+                        <!-- Status Lunas -->
+                        <div class="text-center p-6 bg-green-50 rounded-lg">
+                            <h3 class="text-xl font-bold text-green-800">LUNAS</h3>
+                            <p class="text-green-700 mt-1">
+                                Dibayar pada
+                                {{ \Carbon\Carbon::parse($pemesanan->pembayaran->tanggal_bayar)->translatedFormat('d F Y, H:i') }}
+                                melalui {{ $pemesanan->pembayaran->metode_pembayaran }}.
+                            </p>
+                            <div class="mt-4">
+                                <a href="{{ route('admin.pembayaran.cetak', $pemesanan->id) }}" target="_blank"
+                                    class="inline-block px-5 py-2 bg-gray-600 text-white text-sm font-semibold rounded-md hover:bg-gray-700">
+                                    Cetak Struk
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\pemesanan\edit.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Ubah Status Pemesanan') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 bg-white border-b border-gray-200">
+                    <div class="mb-4">
+                        <p><strong>Pasien:</strong> {{ $pemesanan->pasien->name }}</p>
+                        <p><strong>Dokter:</strong> {{ $pemesanan->dokter->user->name }}</p>
+                        <p><strong>Jadwal:</strong> {{ \Carbon\Carbon::parse($pemesanan->tanggal_pesan)->translatedFormat('d F Y') }} pukul {{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</p>
+                    </div>
+                    <form method="POST" action="{{ route('admin.pemesanan.update', $pemesanan->id) }}">
+                        @csrf
+                        @method('PUT')
+
+                        <div>
+                            <x-input-label for="status" :value="__('Status Pemesanan')" />
+                            <select id="status" name="status" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                                <option value="Dipesan" @selected($pemesanan->status == 'Dipesan')>Dipesan</option>
+                                <option value="Dikonfirmasi" @selected($pemesanan->status == 'Dikonfirmasi')>Dikonfirmasi</option>
+                                <option value="Dibatalkan" @selected($pemesanan->status == 'Dibatalkan')>Dibatalkan</option>
+                                <option value="Selesai" @selected($pemesanan->status == 'Selesai')>Selesai</option>
+                            </select>
+                        </div>
+
+                        <div class="flex items-center justify-end mt-4">
+                            <x-primary-button>
+                                {{ __('Perbarui Status') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\pemesanan\index.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Kelola Semua Pemesanan') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <x-notification />
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-200">
+                                <tr>
+                                    <th class="py-2 px-4 border-b">Pasien</th>
+                                    <th class="py-2 px-4 border-b">Dokter</th>
+                                    <th class="py-2 px-4 border-b">Tanggal</th>
+                                    <th class="py-2 px-4 border-b">Waktu</th>
+                                    <th class="py-2 px-4 border-b">Status</th>
+                                    <th class="py-2 px-4 border-b">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($pemesanans as $pemesanan)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-2 px-4 border-b">{{ $pemesanan->pasien->name }}</td>
+                                        <td class="py-2 px-4 border-b">{{ $pemesanan->dokter->user->name }}</td>
+                                        <td class="py-2 px-4 border-b">{{ \Carbon\Carbon::parse($pemesanan->tanggal_pesan)->translatedFormat('d F Y') }}</td>
+                                        <td class="py-2 px-4 border-b">{{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</td>
+                                        <td class="py-2 px-4 border-b">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                @if($pemesanan->status == 'Selesai') bg-green-100 text-green-800 
+                                                @elseif($pemesanan->status == 'Dibatalkan') bg-red-100 text-red-800
+                                                @elseif($pemesanan->status == 'Dikonfirmasi') bg-blue-100 text-blue-800
+                                                @else bg-yellow-100 text-yellow-800 @endif">
+                                                {{ $pemesanan->status }}
+                                            </span>
+                                        </td>
+                                        <td class="py-2 px-4 border-b">
+                                            <a href="{{ route('admin.pemesanan.edit', $pemesanan->id) }}" class="text-indigo-600 hover:text-indigo-900">Ubah Status</a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="6" class="py-4 px-4 text-center">Tidak ada data pemesanan.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\tindakan\create.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Tambah Tindakan Baru') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 md:p-8 bg-white border-b border-gray-200">
+                    <x-notification />
+                    <form method="POST" action="{{ route('admin.tindakan.store') }}">
+                        @csrf
+
+                        <!-- Nama Tindakan -->
+                        <div>
+                            <x-input-label for="nama_tindakan" :value="__('Nama Tindakan')" />
+                            <x-text-input id="nama_tindakan" class="block mt-1 w-full" type="text" name="nama_tindakan" :value="old('nama_tindakan')" required autofocus />
+                        </div>
+
+                        <!-- Harga -->
+                        <div class="mt-4">
+                            <x-input-label for="harga" :value="__('Harga')" />
+                            <x-text-input id="harga" class="block mt-1 w-full" type="number" name="harga" :value="old('harga')" required placeholder="Contoh: 300000" />
+                        </div>
+
+                        <!-- Deskripsi -->
+                        <div class="mt-4">
+                            <x-input-label for="deskripsi" :value="__('Deskripsi (Opsional)')" />
+                            <textarea id="deskripsi" name="deskripsi" rows="3" class="block mt-1 w-full border-gray-300 focus:border-purple-500 focus:ring-purple-500 rounded-md shadow-sm">{{ old('deskripsi') }}</textarea>
+                        </div>
+
+                        <div class="flex items-center justify-end mt-6">
+                            <a href="{{ route('admin.tindakan.index') }}" class="text-gray-600 hover:text-gray-900 mr-4">
+                                Batal
+                            </a>
+                            <x-primary-button class="bg-purple-600 hover:bg-purple-700">
+                                {{ __('Simpan Tindakan') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\tindakan\edit.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Edit Tindakan: ') . $tindakan->nama_tindakan }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 md:p-8 bg-white border-b border-gray-200">
+                    <x-notification />
+                    <form method="POST" action="{{ route('admin.tindakan.update', $tindakan->id) }}">
+                        @csrf
+                        @method('PUT')
+
+                        <!-- Nama Tindakan -->
+                        <div>
+                            <x-input-label for="nama_tindakan" :value="__('Nama Tindakan')" />
+                            <x-text-input id="nama_tindakan" class="block mt-1 w-full" type="text" name="nama_tindakan" :value="old('nama_tindakan', $tindakan->nama_tindakan)" required autofocus />
+                        </div>
+
+                        <!-- Harga -->
+                        <div class="mt-4">
+                            <x-input-label for="harga" :value="__('Harga')" />
+                            <x-text-input id="harga" class="block mt-1 w-full" type="number" name="harga" :value="old('harga', $tindakan->harga)" required />
+                        </div>
+
+                        <!-- Deskripsi -->
+                        <div class="mt-4">
+                            <x-input-label for="deskripsi" :value="__('Deskripsi (Opsional)')" />
+                            <textarea id="deskripsi" name="deskripsi" rows="3" class="block mt-1 w-full border-gray-300 focus:border-purple-500 focus:ring-purple-500 rounded-md shadow-sm">{{ old('deskripsi', $tindakan->deskripsi) }}</textarea>
+                        </div>
+
+                        <div class="flex items-center justify-end mt-6">
+                            <a href="{{ route('admin.tindakan.index') }}" class="text-gray-600 hover:text-gray-900 mr-4">
+                                Batal
+                            </a>
+                            <x-primary-button class="bg-purple-600 hover:bg-purple-700">
+                                {{ __('Perbarui Tindakan') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\tindakan\index.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Kelola Tindakan & Layanan') }}
+            </h2>
+            <a href="{{ route('admin.tindakan.create') }}" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 shadow-md">
+                Tambah Tindakan Baru
+            </a>
+        </div>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <x-notification />
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-3 px-4 border-b text-left">Nama Tindakan</th>
+                                    <th class="py-3 px-4 border-b text-left">Harga</th>
+                                    <th class="py-3 px-4 border-b text-left">Deskripsi</th>
+                                    <th class="py-3 px-4 border-b">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($tindakans as $tindakan)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-3 px-4 border-b">{{ $tindakan->nama_tindakan }}</td>
+                                        <td class="py-3 px-4 border-b">Rp {{ number_format($tindakan->harga, 0, ',', '.') }}</td>
+                                        <td class="py-3 px-4 border-b">{{ $tindakan->deskripsi ?? '-' }}</td>
+                                        <td class="py-3 px-4 border-b text-center">
+                                            <div class="flex justify-center gap-4">
+                                                <a href="{{ route('admin.tindakan.edit', $tindakan->id) }}" class="text-yellow-500 hover:text-yellow-700 font-semibold">Edit</a>
+                                                <form action="{{ route('admin.tindakan.destroy', $tindakan->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus tindakan ini?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-500 hover:text-red-700 font-semibold">Hapus</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="py-4 px-4 text-center text-gray-500">Belum ada data tindakan. Silakan tambahkan tindakan baru.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\admin\dashboard.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Dashboard Admin') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card Jumlah Pasien -->
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                    <h3 class="text-lg font-medium text-gray-700">Jumlah Pasien</h3>
+                    <p class="mt-2 text-3xl font-bold text-gray-900">{{ $jumlahPasien }}</p>
+                </div>
+                <!-- Card Jumlah Dokter -->
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                    <h3 class="text-lg font-medium text-gray-700">Jumlah Dokter</h3>
+                    <p class="mt-2 text-3xl font-bold text-gray-900">{{ $jumlahDokter }}</p>
+                </div>
+                <!-- Card Pemesanan Hari Ini -->
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                    <h3 class="text-lg font-medium text-gray-700">Pemesanan Hari Ini</h3>
+                    <p class="mt-2 text-3xl font-bold text-gray-900">{{ $pemesananHariIni }}</p>
+                </div>
+            </div>
+
+            <!-- Grafik Pendapatan -->
+            <div class="mt-8 bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <h3 class="text-lg font-semibold mb-4">Grafik Pendapatan (6 Bulan Terakhir)</h3>
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Script untuk Chart.js --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: {!! json_encode($labels) !!},
+                    datasets: [{
+                        label: 'Pendapatan (Rp)',
+                        data: {!! json_encode($data) !!},
+                        backgroundColor: 'rgba(139, 92, 246, 0.5)',
+                        borderColor: 'rgba(139, 92, 246, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value, index, values) {
+                                    return 'Rp ' + new Intl.NumberFormat('id-ID').format(value);
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += 'Rp ' + new Intl.NumberFormat('id-ID').format(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</x-app-layout>
+
+===== resources\views\auth\confirm-password.blade.php =====
+<x-guest-layout>
+    <div class="mb-4 text-sm text-gray-600">
+        {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+    </div>
+
+    <form method="POST" action="{{ route('password.confirm') }}">
+        @csrf
+
+        <!-- Password -->
+        <div>
+            <x-input-label for="password" :value="__('Password')" />
+
+            <x-text-input id="password" class="block mt-1 w-full"
+                            type="password"
+                            name="password"
+                            required autocomplete="current-password" />
+
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
+
+        <div class="flex justify-end mt-4">
+            <x-primary-button>
+                {{ __('Confirm') }}
+            </x-primary-button>
+        </div>
+    </form>
+</x-guest-layout>
+
+===== resources\views\auth\forgot-password.blade.php =====
+<x-guest-layout>
+    <div class="mb-6 text-center">
+        <h2 class="text-2xl font-bold text-gray-800">Lupa Password Anda?</h2>
+        <p class="text-gray-500 mt-2">Tidak masalah. Masukkan email Anda dan kami akan mengirimkan link untuk mengatur ulang password.</p>
+    </div>
+
+    <!-- Session Status -->
+    <x-auth-session-status class="mb-4" :status="session('status')" />
+
+    <form method="POST" action="{{ route('password.email') }}">
+        @csrf
+
+        <!-- Email Address -->
+        <div>
+            <x-input-label for="email" :value="__('Email')" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
+
+        <div class="mt-6">
+            <x-primary-button class="w-full justify-center bg-purple-600 hover:bg-purple-700 focus:bg-purple-700 active:bg-purple-800 focus:ring-purple-500">
+                {{ __('Kirim Link Reset Password') }}
+            </x-primary-button>
+        </div>
+        
+        <div class="mt-6 text-center text-sm text-gray-600">
+            <a class="underline hover:text-purple-700 font-semibold" href="{{ route('login') }}">
+                Kembali ke Login
+            </a>
+        </div>
+    </form>
+</x-guest-layout>
+
+===== resources\views\auth\login.blade.php =====
+<x-guest-layout>
+    <div class="mb-6 text-center">
+        <h2 class="text-3xl font-bold text-gray-800">Selamat Datang Kembali!</h2>
+        <p class="text-gray-500 mt-2">Silakan masuk ke akun Anda.</p>
+    </div>
+
+    <!-- Session Status -->
+    <x-auth-session-status class="mb-4" :status="session('status')" />
+
+    <form method="POST" action="{{ route('login') }}">
+        @csrf
+
+        <!-- Email Address -->
+        <div>
+            <x-input-label for="email" :value="__('Email')" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
+
+        <!-- Password -->
+        <div class="mt-4">
+            <div class="flex justify-between items-center">
+                <x-input-label for="password" :value="__('Password')" />
+                @if (Route::has('password.request'))
+                    <a class="underline text-sm text-gray-600 hover:text-purple-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                        {{ __('Lupa password?') }}
+                    </a>
+                @endif
+            </div>
+            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
+
+        <!-- Remember Me -->
+        <div class="block mt-4">
+            <label for="remember_me" class="inline-flex items-center">
+                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-purple-600 shadow-sm focus:ring-purple-500" name="remember">
+                <span class="ms-2 text-sm text-gray-600">{{ __('Ingat saya') }}</span>
+            </label>
+        </div>
+
+        <div class="mt-6">
+            <x-primary-button class="w-full justify-center bg-purple-600 hover:bg-purple-700 focus:bg-purple-700 active:bg-purple-800 focus:ring-purple-500">
+                {{ __('Log in') }}
+            </x-primary-button>
+        </div>
+
+        <div class="mt-6 text-center text-sm text-gray-600">
+            Belum punya akun?
+            <a class="underline hover:text-purple-700 font-semibold" href="{{ route('register') }}">
+                Daftar di sini
+            </a>
+        </div>
+    </form>
+</x-guest-layout>
+
+===== resources\views\auth\register.blade.php =====
+<x-guest-layout>
+    <div class="mb-6 text-center">
+        <h2 class="text-3xl font-bold text-gray-800">Buat Akun Baru</h2>
+        <p class="text-gray-500 mt-2">Hanya butuh beberapa detik untuk memulai.</p>
+    </div>
+
+    <form method="POST" action="{{ route('register') }}">
+        @csrf
+
+        <!-- Name -->
+        <div>
+            <x-input-label for="name" :value="__('Nama Lengkap')" />
+            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        </div>
+
+        <!-- Email Address -->
+        <div class="mt-4">
+            <x-input-label for="email" :value="__('Email')" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
+
+        <!-- Password -->
+        <div class="mt-4">
+            <x-input-label for="password" :value="__('Password')" />
+            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="mt-4">
+            <x-input-label for="password_confirmation" :value="__('Konfirmasi Password')" />
+            <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        <div class="mt-6">
+            <x-primary-button class="w-full justify-center bg-purple-600 hover:bg-purple-700 focus:bg-purple-700 active:bg-purple-800 focus:ring-purple-500">
+                {{ __('Daftar') }}
+            </x-primary-button>
+        </div>
+
+        <div class="mt-6 text-center text-sm text-gray-600">
+            Sudah punya akun?
+            <a class="underline hover:text-purple-700 font-semibold" href="{{ route('login') }}">
+                Masuk di sini
+            </a>
+        </div>
+    </form>
+</x-guest-layout>
+
+===== resources\views\auth\reset-password.blade.php =====
+<x-guest-layout>
+    <form method="POST" action="{{ route('password.store') }}">
+        @csrf
+
+        <!-- Password Reset Token -->
+        <input type="hidden" name="token" value="{{ $request->route('token') }}">
+
+        <!-- Email Address -->
+        <div>
+            <x-input-label for="email" :value="__('Email')" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
+
+        <!-- Password -->
+        <div class="mt-4">
+            <x-input-label for="password" :value="__('Password')" />
+            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="mt-4">
+            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+
+            <x-text-input id="password_confirmation" class="block mt-1 w-full"
+                                type="password"
+                                name="password_confirmation" required autocomplete="new-password" />
+
+            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        <div class="flex items-center justify-end mt-4">
+            <x-primary-button>
+                {{ __('Reset Password') }}
+            </x-primary-button>
+        </div>
+    </form>
+</x-guest-layout>
+
+===== resources\views\auth\verify-email.blade.php =====
+<x-guest-layout>
+    <div class="mb-4 text-sm text-gray-600">
+        {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
+    </div>
+
+    @if (session('status') == 'verification-link-sent')
+        <div class="mb-4 font-medium text-sm text-green-600">
+            {{ __('A new verification link has been sent to the email address you provided during registration.') }}
+        </div>
+    @endif
+
+    <div class="mt-4 flex items-center justify-between">
+        <form method="POST" action="{{ route('verification.send') }}">
+            @csrf
+
+            <div>
+                <x-primary-button>
+                    {{ __('Resend Verification Email') }}
+                </x-primary-button>
+            </div>
+        </form>
+
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+
+            <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                {{ __('Log Out') }}
+            </button>
+        </form>
+    </div>
+</x-guest-layout>
+
+===== resources\views\components\application-logo.blade.php =====
+<svg viewBox="0 0 316 316" xmlns="http://www.w3.org/2000/svg" {{ $attributes }}>
+    <path d="M305.8 81.125C305.77 80.995 305.69 80.885 305.65 80.755C305.56 80.525 305.49 80.285 305.37 80.075C305.29 79.935 305.17 79.815 305.07 79.685C304.94 79.515 304.83 79.325 304.68 79.175C304.55 79.045 304.39 78.955 304.25 78.845C304.09 78.715 303.95 78.575 303.77 78.475L251.32 48.275C249.97 47.495 248.31 47.495 246.96 48.275L194.51 78.475C194.33 78.575 194.19 78.725 194.03 78.845C193.89 78.955 193.73 79.045 193.6 79.175C193.45 79.325 193.34 79.515 193.21 79.685C193.11 79.815 192.99 79.935 192.91 80.075C192.79 80.285 192.71 80.525 192.63 80.755C192.58 80.875 192.51 80.995 192.48 81.125C192.38 81.495 192.33 81.875 192.33 82.265V139.625L148.62 164.795V52.575C148.62 52.185 148.57 51.805 148.47 51.435C148.44 51.305 148.36 51.195 148.32 51.065C148.23 50.835 148.16 50.595 148.04 50.385C147.96 50.245 147.84 50.125 147.74 49.995C147.61 49.825 147.5 49.635 147.35 49.485C147.22 49.355 147.06 49.265 146.92 49.155C146.76 49.025 146.62 48.885 146.44 48.785L93.99 18.585C92.64 17.805 90.98 17.805 89.63 18.585L37.18 48.785C37 48.885 36.86 49.035 36.7 49.155C36.56 49.265 36.4 49.355 36.27 49.485C36.12 49.635 36.01 49.825 35.88 49.995C35.78 50.125 35.66 50.245 35.58 50.385C35.46 50.595 35.38 50.835 35.3 51.065C35.25 51.185 35.18 51.305 35.15 51.435C35.05 51.805 35 52.185 35 52.575V232.235C35 233.795 35.84 235.245 37.19 236.025L142.1 296.425C142.33 296.555 142.58 296.635 142.82 296.725C142.93 296.765 143.04 296.835 143.16 296.865C143.53 296.965 143.9 297.015 144.28 297.015C144.66 297.015 145.03 296.965 145.4 296.865C145.5 296.835 145.59 296.775 145.69 296.745C145.95 296.655 146.21 296.565 146.45 296.435L251.36 236.035C252.72 235.255 253.55 233.815 253.55 232.245V174.885L303.81 145.945C305.17 145.165 306 143.725 306 142.155V82.265C305.95 81.875 305.89 81.495 305.8 81.125ZM144.2 227.205L100.57 202.515L146.39 176.135L196.66 147.195L240.33 172.335L208.29 190.625L144.2 227.205ZM244.75 114.995V164.795L226.39 154.225L201.03 139.625V89.825L219.39 100.395L244.75 114.995ZM249.12 57.105L292.81 82.265L249.12 107.425L205.43 82.265L249.12 57.105ZM114.49 184.425L96.13 194.995V85.305L121.49 70.705L139.85 60.135V169.815L114.49 184.425ZM91.76 27.425L135.45 52.585L91.76 77.745L48.07 52.585L91.76 27.425ZM43.67 60.135L62.03 70.705L87.39 85.305V202.545V202.555V202.565C87.39 202.735 87.44 202.895 87.46 203.055C87.49 203.265 87.49 203.485 87.55 203.695V203.705C87.6 203.875 87.69 204.035 87.76 204.195C87.84 204.375 87.89 204.575 87.99 204.745C87.99 204.745 87.99 204.755 88 204.755C88.09 204.905 88.22 205.035 88.33 205.175C88.45 205.335 88.55 205.495 88.69 205.635L88.7 205.645C88.82 205.765 88.98 205.855 89.12 205.965C89.28 206.085 89.42 206.225 89.59 206.325C89.6 206.325 89.6 206.325 89.61 206.335C89.62 206.335 89.62 206.345 89.63 206.345L139.87 234.775V285.065L43.67 229.705V60.135ZM244.75 229.705L148.58 285.075V234.775L219.8 194.115L244.75 179.875V229.705ZM297.2 139.625L253.49 164.795V114.995L278.85 100.395L297.21 89.825V139.625H297.2Z"/>
+</svg>
+
+===== resources\views\components\auth-session-status.blade.php =====
+@props(['status'])
+
+@if ($status)
+    <div {{ $attributes->merge(['class' => 'font-medium text-sm text-green-600']) }}>
+        {{ $status }}
+    </div>
+@endif
+
+===== resources\views\components\danger-button.blade.php =====
+<button {{ $attributes->merge(['type' => 'submit', 'class' => 'inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150']) }}>
+    {{ $slot }}
+</button>
+
+===== resources\views\components\dropdown-link.blade.php =====
+<a {{ $attributes->merge(['class' => 'block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out']) }}>{{ $slot }}</a>
+
+===== resources\views\components\dropdown.blade.php =====
+@props(['align' => 'right', 'width' => '48', 'contentClasses' => 'py-1 bg-white'])
+
+@php
+$alignmentClasses = match ($align) {
+    'left' => 'ltr:origin-top-left rtl:origin-top-right start-0',
+    'top' => 'origin-top',
+    default => 'ltr:origin-top-right rtl:origin-top-left end-0',
+};
+
+$width = match ($width) {
+    '48' => 'w-48',
+    default => $width,
+};
+@endphp
+
+<div class="relative" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
+    <div @click="open = ! open">
+        {{ $trigger }}
+    </div>
+
+    <div x-show="open"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 scale-95"
+            x-transition:enter-end="opacity-100 scale-100"
+            x-transition:leave="transition ease-in duration-75"
+            x-transition:leave-start="opacity-100 scale-100"
+            x-transition:leave-end="opacity-0 scale-95"
+            class="absolute z-50 mt-2 {{ $width }} rounded-md shadow-lg {{ $alignmentClasses }}"
+            style="display: none;"
+            @click="open = false">
+        <div class="rounded-md ring-1 ring-black ring-opacity-5 {{ $contentClasses }}">
+            {{ $content }}
+        </div>
+    </div>
+</div>
+
+===== resources\views\components\input-error.blade.php =====
+@props(['messages'])
+
+@if ($messages)
+    <ul {{ $attributes->merge(['class' => 'text-sm text-red-600 space-y-1']) }}>
+        @foreach ((array) $messages as $message)
+            <li>{{ $message }}</li>
+        @endforeach
+    </ul>
+@endif
+
+===== resources\views\components\input-label.blade.php =====
+@props(['value'])
+
+<label {{ $attributes->merge(['class' => 'block font-medium text-sm text-gray-700']) }}>
+    {{ $value ?? $slot }}
+</label>
+
+===== resources\views\components\modal.blade.php =====
+@props([
+    'name',
+    'show' => false,
+    'maxWidth' => '2xl'
+])
+
+@php
+$maxWidth = [
+    'sm' => 'sm:max-w-sm',
+    'md' => 'sm:max-w-md',
+    'lg' => 'sm:max-w-lg',
+    'xl' => 'sm:max-w-xl',
+    '2xl' => 'sm:max-w-2xl',
+][$maxWidth];
+@endphp
+
+<div
+    x-data="{
+        show: @js($show),
+        focusables() {
+            // All focusable element types...
+            let selector = 'a, button, input:not([type=\'hidden\']), textarea, select, details, [tabindex]:not([tabindex=\'-1\'])'
+            return [...$el.querySelectorAll(selector)]
+                // All non-disabled elements...
+                .filter(el => ! el.hasAttribute('disabled'))
+        },
+        firstFocusable() { return this.focusables()[0] },
+        lastFocusable() { return this.focusables().slice(-1)[0] },
+        nextFocusable() { return this.focusables()[this.nextFocusableIndex()] || this.firstFocusable() },
+        prevFocusable() { return this.focusables()[this.prevFocusableIndex()] || this.lastFocusable() },
+        nextFocusableIndex() { return (this.focusables().indexOf(document.activeElement) + 1) % (this.focusables().length + 1) },
+        prevFocusableIndex() { return Math.max(0, this.focusables().indexOf(document.activeElement)) -1 },
+    }"
+    x-init="$watch('show', value => {
+        if (value) {
+            document.body.classList.add('overflow-y-hidden');
+            {{ $attributes->has('focusable') ? 'setTimeout(() => firstFocusable().focus(), 100)' : '' }}
+        } else {
+            document.body.classList.remove('overflow-y-hidden');
+        }
+    })"
+    x-on:open-modal.window="$event.detail == '{{ $name }}' ? show = true : null"
+    x-on:close-modal.window="$event.detail == '{{ $name }}' ? show = false : null"
+    x-on:close.stop="show = false"
+    x-on:keydown.escape.window="show = false"
+    x-on:keydown.tab.prevent="$event.shiftKey || nextFocusable().focus()"
+    x-on:keydown.shift.tab.prevent="prevFocusable().focus()"
+    x-show="show"
+    class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50"
+    style="display: {{ $show ? 'block' : 'none' }};"
+>
+    <div
+        x-show="show"
+        class="fixed inset-0 transform transition-all"
+        x-on:click="show = false"
+        x-transition:enter="ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+    >
+        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+    </div>
+
+    <div
+        x-show="show"
+        class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full {{ $maxWidth }} sm:mx-auto"
+        x-transition:enter="ease-out duration-300"
+        x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+        x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+        x-transition:leave="ease-in duration-200"
+        x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+        x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+    >
+        {{ $slot }}
+    </div>
+</div>
+
+===== resources\views\components\nav-link.blade.php =====
+@props(['active'])
+
+@php
+$classes = ($active ?? false)
+            ? 'flex items-center gap-3 w-full px-4 py-2 rounded-lg bg-purple-600 text-white font-semibold shadow-md transition-colors duration-200'
+            : 'flex items-center gap-3 w-full px-4 py-2 rounded-lg text-gray-600 hover:bg-purple-100 hover:text-purple-700 transition-colors duration-200';
+@endphp
+
+<a {{ $attributes->merge(['class' => $classes]) }}>
+    {{ $slot }}
+</a>
+
+===== resources\views\components\notification.blade.php =====
+@if (session('success'))
+    <div class="mb-4 rounded-md bg-green-100 p-4 text-sm font-medium text-green-800" role="alert">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="mb-4 rounded-md bg-red-100 p-4 text-sm font-medium text-red-800" role="alert">
+        {{ session('error') }}
+    </div>
+@endif
+
+@if ($errors->any())
+    <div class="mb-4 rounded-md bg-red-100 p-4 text-sm font-medium text-red-800">
+        <p class="font-bold">Terjadi kesalahan:</p>
+        <ul class="list-inside list-disc">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+===== resources\views\components\primary-button.blade.php =====
+<button {{ $attributes->merge(['type' => 'submit', 'class' => 'inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150']) }}>
+    {{ $slot }}
+</button>
+
+===== resources\views\components\print-layout.blade.php =====
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $title ?? 'Cetak Dokumen' }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                -webkit-print-color-adjust: exact; /* Chrome, Safari */
+                color-adjust: exact; /* Firefox */
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    {{ $slot }}
+</body>
+</html>
+
+===== resources\views\components\responsive-nav-link.blade.php =====
+@props(['active'])
+
+@php
+$classes = ($active ?? false)
+            ? 'block w-full ps-3 pe-4 py-2 border-l-4 border-indigo-400 text-start text-base font-medium text-indigo-700 bg-indigo-50 focus:outline-none focus:text-indigo-800 focus:bg-indigo-100 focus:border-indigo-700 transition duration-150 ease-in-out'
+            : 'block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out';
+@endphp
+
+<a {{ $attributes->merge(['class' => $classes]) }}>
+    {{ $slot }}
+</a>
+
+===== resources\views\components\secondary-button.blade.php =====
+<button {{ $attributes->merge(['type' => 'button', 'class' => 'inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150']) }}>
+    {{ $slot }}
+</button>
+
+===== resources\views\components\text-input.blade.php =====
+@props(['disabled' => false])
+
+<input @disabled($disabled) {{ $attributes->merge(['class' => 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm']) }}>
+
+===== resources\views\dokter\jadwal\index.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Jadwal Praktek Saya') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-200">
+                                <tr>
+                                    <th class="py-2 px-4 border-b">Hari</th>
+                                    <th class="py-2 px-4 border-b">Jam Mulai</th>
+                                    <th class="py-2 px-4 border-b">Jam Selesai</th>
+                                    <th class="py-2 px-4 border-b">Durasi Slot (Menit)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($jadwals as $jadwal)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-2 px-4 border-b">{{ $jadwal->hari }}</td>
+                                        <td class="py-2 px-4 border-b">{{ \Carbon\Carbon::parse($jadwal->jam_mulai)->format('H:i') }}</td>
+                                        <td class="py-2 px-4 border-b">{{ \Carbon\Carbon::parse($jadwal->jam_selesai)->format('H:i') }}</td>
+                                        <td class="py-2 px-4 border-b">{{ $jadwal->durasi_slot_menit }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="py-4 px-4 text-center">Anda belum memiliki jadwal praktek.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\dokter\rekam-medis\create.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Buat Rekam Medis untuk ' . $pemesanan->pasien->name) }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 md:p-8 bg-white border-b border-gray-200"
+                     x-data="{ tindakans: {{ json_encode($tindakans) }}, selectedTindakans: [], totalBiaya: 0,
+                                calculateTotal() {
+                                    this.totalBiaya = 0;
+                                    this.selectedTindakans.forEach(id => {
+                                        const tindakan = this.tindakans.find(t => t.id == id);
+                                        if (tindakan) {
+                                            this.totalBiaya += parseInt(tindakan.harga);
+                                        }
+                                    });
+                                }
+                             }">
+                    <x-notification />
+                    <form method="POST" action="{{ route('dokter.rekam-medis.store') }}" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="id_pemesanan" value="{{ $pemesanan->id }}">
+
+                        <!-- Diagnosis -->
+                        <div>
+                            <x-input-label for="diagnosis" :value="__('Diagnosis')" />
+                            <textarea id="diagnosis" name="diagnosis" rows="4" class="block mt-1 w-full border-gray-300 focus:border-purple-500 focus:ring-purple-500 rounded-md shadow-sm" required>{{ old('diagnosis') }}</textarea>
+                        </div>
+
+                        <!-- Perawatan -->
+                        <div class="mt-4">
+                            <x-input-label for="perawatan" :value="__('Perawatan / Tindakan Medis')" />
+                            <textarea id="perawatan" name="perawatan" rows="4" class="block mt-1 w-full border-gray-300 focus:border-purple-500 focus:ring-purple-500 rounded-md shadow-sm" required>{{ old('perawatan') }}</textarea>
+                        </div>
+
+                        <!-- Catatan Dokter -->
+                        <div class="mt-4">
+                            <x-input-label for="catatan" :value="__('Catatan Tambahan')" />
+                            <textarea id="catatan" name="catatan" rows="3" class="block mt-1 w-full border-gray-300 focus:border-purple-500 focus:ring-purple-500 rounded-md shadow-sm">{{ old('catatan') }}</textarea>
+                        </div>
+                        
+                        <!-- Upload Foto -->
+                        <div class="mt-4">
+                            <x-input-label for="foto" :value="__('Upload Foto Pendukung (Bisa lebih dari satu)')" />
+                            <input id="foto" class="block mt-1 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" type="file" name="foto[]" multiple>
+                            {{-- TAMBAHKAN BARIS DI BAWAH INI --}}
+                            <p class="mt-1 text-xs text-gray-500">Tipe file yang diizinkan: JPG, PNG, GIF. Ukuran maks: 2MB.</p>
+                        </div>
+
+                        <!-- BAGIAN BARU: Tindakan & Biaya -->
+                        <div class="mt-6 border-t pt-6">
+                            <h3 class="text-lg font-medium text-gray-800">Tindakan & Biaya</h3>
+                            <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <template x-for="tindakan in tindakans" :key="tindakan.id">
+                                    <label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer">
+                                        <input type="checkbox" :value="tindakan.id" x-model="selectedTindakans" @change="calculateTotal" name="tindakans[]" class="h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500">
+                                        <span class="ml-3 text-sm text-gray-700" x-text="tindakan.nama_tindakan"></span>
+                                        <span class="ml-auto text-sm font-semibold text-gray-900" x-text="'Rp ' + new Intl.NumberFormat('id-ID').format(tindakan.harga)"></span>
+                                    </label>
+                                </template>
+                            </div>
+                            <div class="mt-4 p-4 bg-purple-50 rounded-lg flex justify-between items-center">
+                                <span class="font-bold text-lg text-purple-800">Total Estimasi Biaya:</span>
+                                <span class="font-bold text-xl text-purple-900" x-text="'Rp ' + new Intl.NumberFormat('id-ID').format(totalBiaya)"></span>
+                            </div>
+                        </div>
+
+                        <!-- Resep Obat -->
+                        <div class="mt-6 border-t pt-6" x-data="{ resep: [{nama_obat: '', dosis: '', instruksi: ''}] }">
+                            <h3 class="text-lg font-medium text-gray-800">Resep Obat</h3>
+                            <template x-for="(item, index) in resep" :key="index">
+                                <div class="p-4 mt-2 border rounded-md">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div>
+                                            <x-input-label ::for="'nama_obat_' + index" :value="__('Nama Obat')" />
+                                            <x-text-input ::id="'nama_obat_' + index" class="block mt-1 w-full" type="text" x-model="item.nama_obat" ::name="'resep[' + index + '][nama_obat]'" />
+                                        </div>
+                                        <div>
+                                            <x-input-label ::for="'dosis_' + index" :value="__('Dosis')" />
+                                            <x-text-input ::id="'dosis_' + index" class="block mt-1 w-full" type="text" x-model="item.dosis" ::name="'resep[' + index + '][dosis]'" />
+                                        </div>
+                                        <div>
+                                            <x-input-label ::for="'instruksi_' + index" :value="__('Instruksi')" />
+                                            <x-text-input ::id="'instruksi_' + index" class="block mt-1 w-full" type="text" x-model="item.instruksi" ::name="'resep[' + index + '][instruksi]'" />
+                                        </div>
+                                    </div>
+                                    <button type="button" @click="resep.splice(index, 1)" class="mt-2 text-red-500 text-sm hover:underline" x-show="index > 0">Hapus Resep</button>
+                                </div>
+                            </template>
+                            <button type="button" @click="resep.push({nama_obat: '', dosis: '', instruksi: ''})" class="mt-2 text-sm text-blue-600 hover:underline">+ Tambah Resep</button>
+                        </div>
+
+                        <div class="flex items-center justify-end mt-6 border-t pt-6">
+                            <x-primary-button class="bg-purple-600 hover:bg-purple-700">
+                                {{ __('Simpan & Lanjutkan ke Pembayaran') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\dokter\rekam-medis\index.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Ringkasan Rekam Medis per Pasien') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+
+                    <!-- Form Pencarian -->
+                    <form method="GET" action="{{ route('dokter.rekam-medis.index') }}" class="mb-6">
+                        <div class="flex items-center">
+                            <x-text-input type="text" name="search" placeholder="Cari nama pasien..."
+                                class="w-full md:w-1/3" value="{{ request('search') }}" />
+                            <x-primary-button class="ms-3">Cari</x-primary-button>
+                        </div>
+                    </form>
+
+                    <!-- Tabel Ringkasan -->
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-3 px-4 border-b text-left">Nama Pasien</th>
+                                    <th class="py-3 px-4 border-b text-center">Jumlah Kunjungan</th>
+                                    <th class="py-3 px-4 border-b text-left">Diagnosis Terakhir</th>
+                                    <th class="py-3 px-4 border-b text-left">Terakhir Kunjungan</th>
+                                    <th class="py-3 px-4 border-b text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($pasienRingkas as $row)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-3 px-4 border-b">{{ $row->nama_pasien }}</td>
+                                        <td class="py-3 px-4 border-b text-center">{{ $row->jumlah_kunjungan }}</td>
+                                        <td class="py-3 px-4 border-b">{{ Str::limit($row->diagnosis_terakhir, 50) }}</td>
+                                        <td class="py-3 px-4 border-b">
+                                            {{ \Carbon\Carbon::parse($row->terakhir_kunjungan)->translatedFormat('d F Y') }}
+                                        </td>
+                                        <td class="py-3 px-4 border-b text-center">
+                                            <a href="{{ route('dokter.rekam-medis.pasien', $row->pasien_id) }}"
+                                                class="text-purple-600 hover:text-purple-800 font-semibold">
+                                                Detail
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="py-4 px-4 text-center text-gray-500">
+                                            Tidak ada data rekam medis.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Paginasi -->
+                    <div class="mt-6">
+                        {{ $pasienRingkas->links() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\dokter\rekam-medis\pasien.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Riwayat Rekam Medis - ' . $pasien->name) }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+
+                    <!-- Tabel Rekam Medis -->
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-3 px-4 border-b text-left">Tanggal</th>
+                                    <th class="py-3 px-4 border-b text-left">Diagnosis</th>
+                                    <th class="py-3 px-4 border-b text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($rekamMedisList as $rekamMedis)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-3 px-4 border-b">{{ $rekamMedis->created_at->translatedFormat('d F Y') }}</td>
+                                        <td class="py-3 px-4 border-b">{{ Str::limit($rekamMedis->diagnosis, 50) }}</td>
+                                        <td class="py-3 px-4 border-b text-center">
+                                            <a href="{{ route('dokter.rekam-medis.show', $rekamMedis->id) }}"
+                                                class="text-purple-600 hover:text-purple-800 font-semibold">
+                                                Lihat Detail
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="3" class="py-4 px-4 text-center text-gray-500">
+                                            Belum ada riwayat rekam medis untuk pasien ini.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Paginasi -->
+                    <div class="mt-6">
+                        {{ $rekamMedisList->links() }}
+                    </div>
+
+                    <div class="mt-6 text-right">
+                        <a href="{{ route('dokter.rekam-medis.index') }}" class="text-purple-600 hover:text-purple-800 font-semibold">
+                            &larr; Kembali ke Ringkasan Pasien
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\dokter\rekam-medis\show.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Detail Rekam Medis') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 md:p-8 bg-white border-b border-gray-200">
+                    <!-- Informasi Pasien & Dokter -->
+                    <div class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b">
+                        <div>
+                            <h3 class="text-sm text-gray-500">Pasien</h3>
+                            <p class="font-bold text-lg text-gray-800">{{ $rekamMedis->pemesanan->pasien->name }}</p>
+                        </div>
+                        <div>
+                            <h3 class="text-sm text-gray-500">Tanggal Perawatan</h3>
+                            <p class="font-bold text-lg text-gray-800">{{ \Carbon\Carbon::parse($rekamMedis->created_at)->translatedFormat('d F Y') }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Detail Medis -->
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-semibold text-gray-700">Diagnosis</h4>
+                            <p class="mt-1 text-gray-600">{{ $rekamMedis->diagnosis }}</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-700">Perawatan</h4>
+                            <p class="mt-1 text-gray-600">{{ $rekamMedis->perawatan }}</p>
+                        </div>
+                        @if($rekamMedis->catatan)
+                        <div>
+                            <h4 class="font-semibold text-gray-700">Catatan Tambahan</h4>
+                            <p class="mt-1 text-gray-600">{{ $rekamMedis->catatan }}</p>
+                        </div>
+                        @endif
+                    </div>
+
+                    <!-- Rincian Biaya -->
+                    @if($rekamMedis->tindakan->isNotEmpty())
+                    <div class="mt-6 border-t pt-6">
+                        <h4 class="text-lg font-semibold mb-4 text-gray-800">Tindakan & Biaya</h4>
+                        <div class="space-y-2 mb-4">
+                            @foreach($rekamMedis->tindakan as $tindakan)
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">{{ $tindakan->nama_tindakan }}</span>
+                                <span class="font-medium text-gray-800">Rp {{ number_format($tindakan->pivot->harga_saat_itu, 0, ',', '.') }}</span>
+                            </div>
+                            @endforeach
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                            <span class="font-bold text-purple-800">Total Biaya</span>
+                            <span class="font-bold text-lg text-purple-900">Rp {{ number_format($rekamMedis->tindakan->sum('pivot.harga_saat_itu'), 0, ',', '.') }}</span>
+                        </div>
+                    </div>
+                    @endif
+
+                    <!-- Resep Obat -->
+                    @if($rekamMedis->resep->isNotEmpty())
+                    <div class="mt-6 border-t pt-6">
+                        <h4 class="text-lg font-semibold mb-4 text-gray-800">Resep Obat</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600">
+                            @foreach($rekamMedis->resep as $item)
+                                <li><strong>{{ $item->nama_obat }}</strong> ({{ $item->dosis }}) - {{ $item->instruksi }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+
+                    <!-- Foto Pendukung -->
+                    @if($rekamMedis->foto->isNotEmpty())
+                    <div class="mt-6 border-t pt-6">
+                        <h4 class="text-lg font-semibold mb-4 text-gray-800">Foto Pendukung</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            @foreach($rekamMedis->foto as $foto)
+                                <a href="{{ asset('storage/' . $foto->path_foto) }}" target="_blank">
+                                    <img src="{{ asset('storage/' . $foto->path_foto) }}" alt="Foto Rekam Medis" class="rounded-lg object-cover w-full h-32 hover:opacity-80 transition">
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+
+                    <div class="mt-8 border-t pt-6 text-right">
+                        <a href="{{ route('dokter.rekam-medis.index') }}" class="text-purple-600 hover:text-purple-800 font-semibold">
+                            &larr; Kembali ke Riwayat
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\dokter\dashboard.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Dashboard Dokter') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <x-notification />
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <h3 class="text-lg font-semibold mb-4">Antrian Pasien Hari Ini ({{ \Carbon\Carbon::now()->translatedFormat('d F Y') }})</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-200">
+                                <tr>
+                                    <th class="py-2 px-4 border-b">Waktu</th>
+                                    <th class="py-2 px-4 border-b">Nama Pasien & Keluhan</th> {{-- Ubah Judul Kolom --}}
+                                    <th class="py-2 px-4 border-b">Status</th>
+                                    <th class="py-2 px-4 border-b">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($pemesananHariIni as $pemesanan)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-2 px-4 border-b align-top">{{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</td>
+                                        <td class="py-2 px-4 border-b align-top">
+                                            {{-- Tampilkan Nama Pasien --}}
+                                            <div class="font-semibold">{{ $pemesanan->pasien->name }}</div>
+                                            {{-- Tampilkan Keluhan Awal --}}
+                                            @if($pemesanan->tindakanAwal->isNotEmpty())
+                                                <div class="text-xs text-gray-600 mt-1">
+                                                    Keluhan: 
+                                                    @foreach($pemesanan->tindakanAwal as $tindakan)
+                                                        <span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full">{{ $tindakan->nama_tindakan }}</span>
+                                                    @endforeach
+                                                </div>
+                                            @endif
+                                        </td>
+                                        <td class="py-2 px-4 border-b align-top">{{ $pemesanan->status }}</td>
+                                        <td class="py-2 px-4 border-b align-top">
+                                            <a href="{{ route('dokter.rekam-medis.create', ['id_pemesanan' => $pemesanan->id]) }}" class="text-green-600 hover:text-green-900 font-semibold">
+                                                Proses
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="py-4 px-4 text-center">Tidak ada antrian untuk hari ini.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\layouts\app.blade.php =====
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{ $header_scripts ?? '' }}
+</head>
+
+<body x-data="{ sidebarOpen: false }" class="font-sans antialiased bg-gray-100">
+    <div class="min-h-screen flex">
+
+        <!-- Sidebar -->
+        <div :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+            class="fixed inset-y-0 left-0 w-64 z-30 bg-white border-r border-gray-200 transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0 md:z-auto">
+            @include('layouts.navigation')
+        </div>
+
+        <!-- Overlay -->
+        <div x-show="sidebarOpen" @click="sidebarOpen = false" x-cloak
+            class="fixed inset-0 bg-black bg-opacity-25 z-20 md:hidden"></div>
+
+        <!-- Main content -->
+        <div class="flex-1 flex flex-col w-full">
+
+            <!-- Mobile topbar -->
+            <header class="bg-white border-b px-4 py-3 flex items-center justify-between md:hidden relative">
+                <!-- Tombol hamburger -->
+                <button @click="sidebarOpen = true" class="text-gray-500 focus:outline-none z-10">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+
+                <!-- Judul di tengah -->
+                <div class="absolute left-1/2 transform -translate-x-1/2 text-lg font-bold text-gray-800">
+                    {{ config('app.name', 'MY APP') }}
+                </div>
+            </header>
+
+
+            <!-- Optional header (desktop only) -->
+            @isset($header)
+                <header class="bg-white shadow hidden md:block">
+                    <div class="px-6 py-7">
+                        {{ $header }}
+                    </div>
+                </header>
+            @endisset
+
+            <!-- Page Content -->
+            <main class="flex-1 p-6">
+                {{ $slot }}
+            </main>
+        </div>
+    </div>
+</body>
+
+</html>
+
+===== resources\views\layouts\guest.blade.php =====
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
+    <style>
+        .bg-gradient-purple-auth {
+            background: linear-gradient(135deg, #8B5CF6, #5B21B6);
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-900 antialiased">
+    <div class="min-h-screen grid grid-cols-1 md:grid-cols-2">
+        <!-- Kolom Kiri (Branding) -->
+        <div class="hidden md:flex flex-col justify-center items-center p-12 bg-gradient-purple-auth text-white text-center">
+            <a href="/" class="flex items-center mb-6 text-3xl font-bold">
+                <svg class="h-10 w-10 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                   <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                </svg>
+                Deliyana Dental Care
+            </a>
+            <p class="max-w-md">
+                Memberikan layanan terbaik untuk senyum sehat Anda. Daftar atau masuk untuk mengatur janji temu Anda dengan mudah.
+            </p>
+            <img src="https://placehold.co/400x300/FFFFFF/6D28D9?text=Ilustrasi+Gigi" alt="Ilustrasi Klinik Gigi" class="mt-8 rounded-lg">
+        </div>
+
+        <!-- Kolom Kanan (Form) -->
+        <div class="flex flex-col justify-center items-center p-6 sm:p-12 bg-slate-50">
+            <div class="w-full sm:max-w-md">
+                {{ $slot }}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+===== resources\views\layouts\navigation.blade.php =====
+<aside class="h-full flex flex-col bg-white border-r border-gray-200 md:h-screen md:sticky md:top-0">
+    <!-- Logo -->
+    <div class="p-6 border-b border-gray-200 flex items-center gap-3">
+        <a href="{{ route('dashboard') }}" class="flex items-center">
+            <svg class="h-8 w-8 text-purple-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+               <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+            </svg>
+            <span class="ml-2 text-1xl font-bold text-purple-800">Deliyana Dental Care</span>
+        </a>
+    </div>
+
+    <!-- Nav Links -->
+    <nav class="flex-1 px-4 py-6 space-y-2">
+        @if (Auth::user()->peran == 'admin')
+            {{-- Menu untuk Admin --}}
+            <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                <span>{{ __('Dashboard') }}</span>
+            </x-nav-link>
+            <x-nav-link :href="route('admin.pasien.index')" :active="request()->routeIs('admin.pasien.*')">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M15 21v-2a6 6 0 00-12 0v2"></path></svg>
+                <span>{{ __('Kelola Pasien') }}</span>
+            </x-nav-link>
+            <x-nav-link :href="route('admin.dokter.index')" :active="request()->routeIs('admin.dokter.*')">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                <span>{{ __('Kelola Dokter') }}</span>
+            </x-nav-link>
+            <x-nav-link :href="route('admin.jadwal.index')" :active="request()->routeIs('admin.jadwal.*')">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <span>{{ __('Kelola Jadwal') }}</span>
+            </x-nav-link>
+            <x-nav-link :href="route('admin.pemesanan.index')" :active="request()->routeIs('admin.pemesanan.*')">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                <span>{{ __('Kelola Pemesanan') }}</span>
+            </x-nav-link>
+            <x-nav-link :href="route('admin.tindakan.index')" :active="request()->routeIs('admin.tindakan.*')">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                <span>{{ __('Kelola Tindakan') }}</span>
+            </x-nav-link>
+            <x-nav-link :href="route('admin.pembayaran.index')" :active="request()->routeIs('admin.pembayaran.*')">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                <span>{{ __('Kelola Pembayaran') }}</span>
+            </x-nav-link>
+            <x-nav-link :href="route('admin.laporan.index')" :active="request()->routeIs('admin.laporan.*')">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                <span>{{ __('Laporan Klinik') }}</span>
+            </x-nav-link>
+            <x-nav-link :href="route('admin.obat.index')" :active="request()->routeIs('admin.obat.*')">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                <span>{{ __('Kelola Obat') }}</span>
+            </x-nav-link>
+        @elseif (Auth::user()->peran == 'dokter')
+            {{-- Menu untuk Dokter --}}
+            <x-nav-link :href="route('dokter.dashboard')" :active="request()->routeIs('dokter.dashboard')">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                <span>{{ __('Dashboard') }}</span>
+            </x-nav-link>
+            <x-nav-link :href="route('dokter.jadwal.index')" :active="request()->routeIs('dokter.jadwal.*')">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <span>{{ __('Jadwal Saya') }}</span>
+            </x-nav-link>
+            <x-nav-link :href="route('dokter.rekam-medis.index')" :active="request()->routeIs('dokter.rekam-medis.*')">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3h2m-4 3h2m-4 3h2m-4 3h2"></path></svg>
+                <span>{{ __('Riwayat Rekam Medis') }}</span>
+            </x-nav-link>
+
+        @elseif (Auth::user()->peran == 'pasien')
+            {{-- Menu untuk Pasien --}}
+            <x-nav-link :href="route('pasien.dashboard')" :active="request()->routeIs('pasien.dashboard')">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                <span>{{ __('Dashboard') }}</span>
+            </x-nav-link>
+            <x-nav-link :href="route('pasien.pemesanan.create')" :active="request()->routeIs('pasien.pemesanan.create')">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span>{{ __('Buat Pemesanan Baru') }}</span>
+            </x-nav-link>
+            <x-nav-link :href="route('pasien.pemesanan.index')" :active="request()->routeIs('pasien.pemesanan.index')">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                <span>{{ __('Riwayat Pemesanan') }}</span>
+            </x-nav-link>
+        @endif
+    </nav>
+    
+    <!-- User Dropdown -->
+    <div class="px-4 py-4 border-t border-gray-200">
+        <div x-data="{ open: false }" class="relative">
+            <!-- Tombol Dropdown -->
+            <button @click="open = !open"
+                class="w-full flex items-center justify-between px-4 py-2 text-sm font-medium text-left bg-gray-50 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                <span>{{ Auth::user()->name }}</span>
+                <svg :class="{ 'rotate-180': open }" class="w-4 h-4 transform transition-transform" fill="none"
+                    stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+
+            <!-- Menu Dropdown (muncul ke atas) -->
+            <div x-show="open" 
+                 @click.away="open = false" 
+                 x-cloak 
+                 x-transition:enter="transition ease-out duration-100"
+                 x-transition:enter-start="opacity-0 scale-95"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-75"
+                 x-transition:leave-start="opacity-100 scale-100"
+                 x-transition:leave-end="opacity-0 scale-95"
+                 class="absolute bottom-full w-full mb-2 bg-white rounded-md shadow-lg border text-sm text-gray-700">
+                
+                <a href="{{ route('profile.edit') }}"
+                    class="block w-full text-left px-4 py-2 hover:bg-gray-100 rounded-t-md">
+                    {{ __('Profile') }}
+                </a>
+
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                        class="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 hover:text-red-700 rounded-b-md">
+                        {{ __('Log Out') }}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</aside>
+
+===== resources\views\pasien\pemesanan\create.blade.php =====
+<x-app-layout>
+    {{-- Tambahkan CSS Tom Select di header --}}
+    <x-slot name="header_scripts">
+        <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+    </x-slot>
+
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Buat Pemesanan Baru') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 md:p-8" 
+                 x-data="bookingForm()">
+                
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">Formulir Janji Temu</h3>
+                <x-notification />
+
+                <form method="POST" action="{{ route('pasien.pemesanan.store') }}">
+                    @csrf
+                    
+                    {{-- LANGKAH 1: DATA DIRI --}}
+                    <div x-show="step === 1" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform -translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0">
+                        <h4 class="text-lg font-semibold text-gray-700 border-b pb-2 mb-4">Langkah 1: Data Diri Pasien</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <x-input-label for="nama_pasien_booking" value="Nama Pasien" />
+                                <x-text-input id="nama_pasien_booking" class="block mt-1 w-full" type="text" name="nama_pasien_booking" x-model="formData.nama_pasien_booking" required />
+                            </div>
+                            <div>
+                                <x-input-label for="nik" value="NIK" />
+                                <x-text-input id="nik" class="block mt-1 w-full" type="text" name="nik" x-model="formData.nik" />
+                            </div>
+                            <div class="md:col-span-2">
+                                <x-input-label for="status_pasien" value="Status Pasien" />
+                                <select id="status_pasien" name="status_pasien" x-model="formData.status_pasien" class="block mt-1 w-full border-gray-300 focus:border-purple-500 focus:ring-purple-500 rounded-md shadow-sm" required>
+                                    <option value="">-- Pilih Status --</option>
+                                    <option value="BPJS">BPJS</option>
+                                    <option value="Umum">Umum</option>
+                                    <option value="Inhealth">Inhealth</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex justify-end mt-6">
+                            <button type="button" @click="nextStep()" :disabled="!isStep1Complete()" class="px-6 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 disabled:bg-gray-400">
+                                Lanjutkan
+                            </button>
+                        </div>
+                    </div>
+
+                    {{-- LANGKAH 2: JADWAL & KELUHAN --}}
+                    <div x-show="step === 2" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0">
+                        <h4 class="text-lg font-semibold text-gray-700 border-b pb-2 mb-4">Langkah 2: Pilih Jadwal & Keluhan</h4>
+                        
+                        <!-- Pilih Dokter -->
+                        <div class="mb-6">
+                            <x-input-label value="Pilih Dokter" />
+                            <select x-model="selectedDokter" @change="fetchJadwalDokter" name="id_dokter" class="block mt-1 w-full border-gray-300 focus:border-purple-500 focus:ring-purple-500 rounded-md shadow-sm">
+                                <option value="">-- Silakan Pilih Dokter --</option>
+                                @foreach($dokters as $dokter)
+                                    <option value="{{ $dokter->id }}">{{ $dokter->user->name }} ({{ $dokter->spesialisasi }})</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Pilih Tanggal -->
+                        <div class="mb-6" x-show="selectedDokter" x-transition>
+                            <x-input-label value="Pilih Tanggal" />
+                            <input type="date" x-model="selectedTanggal" @change="fetchSlotWaktu" name="tanggal_pesan" :min="today" class="block mt-1 w-full border-gray-300 focus:border-purple-500 focus:ring-purple-500 rounded-md shadow-sm">
+                        </div>
+
+                        <!-- Pilih Jam -->
+                        <div class="mb-6" x-show="selectedTanggal && !loadingSlot" x-transition>
+                            <x-input-label value="Pilih Jam Tersedia" />
+                            <div x-show="availableSlots.length > 0" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 mt-1">
+                                <template x-for="slot in availableSlots" :key="slot">
+                                    <label :class="{'bg-purple-600 text-white': selectedSlot === slot, 'bg-gray-100 hover:bg-purple-100': selectedSlot !== slot}" class="cursor-pointer text-center p-3 rounded-md transition-colors duration-200">
+                                        <input type="radio" x-model="selectedSlot" name="waktu_pesan" :value="slot" class="hidden">
+                                        <span x-text="slot"></span>
+                                    </label>
+                                </template>
+                            </div>
+                            <div x-show="availableSlots.length === 0 && selectedTanggal && !loadingSlot" class="text-sm text-red-500 p-3 bg-red-50 rounded-md mt-1">
+                                Tidak ada slot tersedia. Silakan pilih tanggal lain.
+                            </div>
+                        </div>
+
+                        <!-- Keluhan Awal & Catatan -->
+                        <div x-show="selectedSlot" x-transition>
+                            <div class="mb-6">
+                                <x-input-label for="tindakan_awal" value="Keluhan / Tindakan Awal (Opsional)" />
+                                <select name="tindakan_awal[]" id="tindakan_awal" multiple>
+                                    @foreach($tindakans as $tindakan)
+                                        <option value="{{ $tindakan->id }}" data-harga="{{ $tindakan->harga }}">{{ $tindakan->nama_tindakan }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-6">
+                                <x-input-label for="catatan" value="Catatan Tambahan (Opsional)" />
+                                <textarea name="catatan" id="catatan" rows="3" class="block mt-1 w-full border-gray-300 focus:border-purple-500 focus:ring-purple-500 rounded-md shadow-sm"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between mt-6 border-t pt-6">
+                            <button type="button" @click="step = 1" class="text-sm text-gray-600 hover:text-gray-900">&larr; Kembali</button>
+                            <x-primary-button type="submit" ::disabled="!isFormComplete()" class="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400">
+                                Buat Janji Temu
+                            </x-primary-button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        // Inisialisasi Tom Select
+        document.addEventListener('DOMContentLoaded', function() {
+            new TomSelect('#tindakan_awal', {
+                plugins: ['remove_button'],
+                render: {
+                    // Custom render untuk menampilkan harga
+                    option: function(data, escape) {
+                        const harga = data.harga ? new Intl.NumberFormat('id-ID').format(data.harga) : 'N/A';
+                        return `<div>
+                                    <span class="font-medium">${escape(data.text)}</span>
+                                    <span class="text-sm text-gray-500 ml-2">(Rp ${harga})</span>
+                                </div>`;
+                    },
+                    item: function(data, escape) {
+                        return `<div>${escape(data.text)}</div>`;
+                    }
+                }
+            });
+        });
+        
+        function bookingForm() {
+            return {
+                step: 1,
+                formData: {
+                    nama_pasien_booking: '{{ Auth::user()->name }}',
+                    nik: '{{ Auth::user()->biodata->nik ?? '' }}',
+                    status_pasien: '',
+                },
+                selectedDokter: '',
+                jadwalDokter: [],
+                loadingJadwal: '',
+                selectedTanggal: '',
+                today: new Date().toISOString().split('T')[0],
+                availableSlots: [],
+                loadingSlot: '',
+                selectedSlot: '',
+                isStep1Complete() {
+                    return this.formData.nama_pasien_booking && this.formData.status_pasien;
+                },
+                nextStep() {
+                    if (this.isStep1Complete()) {
+                        this.step = 2;
+                    } else {
+                        alert('Harap isi Nama Pasien dan Status Pasien untuk melanjutkan.');
+                    }
+                },
+                isFormComplete() {
+                    return this.isStep1Complete() && this.selectedDokter && this.selectedTanggal && this.selectedSlot;
+                },
+
+                fetchJadwalDokter() {
+                    this.resetTanggalDanSlot();
+                    if (!this.selectedDokter) return;
+
+                    this.loadingJadwal = 'Memuat jadwal dokter...';
+                    fetch(`/pasien/get-jadwal-dokter/${this.selectedDokter}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            this.jadwalDokter = data;
+                            this.loadingJadwal = '';
+                        })
+                        .catch(() => {
+                            this.loadingJadwal = 'Gagal memuat jadwal.';
+                        });
+                },
+
+                fetchSlotWaktu() {
+                    this.availableSlots = [];
+                    this.selectedSlot = '';
+                    if (!this.selectedTanggal || !this.selectedDokter) return;
+
+                    this.loadingSlot = 'Mencari slot waktu...';
+                    fetch(`/pasien/get-slot-waktu/${this.selectedDokter}/${this.selectedTanggal}`)
+                        .then(response => {
+                            if (!response.ok) throw new Error('Jadwal tidak ditemukan');
+                            return response.json();
+                        })
+                        .then(data => {
+                            this.availableSlots = data;
+                            this.loadingSlot = '';
+                        })
+                        .catch(() => {
+                            this.loadingSlot = '';
+                        });
+                },
+                
+                isFormComplete() {
+                    return this.selectedDokter && this.selectedTanggal && this.selectedSlot;
+                },
+
+                resetTanggalDanSlot() {
+                    this.selectedTanggal = '';
+                    this.availableSlots = [];
+                    this.selectedSlot = '';
+                }
+            }
+        }
+    </script>
+</x-app-layout>
+
+===== resources\views\pasien\pemesanan\index.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Riwayat Pemesanan Saya') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <x-notification />
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-200">
+                                <tr>
+                                    <th class="py-2 px-4 border-b">Tanggal</th>
+                                    <th class="py-2 px-4 border-b">Dokter</th>
+                                    <th class="py-2 px-4 border-b">Status</th>
+                                    <th class="py-2 px-4 border-b">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($pemesanans as $pemesanan)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-2 px-4 border-b">{{ \Carbon\Carbon::parse($pemesanan->tanggal_pesan)->translatedFormat('d M Y') }} - {{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</td>
+                                        <td class="py-2 px-4 border-b">{{ $pemesanan->dokter->user->name }}</td>
+                                        <td class="py-2 px-4 border-b">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                @if($pemesanan->status == 'Selesai') bg-green-100 text-green-800 
+                                                @elseif($pemesanan->status == 'Dibatalkan') bg-red-100 text-red-800
+                                                @else bg-blue-100 text-blue-800 @endif">
+                                                {{ $pemesanan->status }}
+                                            </span>
+                                        </td>
+                                        <td class="py-2 px-4 border-b">
+                                            @if($pemesanan->status == 'Selesai' && $pemesanan->rekamMedis)
+                                            <a href="{{ route('pasien.rekamMedis.show', $pemesanan->rekamMedis->id) }}" class="text-blue-600 hover:text-blue-900">Lihat Rekam Medis</a>
+                                            @elseif(in_array($pemesanan->status, ['Dipesan', 'Dikonfirmasi']))
+                                                <form action="{{ route('pasien.pemesanan.destroy', $pemesanan->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan pemesanan ini?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-500 hover:text-red-700">Batalkan</button>
+                                                </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="py-4 px-4 text-center">Anda belum pernah membuat pemesanan.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\pasien\rekam-medis\show.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Detail Riwayat Kunjungan') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 md:p-8 bg-white border-b border-gray-200">
+                    <!-- Informasi Kunjungan -->
+                    <div class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b">
+                        <div>
+                            <h3 class="text-sm text-gray-500">Tanggal Perawatan</h3>
+                            <p class="font-bold text-lg text-gray-800">{{ \Carbon\Carbon::parse($rekamMedis->created_at)->translatedFormat('d F Y') }}</p>
+                        </div>
+                        <div>
+                            <h3 class="text-sm text-gray-500">Dokter</h3>
+                            <p class="font-bold text-lg text-gray-800">{{ $rekamMedis->pemesanan->dokter->user->name }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Detail Medis -->
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-semibold text-gray-700">Diagnosis</h4>
+                            <p class="mt-1 text-gray-600">{{ $rekamMedis->diagnosis }}</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-700">Perawatan</h4>
+                            <p class="mt-1 text-gray-600">{{ $rekamMedis->perawatan }}</p>
+                        </div>
+                        @if($rekamMedis->catatan)
+                        <div>
+                            <h4 class="font-semibold text-gray-700">Catatan Dokter</h4>
+                            <p class="mt-1 text-gray-600">{{ $rekamMedis->catatan }}</p>
+                        </div>
+                        @endif
+                    </div>
+
+                    <!-- Rincian Pembayaran -->
+                    @if($rekamMedis->pemesanan->pembayaran)
+                    <div class="mt-6 border-t pt-6">
+                        <h4 class="text-lg font-semibold mb-4 text-gray-800">Rincian Pembayaran</h4>
+                        <div class="space-y-2 mb-4">
+                            @foreach($rekamMedis->tindakan as $tindakan)
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">{{ $tindakan->nama_tindakan }}</span>
+                                <span class="font-medium text-gray-800">Rp {{ number_format($tindakan->pivot->harga_saat_itu, 0, ',', '.') }}</span>
+                            </div>
+                            @endforeach
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                            <span class="font-bold text-purple-800">Total Biaya</span>
+                            <span class="font-bold text-lg text-purple-900">Rp {{ number_format($rekamMedis->pemesanan->pembayaran->total_biaya, 0, ',', '.') }}</span>
+                        </div>
+                        <div class="mt-4 text-right">
+                            <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                LUNAS
+                            </span>
+                        </div>
+                    </div>
+                    @endif
+
+                    <div class="mt-8 border-t pt-6 text-right">
+                        <a href="{{ route('pasien.pemesanan.index') }}" class="text-purple-600 hover:text-purple-800 font-semibold">
+                            &larr; Kembali ke Riwayat Pemesanan
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\pasien\dashboard.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Selamat Datang, ') . Auth::user()->name }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <h3 class="text-lg font-semibold mb-4">Pemesanan Aktif Anda</h3>
+                    @if($pemesananAktif->isNotEmpty())
+                        @foreach($pemesananAktif as $pemesanan)
+                            <div class="border p-4 rounded-lg mb-4">
+                                <p><strong>Dokter:</strong> {{ $pemesanan->dokter->user->name }}</p>
+                                <p><strong>Jadwal:</strong> {{ \Carbon\Carbon::parse($pemesanan->tanggal_pesan)->translatedFormat('l, d F Y') }} pukul {{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</p>
+                                <p><strong>Status:</strong> <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">{{ $pemesanan->status }}</span></p>
+                            </div>
+                        @endforeach
+                    @else
+                        <p>Anda tidak memiliki pemesanan yang aktif saat ini.</p>
+                        <a href="{{ route('pasien.pemesanan.create') }}" class="inline-block mt-4 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">
+                            Buat Pemesanan Baru
+                        </a>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\profile\partials\delete-user-form.blade.php =====
+<section class="space-y-6">
+    <header>
+        <h2 class="text-lg font-medium text-gray-900">
+            {{ __('Delete Account') }}
+        </h2>
+
+        <p class="mt-1 text-sm text-gray-600">
+            {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }}
+        </p>
+    </header>
+
+    <x-danger-button
+        x-data=""
+        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
+    >{{ __('Delete Account') }}</x-danger-button>
+
+    <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
+        <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
+            @csrf
+            @method('delete')
+
+            <h2 class="text-lg font-medium text-gray-900">
+                {{ __('Are you sure you want to delete your account?') }}
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-600">
+                {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
+            </p>
+
+            <div class="mt-6">
+                <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
+
+                <x-text-input
+                    id="password"
+                    name="password"
+                    type="password"
+                    class="mt-1 block w-3/4"
+                    placeholder="{{ __('Password') }}"
+                />
+
+                <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
+            </div>
+
+            <div class="mt-6 flex justify-end">
+                <x-secondary-button x-on:click="$dispatch('close')">
+                    {{ __('Cancel') }}
+                </x-secondary-button>
+
+                <x-danger-button class="ms-3">
+                    {{ __('Delete Account') }}
+                </x-danger-button>
+            </div>
+        </form>
+    </x-modal>
+</section>
+
+===== resources\views\profile\partials\update-password-form.blade.php =====
+<section>
+    <header>
+        <h2 class="text-lg font-medium text-gray-900">
+            {{ __('Update Password') }}
+        </h2>
+
+        <p class="mt-1 text-sm text-gray-600">
+            {{ __('Ensure your account is using a long, random password to stay secure.') }}
+        </p>
+    </header>
+
+    <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
+        @csrf
+        @method('put')
+
+        <div>
+            <x-input-label for="update_password_current_password" :value="__('Current Password')" />
+            <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
+            <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
+        </div>
+
+        <div>
+            <x-input-label for="update_password_password" :value="__('New Password')" />
+            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+            <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
+        </div>
+
+        <div>
+            <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
+            <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+            <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        <div class="flex items-center gap-4">
+            <x-primary-button>{{ __('Save') }}</x-primary-button>
+
+            @if (session('status') === 'password-updated')
+                <p
+                    x-data="{ show: true }"
+                    x-show="show"
+                    x-transition
+                    x-init="setTimeout(() => show = false, 2000)"
+                    class="text-sm text-gray-600"
+                >{{ __('Saved.') }}</p>
+            @endif
+        </div>
+    </form>
+</section>
+
+===== resources\views\profile\partials\update-profile-information-form.blade.php =====
+<section>
+    <header>
+        <h2 class="text-lg font-medium text-gray-900">
+            {{ __('Profile Information') }}
+        </h2>
+
+        <p class="mt-1 text-sm text-gray-600">
+            {{ __("Update your account's profile information and email address.") }}
+        </p>
+    </header>
+
+    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
+        @csrf
+    </form>
+
+    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+        @csrf
+        @method('patch')
+
+        <div>
+            <x-input-label for="name" :value="__('Name')" />
+            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
+            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+        </div>
+
+        <div>
+            <x-input-label for="email" :value="__('Email')" />
+            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
+            <x-input-error class="mt-2" :messages="$errors->get('email')" />
+
+            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
+                <div>
+                    <p class="text-sm mt-2 text-gray-800">
+                        {{ __('Your email address is unverified.') }}
+
+                        <button form="send-verification" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            {{ __('Click here to re-send the verification email.') }}
+                        </button>
+                    </p>
+
+                    @if (session('status') === 'verification-link-sent')
+                        <p class="mt-2 font-medium text-sm text-green-600">
+                            {{ __('A new verification link has been sent to your email address.') }}
+                        </p>
+                    @endif
+                </div>
+            @endif
+        </div>
+
+        <div class="flex items-center gap-4">
+            <x-primary-button>{{ __('Save') }}</x-primary-button>
+
+            @if (session('status') === 'profile-updated')
+                <p
+                    x-data="{ show: true }"
+                    x-show="show"
+                    x-transition
+                    x-init="setTimeout(() => show = false, 2000)"
+                    class="text-sm text-gray-600"
+                >{{ __('Saved.') }}</p>
+            @endif
+        </div>
+    </form>
+</section>
+
+===== resources\views\profile\edit.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Profile') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <div class="max-w-xl">
+                    @include('profile.partials.update-profile-information-form')
+                </div>
+            </div>
+
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <div class="max-w-xl">
+                    @include('profile.partials.update-password-form')
+                </div>
+            </div>
+
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <div class="max-w-xl">
+                    @include('profile.partials.delete-user-form')
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\dashboard.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Dashboard') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    {{ __("You're logged in!") }}
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\welcome.blade.php =====
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Deliyana Dental Care - Klinik Gigi Modern & Terpercaya</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Inline Styles & Scripts -->
+    <style>
+        /* Tema Warna */
+        .bg-gradient-purple { background: linear-gradient(90deg, #8B5CF6, #6D28D9); }
+        .text-purple-accent { color: #6D28D9; }
+        
+        /* Efek Underline Navigasi */
+        .nav-link-hover { position: relative; padding-bottom: 0.25rem; }
+        .nav-link-hover::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #8B5CF6;
+            transition: width 0.3s ease-in-out;
+        }
+        .nav-link-hover:hover::after { width: 100%; }
+
+        /* Efek Tombol Utama */
+        .cta-button-hover:hover {
+            background: linear-gradient(90deg, #A78BFA, #8B5CF6);
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3), 0 6px 6px rgba(139, 92, 246, 0.25);
+        }
+        
+        /* Animasi Fade-in */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased bg-slate-50 text-gray-800" x-data>
+    <div class="min-h-screen">
+        <!-- Header -->
+        <header class="bg-white/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <a href="#beranda" class="flex items-center">
+                        <svg class="h-8 w-8 text-purple-accent mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                        </svg>
+                        <span class="text-xl font-bold text-gray-800">Deliyana Dental Care</span>
+                    </a>
+                    <nav class="hidden md:flex items-center space-x-8">
+                        <a href="#layanan" class="nav-link-hover text-gray-600 hover:text-purple-accent transition duration-300">Layanan</a>
+                        <a href="#tentang" class="nav-link-hover text-gray-600 hover:text-purple-accent transition duration-300">Tentang Kami</a>
+                        <a href="#kontak" class="nav-link-hover text-gray-600 hover:text-purple-accent transition duration-300">Kontak</a>
+                    </nav>
+                    <div class="flex items-center space-x-4">
+                        @if (Route::has('login'))
+                            @auth
+                                <a href="{{ url('/dashboard') }}" class="px-5 py-2 text-sm font-medium text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 transition-all duration-300 transform hover:scale-105">Dashboard</a>
+                            @else
+                                <a href="{{ route('login') }}" class="hidden sm:block text-sm font-medium text-gray-600 hover:text-purple-accent transition duration-300">Log in</a>
+                                @if (Route::has('register'))
+                                    <a href="{{ route('register') }}" class="px-5 py-2 text-sm font-medium text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 transition-all duration-300 transform hover:scale-105">Daftar</a>
+                                @endif
+                            @endauth
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Hero Section -->
+            <section id="beranda" class="min-h-screen flex flex-col justify-center bg-white fade-in">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+                    <h1 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
+                        Senyum Sehat & Percaya Diri <br class="hidden md:block"> Dimulai di <span class="text-purple-accent">Sini</span>.
+                    </h1>
+                    <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-600">
+                        Deliyana Dental Care menyediakan layanan perawatan gigi terbaik dengan teknologi modern dan dokter berpengalaman untuk Anda dan keluarga.
+                    </p>
+                    <div class="mt-8">
+                        <a href="{{ route('register') }}" class="cta-button-hover px-8 py-3 text-lg font-semibold text-white bg-gradient-purple rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105">
+                            Buat Janji Temu Sekarang
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Layanan Section (Diperbarui) -->
+            <section id="layanan" class="min-h-screen flex flex-col justify-center py-20 bg-slate-50 fade-in">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Layanan Holistik untuk Anda</h2>
+                        <p class="mt-4 max-w-2xl mx-auto text-gray-600">Dari perawatan rutin hingga estetika, kami memiliki solusi lengkap untuk memastikan senyum Anda selalu dalam kondisi terbaik.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <!-- Service Card 1 -->
+                        <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-purple-200 hover:-translate-y-2 transition-all duration-300">
+                            <h3 class="text-xl font-bold mb-2 text-purple-accent">Perawatan Umum</h3>
+                            <ul class="space-y-2 text-gray-600">
+                                <li>Pembersihan Karang Gigi</li>
+                                <li>Penambalan Gigi</li>
+                                <li>Pencabutan Gigi</li>
+                                <li>Perawatan Saluran Akar</li>
+                            </ul>
+                        </div>
+                        <!-- Service Card 2 -->
+                        <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-purple-200 hover:-translate-y-2 transition-all duration-300">
+                            <h3 class="text-xl font-bold mb-2 text-purple-accent">Gigi Tiruan</h3>
+                            <ul class="space-y-2 text-gray-600">
+                                <li>Gigi Tiruan Lepasan</li>
+                                <li>Crown & Bridge (Mahkota)</li>
+                                <li>Implan Gigi</li>
+                                <li>Veneer</li>
+                            </ul>
+                        </div>
+                        <!-- Service Card 3 -->
+                        <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-purple-200 hover:-translate-y-2 transition-all duration-300">
+                            <h3 class="text-xl font-bold mb-2 text-purple-accent">Estetika Gigi</h3>
+                            <ul class="space-y-2 text-gray-600">
+                                <li>Pemutihan (Bleaching)</li>
+                                <li>Behel / Kawat Gigi</li>
+                                <li>Smile Makeover</li>
+                                <li>Dental SPA</li>
+                            </ul>
+                        </div>
+                        <!-- Service Card 4 -->
+                        <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-purple-200 hover:-translate-y-2 transition-all duration-300">
+                            <h3 class="text-xl font-bold mb-2 text-purple-accent">Bedah Minor</h3>
+                            <ul class="space-y-2 text-gray-600">
+                                <li>Odontektomi (Gigi Bungsu)</li>
+                                <li>Frenectomy</li>
+                                <li>Gingivektomi</li>
+                                <li>Kuretase</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tentang Kami Section (Diperbarui) -->
+            <section id="tentang" class="min-h-screen flex items-center bg-white py-20 fade-in">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                        <div class="order-2 md:order-1">
+                            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Komitmen Kami untuk <span class="text-purple-accent">Senyum Terbaik Anda</span></h2>
+                            <p class="text-gray-600 mb-6">Di Deliyana Dental Care, kami percaya bahwa setiap pasien berhak mendapatkan perawatan gigi yang tidak hanya berkualitas, tetapi juga nyaman dan personal. Kami menggabungkan keahlian, teknologi, dan keramahan untuk menciptakan pengalaman yang positif bagi Anda.</p>
+                            <div class="space-y-4">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center mr-4"><span class="text-purple-accent font-bold">1</span></div>
+                                    <div>
+                                        <h4 class="font-semibold">Dokter Berpengalaman</h4>
+                                        <p class="text-gray-600">Tim kami terdiri dari para profesional yang berdedikasi dan terus mengikuti perkembangan ilmu kedokteran gigi.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center mr-4"><span class="text-purple-accent font-bold">2</span></div>
+                                    <div>
+                                        <h4 class="font-semibold">Fasilitas Modern</h4>
+                                        <p class="text-gray-600">Menggunakan peralatan canggih untuk diagnosis yang presisi dan perawatan yang efektif serta minim rasa sakit.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center mr-4"><span class="text-purple-accent font-bold">3</span></div>
+                                    <div>
+                                        <h4 class="font-semibold">Lingkungan Nyaman</h4>
+                                        <p class="text-gray-600">Kami mendesain klinik kami agar terasa hangat dan menenangkan, mengurangi kecemasan Anda.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-1 md:order-2">
+                            <img src="https://placehold.co/600x700/8B5CF6/FFFFFF?text=Klinik+Kami" alt="Interior Klinik Deliyana Dental Care" class="rounded-xl shadow-2xl w-full h-auto object-cover">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer id="kontak" class="bg-gray-800 text-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="text-lg font-bold">Deliyana Dental Care</h3>
+                        <p class="mt-2 text-gray-400">Perawatan gigi profesional untuk senyum sehat keluarga Anda.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold">Kontak Kami</h3>
+                        <ul class="mt-2 space-y-2 text-gray-400">
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                Jl. Kesehatan Gigi No. 123, Kota Anda
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                                (021) 123-4567
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold">Jam Buka</h3>
+                        <ul class="mt-2 space-y-2 text-gray-400">
+                            <li>Senin - Jumat: 09:00 - 20:00</li>
+                            <li>Sabtu: 09:00 - 17:00</li>
+                            <li>Minggu: Tutup</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-8 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
+                    &copy; {{ date('Y') }} Deliyana Dental Care. All Rights Reserved.
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.fade-in');
+            
+            // Initial fade-in for the first section
+            setTimeout(() => {
+                sections.forEach(section => {
+                    // Check if the section is already in view on load
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom >= 0) {
+                        section.classList.add('is-visible');
+                    }
+                });
+            }, 100); // Small delay to ensure styles are applied
+
+            // Fade-in on scroll
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
+
+```
+
+
+## Entry Points & Main Configs Content
+```
+===== public\index.php =====
+<?php
+
+use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
+
+define('LARAVEL_START', microtime(true));
+
+// Determine if the application is in maintenance mode...
+if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
+    require $maintenance;
+}
+
+// Register the Composer autoloader...
+require __DIR__.'/../vendor/autoload.php';
+
+// Bootstrap Laravel and handle the request...
+/** @var Application $app */
+$app = require_once __DIR__.'/../bootstrap/app.php';
+
+$app->handleRequest(Request::capture());
+
+===== artisan =====
+#!/usr/bin/env php
+<?php
+
+use Illuminate\Foundation\Application;
+use Symfony\Component\Console\Input\ArgvInput;
+
+define('LARAVEL_START', microtime(true));
+
+// Register the Composer autoloader...
+require __DIR__.'/vendor/autoload.php';
+
+// Bootstrap Laravel and handle the command...
+/** @var Application $app */
+$app = require_once __DIR__.'/bootstrap/app.php';
+
+$status = $app->handleCommand(new ArgvInput);
+
+exit($status);
+
+===== resources\js\app.js =====
+import './bootstrap';
+
+import Alpine from 'alpinejs';
+
+window.Alpine = Alpine;
+
+Alpine.start();
+
+===== vite.config.js =====
+import { defineConfig } from 'vite';
+import laravel from 'laravel-vite-plugin';
+
+export default defineConfig({
+    plugins: [
+        laravel({
+            input: ['resources/css/app.css', 'resources/js/app.js'],
+            refresh: true,
+        }),
+    ],
+});
+
+===== config\app.php =====
+<?php
+
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Name
+    |--------------------------------------------------------------------------
+    |
+    | This value is the name of your application, which will be used when the
+    | framework needs to place the application's name in a notification or
+    | other UI elements where an application name needs to be displayed.
+    |
+    */
+
+    'name' => env('APP_NAME', 'Laravel'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Environment
+    |--------------------------------------------------------------------------
+    |
+    | This value determines the "environment" your application is currently
+    | running in. This may determine how you prefer to configure various
+    | services the application utilizes. Set this in your ".env" file.
+    |
+    */
+
+    'env' => env('APP_ENV', 'production'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Debug Mode
+    |--------------------------------------------------------------------------
+    |
+    | When your application is in debug mode, detailed error messages with
+    | stack traces will be shown on every error that occurs within your
+    | application. If disabled, a simple generic error page is shown.
+    |
+    */
+
+    'debug' => (bool) env('APP_DEBUG', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application URL
+    |--------------------------------------------------------------------------
+    |
+    | This URL is used by the console to properly generate URLs when using
+    | the Artisan command line tool. You should set this to the root of
+    | the application so that it's available within Artisan commands.
+    |
+    */
+
+    'url' => env('APP_URL', 'http://localhost'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Timezone
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the default timezone for your application, which
+    | will be used by the PHP date and date-time functions. The timezone
+    | is set to "UTC" by default as it is suitable for most use cases.
+    |
+    */
+
+    'timezone' => 'Asia/Makassar',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Locale Configuration
+    |--------------------------------------------------------------------------
+    |
+    | The application locale determines the default locale that will be used
+    | by Laravel's translation / localization methods. This option can be
+    | set to any locale for which you plan to have translation strings.
+    |
+    */
+
+    'locale' => env('APP_LOCALE', 'en'),
+
+    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
+
+    'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Encryption Key
+    |--------------------------------------------------------------------------
+    |
+    | This key is utilized by Laravel's encryption services and should be set
+    | to a random, 32 character string to ensure that all encrypted values
+    | are secure. You should do this prior to deploying the application.
+    |
+    */
+
+    'cipher' => 'AES-256-CBC',
+
+    'key' => env('APP_KEY'),
+
+    'previous_keys' => [
+        ...array_filter(
+            explode(',', env('APP_PREVIOUS_KEYS', ''))
+        ),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Maintenance Mode Driver
+    |--------------------------------------------------------------------------
+    |
+    | These configuration options determine the driver used to determine and
+    | manage Laravel's "maintenance mode" status. The "cache" driver will
+    | allow maintenance mode to be controlled across multiple machines.
+    |
+    | Supported drivers: "file", "cache"
+    |
+    */
+
+    'maintenance' => [
+        'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
+        'store' => env('APP_MAINTENANCE_STORE', 'database'),
+    ],
+
+];
+
+===== config\database.php =====
+<?php
+
+use Illuminate\Support\Str;
+
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Database Connection Name
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify which of the database connections below you wish
+    | to use as your default connection for database operations. This is
+    | the connection which will be utilized unless another connection
+    | is explicitly specified when you execute a query / statement.
+    |
+    */
+
+    'default' => env('DB_CONNECTION', 'sqlite'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Database Connections
+    |--------------------------------------------------------------------------
+    |
+    | Below are all of the database connections defined for your application.
+    | An example configuration is provided for each database system which
+    | is supported by Laravel. You're free to add / remove connections.
+    |
+    */
+
+    'connections' => [
+
+        'sqlite' => [
+            'driver' => 'sqlite',
+            'url' => env('DB_URL'),
+            'database' => env('DB_DATABASE', database_path('database.sqlite')),
+            'prefix' => '',
+            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
+            'busy_timeout' => null,
+            'journal_mode' => null,
+            'synchronous' => null,
+        ],
+
+        'mysql' => [
+            'driver' => 'mysql',
+            'url' => env('DB_URL'),
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'laravel'),
+            'username' => env('DB_USERNAME', 'root'),
+            'password' => env('DB_PASSWORD', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => env('DB_CHARSET', 'utf8mb4'),
+            'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
+        'mariadb' => [
+            'driver' => 'mariadb',
+            'url' => env('DB_URL'),
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'laravel'),
+            'username' => env('DB_USERNAME', 'root'),
+            'password' => env('DB_PASSWORD', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => env('DB_CHARSET', 'utf8mb4'),
+            'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
+        'pgsql' => [
+            'driver' => 'pgsql',
+            'url' => env('DB_URL'),
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '5432'),
+            'database' => env('DB_DATABASE', 'laravel'),
+            'username' => env('DB_USERNAME', 'root'),
+            'password' => env('DB_PASSWORD', ''),
+            'charset' => env('DB_CHARSET', 'utf8'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'search_path' => 'public',
+            'sslmode' => 'prefer',
+        ],
+
+        'sqlsrv' => [
+            'driver' => 'sqlsrv',
+            'url' => env('DB_URL'),
+            'host' => env('DB_HOST', 'localhost'),
+            'port' => env('DB_PORT', '1433'),
+            'database' => env('DB_DATABASE', 'laravel'),
+            'username' => env('DB_USERNAME', 'root'),
+            'password' => env('DB_PASSWORD', ''),
+            'charset' => env('DB_CHARSET', 'utf8'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            // 'encrypt' => env('DB_ENCRYPT', 'yes'),
+            // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
+        ],
+
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Migration Repository Table
+    |--------------------------------------------------------------------------
+    |
+    | This table keeps track of all the migrations that have already run for
+    | your application. Using this information, we can determine which of
+    | the migrations on disk haven't actually been run on the database.
+    |
+    */
+
+    'migrations' => [
+        'table' => 'migrations',
+        'update_date_on_publish' => true,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Redis Databases
+    |--------------------------------------------------------------------------
+    |
+    | Redis is an open source, fast, and advanced key-value store that also
+    | provides a richer body of commands than a typical key-value system
+    | such as Memcached. You may define your connection settings here.
+    |
+    */
+
+    'redis' => [
+
+        'client' => env('REDIS_CLIENT', 'phpredis'),
+
+        'options' => [
+            'cluster' => env('REDIS_CLUSTER', 'redis'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'persistent' => env('REDIS_PERSISTENT', false),
+        ],
+
+        'default' => [
+            'url' => env('REDIS_URL'),
+            'host' => env('REDIS_HOST', '127.0.0.1'),
+            'username' => env('REDIS_USERNAME'),
+            'password' => env('REDIS_PASSWORD'),
+            'port' => env('REDIS_PORT', '6379'),
+            'database' => env('REDIS_DB', '0'),
+        ],
+
+        'cache' => [
+            'url' => env('REDIS_URL'),
+            'host' => env('REDIS_HOST', '127.0.0.1'),
+            'username' => env('REDIS_USERNAME'),
+            'password' => env('REDIS_PASSWORD'),
+            'port' => env('REDIS_PORT', '6379'),
+            'database' => env('REDIS_CACHE_DB', '1'),
+        ],
+
+    ],
+
+];
+
+```
+
+== Selesai ==

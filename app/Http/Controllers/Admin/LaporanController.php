@@ -7,39 +7,108 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Pembayaran;
 use App\Models\Pemesanan;
+use Illuminate\Support\Facades\DB;
 
 class LaporanController extends Controller
 {
     public function index(Request $request)
     {
-        // Tentukan rentang tanggal default (bulan ini)
-        $tanggalMulai = $request->input('tanggal_mulai', Carbon::now()->startOfMonth()->toDateString());
-        $tanggalSelesai = $request->input('tanggal_selesai', Carbon::now()->endOfMonth()->toDateString());
+        // [TETAP] Logika query dimulai dari Pemesanan.
+        $query = Pemesanan::query()
+            // --- [FIX] Start: Menggunakan Nama Kolom yang Benar ---
+            // Mengganti 'pembayaran.id_pemesanan' menjadi 'pembayaran.pemesanan_id'
+            ->leftJoin('pembayaran', 'pemesanan.id', '=', 'pembayaran.pemesanan_id')
+            // --- [FIX] End ---
+            ->with(['pasien', 'dokter.user']);
 
-        // 1. Query untuk Laporan Pendapatan
-        $laporanPembayaran = Pembayaran::where('status', 'Lunas')
-            ->whereBetween('tanggal_bayar', [$tanggalMulai, $tanggalSelesai . ' 23:59:59'])
-            ->with('pemesanan.pasien', 'pemesanan.dokter.user')
-            ->latest('tanggal_bayar')
+        // [TETAP] Filter berdasarkan status pemesanan
+        if ($request->filled('status')) {
+            $query->where('pemesanan.status', $request->status);
+        }
+
+        // [TETAP] Filter berdasarkan rentang tanggal
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $query->where(function ($q) use ($request) {
+                $q->whereBetween('pembayaran.tanggal_bayar', [$request->start_date, $request->end_date])
+                  ->orWhereBetween(DB::raw('DATE(pemesanan.created_at)'), [$request->start_date, $request->end_date]);
+            });
+        }
+
+        // [TETAP] Filter Metode Pembayaran
+        if ($request->filled('metode_pembayaran')) {
+            $query->where('pembayaran.metode_pembayaran', $request->metode_pembayaran);
+        }
+
+        $laporan = $query->select('pemesanan.*')->latest('pemesanan.created_at')->get();
+        //dd($laporan); // <--- LETAKKAN DI SINI
+        // [MODIFIKASI] Kalkulasi pendapatan disesuaikan dengan relasi yang benar
+        $totalPendapatan = $laporan->sum(function($item) {
+            return $item->pembayaran->total_biaya ?? 0;
+        });
+        
+        $totalTransaksi = $laporan->count();
+        $pasienUnik = $laporan->pluck('pasien.id')->unique()->count();
+        
+        // --- [FIX] Start: Query untuk Chart ---
+        // Menggunakan nama kolom yang benar juga di sini
+        $pendapatanHarian = Pemesanan::query()
+            ->join('pembayaran', 'pemesanan.id', '=', 'pembayaran.pemesanan_id')
+            ->select(DB::raw('DATE(pembayaran.tanggal_bayar) as tanggal'), DB::raw('SUM(pembayaran.total_biaya) as total'))
+            ->whereBetween('pembayaran.tanggal_bayar', [$request->input('start_date', now()->subMonth()), $request->input('end_date', now())])
+            ->groupBy('tanggal')
+            ->orderBy('tanggal', 'asc')
             ->get();
+        // --- [FIX] End ---
 
-        // 2. Query untuk Laporan Kunjungan
-        $laporanKunjungan = Pemesanan::whereIn('status', ['Selesai', 'Menunggu Pembayaran']) // Asumsikan yang belum bayar tetap dihitung kunjungan
-            ->whereBetween('tanggal_pesan', [$tanggalMulai, $tanggalSelesai])
-            ->get();
+        $chartData = [
+            'labels' => $pendapatanHarian->pluck('tanggal'),
+            'data' => $pendapatanHarian->pluck('total'),
+        ];
+        
+        // [TETAP] Opsi untuk dropdown filter
+        $metodePembayaranOptions = Pembayaran::whereNotNull('metode_pembayaran')->distinct()->pluck('metode_pembayaran');
+        // [FIX] Sesuaikan dengan status yang ada di database Anda
+        $statusOptions = ['Menunggu Pembayaran', 'Selesai', 'Dikonfirmasi', 'Dibatalkan'];
 
-        // 3. Hitung Total
-        $totalPendapatan = $laporanPembayaran->sum('total_biaya');
-        $totalTransaksi = $laporanPembayaran->count();
-        $totalKunjungan = $laporanKunjungan->count();
 
         return view('admin.laporan.index', compact(
-            'laporanPembayaran',
+            'laporan',
             'totalPendapatan',
+            'metodePembayaranOptions',
+            'statusOptions',
             'totalTransaksi',
-            'totalKunjungan',
-            'tanggalMulai',
-            'tanggalSelesai'
+            'pasienUnik',
+            'chartData'
         ));
+    }
+
+    // Fungsi cetak juga disesuaikan
+    public function cetak(Request $request)
+    {
+        $query = Pemesanan::query()
+            // --- [FIX] Start: Menggunakan Nama Kolom yang Benar ---
+            ->leftJoin('pembayaran', 'pemesanan.id', '=', 'pembayaran.pemesanan_id')
+            // --- [FIX] End ---
+            ->with(['pasien', 'dokter.user']);
+            
+        if ($request->filled('status')) {
+            $query->where('pemesanan.status', $request->status);
+        }
+
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $query->where(function ($q) use ($request) {
+                $q->whereBetween('pembayaran.tanggal_bayar', [$request->start_date, $request->end_date])
+                  ->orWhereBetween(DB::raw('DATE(pemesanan.created_at)'), [$request->start_date, $request->end_date]);
+            });
+        }
+
+        if ($request->filled('metode_pembayaran')) {
+            $query->where('pembayaran.metode_pembayaran', $request->metode_pembayaran);
+        }
+
+        $laporan = $query->select('pemesanan.*')->get();
+        $totalPendapatan = $laporan->sum(fn($item) => $item->pembayaran->total_biaya ?? 0);
+
+        return view('admin.laporan.cetak', compact('laporan', 'totalPendapatan'));
     }
 }

@@ -69,70 +69,95 @@ class RekamMedisController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'id_pemesanan' => ['required', 'exists:pemesanan,id'],
-            'diagnosis' => ['required', 'string'],
-            'perawatan' => ['required', 'string'],
-            'catatan' => ['nullable', 'string'],
-            'tindakans' => ['nullable', 'array'],
-            'tindakans.*' => ['exists:tindakan,id'],
-            'resep.*.nama_obat' => ['nullable', 'string', 'max:255'],
-            'resep.*.dosis' => ['nullable', 'string', 'max:100'],
-            'resep.*.instruksi' => ['nullable', 'string'],
-            'foto.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
-        ]);
+{
+    $request->validate([
+        'id_pemesanan' => ['required', 'exists:pemesanan,id'],
+        'diagnosis' => ['required', 'string'],
+        'perawatan' => ['required', 'string'],
+        'catatan' => ['nullable', 'string'],
+        'tindakans' => ['nullable', 'array'],
+        'tindakans.*' => ['exists:tindakan,id'],
+        'resep.*.nama_obat' => ['nullable', 'string', 'max:255'],
+        'resep.*.dosis' => ['nullable', 'string', 'max:100'],
+        'resep.*.instruksi' => ['nullable', 'string'],
+        'foto.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+    ]);
 
-        $pemesanan = Pemesanan::findOrFail($request->id_pemesanan);
-        if ($pemesanan->id_dokter !== Auth::user()->dokter->id) abort(403);
+    $pemesanan = Pemesanan::with('pembayaran')->findOrFail($request->id_pemesanan);
+    if ($pemesanan->id_dokter !== Auth::user()->dokter->id) {
+        abort(403);
+    }
 
-        DB::transaction(function () use ($request, $pemesanan) {
-            $rekamMedis = RekamMedis::create($request->only('id_pemesanan', 'diagnosis', 'perawatan', 'catatan'));
+    // Blokir proses jika pembayaran sudah lunas (Selesai)
+    if ($pemesanan->status === 'Selesai') {
+        return redirect()->route('dokter.dashboard')->with('error', 'Tidak dapat mengubah rekam medis karena pembayaran sudah lunas.');
+    }
 
-            $totalBiaya = 0;
-            if ($request->has('tindakans')) {
-                $tindakansTerpilih = Tindakan::find($request->tindakans);
-                foreach ($tindakansTerpilih as $tindakan) {
-                    $rekamMedis->tindakan()->attach($tindakan->id, ['harga_saat_itu' => $tindakan->harga]);
-                    $totalBiaya += $tindakan->harga;
-                }
+    DB::transaction(function () use ($request, $pemesanan) {
+        // Gunakan updateOrCreate untuk menghindari duplikasi rekam medis
+        $rekamMedis = RekamMedis::updateOrCreate(
+            ['id_pemesanan' => $pemesanan->id],
+            $request->only('diagnosis', 'perawatan', 'catatan')
+        );
+
+        // --- Logika Perbaikan untuk Tindakan dan Harga ---
+        $totalBiaya = 0;
+        $tindakansToSync = []; 
+
+        if ($request->has('tindakans')) {
+            $tindakansTerpilih = Tindakan::find($request->tindakans);
+            foreach ($tindakansTerpilih as $tindakan) {
+                // Siapkan array untuk sync dengan menyertakan harga_saat_itu
+                $tindakansToSync[$tindakan->id] = ['harga_saat_itu' => $tindakan->harga];
+                $totalBiaya += $tindakan->harga;
             }
+        }
+        // Jalankan sync untuk memperbarui tindakan dan harga di tabel pivot
+        $rekamMedis->tindakan()->sync($tindakansToSync);
+        // --- Akhir Perbaikan ---
 
-            if ($totalBiaya > 0) {
-                $pemesanan->pembayaran()->create([
+        // Logika untuk memperbarui atau membuat pembayaran
+        if ($totalBiaya > 0) {
+            $pemesanan->pembayaran()->updateOrCreate(
+                ['pemesanan_id' => $pemesanan->id],
+                [
                     'total_biaya' => $totalBiaya,
                     'status' => 'Belum Lunas',
-                ]);
-            }
-
-            // Proses Resep (hanya jika ada dan valid)
-            if ($request->has('resep') && is_array($request->resep)) {
-                foreach ($request->resep as $item) {
-                    if (is_array($item) && !empty($item['nama_obat'])) {
-                        $rekamMedis->resep()->create([
-                            'nama_obat' => $item['nama_obat'],
-                            'dosis' => $item['dosis'] ?? '',
-                            'instruksi' => $item['instruksi'] ?? ''
-                        ]);
-                    }
+                ]
+            );
+        } elseif ($pemesanan->pembayaran) {
+            $pemesanan->pembayaran->delete();
+        }
+        
+        // Proses Resep dan Foto (tetap sama)
+        if ($request->has('resep') && is_array($request->resep)) {
+            $rekamMedis->resep()->delete(); // Hapus resep lama dulu
+            foreach ($request->resep as $item) {
+                if (is_array($item) && !empty($item['nama_obat'])) {
+                    $rekamMedis->resep()->create($item);
                 }
             }
+        }
 
-            if ($request->hasFile('foto')) {
-                foreach ($request->file('foto') as $file) {
-                    if ($file instanceof \Illuminate\Http\UploadedFile && $file->isValid()) {
-                        $path = $file->store('foto-rekam-medis', 'public');
-                        $rekamMedis->foto()->create(['path_foto' => $path]);
-                    }
+        if ($request->hasFile('foto')) {
+            // (Optional) Hapus foto lama jika perlu
+            foreach ($request->file('foto') as $file) {
+                if ($file instanceof \Illuminate\Http\UploadedFile && $file->isValid()) {
+                    $path = $file->store('foto-rekam-medis', 'public');
+                    $rekamMedis->foto()->create(['path_foto' => $path]);
                 }
             }
+        }
 
+        // Logika status akhir yang aman: HANYA ubah status jika belum lunas
+        if ($pemesanan->status !== 'Selesai') {
             $statusAkhir = ($totalBiaya > 0) ? 'Menunggu Pembayaran' : 'Selesai';
             $pemesanan->update(['status' => $statusAkhir]);
-        });
+        }
+    });
 
-        return redirect()->route('dokter.dashboard')->with('success', 'Rekam medis berhasil disimpan.');
-    }
+    return redirect()->route('dokter.dashboard')->with('success', 'Rekam medis berhasil disimpan.');
+}
 
     public function show(RekamMedis $rekamMedi)
     {
