@@ -10,7 +10,7 @@ use App\Models\Dokter;
 
 class PemesananController extends Controller
 {
-     /**
+    /**
      * Menampilkan semua data pemesanan.
      */
     public function index()
@@ -63,6 +63,8 @@ class PemesananController extends Controller
      */
     public function edit(Pemesanan $pemesanan)
     {
+        // Memuat relasi yang dibutuhkan untuk ditampilkan di view
+        $pemesanan->load(['pasien', 'dokter.user', 'jadwal']);
         return view('admin.pemesanan.edit', compact('pemesanan'));
     }
 
@@ -72,10 +74,15 @@ class PemesananController extends Controller
     public function update(Request $request, Pemesanan $pemesanan)
     {
         $request->validate([
-            'status' => ['required', 'in:Dipesan,Dikonfirmasi,Dibatalkan,Selesai'],
+            'status' => 'required|string|in:Dikonfirmasi,Selesai,Dibatalkan,Dijadwalkan Ulang',
+            // Catatan wajib diisi jika statusnya Dibatalkan atau Dijadwalkan Ulang
+            'catatan_admin' => 'required_if:status,Dibatalkan,Dijadwalkan Ulang|nullable|string|max:1000',
         ]);
 
-        $pemesanan->update(['status' => $request->status]);
+        $pemesanan->update([
+            'status' => $request->status,
+            'catatan_admin' => $request->catatan_admin,
+        ]);
 
         return redirect()->route('admin.pemesanan.index')->with('success', 'Status pemesanan berhasil diperbarui.');
     }

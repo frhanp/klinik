@@ -1,5 +1,5 @@
 ﻿# Project Digest (Full Content)
-_Generated: 2025-08-27 11:45:21_
+_Generated: 2025-08-29 23:31:06_
 **Root:** D:\Laragon\www\klinik
 
 
@@ -244,10 +244,12 @@ storage\app\public\foto-rekam-medis
 storage\app\public\.gitignore
 storage\app\public\foto-rekam-medis\0tOHnUgGChxO2YNFYs5dWmcVSvclVXlZZxVXvT8U.png
 storage\app\public\foto-rekam-medis\fX2p89itG43tIY33kbaiBgXp0Ux1xHCZfi3vCOOw.jpg
+storage\app\public\foto-rekam-medis\hQVZ57gPiBUQUaM3KWYgMUmjdlBPmNXJZCuyXa2r.jpg
 storage\app\public\foto-rekam-medis\kiB0ZTydzOi6eYAuRC8s4Wf0OVhY3dqkQo7kkzLw.jpg
 storage\app\public\foto-rekam-medis\LFsUArqiXUnS9hctaC88djCWjKnPfcg3hkYwmLxs.jpg
 storage\app\public\foto-rekam-medis\rAYFSWvDqjTJLYAEOQGCRyTzF10L6WmsZfLOB0y2.jpg
 storage\app\public\foto-rekam-medis\VzhDeEN3UR3Gk4CA7k0B6xkVIYMEM24BbTs47PUS.png
+storage\app\public\foto-rekam-medis\XrFM0h3OjAsf99oM6ag257hamYlM5aVCltwZp1Uz.jpg
 storage\framework\cache
 storage\framework\sessions
 storage\framework\testing
@@ -361,11 +363,11 @@ Branch:
 main
 
 Last 5 commits:
+002160b perbaiki ringkasan RM pasien
+319427a cari nik nama dll di pasien
+fbe172f perbaiki laporan klinik
 36741bf ringkas rekam medis
 4493f83 ringkas kelola jadwal
-a77cd54 test 1
-ebb0485 buat 2 langkah daftar
-b608aa5 fitur tambah pasien offline
 ```
 
 
@@ -479,7 +481,9 @@ use App\Http\Controllers\Pasien\PemesananController as PasienPemesananController
 use App\Http\Controllers\Admin\LaporanController as AdminLaporanController;
 use App\Http\Controllers\Admin\ObatController as AdminObatController;
 use App\Http\Controllers\Admin\PasienController as AdminPasienController;
+use App\Http\Controllers\Admin\LaporanController as LaporanController;
 use App\Http\Controllers\Pasien\BiodataController as PasienBiodataController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -523,6 +527,7 @@ Route::middleware(['auth', 'cekperan:admin'])->prefix('admin')->name('admin.')->
     Route::resource('obat', AdminObatController::class);
 
     Route::resource('pasien', AdminPasienController::class)->except(['show', 'destroy']);
+    Route::get('laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
 });
 
 
@@ -591,6 +596,7 @@ require __DIR__ . '/auth.php';
   DELETE          admin/jadwal/{jadwal} ..................... admin.jadwal.destroy ΓÇ║ Admin\JadwalController@destroy
   GET|HEAD        admin/jadwal/{jadwal}/edit ...................... admin.jadwal.edit ΓÇ║ Admin\JadwalController@edit
   GET|HEAD        admin/laporan ............................... admin.laporan.index ΓÇ║ Admin\LaporanController@index
+  GET|HEAD        admin/laporan/cetak ......................... admin.laporan.cetak ΓÇ║ Admin\LaporanController@cetak
   GET|HEAD        admin/obat ........................................ admin.obat.index ΓÇ║ Admin\ObatController@index
   POST            admin/obat ........................................ admin.obat.store ΓÇ║ Admin\ObatController@store
   GET|HEAD        admin/obat/create ............................... admin.obat.create ΓÇ║ Admin\ObatController@create
@@ -665,7 +671,7 @@ require __DIR__ . '/auth.php';
   GET|HEAD        verify-email ....................... verification.notice ΓÇ║ Auth\EmailVerificationPromptController
   GET|HEAD        verify-email/{id}/{hash} ....................... verification.verify ΓÇ║ Auth\VerifyEmailController
 
-                                                                                                Showing [96] routes
+                                                                                                Showing [97] routes
 
 ```
 
@@ -952,40 +958,109 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Pembayaran;
 use App\Models\Pemesanan;
+use Illuminate\Support\Facades\DB;
 
 class LaporanController extends Controller
 {
     public function index(Request $request)
     {
-        // Tentukan rentang tanggal default (bulan ini)
-        $tanggalMulai = $request->input('tanggal_mulai', Carbon::now()->startOfMonth()->toDateString());
-        $tanggalSelesai = $request->input('tanggal_selesai', Carbon::now()->endOfMonth()->toDateString());
+        // [TETAP] Logika query dimulai dari Pemesanan.
+        $query = Pemesanan::query()
+            // --- [FIX] Start: Menggunakan Nama Kolom yang Benar ---
+            // Mengganti 'pembayaran.id_pemesanan' menjadi 'pembayaran.pemesanan_id'
+            ->leftJoin('pembayaran', 'pemesanan.id', '=', 'pembayaran.pemesanan_id')
+            // --- [FIX] End ---
+            ->with(['pasien', 'dokter.user']);
 
-        // 1. Query untuk Laporan Pendapatan
-        $laporanPembayaran = Pembayaran::where('status', 'Lunas')
-            ->whereBetween('tanggal_bayar', [$tanggalMulai, $tanggalSelesai . ' 23:59:59'])
-            ->with('pemesanan.pasien', 'pemesanan.dokter.user')
-            ->latest('tanggal_bayar')
+        // [TETAP] Filter berdasarkan status pemesanan
+        if ($request->filled('status')) {
+            $query->where('pemesanan.status', $request->status);
+        }
+
+        // [TETAP] Filter berdasarkan rentang tanggal
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $query->where(function ($q) use ($request) {
+                $q->whereBetween('pembayaran.tanggal_bayar', [$request->start_date, $request->end_date])
+                  ->orWhereBetween(DB::raw('DATE(pemesanan.created_at)'), [$request->start_date, $request->end_date]);
+            });
+        }
+
+        // [TETAP] Filter Metode Pembayaran
+        if ($request->filled('metode_pembayaran')) {
+            $query->where('pembayaran.metode_pembayaran', $request->metode_pembayaran);
+        }
+
+        $laporan = $query->select('pemesanan.*')->latest('pemesanan.created_at')->get();
+        //dd($laporan); // <--- LETAKKAN DI SINI
+        // [MODIFIKASI] Kalkulasi pendapatan disesuaikan dengan relasi yang benar
+        $totalPendapatan = $laporan->sum(function($item) {
+            return $item->pembayaran->total_biaya ?? 0;
+        });
+        
+        $totalTransaksi = $laporan->count();
+        $pasienUnik = $laporan->pluck('pasien.id')->unique()->count();
+        
+        // --- [FIX] Start: Query untuk Chart ---
+        // Menggunakan nama kolom yang benar juga di sini
+        $pendapatanHarian = Pemesanan::query()
+            ->join('pembayaran', 'pemesanan.id', '=', 'pembayaran.pemesanan_id')
+            ->select(DB::raw('DATE(pembayaran.tanggal_bayar) as tanggal'), DB::raw('SUM(pembayaran.total_biaya) as total'))
+            ->whereBetween('pembayaran.tanggal_bayar', [$request->input('start_date', now()->subMonth()), $request->input('end_date', now())])
+            ->groupBy('tanggal')
+            ->orderBy('tanggal', 'asc')
             ->get();
+        // --- [FIX] End ---
 
-        // 2. Query untuk Laporan Kunjungan
-        $laporanKunjungan = Pemesanan::whereIn('status', ['Selesai', 'Menunggu Pembayaran']) // Asumsikan yang belum bayar tetap dihitung kunjungan
-            ->whereBetween('tanggal_pesan', [$tanggalMulai, $tanggalSelesai])
-            ->get();
+        $chartData = [
+            'labels' => $pendapatanHarian->pluck('tanggal'),
+            'data' => $pendapatanHarian->pluck('total'),
+        ];
+        
+        // [TETAP] Opsi untuk dropdown filter
+        $metodePembayaranOptions = Pembayaran::whereNotNull('metode_pembayaran')->distinct()->pluck('metode_pembayaran');
+        // [FIX] Sesuaikan dengan status yang ada di database Anda
+        $statusOptions = ['Menunggu Pembayaran', 'Selesai', 'Dikonfirmasi', 'Dibatalkan'];
 
-        // 3. Hitung Total
-        $totalPendapatan = $laporanPembayaran->sum('total_biaya');
-        $totalTransaksi = $laporanPembayaran->count();
-        $totalKunjungan = $laporanKunjungan->count();
 
         return view('admin.laporan.index', compact(
-            'laporanPembayaran',
+            'laporan',
             'totalPendapatan',
+            'metodePembayaranOptions',
+            'statusOptions',
             'totalTransaksi',
-            'totalKunjungan',
-            'tanggalMulai',
-            'tanggalSelesai'
+            'pasienUnik',
+            'chartData'
         ));
+    }
+
+    // Fungsi cetak juga disesuaikan
+    public function cetak(Request $request)
+    {
+        $query = Pemesanan::query()
+            // --- [FIX] Start: Menggunakan Nama Kolom yang Benar ---
+            ->leftJoin('pembayaran', 'pemesanan.id', '=', 'pembayaran.pemesanan_id')
+            // --- [FIX] End ---
+            ->with(['pasien', 'dokter.user']);
+            
+        if ($request->filled('status')) {
+            $query->where('pemesanan.status', $request->status);
+        }
+
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $query->where(function ($q) use ($request) {
+                $q->whereBetween('pembayaran.tanggal_bayar', [$request->start_date, $request->end_date])
+                  ->orWhereBetween(DB::raw('DATE(pemesanan.created_at)'), [$request->start_date, $request->end_date]);
+            });
+        }
+
+        if ($request->filled('metode_pembayaran')) {
+            $query->where('pembayaran.metode_pembayaran', $request->metode_pembayaran);
+        }
+
+        $laporan = $query->select('pemesanan.*')->get();
+        $totalPendapatan = $laporan->sum(fn($item) => $item->pembayaran->total_biaya ?? 0);
+
+        return view('admin.laporan.cetak', compact('laporan', 'totalPendapatan'));
     }
 }
 
@@ -1060,50 +1135,47 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
+use App\Models\BiodataPasien;
 
 class PasienController extends Controller
 {
-    /**
-     * Menampilkan daftar semua pasien.
-     */
     public function index(Request $request)
     {
-        $query = User::where('peran', 'pasien');
+        $query = User::where('peran', 'pasien')->with('biodata');
 
-        // Fitur Pencarian yang disederhanakan
+        // [MODIFIKASI] Logika pencarian diperbarui
         if ($request->has('search') && $request->search != '') {
-            $query->where(function($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->search . '%')
-                  ->orWhere('email', 'like', '%' . $request->search . '%');
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                // Kondisi 1: Cari berdasarkan nama pasien
+                $q->where('name', 'like', '%' . $search . '%')
+                    // Kondisi 2: ATAU cari berdasarkan NIK di tabel biodata
+                    ->orWhereHas('biodata', function ($subQ) use ($search) {
+                        $subQ->where('nik', 'like', '%' . $search . '%');
+                    });
             });
         }
 
-        $pasiens = $query->latest()->paginate(15);
-
+        $pasiens = $query->latest()->paginate(15)->withQueryString(); // withQueryString() agar pencarian tidak hilang saat pindah halaman
         return view('admin.pasien.index', compact('pasiens'));
     }
 
-    /**
-     * Menampilkan form untuk membuat pasien baru secara offline.
-     */
     public function create()
     {
         return view('admin.pasien.create');
     }
 
-    /**
-     * Menyimpan data pasien baru (hanya akun).
-     */
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', Rules\Password::defaults()],
-            'nomor_telepon' => ['nullable', 'string', 'max:20'],
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+            'nomor_telepon' => 'nullable|string|max:20',
+            'nik' => 'nullable|string|numeric|digits:16|unique:biodata_pasien,nik',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -1111,36 +1183,45 @@ class PasienController extends Controller
             'peran' => 'pasien',
         ]);
 
-        return redirect()->route('admin.pasien.index')->with('success', 'Akun pasien baru berhasil didaftarkan.');
+        if ($request->filled('nik')) {
+            $user->biodata()->create(['nik' => $request->nik]);
+        }
+
+        return redirect()->route('admin.pasien.index')->with('success', 'Pasien berhasil ditambahkan.');
     }
 
-    /**
-     * Menampilkan form untuk mengedit data dasar pasien.
-     */
-     /**
-     * Menampilkan form untuk mengedit data dasar pasien.
-     */
-    public function edit(User $pasien) // <-- Ubah $user menjadi $pasien
+    public function edit(User $pasien)
     {
         if ($pasien->peran !== 'pasien') {
             abort(404);
         }
-        return view('admin.pasien.edit', ['user' => $pasien]); // Kirim dengan nama 'user' agar view tidak error
+        $pasien->load('biodata');
+        return view('admin.pasien.edit', compact('pasien'));
     }
 
-    /**
-     * Memperbarui data dasar pasien.
-     */
-    public function update(Request $request, User $pasien) // <-- Ubah $user menjadi $pasien
+    public function update(Request $request, User $pasien)
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $pasien->id,
             'nomor_telepon' => 'nullable|string|max:20',
+            'nik' => 'nullable|string|numeric|digits:16|unique:biodata_pasien,nik,' . optional($pasien->biodata)->id,
         ]);
 
-        $pasien->update($request->only('name', 'nomor_telepon'));
+        $pasien->update($request->only('name', 'email', 'nomor_telepon'));
+
+        $pasien->biodata()->updateOrCreate(
+            ['user_id' => $pasien->id],
+            ['nik' => $request->nik]
+        );
 
         return redirect()->route('admin.pasien.index')->with('success', 'Data pasien berhasil diperbarui.');
+    }
+
+    public function destroy(User $pasien)
+    {
+        $pasien->delete();
+        return redirect()->route('admin.pasien.index')->with('success', 'Pasien berhasil dihapus.');
     }
 }
 
@@ -1885,70 +1966,95 @@ class RekamMedisController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'id_pemesanan' => ['required', 'exists:pemesanan,id'],
-            'diagnosis' => ['required', 'string'],
-            'perawatan' => ['required', 'string'],
-            'catatan' => ['nullable', 'string'],
-            'tindakans' => ['nullable', 'array'],
-            'tindakans.*' => ['exists:tindakan,id'],
-            'resep.*.nama_obat' => ['nullable', 'string', 'max:255'],
-            'resep.*.dosis' => ['nullable', 'string', 'max:100'],
-            'resep.*.instruksi' => ['nullable', 'string'],
-            'foto.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
-        ]);
+{
+    $request->validate([
+        'id_pemesanan' => ['required', 'exists:pemesanan,id'],
+        'diagnosis' => ['required', 'string'],
+        'perawatan' => ['required', 'string'],
+        'catatan' => ['nullable', 'string'],
+        'tindakans' => ['nullable', 'array'],
+        'tindakans.*' => ['exists:tindakan,id'],
+        'resep.*.nama_obat' => ['nullable', 'string', 'max:255'],
+        'resep.*.dosis' => ['nullable', 'string', 'max:100'],
+        'resep.*.instruksi' => ['nullable', 'string'],
+        'foto.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+    ]);
 
-        $pemesanan = Pemesanan::findOrFail($request->id_pemesanan);
-        if ($pemesanan->id_dokter !== Auth::user()->dokter->id) abort(403);
+    $pemesanan = Pemesanan::with('pembayaran')->findOrFail($request->id_pemesanan);
+    if ($pemesanan->id_dokter !== Auth::user()->dokter->id) {
+        abort(403);
+    }
 
-        DB::transaction(function () use ($request, $pemesanan) {
-            $rekamMedis = RekamMedis::create($request->only('id_pemesanan', 'diagnosis', 'perawatan', 'catatan'));
+    // Blokir proses jika pembayaran sudah lunas (Selesai)
+    if ($pemesanan->status === 'Selesai') {
+        return redirect()->route('dokter.dashboard')->with('error', 'Tidak dapat mengubah rekam medis karena pembayaran sudah lunas.');
+    }
 
-            $totalBiaya = 0;
-            if ($request->has('tindakans')) {
-                $tindakansTerpilih = Tindakan::find($request->tindakans);
-                foreach ($tindakansTerpilih as $tindakan) {
-                    $rekamMedis->tindakan()->attach($tindakan->id, ['harga_saat_itu' => $tindakan->harga]);
-                    $totalBiaya += $tindakan->harga;
-                }
+    DB::transaction(function () use ($request, $pemesanan) {
+        // Gunakan updateOrCreate untuk menghindari duplikasi rekam medis
+        $rekamMedis = RekamMedis::updateOrCreate(
+            ['id_pemesanan' => $pemesanan->id],
+            $request->only('diagnosis', 'perawatan', 'catatan')
+        );
+
+        // --- Logika Perbaikan untuk Tindakan dan Harga ---
+        $totalBiaya = 0;
+        $tindakansToSync = []; 
+
+        if ($request->has('tindakans')) {
+            $tindakansTerpilih = Tindakan::find($request->tindakans);
+            foreach ($tindakansTerpilih as $tindakan) {
+                // Siapkan array untuk sync dengan menyertakan harga_saat_itu
+                $tindakansToSync[$tindakan->id] = ['harga_saat_itu' => $tindakan->harga];
+                $totalBiaya += $tindakan->harga;
             }
+        }
+        // Jalankan sync untuk memperbarui tindakan dan harga di tabel pivot
+        $rekamMedis->tindakan()->sync($tindakansToSync);
+        // --- Akhir Perbaikan ---
 
-            if ($totalBiaya > 0) {
-                $pemesanan->pembayaran()->create([
+        // Logika untuk memperbarui atau membuat pembayaran
+        if ($totalBiaya > 0) {
+            $pemesanan->pembayaran()->updateOrCreate(
+                ['pemesanan_id' => $pemesanan->id],
+                [
                     'total_biaya' => $totalBiaya,
                     'status' => 'Belum Lunas',
-                ]);
-            }
-
-            // Proses Resep (hanya jika ada dan valid)
-            if ($request->has('resep') && is_array($request->resep)) {
-                foreach ($request->resep as $item) {
-                    if (is_array($item) && !empty($item['nama_obat'])) {
-                        $rekamMedis->resep()->create([
-                            'nama_obat' => $item['nama_obat'],
-                            'dosis' => $item['dosis'] ?? '',
-                            'instruksi' => $item['instruksi'] ?? ''
-                        ]);
-                    }
+                ]
+            );
+        } elseif ($pemesanan->pembayaran) {
+            $pemesanan->pembayaran->delete();
+        }
+        
+        // Proses Resep dan Foto (tetap sama)
+        if ($request->has('resep') && is_array($request->resep)) {
+            $rekamMedis->resep()->delete(); // Hapus resep lama dulu
+            foreach ($request->resep as $item) {
+                if (is_array($item) && !empty($item['nama_obat'])) {
+                    $rekamMedis->resep()->create($item);
                 }
             }
+        }
 
-            if ($request->hasFile('foto')) {
-                foreach ($request->file('foto') as $file) {
-                    if ($file instanceof \Illuminate\Http\UploadedFile && $file->isValid()) {
-                        $path = $file->store('foto-rekam-medis', 'public');
-                        $rekamMedis->foto()->create(['path_foto' => $path]);
-                    }
+        if ($request->hasFile('foto')) {
+            // (Optional) Hapus foto lama jika perlu
+            foreach ($request->file('foto') as $file) {
+                if ($file instanceof \Illuminate\Http\UploadedFile && $file->isValid()) {
+                    $path = $file->store('foto-rekam-medis', 'public');
+                    $rekamMedis->foto()->create(['path_foto' => $path]);
                 }
             }
+        }
 
+        // Logika status akhir yang aman: HANYA ubah status jika belum lunas
+        if ($pemesanan->status !== 'Selesai') {
             $statusAkhir = ($totalBiaya > 0) ? 'Menunggu Pembayaran' : 'Selesai';
             $pemesanan->update(['status' => $statusAkhir]);
-        });
+        }
+    });
 
-        return redirect()->route('dokter.dashboard')->with('success', 'Rekam medis berhasil disimpan.');
-    }
+    return redirect()->route('dokter.dashboard')->with('success', 'Rekam medis berhasil disimpan.');
+}
 
     public function show(RekamMedis $rekamMedi)
     {
@@ -3042,79 +3148,193 @@ class Tindakan extends Model
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Laporan Klinik') }}
+            {{ __('Laporan Pendapatan') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="text-gray-500 text-sm font-medium">Total Pendapatan</h3>
+                    <p class="text-3xl font-semibold text-gray-800">Rp.
+                        {{ number_format($totalPendapatan, 0, ',', '.') }}</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="text-gray-500 text-sm font-medium">Total Transaksi</h3>
+                    <p class="text-3xl font-semibold text-gray-800">{{ $totalTransaksi }}</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="text-gray-500 text-sm font-medium">Pasien Unik</h3>
+                    <p class="text-3xl font-semibold text-gray-800">{{ $pasienUnik }}</p>
+                </div>
+            </div>
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
+                <div class="p-6 bg-white border-b border-gray-200">
+                    <h3 class="font-semibold text-lg mb-4">Grafik Pendapatan Harian</h3>
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <!-- Filter Tanggal -->
-                    <form method="GET" action="{{ route('admin.laporan.index') }}" class="mb-6 p-4 border rounded-lg bg-gray-50">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+                <div class="p-6 bg-white border-b border-gray-200">
+                    <h3 class="font-semibold text-lg mb-4">Filter Laporan</h3>
+                    <form action="{{ route('admin.laporan.index') }}" method="GET">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                            {{-- [MODIFIKASI] Form filter dibuat lebih rapi --}}
                             <div>
-                                <x-input-label for="tanggal_mulai" :value="__('Dari Tanggal')" />
-                                <x-text-input id="tanggal_mulai" type="date" name="tanggal_mulai" class="w-full" value="{{ $tanggalMulai }}" />
+                                <x-input-label for="start_date" :value="__('Tanggal Mulai')" />
+                                <x-text-input type="date" id="start_date" name="start_date" class="mt-1 block w-full"
+                                    value="{{ request('start_date', now()->subMonth()->format('Y-m-d')) }}" />
                             </div>
                             <div>
-                                <x-input-label for="tanggal_selesai" :value="__('Sampai Tanggal')" />
-                                <x-text-input id="tanggal_selesai" type="date" name="tanggal_selesai" class="w-full" value="{{ $tanggalSelesai }}" />
+                                <x-input-label for="end_date" :value="__('Tanggal Selesai')" />
+                                <x-text-input type="date" id="end_date" name="end_date" class="mt-1 block w-full"
+                                    value="{{ request('end_date', now()->format('Y-m-d')) }}" />
                             </div>
-                            <x-primary-button class="w-full md:w-auto justify-center">
-                                Tampilkan Laporan
-                            </x-primary-button>
+                            <div>
+                                <x-input-label for="metode_pembayaran" :value="__('Metode Pembayaran')" />
+                                <select name="metode_pembayaran" id="metode_pembayaran"
+                                    class="mt-1 block w-full rounded-md shadow-sm border-gray-300">
+                                    <option value="">Semua</option>
+                                    @foreach ($metodePembayaranOptions as $metode)
+                                        <option value="{{ $metode }}" @selected(request('metode_pembayaran') == $metode)>
+                                            {{ ucfirst($metode) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <x-input-label for="status" :value="__('Status')" />
+                                <select name="status" id="status"
+                                    class="mt-1 block w-full rounded-md shadow-sm border-gray-300">
+                                    <option value="">Semua</option>
+                                    @foreach ($statusOptions as $status)
+                                        <option value="{{ $status }}" @selected(request('status') == $status)>
+                                            {{ ucfirst($status) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 mt-4">
+                            <x-primary-button type="submit">{{ __('Filter') }}</x-primary-button>
+                            @if (request()->filled('start_date') && request()->filled('end_date'))
+                                <a href="{{ route('admin.laporan.cetak', request()->all()) }}"
+                                    class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500">
+                                    Cetak Laporan
+                                </a>
+                            @endif
                         </div>
                     </form>
 
-                    <!-- Ringkasan Data -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                        <div class="bg-purple-100 p-6 rounded-lg shadow">
-                            <h3 class="text-sm font-medium text-purple-800">Total Pendapatan</h3>
-                            <p class="mt-2 text-3xl font-bold text-purple-900">Rp {{ number_format($totalPendapatan, 0, ',', '.') }}</p>
-                        </div>
-                        <div class="bg-blue-100 p-6 rounded-lg shadow">
-                            <h3 class="text-sm font-medium text-blue-800">Total Transaksi Lunas</h3>
-                            <p class="mt-2 text-3xl font-bold text-blue-900">{{ $totalTransaksi }}</p>
-                        </div>
-                        <div class="bg-green-100 p-6 rounded-lg shadow">
-                            <h3 class="text-sm font-medium text-green-800">Total Kunjungan Pasien</h3>
-                            <p class="mt-2 text-3xl font-bold text-green-900">{{ $totalKunjungan }}</p>
-                        </div>
-                    </div>
-
-                    <!-- Tabel Detail Transaksi -->
-                    <h3 class="text-lg font-semibold mb-4">Detail Transaksi Lunas</h3>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full bg-white">
-                            <thead class="bg-gray-100">
+                    <div class="mt-6 overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="py-3 px-4 border-b text-left">Tanggal Bayar</th>
-                                    <th class="py-3 px-4 border-b text-left">Pasien</th>
-                                    <th class="py-3 px-4 border-b text-left">Dokter</th>
-                                    <th class="py-3 px-4 border-b text-right">Total Biaya</th>
+                                    {{-- [MODIFIKASI] Kolom tabel disesuaikan --}}
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Pasien
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Dokter
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tgl.
+                                        Bayar</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Metode
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status
+                                    </th>
+                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Total
+                                        Biaya</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @forelse ($laporanPembayaran as $pembayaran)
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="py-3 px-4 border-b">{{ \Carbon\Carbon::parse($pembayaran->tanggal_bayar)->translatedFormat('d M Y, H:i') }}</td>
-                                        <td class="py-3 px-4 border-b">{{ $pembayaran->pemesanan->pasien->name }}</td>
-                                        <td class="py-3 px-4 border-b">{{ $pembayaran->pemesanan->dokter->user->name }}</td>
-                                        <td class="py-3 px-4 border-b text-right">Rp {{ number_format($pembayaran->total_biaya, 0, ',', '.') }}</td>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @forelse ($laporan as $item)
+                                    <tr>
+                                        {{-- [TETAP] Data Pasien dan Dokter --}}
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ $item->pasien->name }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ $item->dokter->user->name }}</td>
+
+                                        {{-- [MODIFIKASI] Cek jika pembayaran ada, tampilkan tanggal bayar --}}
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            @if ($item->status !== 'Menunggu Pembayaran' && $item->pembayaran)
+                                                {{ \Carbon\Carbon::parse($item->pembayaran->tanggal_bayar)->format('d/m/Y') }}
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+
+                                        {{-- [MODIFIKASI] Cek jika pembayaran ada, tampilkan metode --}}
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ $item->pembayaran ? ucfirst($item->pembayaran->metode_pembayaran) : '-' }}
+                                        </td>
+
+                                        {{-- [MODIFIKASI] Badge warna disesuaikan --}}
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            @php
+                                                $status = $item->status;
+                                                $badgeColor =
+                                                    [
+                                                        'Selesai' => 'bg-green-100 text-green-800',
+                                                        'Menunggu Pembayaran' => 'bg-yellow-100 text-yellow-800',
+                                                        'dikonfirmasi' => 'bg-blue-100 text-blue-800',
+                                                        'dibatalkan' => 'bg-red-100 text-red-800',
+                                                    ][$status] ?? 'bg-gray-100 text-gray-800';
+                                            @endphp
+                                            <span
+                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $badgeColor }}">
+                                                {{ $status }}
+                                            </span>
+                                        </td>
+
+                                        {{-- [MODIFIKASI] Cek jika pembayaran ada, tampilkan total biaya --}}
+                                        <td
+                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium text-right">
+                                            {{ $item->pembayaran ? 'Rp. ' . number_format($item->pembayaran->total_biaya, 0, ',', '.') : '-' }}
+                                        </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="py-4 px-4 text-center text-gray-500">Tidak ada data transaksi lunas pada rentang tanggal ini.</td>
+                                        <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
+                                            Tidak ada data untuk filter yang dipilih.
+                                        </td>
                                     </tr>
                                 @endforelse
                             </tbody>
+
                         </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(ctx, {
+                type: 'line', // Tipe grafik: line, bar, pie, etc.
+                data: {
+                    labels: @json($chartData['labels']),
+                    datasets: [{
+                        label: 'Pendapatan',
+                        data: @json($chartData['data']),
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 2,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    @endpush
 </x-app-layout>
 
 ===== resources\views\admin\obat\create.blade.php =====
@@ -3282,7 +3502,7 @@ class Tindakan extends Model
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Daftarkan Akun Pasien Baru (Offline)') }}
+            {{ __('Daftarkan Akun Pasien Baru') }}
         </h2>
     </x-slot>
 
@@ -3295,26 +3515,26 @@ class Tindakan extends Model
                         @csrf
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Nama Pasien -->
                             <div>
                                 <x-input-label for="name" :value="__('Nama Pasien')" />
                                 <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required />
                             </div>
-                            <!-- Email -->
                             <div>
                                 <x-input-label for="email" :value="__('Email')" />
                                 <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
                             </div>
-                            <!-- Nomor HP -->
+                            <div>
+                                <x-input-label for="nik" :value="__('NIK')" />
+                                <x-text-input id="nik" class="block mt-1 w-full" type="text" name="nik" :value="old('nik')" />
+                                <x-input-error :messages="$errors->get('nik')" class="mt-2" />
+                            </div>
                             <div>
                                 <x-input-label for="nomor_telepon" :value="__('Nomor HP')" />
                                 <x-text-input id="nomor_telepon" class="block mt-1 w-full" type="text" name="nomor_telepon" :value="old('nomor_telepon')" />
                             </div>
-                             <!-- Password -->
                              <div>
                                 <x-input-label for="password" :value="__('Password Sementara')" />
                                 <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required />
-                                <p class="text-xs text-gray-500 mt-1">Pasien dapat mengubah password ini nanti.</p>
                             </div>
                         </div>
 
@@ -3337,7 +3557,7 @@ class Tindakan extends Model
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Edit Data Pasien: <span class="font-bold">{{ $user->name }}</span>
+            Edit Data Pasien: <span class="font-bold">{{ $pasien->name }}</span>
         </h2>
     </x-slot>
 
@@ -3346,21 +3566,30 @@ class Tindakan extends Model
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 md:p-8 bg-white border-b border-gray-200">
                     <x-notification />
-                    <form method="POST" action="{{ route('admin.pasien.update', $user->id) }}">
+                    <form method="POST" action="{{ route('admin.pasien.update', $pasien->id) }}">
                         @csrf
                         @method('PUT')
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Nama Pasien -->
                             <div>
                                 <x-input-label for="name" :value="__('Nama Pasien')" />
-                                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name', $user->name)" required />
+                                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name', $pasien->name)" required />
                             </div>
 
-                            <!-- Nomor HP -->
+                             <div>
+                                <x-input-label for="email" :value="__('Email')" />
+                                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $pasien->email)" required />
+                            </div>
+
                             <div>
                                 <x-input-label for="nomor_telepon" :value="__('Nomor HP')" />
-                                <x-text-input id="nomor_telepon" class="block mt-1 w-full" type="text" name="nomor_telepon" :value="old('nomor_telepon', $user->nomor_telepon)" />
+                                <x-text-input id="nomor_telepon" class="block mt-1 w-full" type="text" name="nomor_telepon" :value="old('nomor_telepon', $pasien->nomor_telepon)" />
+                            </div>
+
+                            <div>
+                                <x-input-label for="nik" :value="__('NIK')" />
+                                <x-text-input id="nik" class="block mt-1 w-full" type="text" name="nik" :value="old('nik', optional($pasien->biodata)->nik)" />
+                                <x-input-error :messages="$errors->get('nik')" class="mt-2" />
                             </div>
                         </div>
 
@@ -3399,7 +3628,7 @@ class Tindakan extends Model
                 <div class="p-6 text-gray-900">
                     <form method="GET" action="{{ route('admin.pasien.index') }}" class="mb-6">
                         <div class="flex items-center">
-                            <x-text-input type="text" name="search" placeholder="Cari nama atau email..." class="w-full md:w-1/3" value="{{ request('search') }}" />
+                            <x-text-input type="text" name="search" placeholder="Cari nama pasien..." class="w-full md:w-1/3" value="{{ request('search') }}" />
                             <x-primary-button class="ms-3">
                                 Cari
                             </x-primary-button>
@@ -3412,6 +3641,7 @@ class Tindakan extends Model
                                 <tr>
                                     <th class="py-3 px-4 border-b text-left">Nama Pasien</th>
                                     <th class="py-3 px-4 border-b text-left">Kontak</th>
+                                    <th class="py-3 px-4 border-b text-left">NIK</th>
                                     <th class="py-3 px-4 border-b text-center">Aksi</th>
                                 </tr>
                             </thead>
@@ -3420,6 +3650,7 @@ class Tindakan extends Model
                                     <tr class="hover:bg-gray-50">
                                         <td class="py-3 px-4 border-b">{{ $pasien->name }}</td>
                                         <td class="py-3 px-4 border-b">{{ $pasien->email }} <br> <span class="text-sm text-gray-500">{{ $pasien->nomor_telepon }}</span></td>
+                                        <td class="py-3 px-4 border-b">{{ $pasien->biodata->nik ?? '-' }}</td>
                                         <td class="py-3 px-4 border-b text-center">
                                             <a href="{{ route('admin.pasien.edit', $pasien->id) }}" class="text-purple-600 hover:text-purple-800 font-semibold">
                                                 Edit
@@ -3428,7 +3659,7 @@ class Tindakan extends Model
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="3" class="py-4 px-4 text-center text-gray-500">Tidak ada data pasien.</td>
+                                        <td colspan="4" class="py-4 px-4 text-center text-gray-500">Tidak ada data pasien.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -4770,56 +5001,64 @@ $classes = ($active ?? false)
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Riwayat Rekam Medis - ' . $pasien->name) }}
+            Riwayat Rekam Medis Pasien: <span class="font-bold">{{ $pasien->name }}</span>
         </h2>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-
-                    <!-- Tabel Rekam Medis -->
                     <div class="overflow-x-auto">
                         <table class="min-w-full bg-white">
                             <thead class="bg-gray-100">
                                 <tr>
-                                    <th class="py-3 px-4 border-b text-left">Tanggal</th>
-                                    <th class="py-3 px-4 border-b text-left">Diagnosis</th>
+                                    <th class="py-3 px-4 border-b text-left w-16">No.</th>
+                                    <th class="py-3 px-4 border-b text-left">Tanggal Kunjungan</th>
+                                    <th class="py-3 px-4 border-b text-left">Diagnosis / Perawatan</th>
+                                    <th class="py-3 px-4 border-b text-left">Tindakan</th>
                                     <th class="py-3 px-4 border-b text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($rekamMedisList as $rekamMedis)
+                                @forelse ($rekamMedisList as $index => $rekamMedis)
                                     <tr class="hover:bg-gray-50">
-                                        <td class="py-3 px-4 border-b">{{ $rekamMedis->created_at->translatedFormat('d F Y') }}</td>
-                                        <td class="py-3 px-4 border-b">{{ Str::limit($rekamMedis->diagnosis, 50) }}</td>
+                                        <td class="py-3 px-4 border-b">{{ $rekamMedisList->firstItem() + $index }}</td>
+                                        <td class="py-3 px-4 border-b">{{ $rekamMedis->created_at->isoFormat('D MMMM YYYY') }}</td>
+                                        <td class="py-3 px-4 border-b">{{ $rekamMedis->diagnosis }}</td>
+                                        <td class="py-3 px-4 border-b">
+                                            @if($rekamMedis->tindakan->isNotEmpty())
+                                                <ul class="list-disc list-inside text-sm">
+                                                    @foreach($rekamMedis->tindakan as $tindakan)
+                                                        <li>{{ $tindakan->nama_tindakan }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
                                         <td class="py-3 px-4 border-b text-center">
-                                            <a href="{{ route('dokter.rekam-medis.show', $rekamMedis->id) }}"
-                                                class="text-purple-600 hover:text-purple-800 font-semibold">
+                                            <a href="{{ route('dokter.rekam-medis.show', $rekamMedis->id) }}" class="text-purple-600 hover:text-purple-800 font-semibold">
                                                 Lihat Detail
                                             </a>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="3" class="py-4 px-4 text-center text-gray-500">
-                                            Belum ada riwayat rekam medis untuk pasien ini.
+                                        <td colspan="5" class="py-4 px-4 text-center text-gray-500">
+                                            Pasien ini belum memiliki riwayat rekam medis.
                                         </td>
                                     </tr>
                                 @endforelse
                             </tbody>
                         </table>
                     </div>
-
-                    <!-- Paginasi -->
-                    <div class="mt-6">
+                    <div class="mt-4">
                         {{ $rekamMedisList->links() }}
                     </div>
-
-                    <div class="mt-6 text-right">
+                    <div class="mt-8 pt-6 text-right">
                         <a href="{{ route('dokter.rekam-medis.index') }}" class="text-purple-600 hover:text-purple-800 font-semibold">
-                            &larr; Kembali ke Ringkasan Pasien
+                            &larr; Kembali ke Riwayat
                         </a>
                     </div>
                 </div>
@@ -5060,6 +5299,8 @@ $classes = ($active ?? false)
             </main>
         </div>
     </div>
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    @stack('scripts')
 </body>
 
 </html>

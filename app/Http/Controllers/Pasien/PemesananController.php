@@ -19,9 +19,9 @@ class PemesananController extends Controller
     public function index()
     {
         $pemesanans = Pemesanan::where('id_pasien', Auth::id())
-            ->with('dokter.user', 'jadwal')
-            ->latest()
-            ->get();
+        ->with(['dokter.user', 'jadwal']) // Eager load relasi
+        ->latest()
+        ->paginate(10);
         return view('pasien.pemesanan.index', compact('pemesanans'));
     }
 
