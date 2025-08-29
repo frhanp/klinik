@@ -17,7 +17,7 @@
                 <div class="p-6 text-gray-900">
                     <form method="GET" action="{{ route('admin.pasien.index') }}" class="mb-6">
                         <div class="flex items-center">
-                            <x-text-input type="text" name="search" placeholder="Cari nama atau email..." class="w-full md:w-1/3" value="{{ request('search') }}" />
+                            <x-text-input type="text" name="search" placeholder="Cari nama pasien..." class="w-full md:w-1/3" value="{{ request('search') }}" />
                             <x-primary-button class="ms-3">
                                 Cari
                             </x-primary-button>
@@ -30,6 +30,7 @@
                                 <tr>
                                     <th class="py-3 px-4 border-b text-left">Nama Pasien</th>
                                     <th class="py-3 px-4 border-b text-left">Kontak</th>
+                                    <th class="py-3 px-4 border-b text-left">NIK</th>
                                     <th class="py-3 px-4 border-b text-center">Aksi</th>
                                 </tr>
                             </thead>
@@ -38,6 +39,7 @@
                                     <tr class="hover:bg-gray-50">
                                         <td class="py-3 px-4 border-b">{{ $pasien->name }}</td>
                                         <td class="py-3 px-4 border-b">{{ $pasien->email }} <br> <span class="text-sm text-gray-500">{{ $pasien->nomor_telepon }}</span></td>
+                                        <td class="py-3 px-4 border-b">{{ $pasien->biodata->nik ?? '-' }}</td>
                                         <td class="py-3 px-4 border-b text-center">
                                             <a href="{{ route('admin.pasien.edit', $pasien->id) }}" class="text-purple-600 hover:text-purple-800 font-semibold">
                                                 Edit
@@ -46,7 +48,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="3" class="py-4 px-4 text-center text-gray-500">Tidak ada data pasien.</td>
+                                        <td colspan="4" class="py-4 px-4 text-center text-gray-500">Tidak ada data pasien.</td>
                                     </tr>
                                 @endforelse
                             </tbody>

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Daftarkan Akun Pasien Baru (Offline)') }}
+            {{ __('Daftarkan Akun Pasien Baru') }}
         </h2>
     </x-slot>
 
@@ -14,26 +14,26 @@
                         @csrf
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Nama Pasien -->
                             <div>
                                 <x-input-label for="name" :value="__('Nama Pasien')" />
                                 <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required />
                             </div>
-                            <!-- Email -->
                             <div>
                                 <x-input-label for="email" :value="__('Email')" />
                                 <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
                             </div>
-                            <!-- Nomor HP -->
+                            <div>
+                                <x-input-label for="nik" :value="__('NIK')" />
+                                <x-text-input id="nik" class="block mt-1 w-full" type="text" name="nik" :value="old('nik')" />
+                                <x-input-error :messages="$errors->get('nik')" class="mt-2" />
+                            </div>
                             <div>
                                 <x-input-label for="nomor_telepon" :value="__('Nomor HP')" />
                                 <x-text-input id="nomor_telepon" class="block mt-1 w-full" type="text" name="nomor_telepon" :value="old('nomor_telepon')" />
                             </div>
-                             <!-- Password -->
                              <div>
                                 <x-input-label for="password" :value="__('Password Sementara')" />
                                 <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required />
-                                <p class="text-xs text-gray-500 mt-1">Pasien dapat mengubah password ini nanti.</p>
                             </div>
                         </div>
 
