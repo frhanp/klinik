@@ -4,9 +4,15 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Ringkasan Jadwal Dokter') }}
             </h2>
-            <a href="{{ route('admin.jadwal.create') }}" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 shadow-md">
-                Tambah Jadwal Baru
-            </a>
+    
+            <div class="flex items-center space-x-3">
+                <a href="{{ route('admin.jadwal.generate') }}" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 shadow-sm text-sm font-medium">
+                    Generate Mingguan
+                </a>
+                <a href="{{ route('admin.jadwal.create') }}" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 shadow-sm text-sm font-medium">
+                    Tambah Jadwal Baru
+                </a>
+            </div>
         </div>
     </x-slot>
 

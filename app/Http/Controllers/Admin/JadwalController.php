@@ -122,4 +122,54 @@ class JadwalController extends Controller
 
         return ['hari' => $hariPraktek, 'jam' => $jamPraktek];
     }
+
+     /**
+     * Menampilkan halaman form untuk generate jadwal mingguan.
+     */
+    public function createMultiple()
+    {
+        $dokters = Dokter::with('user')->get();
+        return view('admin.jadwal.generate', compact('dokters'));
+    }
+
+    /**
+     * Menyimpan beberapa jadwal sekaligus berdasarkan hari yang dipilih.
+     */
+    public function storeMultiple(Request $request)
+    {
+        $request->validate([
+            'id_dokter' => 'required|exists:dokter,id',
+            'hari' => 'required|array|min:1',
+            'hari.*' => 'required|string|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu',
+            'jam_mulai' => 'required|date_format:H:i',
+            'jam_selesai' => 'required|date_format:H:i|after:jam_mulai',
+        ]);
+
+        $dokterId = $request->id_dokter;
+        $days = $request->hari;
+        $startTime = $request->jam_mulai;
+        $endTime = $request->jam_selesai;
+        $generatedCount = 0;
+
+        foreach ($days as $day) {
+            // Gunakan updateOrCreate untuk menghindari duplikasi jadwal yang sama persis
+            $jadwal = Jadwal::updateOrCreate(
+                [
+                    'id_dokter' => $dokterId,
+                    'hari' => $day,
+                ],
+                [
+                    'jam_mulai' => $startTime,
+                    'jam_selesai' => $endTime,
+                ]
+            );
+
+            // Cek apakah jadwal baru dibuat atau hanya di-update
+            if ($jadwal->wasRecentlyCreated) {
+                $generatedCount++;
+            }
+        }
+
+        return redirect()->route('admin.jadwal.index')->with('success', 'Berhasil memproses. ' . $generatedCount . ' jadwal baru berhasil dibuat.');
+    }
 }

@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\ObatController as AdminObatController;
 use App\Http\Controllers\Admin\PasienController as AdminPasienController;
 use App\Http\Controllers\Admin\LaporanController as LaporanController;
 use App\Http\Controllers\Pasien\BiodataController as PasienBiodataController;
+use App\Http\Controllers\Admin\JadwalController as JadwalController;
 
 
 /*
@@ -64,6 +65,8 @@ Route::middleware(['auth', 'cekperan:admin'])->prefix('admin')->name('admin.')->
     Route::get('pembayaran/{pemesanan}', [AdminPembayaranController::class, 'show'])->name('pembayaran.show');
     Route::post('pembayaran/{pemesanan}', [AdminPembayaranController::class, 'store'])->name('pembayaran.store');
     Route::resource('obat', AdminObatController::class);
+    Route::get('jadwal-generate', [JadwalController::class, 'createMultiple'])->name('jadwal.generate');
+    Route::post('jadwal-generate', [JadwalController::class, 'storeMultiple'])->name('jadwal.storeMultiple');
 
     Route::resource('pasien', AdminPasienController::class)->except(['show', 'destroy']);
     Route::get('laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
