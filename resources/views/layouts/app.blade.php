@@ -20,6 +20,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     {{ $header_scripts ?? '' }}
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
 </head>
 
 <body x-data="{ sidebarOpen: false }" class="font-sans antialiased bg-gray-100">
@@ -71,6 +72,7 @@
     </div>
     <script src="{{ asset('js/app.js') }}" defer></script>
     @stack('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
 </body>
 
 </html>

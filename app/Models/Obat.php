@@ -9,5 +9,10 @@ class Obat extends Model
 {
     use HasFactory;
     protected $table = 'obat';
-    protected $fillable = ['nama_obat', 'satuan', 'stok'];
+    protected $fillable = ['nama_obat', 'satuan', 'stok', 'harga_jual_resep', 'harga_jual_non_resep', 'kemasan'];
+
+    public function resep()
+    {
+        return $this->hasMany(Resep::class, 'obat_id');
+    }
 }

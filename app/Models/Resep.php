@@ -9,10 +9,15 @@ class Resep extends Model
 {
     use HasFactory;
     protected $table = 'resep';
-    protected $fillable = ['id_rekam_medis', 'nama_obat', 'dosis', 'instruksi'];
+    protected $fillable = ['id_rekam_medis', 'nama_obat', 'dosis', 'instruksi', 'obat_id', 'jumlah'];
 
     public function rekamMedis()
     {
         return $this->belongsTo(RekamMedis::class, 'id_rekam_medis');
+    }
+
+    public function obat()
+    {
+        return $this->belongsTo(Obat::class, 'obat_id');
     }
 }

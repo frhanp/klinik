@@ -21,12 +21,16 @@ class ObatController extends Controller
 
     public function store(Request $request)
     {
+        // [MODIFIKASI] Tambahkan validasi untuk field baru
         $request->validate([
             'nama_obat' => 'required|string|max:255|unique:obat,nama_obat',
-            'satuan' => 'required|string|max:50',
+            'kemasan' => 'required|string|max:100',
             'stok' => 'required|integer|min:0',
+            'harga_jual_resep' => 'required|integer|min:0',
+            'harga_jual_non_resep' => 'required|integer|min:0',
         ]);
 
+        // [MODIFIKASI] Gunakan $request->all() karena sudah divalidasi dan sesuai fillable
         Obat::create($request->all());
 
         return redirect()->route('admin.obat.index')->with('success', 'Data obat berhasil ditambahkan.');
@@ -39,12 +43,16 @@ class ObatController extends Controller
 
     public function update(Request $request, Obat $obat)
     {
+        // [MODIFIKASI] Tambahkan validasi untuk field baru saat update
         $request->validate([
             'nama_obat' => 'required|string|max:255|unique:obat,nama_obat,' . $obat->id,
-            'satuan' => 'required|string|max:50',
+            'kemasan' => 'required|string|max:100',
             'stok' => 'required|integer|min:0',
+            'harga_jual_resep' => 'required|integer|min:0',
+            'harga_jual_non_resep' => 'required|integer|min:0',
         ]);
 
+        // [MODIFIKASI] Gunakan $request->all() untuk update
         $obat->update($request->all());
 
         return redirect()->route('admin.obat.index')->with('success', 'Data obat berhasil diperbarui.');
