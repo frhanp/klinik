@@ -1,15 +1,20 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Detail Rekam Medis') }}
-        </h2>
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Detail Rekam Medis') }}
+            </h2>
+            <a href="{{ route('dokter.rekam-medis.pasien', $rekamMedis->pemesanan->pasien) }}" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 text-sm">
+                &larr; Kembali ke Riwayat
+            </a>
+        </div>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 md:p-8 bg-white border-b border-gray-200">
-                    <!-- Informasi Pasien & Dokter -->
+                    
                     <div class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b">
                         <div>
                             <h3 class="text-sm text-gray-500">Pasien</h3>
@@ -17,11 +22,10 @@
                         </div>
                         <div>
                             <h3 class="text-sm text-gray-500">Tanggal Perawatan</h3>
-                            <p class="font-bold text-lg text-gray-800">{{ \Carbon\Carbon::parse($rekamMedis->created_at)->translatedFormat('d F Y') }}</p>
+                            <p class="font-bold text-lg text-gray-800">{{ $rekamMedis->created_at->translatedFormat('d F Y') }}</p>
                         </div>
                     </div>
 
-                    <!-- Detail Medis -->
                     <div class="space-y-6">
                         <div>
                             <h4 class="font-semibold text-gray-700">Diagnosis</h4>
@@ -39,38 +43,51 @@
                         @endif
                     </div>
 
-                    <!-- Rincian Biaya -->
-                    @if($rekamMedis->tindakan->isNotEmpty())
                     <div class="mt-6 border-t pt-6">
-                        <h4 class="text-lg font-semibold mb-4 text-gray-800">Tindakan & Biaya</h4>
+                        <h4 class="text-lg font-semibold mb-4 text-gray-800">Rincian Tagihan</h4>
                         <div class="space-y-2 mb-4">
-                            @foreach($rekamMedis->tindakan as $tindakan)
-                            <div class="flex justify-between items-center">
-                                <span class="text-gray-600">{{ $tindakan->nama_tindakan }}</span>
-                                <span class="font-medium text-gray-800">Rp {{ number_format($tindakan->pivot->harga_saat_itu, 0, ',', '.') }}</span>
-                            </div>
-                            @endforeach
-                        </div>
-                        <div class="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
-                            <span class="font-bold text-purple-800">Total Biaya</span>
-                            <span class="font-bold text-lg text-purple-900">Rp {{ number_format($rekamMedis->tindakan->sum('pivot.harga_saat_itu'), 0, ',', '.') }}</span>
-                        </div>
-                    </div>
-                    @endif
+                            @if($rekamMedis->tindakan->isNotEmpty())
+                                @foreach($rekamMedis->tindakan as $tindakan)
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">{{ $tindakan->nama_tindakan }}</span>
+                                    <span class="font-medium text-gray-800">Rp {{ number_format($tindakan->pivot->harga_saat_itu, 0, ',', '.') }}</span>
+                                </div>
+                                @endforeach
+                            @endif
 
-                    <!-- Resep Obat -->
+                            @if($rekamMedis->resep->isNotEmpty())
+                                <div class="pt-2 mt-2 border-t border-dashed">
+                                    @foreach($rekamMedis->resep as $item)
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-600">Obat: {{ $item->obat->nama_obat }} ({{ $item->jumlah }} {{ $item->obat->kemasan }})</span>
+                                        {{-- Harga satuan obat tidak disimpan per resep, jadi hanya ditampilkan dalam total --}}
+                                    </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+
+                        @if($rekamMedis->pemesanan->pembayaran)
+                        <div class="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                            <span class="font-bold text-purple-800">Total Biaya Keseluruhan</span>
+                            <span class="font-bold text-lg text-purple-900">
+                                Rp {{ number_format($rekamMedis->pemesanan->pembayaran->total_biaya, 0, ',', '.') }}
+                            </span>
+                        </div>
+                        @endif
+                    </div>
+
                     @if($rekamMedis->resep->isNotEmpty())
                     <div class="mt-6 border-t pt-6">
-                        <h4 class="text-lg font-semibold mb-4 text-gray-800">Resep Obat</h4>
+                        <h4 class="text-lg font-semibold mb-4 text-gray-800">Detail Resep Obat</h4>
                         <ul class="list-disc list-inside space-y-2 text-gray-600">
                             @foreach($rekamMedis->resep as $item)
-                                <li><strong>{{ $item->nama_obat }}</strong> ({{ $item->dosis }}) - {{ $item->instruksi }}</li>
+                                <li><strong>{{ $item->obat->nama_obat }}</strong> - {{ $item->jumlah }} {{ $item->obat->kemasan }}. Dosis: {{ $item->dosis }}. Instruksi: {{ $item->instruksi }}</li>
                             @endforeach
                         </ul>
                     </div>
                     @endif
 
-                    <!-- Foto Pendukung -->
                     @if($rekamMedis->foto->isNotEmpty())
                     <div class="mt-6 border-t pt-6">
                         <h4 class="text-lg font-semibold mb-4 text-gray-800">Foto Pendukung</h4>
@@ -83,12 +100,6 @@
                         </div>
                     </div>
                     @endif
-
-                    <div class="mt-8 border-t pt-6 text-right">
-                        <a href="{{ route('dokter.rekam-medis.index') }}" class="text-purple-600 hover:text-purple-800 font-semibold">
-                            &larr; Kembali ke Riwayat
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
