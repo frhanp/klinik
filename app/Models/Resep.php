@@ -9,7 +9,7 @@ class Resep extends Model
 {
     use HasFactory;
     protected $table = 'resep';
-    protected $fillable = ['id_rekam_medis', 'nama_obat', 'dosis', 'instruksi', 'obat_id', 'jumlah'];
+    protected $fillable = ['id_rekam_medis', 'nama_obat', 'dosis', 'instruksi', 'obat_id', 'jumlah', 'harga_saat_resep'];
 
     public function rekamMedis()
     {

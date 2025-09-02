@@ -77,7 +77,7 @@ class RekamMedisController extends Controller
 
     public function store(Request $request)
     {
-        // [MODIFIKASI] Tambahkan 'tipe_harga' ke validasi
+        // [MODIFIKASI] Validasi diganti total untuk resep
         $request->validate([
             'id_pemesanan' => ['required', 'exists:pemesanan,id'],
             'diagnosis' => ['required', 'string'],
@@ -86,6 +86,7 @@ class RekamMedisController extends Controller
             'tindakans' => ['nullable', 'array'],
             'tindakans.*' => ['exists:tindakan,id'],
             'foto.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            // Validasi baru untuk resep yang terintegrasi
             'resep' => ['nullable', 'array'],
             'resep.*.obat_id' => ['required_with:resep', 'exists:obat,id'],
             'resep.*.tipe_harga' => ['required_with:resep', 'in:resep,non_resep'],
@@ -123,7 +124,7 @@ class RekamMedisController extends Controller
             }
             $rekamMedis->tindakan()->sync($tindakansToSync);
 
-            // 2. Proses resep, hitung biayanya, dan simpan
+            // 2. Proses resep, hitung biayanya, dan simpan (TERMASUK HARGA)
             if ($request->has('resep') && is_array($request->resep)) {
                 $rekamMedis->resep()->delete(); // Hapus resep lama
 
@@ -131,7 +132,7 @@ class RekamMedisController extends Controller
                     if (!empty($item['obat_id']) && !empty($item['jumlah'])) {
                         $obat = Obat::find($item['obat_id']);
                         if ($obat) {
-                            // Tentukan harga berdasarkan pilihan dokter
+                            // Tentukan harga satuan berdasarkan pilihan dokter
                             $hargaSatuan = ($item['tipe_harga'] === 'resep')
                                 ? $obat->harga_jual_resep
                                 : $obat->harga_jual_non_resep;
@@ -139,12 +140,13 @@ class RekamMedisController extends Controller
                             // Tambahkan total harga obat ke total biaya keseluruhan
                             $totalBiaya += $hargaSatuan * $item['jumlah'];
 
-                            // Buat resep baru
+                            // Buat resep baru DAN SIMPAN HARGANYA
                             $rekamMedis->resep()->create([
-                                'obat_id'   => $item['obat_id'],
-                                'jumlah'    => $item['jumlah'],
-                                'dosis'     => $item['dosis'] ?? null,
-                                'instruksi' => $item['instruksi'] ?? null,
+                                'obat_id'          => $item['obat_id'],
+                                'jumlah'           => $item['jumlah'],
+                                'harga_saat_resep' => $hargaSatuan, // <-- INI BAGIAN PENTINGNYA
+                                'dosis'            => $item['dosis'] ?? null,
+                                'instruksi'        => $item['instruksi'] ?? null,
                             ]);
 
                             // Kurangi stok obat
@@ -166,7 +168,8 @@ class RekamMedisController extends Controller
             // --- Akhir Revisi ---
 
             // Logika Foto & Status (Biarkan sama)
-            if ($request->hasFile('foto')) { /* ... */
+            if ($request->hasFile('foto')) {
+                // ... (kode foto Anda) ...
             }
 
             if ($pemesanan->status !== 'Selesai') {

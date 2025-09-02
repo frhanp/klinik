@@ -46,27 +46,25 @@
                     <div class="mt-6 border-t pt-6">
                         <h4 class="text-lg font-semibold mb-4 text-gray-800">Rincian Tagihan</h4>
                         <div class="space-y-2 mb-4">
-                            @if($rekamMedis->tindakan->isNotEmpty())
-                                @foreach($rekamMedis->tindakan as $tindakan)
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-600">{{ $tindakan->nama_tindakan }}</span>
-                                    <span class="font-medium text-gray-800">Rp {{ number_format($tindakan->pivot->harga_saat_itu, 0, ',', '.') }}</span>
-                                </div>
-                                @endforeach
-                            @endif
-
+                            @foreach($rekamMedis->tindakan as $tindakan)
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">{{ $tindakan->nama_tindakan }}</span>
+                                <span class="font-medium text-gray-800">Rp {{ number_format($tindakan->pivot->harga_saat_itu, 0, ',', '.') }}</span>
+                            </div>
+                            @endforeach
+                    
                             @if($rekamMedis->resep->isNotEmpty())
                                 <div class="pt-2 mt-2 border-t border-dashed">
                                     @foreach($rekamMedis->resep as $item)
                                     <div class="flex justify-between items-center">
-                                        <span class="text-gray-600">Obat: {{ $item->obat->nama_obat }} ({{ $item->jumlah }} {{ $item->obat->kemasan }})</span>
-                                        {{-- Harga satuan obat tidak disimpan per resep, jadi hanya ditampilkan dalam total --}}
+                                        <span class="text-gray-600">Obat: {{ $item->obat->nama_obat }} ({{ $item->jumlah }} x Rp {{ number_format($item->harga_saat_resep, 0, ',', '.') }})</span>
+                                        <span class="font-medium text-gray-800">Rp {{ number_format($item->jumlah * $item->harga_saat_resep, 0, ',', '.') }}</span>
                                     </div>
                                     @endforeach
                                 </div>
                             @endif
                         </div>
-
+                    
                         @if($rekamMedis->pemesanan->pembayaran)
                         <div class="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
                             <span class="font-bold text-purple-800">Total Biaya Keseluruhan</span>
