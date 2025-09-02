@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Tindakan;
 use App\Models\User;
 use App\Models\Obat;
+use App\Models\DaftarTindakan;
 
 class RekamMedisController extends Controller
 {
@@ -60,20 +61,20 @@ class RekamMedisController extends Controller
         return view('dokter.rekam-medis.pasien', compact('pasien', 'rekamMedisList'));
     }
     public function create(Request $request)
-    {
-        $pemesanan = Pemesanan::with('pasien')->findOrFail($request->query('id_pemesanan'));
-        if ($pemesanan->id_dokter !== Auth::user()->dokter->id) {
-            abort(403);
-        }
-
-        // [MODIFIKASI] Siapkan data untuk JavaScript
-        // Ambil semua tindakan dengan kolom yang relevan
-        $tindakans = Tindakan::select('id', 'nama_tindakan', 'harga')->get();
-        // Ambil semua obat yang stoknya ada
-        $obats = Obat::where('stok', '>', 0)->orderBy('nama_obat')->get();
-
-        return view('dokter.rekam-medis.create', compact('pemesanan', 'tindakans', 'obats'));
+{
+    $pemesanan = Pemesanan::with('pasien')->findOrFail($request->query('id_pemesanan'));
+    if ($pemesanan->id_dokter !== Auth::user()->dokter->id) {
+        abort(403);
     }
+
+    // [FIX] Mengambil data tindakan yang sudah dikelompokkan berdasarkan kategori
+    // dan tidak lagi memanggil 'nama_tindakan' secara langsung.
+    $daftarTindakans = DaftarTindakan::with('tindakanItems')->orderBy('nama_kategori')->get();
+    
+    $obats = Obat::where('stok', '>', 0)->orderBy('nama_obat')->get();
+
+    return view('dokter.rekam-medis.create', compact('pemesanan', 'daftarTindakans', 'obats'));
+}
 
     public function store(Request $request)
     {

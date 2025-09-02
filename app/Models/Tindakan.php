@@ -9,7 +9,12 @@ class Tindakan extends Model
 {
     use HasFactory;
     protected $table = 'tindakan';
-    protected $fillable = ['nama_tindakan', 'harga', 'deskripsi'];
+    protected $fillable = ['daftar_tindakan_id', 'keterangan', 'harga', 'deskripsi'];
+
+    public function kategori()
+    {
+        return $this->belongsTo(DaftarTindakan::class, 'daftar_tindakan_id');
+    }
 
     /**
      * Relasi many-to-many ke RekamMedis.
@@ -18,8 +23,8 @@ class Tindakan extends Model
     public function rekamMedis()
     {
         return $this->belongsToMany(RekamMedis::class, 'rekam_medis_tindakan', 'tindakan_id', 'rekam_medis_id')
-                    ->withPivot('harga_saat_itu') // Ambil juga harga saat tindakan dilakukan
-                    ->withTimestamps();
+            ->withPivot('harga_saat_itu') // Ambil juga harga saat tindakan dilakukan
+            ->withTimestamps();
     }
 
     public function pemesananAwal()

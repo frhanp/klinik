@@ -93,8 +93,15 @@
                             <div class="mb-6">
                                 <x-input-label for="tindakan_awal" value="Keluhan / Tindakan Awal (Opsional)" />
                                 <select name="tindakan_awal[]" id="tindakan_awal" multiple>
-                                    @foreach($tindakans as $tindakan)
-                                        <option value="{{ $tindakan->id }}" data-harga="{{ $tindakan->harga }}">{{ $tindakan->nama_tindakan }}</option>
+                                    @foreach($daftarTindakans as $kategori)
+                                        <optgroup label="{{ $kategori->nama_kategori }}">
+                                            @foreach($kategori->tindakanItems as $tindakan)
+                                                {{-- [FIX] Tambahkan data-harga di sini --}}
+                                                <option value="{{ $tindakan->id }}" data-harga="{{ $tindakan->harga }}">
+                                                    {{ $tindakan->keterangan }}
+                                                </option>
+                                            @endforeach
+                                        </optgroup>
                                     @endforeach
                                 </select>
                             </div>

@@ -13,6 +13,7 @@ use App\Models\Tindakan;
 use App\Models\BiodataPasien;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Models\DaftarTindakan;
 
 class PemesananController extends Controller
 {
@@ -139,11 +140,14 @@ class PemesananController extends Controller
     //----------------------------------
 
     public function create()
-    {
-        $dokters = Dokter::with('user')->get();
-        $tindakans = Tindakan::all();
-        return view('pasien.pemesanan.create', compact('dokters', 'tindakans'));
-    }
+{
+    $dokters = Dokter::with('user')->get();
+
+    // [MODIFIKASI] Ambil data tindakan yang sudah dikelompokkan berdasarkan kategori
+    $daftarTindakans = DaftarTindakan::with('tindakanItems')->orderBy('nama_kategori')->get();
+
+    return view('pasien.pemesanan.create', compact('dokters', 'daftarTindakans'));
+}
 
     public function store(Request $request)
     {

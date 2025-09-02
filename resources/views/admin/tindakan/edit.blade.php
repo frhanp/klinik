@@ -1,44 +1,43 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Edit Tindakan: ') . $tindakan->nama_tindakan }}
-        </h2>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">Edit Detail Tindakan</h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 md:p-8 bg-white border-b border-gray-200">
-                    <x-notification />
                     <form method="POST" action="{{ route('admin.tindakan.update', $tindakan->id) }}">
                         @csrf
                         @method('PUT')
-
-                        <!-- Nama Tindakan -->
-                        <div>
-                            <x-input-label for="nama_tindakan" :value="__('Nama Tindakan')" />
-                            <x-text-input id="nama_tindakan" class="block mt-1 w-full" type="text" name="nama_tindakan" :value="old('nama_tindakan', $tindakan->nama_tindakan)" required autofocus />
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <x-input-label for="daftar_tindakan_id" :value="__('Kategori')" />
+                                <select name="daftar_tindakan_id" id="daftar_tindakan_id"
+                                    class="block mt-1 w-full rounded-md border-gray-300" required>
+                                    @foreach ($kategoris as $kategori)
+                                        <option value="{{ $kategori->id }}" @selected($tindakan->daftar_tindakan_id == $kategori->id)>
+                                            {{ $kategori->nama_kategori }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <x-input-label for="keterangan" :value="__('Keterangan')" />
+                                <x-text-input id="keterangan" class="block mt-1 w-full" type="text" name="keterangan"
+                                    :value="old('keterangan', $tindakan->keterangan)" required />
+                            </div>
+                            <div class="md:col-span-2">
+                                <x-input-label for="harga" :value="__('Harga')" />
+                                <x-text-input id="harga" class="block mt-1 w-full" type="number" name="harga"
+                                    :value="old('harga', $tindakan->harga)" required />
+                            </div>
                         </div>
 
-                        <!-- Harga -->
-                        <div class="mt-4">
-                            <x-input-label for="harga" :value="__('Harga')" />
-                            <x-text-input id="harga" class="block mt-1 w-full" type="number" name="harga" :value="old('harga', $tindakan->harga)" required />
-                        </div>
-
-                        <!-- Deskripsi -->
-                        <div class="mt-4">
-                            <x-input-label for="deskripsi" :value="__('Deskripsi (Opsional)')" />
-                            <textarea id="deskripsi" name="deskripsi" rows="3" class="block mt-1 w-full border-gray-300 focus:border-purple-500 focus:ring-purple-500 rounded-md shadow-sm">{{ old('deskripsi', $tindakan->deskripsi) }}</textarea>
-                        </div>
-
-                        <div class="flex items-center justify-end mt-6">
-                            <a href="{{ route('admin.tindakan.index') }}" class="text-gray-600 hover:text-gray-900 mr-4">
-                                Batal
-                            </a>
-                            <x-primary-button class="bg-purple-600 hover:bg-purple-700">
-                                {{ __('Perbarui Tindakan') }}
-                            </x-primary-button>
+                        <div class="flex items-center justify-end mt-6 border-t pt-6">
+                            <a href="{{ route('admin.tindakan.index') }}"
+                                class="text-gray-600 hover:text-gray-900 mr-4">Batal</a>
+                            <x-primary-button class="bg-purple-600 hover:bg-purple-700">Simpan
+                                Perubahan</x-primary-button>
                         </div>
                     </form>
                 </div>
