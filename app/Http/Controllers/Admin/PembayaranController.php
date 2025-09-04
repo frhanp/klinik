@@ -15,18 +15,23 @@ class PembayaranController extends Controller
     public function index()
     {
         $pemesanans = Pemesanan::whereIn('status', ['Menunggu Pembayaran', 'Selesai'])
-                                ->with(['pasien', 'pembayaran'])
-                                ->latest()
-                                ->get();
+            ->with(['pasien', 'pembayaran'])
+            ->latest()
+            ->get();
         return view('admin.pembayaran.index', compact('pemesanans'));
     }
 
     public function cetak(Pemesanan $pemesanan)
     {
-        // Pastikan semua data yang dibutuhkan sudah ter-load
-        $pemesanan->load(['pasien', 'dokter.user', 'rekamMedis.tindakan', 'pembayaran']);
+        // [MODIFIKASI] Muat semua relasi, termasuk resep dan obat untuk dicetak
+        $pemesanan->load([
+            'pasien',
+            'dokter.user',
+            'rekamMedis.tindakan',
+            'rekamMedis.resep.obat', // <-- Relasi penting yang ditambahkan
+            'pembayaran'
+        ]);
 
-        // Pastikan pemesanan ini memang memiliki tagihan
         if (!$pemesanan->pembayaran) {
             return redirect()->route('admin.pembayaran.index')->with('error', 'Struk tidak dapat dicetak karena tidak ada tagihan.');
         }
@@ -37,12 +42,21 @@ class PembayaranController extends Controller
     /**
      * Menampilkan halaman detail untuk memproses pembayaran.
      */
+    // app/Http/Controllers/Admin/PembayaranController.php
+
+    // app/Http/Controllers/Admin/PembayaranController.php
+
     public function show(Pemesanan $pemesanan)
     {
-        // Memuat relasi yang dibutuhkan untuk menampilkan detail tagihan
-        $pemesanan->load(['pasien', 'dokter.user', 'rekamMedis.tindakan', 'pembayaran']);
+        // [MODIFIKASI] Muat semua relasi, termasuk resep dan obat
+        $pemesanan->load([
+            'pasien',
+            'dokter.user',
+            'rekamMedis.tindakan',
+            'rekamMedis.resep.obat', // <-- Relasi penting yang ditambahkan
+            'pembayaran'
+        ]);
 
-        // Pastikan pemesanan ini memang memiliki tagihan
         if (!$pemesanan->pembayaran) {
             return redirect()->route('admin.pembayaran.index')->with('error', 'Pemesanan ini tidak memiliki tagihan.');
         }

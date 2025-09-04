@@ -48,7 +48,8 @@
                         <div class="space-y-2 mb-4">
                             @foreach($rekamMedis->tindakan as $tindakan)
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-600">{{ $tindakan->nama_tindakan }}</span>
+                                {{-- [FIX] Ganti 'nama_tindakan' menjadi 'keterangan' --}}
+                                <span class="text-gray-600">{{ $tindakan->keterangan }}</span>
                                 <span class="font-medium text-gray-800">Rp {{ number_format($tindakan->pivot->harga_saat_itu, 0, ',', '.') }}</span>
                             </div>
                             @endforeach

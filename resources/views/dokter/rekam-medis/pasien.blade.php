@@ -30,7 +30,8 @@
                                             @if($rekamMedis->tindakan->isNotEmpty())
                                                 <ul class="list-disc list-inside text-sm">
                                                     @foreach($rekamMedis->tindakan as $tindakan)
-                                                        <li>{{ $tindakan->nama_tindakan }}</li>
+                                                        {{-- [FIX] Menggunakan 'keterangan' sesuai struktur database baru --}}
+                                                        <li>{{ $tindakan->keterangan }}</li>
                                                     @endforeach
                                                 </ul>
                                             @else
