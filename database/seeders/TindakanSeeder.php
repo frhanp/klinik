@@ -5,6 +5,11 @@ namespace Database\Seeders;
 use App\Models\Tindakan;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\TindakanImport;
+use App\Models\DaftarTindakan;
+
 
 class TindakanSeeder extends Seeder
 {
@@ -13,40 +18,20 @@ class TindakanSeeder extends Seeder
      */
     public function run(): void
     {
-        Tindakan::create([
-            'nama_tindakan' => 'Konsultasi & Pemeriksaan',
-            'harga' => 150000,
-            'deskripsi' => 'Pemeriksaan awal kondisi gigi dan mulut oleh dokter.',
-        ]);
+        // Nonaktifkan foreign key check untuk mengosongkan tabel
+        Schema::disableForeignKeyConstraints();
+        Tindakan::truncate();
+        DaftarTindakan::truncate();
+        Schema::enableForeignKeyConstraints();
 
-        Tindakan::create([
-            'nama_tindakan' => 'Pembersihan Karang Gigi (Scaling)',
-            'harga' => 350000,
-            'deskripsi' => 'Membersihkan karang gigi pada seluruh bagian rahang.',
-        ]);
+        // Ganti 'data_tindakan.xlsx' dengan nama file Anda jika berbeda
+        $filePath = storage_path('app/data_tindakan.xlsx');
 
-        Tindakan::create([
-            'nama_tindakan' => 'Tambal Gigi Composite',
-            'harga' => 400000,
-            'deskripsi' => 'Penambalan gigi berlubang dengan bahan sewarna gigi.',
-        ]);
-
-        Tindakan::create([
-            'nama_tindakan' => 'Cabut Gigi Anak (Tanpa Komplikasi)',
-            'harga' => 250000,
-            'deskripsi' => 'Pencabutan gigi susu pada anak.',
-        ]);
-        
-        Tindakan::create([
-            'nama_tindakan' => 'Cabut Gigi Dewasa (Tanpa Komplikasi)',
-            'harga' => 300000,
-            'deskripsi' => 'Pencabutan gigi permanen yang tidak memerlukan bedah.',
-        ]);
-
-        Tindakan::create([
-            'nama_tindakan' => 'Pemutihan Gigi (Bleaching)',
-            'harga' => 1500000,
-            'deskripsi' => 'Prosedur untuk mencerahkan warna gigi.',
-        ]);
+        if (file_exists($filePath)) {
+            Excel::import(new TindakanImport, $filePath);
+            $this->command->info('Data tindakan berhasil diimpor dari Excel.');
+        } else {
+            $this->command->error('File Excel tidak ditemukan di storage/app/data_tindakan.xlsx');
+        }
     }
 }
