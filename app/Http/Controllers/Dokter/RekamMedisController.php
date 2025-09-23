@@ -62,18 +62,17 @@ class RekamMedisController extends Controller
     }
     public function create(Request $request)
 {
-    $pemesanan = Pemesanan::with('pasien')->findOrFail($request->query('id_pemesanan'));
+    $pemesanan = Pemesanan::with('pasien', 'tindakanAwal')->findOrFail($request->query('id_pemesanan'));
     if ($pemesanan->id_dokter !== Auth::user()->dokter->id) {
         abort(403);
     }
 
-    // [FIX] Mengambil data tindakan yang sudah dikelompokkan berdasarkan kategori
-    // dan tidak lagi memanggil 'nama_tindakan' secara langsung.
     $daftarTindakans = DaftarTindakan::with('tindakanItems')->orderBy('nama_kategori')->get();
-    
-    $obats = Obat::where('stok', '>', 0)->orderBy('nama_obat')->get();
 
-    return view('dokter.rekam-medis.create', compact('pemesanan', 'daftarTindakans', 'obats'));
+    $obats = Obat::where('stok', '>', 0)->orderBy('nama_obat')->get();
+    $tindakanAwalIds = $pemesanan->tindakanAwal->pluck('id')->toArray();
+    
+    return view('dokter.rekam-medis.create', compact('pemesanan', 'daftarTindakans', 'obats', 'tindakanAwalIds'));
 }
 
     public function store(Request $request)

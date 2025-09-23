@@ -16,11 +16,13 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <x-input-label for="diagnosis" :value="__('Diagnosis')" />
-                                <x-text-input id="diagnosis" class="block mt-1 w-full" type="text" name="diagnosis" :value="old('diagnosis')" required />
+                                <x-text-input id="diagnosis" class="block mt-1 w-full" type="text" name="diagnosis"
+                                    :value="old('diagnosis')" required />
                             </div>
                             <div>
                                 <x-input-label for="perawatan" :value="__('Perawatan')" />
-                                <x-text-input id="perawatan" class="block mt-1 w-full" type="text" name="perawatan" :value="old('perawatan')" required />
+                                <x-text-input id="perawatan" class="block mt-1 w-full" type="text" name="perawatan"
+                                    :value="old('perawatan')" required />
                             </div>
                             <div class="md:col-span-2">
                                 <x-input-label for="catatan" :value="__('Catatan Tambahan (Opsional)')" />
@@ -28,37 +30,92 @@
                             </div>
                         </div>
 
-                        <div class="mt-6 border-t pt-6">
+                        @php
+                            // Logika untuk menemukan kategori pertama yang harus dibuka
+                            $openKategoriId = '';
+                            foreach ($daftarTindakans as $kategori) {
+                                // Cek apakah ada tindakan dari kategori ini yang sudah dipilih pasien
+                                if (
+                                    count(
+                                        array_intersect(
+                                            $kategori->tindakanItems->pluck('id')->toArray(),
+                                            $tindakanAwalIds,
+                                        ),
+                                    ) > 0
+                                ) {
+                                    $openKategoriId = $kategori->id;
+                                    break; // Hentikan setelah menemukan yang pertama
+                                }
+                            }
+                        @endphp
+
+                        <div class="mt-6 border-t pt-6" x-data="{ openKategori: '{{ $openKategoriId }}' }">
                             <h3 class="text-lg font-bold mb-4">Tindakan Medis</h3>
-                            <div id="tindakan-container" class="space-y-4">
-                                @foreach ($daftarTindakans as $kategori)
-                                    <div>
-                                        <h4 class="font-semibold text-gray-700 mb-2">{{ $kategori->nama_kategori }}</h4>
-                                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 pl-2">
-                                            @foreach ($kategori->tindakanItems as $tindakan)
-                                            <label class="flex items-center space-x-2 p-2 border rounded-md hover:bg-gray-50">
-                                                <input type="checkbox" name="tindakans[]" value="{{ $tindakan->id }}" class="tindakan-checkbox rounded border-gray-300" data-harga="{{ $tindakan->harga }}">
-                                                <span>{{ $tindakan->keterangan }}</span>
-                                            </label>
-                                            @endforeach
+                            <div id="tindakan-container" class="space-y-2 border rounded-md p-2">
+
+                                @forelse ($daftarTindakans as $kategori)
+                                    <div class="border-b last:border-b-0">
+                                        {{-- Header Kategori yang bisa diklik --}}
+                                        <button type="button"
+                                            @click="openKategori = (openKategori === '{{ $kategori->id }}' ? '' : '{{ $kategori->id }}')"
+                                            class="w-full flex justify-between items-center p-3 text-left font-semibold text-gray-700 hover:bg-gray-50">
+                                            <span>{{ $kategori->nama_kategori }}</span>
+                                            <svg class="w-5 h-5 transform transition-transform"
+                                                :class="{ 'rotate-180': openKategori === '{{ $kategori->id }}' }"
+                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                        </button>
+
+                                        {{-- Detail Tindakan yang bisa disembunyikan/ditampilkan --}}
+                                        <div x-show="openKategori === '{{ $kategori->id }}'" x-transition
+                                            class="p-4 bg-gray-50">
+                                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                                @forelse ($kategori->tindakanItems as $tindakan)
+                                                    <label
+                                                        class="flex items-center space-x-2 p-2 border rounded-md bg-white hover:bg-gray-100">
+                                                        <input type="checkbox" name="tindakans[]"
+                                                            value="{{ $tindakan->id }}"
+                                                            class="tindakan-checkbox rounded border-gray-300"
+                                                            data-harga="{{ $tindakan->harga }}"
+                                                            {{ in_array($tindakan->id, old('tindakans', $tindakanAwalIds ?? [])) ? 'checked' : '' }}>
+                                                            <span>
+                                                                {{ $tindakan->keterangan }} 
+                                                                <span class="text-gray-500">
+                                                                    (Rp {{ number_format($tindakan->harga, 0, ',', '.') }})
+                                                                </span>
+                                                            </span>
+                                                    </label>
+                                                @empty
+                                                    <p class="col-span-full text-sm text-gray-500">Tidak ada detail
+                                                        tindakan untuk kategori ini.</p>
+                                                @endforelse
+                                            </div>
                                         </div>
                                     </div>
-                                @endforeach
+                                @empty
+                                    <p class="text-center text-gray-500 p-4">Belum ada kategori tindakan yang dibuat.
+                                    </p>
+                                @endforelse
                             </div>
                         </div>
 
                         <div class="mt-6 border-t pt-6">
                             <div class="flex justify-between items-center mb-4">
                                 <h3 class="text-lg font-bold">Resep Obat</h3>
-                                <button type="button" id="tambah-resep" class="px-3 py-1 bg-green-500 text-white rounded-md text-sm hover:bg-green-600">Tambah Obat</button>
+                                <button type="button" id="tambah-resep"
+                                    class="px-3 py-1 bg-green-500 text-white rounded-md text-sm hover:bg-green-600">Tambah
+                                    Obat</button>
                             </div>
                             <div id="resep-container" class="space-y-4">
-                                </div>
+                            </div>
                         </div>
 
                         <div class="mt-6 border-t pt-6">
                             <h3 class="text-lg font-bold mb-4">Foto Pendukung (Opsional)</h3>
-                            <input type="file" name="foto[]" multiple class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100"/>
+                            <input type="file" name="foto[]" multiple
+                                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100" />
                         </div>
 
 
@@ -69,8 +126,10 @@
                         </div>
 
                         <div class="flex items-center justify-end mt-6">
-                            <a href="{{ route('dokter.dashboard') }}" class="text-gray-600 hover:text-gray-900 mr-4">Batal</a>
-                            <x-primary-button class="bg-purple-600 hover:bg-purple-700">Simpan Rekam Medis</x-primary-button>
+                            <a href="{{ route('dokter.dashboard') }}"
+                                class="text-gray-600 hover:text-gray-900 mr-4">Batal</a>
+                            <x-primary-button class="bg-purple-600 hover:bg-purple-700">Simpan Rekam
+                                Medis</x-primary-button>
                         </div>
                     </form>
                 </div>
@@ -79,41 +138,42 @@
     </div>
 
     @push('scripts')
-    {{-- Kode JavaScript untuk TomSelect dan kalkulasi biaya --}}
-    <script>
-        const obats = @json($obats);
-        
-        document.addEventListener('DOMContentLoaded', function () {
-            const resepContainer = document.getElementById('resep-container');
-            const addButton = document.getElementById('tambah-resep');
-            const totalBiayaEl = document.getElementById('total-biaya');
-            let resepIndex = 0;
+        {{-- Kode JavaScript untuk TomSelect dan kalkulasi biaya --}}
+        <script>
+            const obats = @json($obats);
 
-            function calculateTotal() {
-                let total = 0;
-                document.querySelectorAll('.tindakan-checkbox:checked').forEach(checkbox => {
-                    total += parseFloat(checkbox.dataset.harga) || 0;
-                });
-                document.querySelectorAll('#resep-container .resep-row').forEach(row => {
-                    const obatId = row.querySelector('.obat-select').value;
-                    const jumlah = parseFloat(row.querySelector('.jumlah-input').value) || 0;
-                    const tipeHarga = row.querySelector('.tipe-harga-select').value;
-                    if (obatId && jumlah > 0) {
-                        const obat = obats.find(o => o.id == obatId);
-                        if (obat) {
-                            const harga = tipeHarga === 'resep' ? obat.harga_jual_resep : obat.harga_jual_non_resep;
-                            total += (parseFloat(harga) || 0) * jumlah;
+            document.addEventListener('DOMContentLoaded', function() {
+                const resepContainer = document.getElementById('resep-container');
+                const addButton = document.getElementById('tambah-resep');
+                const totalBiayaEl = document.getElementById('total-biaya');
+                let resepIndex = 0;
+
+                function calculateTotal() {
+                    let total = 0;
+                    document.querySelectorAll('.tindakan-checkbox:checked').forEach(checkbox => {
+                        total += parseFloat(checkbox.dataset.harga) || 0;
+                    });
+                    document.querySelectorAll('#resep-container .resep-row').forEach(row => {
+                        const obatId = row.querySelector('.obat-select').value;
+                        const jumlah = parseFloat(row.querySelector('.jumlah-input').value) || 0;
+                        const tipeHarga = row.querySelector('.tipe-harga-select').value;
+                        if (obatId && jumlah > 0) {
+                            const obat = obats.find(o => o.id == obatId);
+                            if (obat) {
+                                const harga = tipeHarga === 'resep' ? obat.harga_jual_resep : obat
+                                    .harga_jual_non_resep;
+                                total += (parseFloat(harga) || 0) * jumlah;
+                            }
                         }
-                    }
-                });
-                totalBiayaEl.textContent = 'Rp ' + total.toLocaleString('id-ID');
-            }
+                    });
+                    totalBiayaEl.textContent = 'Rp ' + total.toLocaleString('id-ID');
+                }
 
-            function addResepRow() {
-                const selectId = `select-obat-${resepIndex}`;
-                const row = document.createElement('div');
-                row.classList.add('resep-row', 'p-4', 'border', 'rounded-md', 'bg-gray-50', 'space-y-3');
-                row.innerHTML = `
+                function addResepRow() {
+                    const selectId = `select-obat-${resepIndex}`;
+                    const row = document.createElement('div');
+                    row.classList.add('resep-row', 'p-4', 'border', 'rounded-md', 'bg-gray-50', 'space-y-3');
+                    row.innerHTML = `
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Pilih Obat</label>
@@ -140,27 +200,38 @@
                     </div>
                     <button type="button" class="hapus-resep text-red-500 text-sm hover:text-red-700">Hapus</button>
                 `;
-                resepContainer.appendChild(row);
-                new TomSelect(`#${selectId}`, { create: false, sortField: { field: "text", direction: "asc" } });
-                resepIndex++;
-            }
-
-            addButton.addEventListener('click', addResepRow);
-            document.body.addEventListener('change', (e) => {
-                if (e.target.matches('.tindakan-checkbox, .obat-select, .tipe-harga-select, .jumlah-input')) { calculateTotal(); }
-            });
-            document.body.addEventListener('input', (e) => {
-                if (e.target.matches('.jumlah-input')) { calculateTotal(); }
-            });
-            document.body.addEventListener('click', (e) => {
-                if (e.target.classList.contains('hapus-resep')) {
-                    e.target.closest('.resep-row').remove();
-                    calculateTotal();
+                    resepContainer.appendChild(row);
+                    new TomSelect(`#${selectId}`, {
+                        create: false,
+                        sortField: {
+                            field: "text",
+                            direction: "asc"
+                        }
+                    });
+                    resepIndex++;
                 }
+
+                addButton.addEventListener('click', addResepRow);
+                document.body.addEventListener('change', (e) => {
+                    if (e.target.matches(
+                            '.tindakan-checkbox, .obat-select, .tipe-harga-select, .jumlah-input')) {
+                        calculateTotal();
+                    }
+                });
+                document.body.addEventListener('input', (e) => {
+                    if (e.target.matches('.jumlah-input')) {
+                        calculateTotal();
+                    }
+                });
+                document.body.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('hapus-resep')) {
+                        e.target.closest('.resep-row').remove();
+                        calculateTotal();
+                    }
+                });
+                addResepRow();
+                calculateTotal();
             });
-            addResepRow();
-            calculateTotal();
-        });
-    </script>
+        </script>
     @endpush
 </x-app-layout>
