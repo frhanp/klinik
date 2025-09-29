@@ -48,8 +48,14 @@
                         <div class="space-y-2 mb-4">
                             @foreach($rekamMedis->tindakan as $tindakan)
                             <div class="flex justify-between items-center">
-                                {{-- [FIX] Ganti 'nama_tindakan' menjadi 'keterangan' --}}
-                                <span class="text-gray-600">{{ $tindakan->keterangan }}</span>
+                                <span class="text-gray-600">
+                                    {{ $tindakan->keterangan }}
+                                    @if(in_array($tindakan->id, $tindakanAwalIds))
+                                        <span class="ml-2 text-xs font-semibold text-blue-800 bg-blue-100 px-2 py-0.5 rounded-full">Pilihan Pasien</span>
+                                    @else
+                                        <span class="ml-2 text-xs font-semibold text-green-800 bg-green-100 px-2 py-0.5 rounded-full">Tambahan Dokter</span>
+                                    @endif
+                                </span>
                                 <span class="font-medium text-gray-800">Rp {{ number_format($tindakan->pivot->harga_saat_itu, 0, ',', '.') }}</span>
                             </div>
                             @endforeach

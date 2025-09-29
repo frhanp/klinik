@@ -187,19 +187,24 @@ class RekamMedisController extends Controller
         if ($rekamMedi->pemesanan->id_dokter !== Auth::user()->dokter->id) {
             abort(403);
         }
-
-        // [MODIFIKASI] Muat semua relasi yang dibutuhkan untuk rincian biaya
+    
+        // Muat semua relasi yang dibutuhkan untuk rincian biaya
         $rekamMedi->load([
             'pemesanan.pasien',
             'pemesanan.pembayaran', // Untuk total biaya final
+            'pemesanan.tindakan', // [MODIFIKASI] Eager load tindakan dari pemesanan
             'tindakan',
             'resep.obat', // Untuk rincian resep & harga
             'foto'
         ]);
-
-        // Ganti nama variabel agar konsisten
+    
+        // [MODIFIKASI] Ambil ID tindakan awal dari relasi pemesanan yang sudah di-load
+        $tindakanAwalIds = $rekamMedi->pemesanan->tindakan->pluck('id')->toArray();
+    
+        // Ganti nama variabel agar konsisten di view
         $rekamMedis = $rekamMedi;
-
-        return view('dokter.rekam-medis.show', compact('rekamMedis'));
+    
+        // [MODIFIKASI] Kirim data tindakanAwalIds ke view
+        return view('dokter.rekam-medis.show', compact('rekamMedis', 'tindakanAwalIds'));
     }
 }

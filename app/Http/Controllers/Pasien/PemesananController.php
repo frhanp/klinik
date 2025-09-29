@@ -64,9 +64,13 @@ class PemesananController extends Controller
         }
 
         // Memuat semua relasi yang dibutuhkan untuk ditampilkan di view
-        $rekamMedis->load(['pemesanan.dokter.user', 'tindakan', 'resep', 'foto', 'pemesanan.pembayaran']);
+        $rekamMedis->load(['pemesanan.dokter.user', 'pemesanan.tindakan', 'tindakan', 'resep.obat', 'foto', 'pemesanan.pembayaran']);
 
-        return view('pasien.rekam-medis.show', compact('rekamMedis'));
+        // [MODIFIKASI] Ambil ID tindakan awal dari relasi pemesanan yang sudah di-load
+        $tindakanAwalIds = $rekamMedis->pemesanan->tindakan->pluck('id')->toArray();
+
+        // [MODIFIKASI] Kirim data tindakanAwalIds ke view
+        return view('pasien.rekam-medis.show', compact('rekamMedis', 'tindakanAwalIds'));
     }
 
     /**
