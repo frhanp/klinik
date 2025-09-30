@@ -83,31 +83,47 @@
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    {{-- [MODIFIKASI] Kolom tabel disesuaikan --}}
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Pasien
-                                    </th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Dokter
-                                    </th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tgl.
-                                        Bayar</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Metode
-                                    </th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status
-                                    </th>
-                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Total
-                                        Biaya</th>
+                                    {{-- [MODIFIKASI] Urutan dan jumlah header disesuaikan --}}
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">NIK</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Pasien</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Dokter</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tindakan</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Resep</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tgl. Bayar</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Metode</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Total Biaya</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @forelse ($laporan as $item)
                                     <tr>
-                                        {{-- [TETAP] Data Pasien dan Dokter --}}
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {{ $item->pasien->name }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            {{ $item->dokter->user->name }}</td>
-
-                                        {{-- [MODIFIKASI] Cek jika pembayaran ada, tampilkan tanggal bayar --}}
+                                        {{-- [MODIFIKASI] Urutan dan jumlah data disesuaikan --}}
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $item->pasien->biodata->nik ?? '-' }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $item->pasien->name }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $item->dokter->user->name }}</td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">
+                                            @if($item->rekamMedis && $item->rekamMedis->tindakan->isNotEmpty())
+                                                <ul class="list-disc list-inside">
+                                                    @foreach($item->rekamMedis->tindakan as $tindakan)
+                                                        <li>{{ $tindakan->keterangan }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                        <td class="px-6 py-4 text-sm text-gray-500">
+                                            @if($item->rekamMedis && $item->rekamMedis->resep->isNotEmpty())
+                                                <ul class="list-disc list-inside">
+                                                    @foreach($item->rekamMedis->resep as $resep)
+                                                        <li>{{ $resep->obat->nama_obat }} ({{$resep->jumlah}})</li>
+                                                    @endforeach
+                                                </ul>
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             @if ($item->status !== 'Menunggu Pembayaran' && $item->pembayaran)
                                                 {{ \Carbon\Carbon::parse($item->pembayaran->tanggal_bayar)->format('d/m/Y') }}
@@ -115,44 +131,36 @@
                                                 -
                                             @endif
                                         </td>
-
-                                        {{-- [MODIFIKASI] Cek jika pembayaran ada, tampilkan metode --}}
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             {{ $item->pembayaran ? ucfirst($item->pembayaran->metode_pembayaran) : '-' }}
                                         </td>
-
-                                        {{-- [MODIFIKASI] Badge warna disesuaikan --}}
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             @php
                                                 $status = $item->status;
-                                                $badgeColor =
-                                                    [
+                                                $badgeColor = [
                                                         'Selesai' => 'bg-green-100 text-green-800',
                                                         'Menunggu Pembayaran' => 'bg-yellow-100 text-yellow-800',
-                                                        'dikonfirmasi' => 'bg-blue-100 text-blue-800',
-                                                        'dibatalkan' => 'bg-red-100 text-red-800',
+                                                        'Dikonfirmasi' => 'bg-blue-100 text-blue-800',
                                                     ][$status] ?? 'bg-gray-100 text-gray-800';
                                             @endphp
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $badgeColor }}">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $badgeColor }}">
                                                 {{ $status }}
                                             </span>
                                         </td>
-
-                                        {{-- [MODIFIKASI] Cek jika pembayaran ada, tampilkan total biaya --}}
-                                        <td
-                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium text-right">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium text-right">
                                             {{ $item->pembayaran ? 'Rp. ' . number_format($item->pembayaran->total_biaya, 0, ',', '.') : '-' }}
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
+                                        {{-- [MODIFIKASI] Colspan disesuaikan menjadi 9 --}}
+                                        <td colspan="9" class="px-6 py-4 text-center text-sm text-gray-500">
                                             Tidak ada data untuk filter yang dipilih.
                                         </td>
                                     </tr>
                                 @endforelse
                             </tbody>
+                        </table>
 
                         </table>
                     </div>

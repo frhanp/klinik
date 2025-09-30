@@ -13,20 +13,18 @@ class LaporanController extends Controller
 {
     public function index(Request $request)
     {
-        // [TETAP] Logika query dimulai dari Pemesanan.
+        // [MODIFIKASI] Tambahkan kondisi untuk mengabaikan status 'Dibatalkan' di awal
         $query = Pemesanan::query()
-            // --- [FIX] Start: Menggunakan Nama Kolom yang Benar ---
-            // Mengganti 'pembayaran.id_pemesanan' menjadi 'pembayaran.pemesanan_id'
+            ->where('pemesanan.status', '!=', 'Dibatalkan') 
             ->leftJoin('pembayaran', 'pemesanan.id', '=', 'pembayaran.pemesanan_id')
-            // --- [FIX] End ---
-            ->with(['pasien', 'dokter.user']);
+            ->with(['pasien', 'dokter.user','pasien.biodata','rekamMedis.tindakan','rekamMedis.resep.obat']);
 
-        // [TETAP] Filter berdasarkan status pemesanan
+        // Filter berdasarkan status pemesanan
         if ($request->filled('status')) {
             $query->where('pemesanan.status', $request->status);
         }
 
-        // [TETAP] Filter berdasarkan rentang tanggal
+        // Filter berdasarkan rentang tanggal
         if ($request->filled('start_date') && $request->filled('end_date')) {
             $query->where(function ($q) use ($request) {
                 $q->whereBetween('pembayaran.tanggal_bayar', [$request->start_date, $request->end_date])
@@ -34,14 +32,14 @@ class LaporanController extends Controller
             });
         }
 
-        // [TETAP] Filter Metode Pembayaran
+        // Filter Metode Pembayaran
         if ($request->filled('metode_pembayaran')) {
             $query->where('pembayaran.metode_pembayaran', $request->metode_pembayaran);
         }
 
         $laporan = $query->select('pemesanan.*')->latest('pemesanan.created_at')->get();
-        //dd($laporan); // <--- LETAKKAN DI SINI
-        // [MODIFIKASI] Kalkulasi pendapatan disesuaikan dengan relasi yang benar
+        
+        // Kalkulasi pendapatan disesuaikan dengan relasi yang benar
         $totalPendapatan = $laporan->sum(function($item) {
             return $item->pembayaran->total_biaya ?? 0;
         });
@@ -49,27 +47,27 @@ class LaporanController extends Controller
         $totalTransaksi = $laporan->count();
         $pasienUnik = $laporan->pluck('pasien.id')->unique()->count();
         
-        // --- [FIX] Start: Query untuk Chart ---
-        // Menggunakan nama kolom yang benar juga di sini
+        // Query untuk Chart
         $pendapatanHarian = Pemesanan::query()
             ->join('pembayaran', 'pemesanan.id', '=', 'pembayaran.pemesanan_id')
             ->select(DB::raw('DATE(pembayaran.tanggal_bayar) as tanggal'), DB::raw('SUM(pembayaran.total_biaya) as total'))
             ->whereBetween('pembayaran.tanggal_bayar', [$request->input('start_date', now()->subMonth()), $request->input('end_date', now())])
+            // [MODIFIKASI] Tambahkan filter 'Dibatalkan' juga di query chart agar konsisten
+            ->where('pemesanan.status', '!=', 'Dibatalkan')
             ->groupBy('tanggal')
             ->orderBy('tanggal', 'asc')
             ->get();
-        // --- [FIX] End ---
 
         $chartData = [
             'labels' => $pendapatanHarian->pluck('tanggal'),
             'data' => $pendapatanHarian->pluck('total'),
         ];
         
-        // [TETAP] Opsi untuk dropdown filter
+        // Opsi untuk dropdown filter
         $metodePembayaranOptions = Pembayaran::whereNotNull('metode_pembayaran')->distinct()->pluck('metode_pembayaran');
-        // [FIX] Sesuaikan dengan status yang ada di database Anda
-        $statusOptions = ['Menunggu Pembayaran', 'Selesai', 'Dikonfirmasi', 'Dibatalkan'];
-
+        
+        // [MODIFIKASI] Sesuaikan dengan status yang ada dan hilangkan 'Dibatalkan'
+        $statusOptions = ['Menunggu Pembayaran', 'Selesai', 'Dikonfirmasi'];
 
         return view('admin.laporan.index', compact(
             'laporan',
