@@ -36,6 +36,24 @@ class DashboardController extends Controller
         });
         $data = $pendapatanPerBulan->pluck('total');
 
-        return view('admin.dashboard', compact('jumlahPasien', 'jumlahDokter', 'pemesananHariIni', 'labels', 'data'));
+        $tindakanPopuler = DB::table('rekam_medis_tindakan')
+            ->join('tindakan', 'rekam_medis_tindakan.tindakan_id', '=', 'tindakan.id')
+            ->select('tindakan.keterangan', DB::raw('count(rekam_medis_tindakan.tindakan_id) as jumlah'))
+            ->groupBy('tindakan.keterangan')
+            ->orderBy('jumlah', 'desc')
+            ->limit(5)
+            ->get();
+        $tindakanLabels = $tindakanPopuler->pluck('keterangan');
+        $tindakanData = $tindakanPopuler->pluck('jumlah');
+
+        return view('admin.dashboard', compact(
+            'jumlahPasien', 
+            'jumlahDokter', 
+            'pemesananHariIni', 
+            'labels', 
+            'data', 
+            'tindakanLabels', // Kirim data label tindakan
+            'tindakanData'    // Kirim data jumlah tindakan
+        ));
     }
 }
