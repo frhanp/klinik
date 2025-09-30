@@ -24,6 +24,7 @@
                         <table class="min-w-full bg-white">
                             <thead class="bg-gray-100">
                                 <tr>
+                                    <th class="py-3 px-4 border-b text-left">NIK</th>
                                     <th class="py-3 px-4 border-b text-left">Nama Pasien</th>
                                     <th class="py-3 px-4 border-b text-center">Jumlah Kunjungan</th>
                                     <th class="py-3 px-4 border-b text-left">Diagnosis Terakhir</th>
@@ -34,6 +35,7 @@
                             <tbody>
                                 @forelse ($pasienRingkas as $row)
                                     <tr class="hover:bg-gray-50">
+                                        <td class="py-3 px-4 border-b">{{ $row->nik_pasien }}</td>
                                         <td class="py-3 px-4 border-b">{{ $row->nama_pasien }}</td>
                                         <td class="py-3 px-4 border-b text-center">{{ $row->jumlah_kunjungan }}</td>
                                         <td class="py-3 px-4 border-b">{{ Str::limit($row->diagnosis_terakhir, 50) }}</td>

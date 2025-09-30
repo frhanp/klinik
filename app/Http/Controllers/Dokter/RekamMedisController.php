@@ -20,27 +20,31 @@ class RekamMedisController extends Controller
     {
         $dokterId = Auth::user()->dokter->id;
 
-        // tambahan: query ringkasan per pasien
+        // [MODIFIKASI] Query diubah untuk join ke biodata_pasien dan mengambil NIK
         $query = RekamMedis::query()
-            ->selectRaw('u.id as pasien_id, u.name as nama_pasien,
-            COUNT(rm.id) as jumlah_kunjungan,
-            MAX(rm.created_at) as terakhir_kunjungan,
-            MAX(rm.diagnosis) as diagnosis_terakhir')
+            ->selectRaw('u.id as pasien_id, u.name as nama_pasien, bp.nik as nik_pasien,
+               COUNT(rm.id) as jumlah_kunjungan,
+               MAX(rm.created_at) as terakhir_kunjungan,
+               MAX(rm.diagnosis) as diagnosis_terakhir')
             ->from('rekam_medis as rm')
             ->join('pemesanan as p', 'p.id', '=', 'rm.id_pemesanan')
             ->join('users as u', 'u.id', '=', 'p.id_pasien')
+            ->leftJoin('biodata_pasien as bp', 'u.id', '=', 'bp.user_id') // Join untuk NIK
             ->where('p.id_dokter', $dokterId)
-            ->groupBy('u.id', 'u.name')
+            ->groupBy('u.id', 'u.name', 'bp.nik') // Tambah NIK ke group by
             ->orderByDesc('terakhir_kunjungan');
 
-        // tambahan: pencarian pasien
+        // Pencarian diperluas untuk bisa mencari berdasarkan NIK
         if ($request->has('search') && $request->search != '') {
-            $query->where('u.name', 'like', '%' . $request->search . '%');
+            $query->where(function($q) use ($request) {
+                $q->where('u.name', 'like', '%' . $request->search . '%')
+                  ->orWhere('bp.nik', 'like', '%' . $request->search . '%');
+            });
         }
 
         $pasienRingkas = $query->paginate(10)->withQueryString();
 
-        return view('dokter.rekam-medis.index', compact('pasienRingkas')); // tambahan: ganti variabel
+        return view('dokter.rekam-medis.index', compact('pasienRingkas'));
     }
 
     // tambahan: tampilkan semua rekam medis milik pasien tertentu
