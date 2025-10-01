@@ -35,7 +35,14 @@
                             $openKategoriId = '';
                             if ($daftarTindakans && $tindakanAwalIds) {
                                 foreach ($daftarTindakans as $kategori) {
-                                    if (count(array_intersect($kategori->tindakanItems->pluck('id')->toArray(), $tindakanAwalIds)) > 0) {
+                                    if (
+                                        count(
+                                            array_intersect(
+                                                $kategori->tindakanItems->pluck('id')->toArray(),
+                                                $tindakanAwalIds,
+                                            ),
+                                        ) > 0
+                                    ) {
                                         $openKategoriId = $kategori->id;
                                         break;
                                     }
@@ -44,7 +51,8 @@
                         @endphp
 
                         {{-- [MODIFIKASI] Blok untuk Tindakan yang Dipilih Pasien --}}
-                        <div class="mt-6 border-t pt-6" x-data="{ openKategori: '{{ $openKategoriId }}' }">
+                        <div class="mt-6 border-t pt-6" x-data="{ openKategori: '{{ $openKategoriId }}_pasien' }">
+
                             <h3 class="text-lg font-bold mb-4">Tindakan Medis Dipilih Pasien</h3>
                             <div class="space-y-2">
                                 @foreach ($daftarTindakans as $kategori)
@@ -60,19 +68,24 @@
                                                 <svg class="w-5 h-5 transform transition-transform"
                                                     :class="{ 'rotate-180': openKategori === '{{ $kategori->id }}_pasien' }"
                                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                                 </svg>
                                             </button>
-                                            <div x-show="openKategori === '{{ $kategori->id }}_pasien'" x-collapse class="p-4 bg-blue-50">
+                                            <div x-show="openKategori === '{{ $kategori->id }}_pasien'" x-collapse
+                                                class="p-4 bg-blue-50">
                                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                                     @foreach ($pilihanPasien as $tindakan)
-                                                        <label class="flex items-center space-x-2 p-2 border rounded-md bg-white cursor-not-allowed">
-                                                            <input type="checkbox" value="{{ $tindakan->id }}" class="tindakan-checkbox rounded border-gray-300" data-harga="{{ $tindakan->harga }}" checked disabled>
-                                                            <input type="hidden" name="tindakans[]" value="{{ $tindakan->id }}">
-                                                            <span>
-                                                                {{ $tindakan->keterangan }}
-                                                                <span class="text-gray-500">(Rp {{ number_format($tindakan->harga, 0, ',', '.') }})</span>
-                                                            </span>
+                                                        <label
+                                                            class="flex items-center space-x-2 p-2 border rounded-md bg-white cursor-not-allowed">
+                                                            <input type="checkbox" value="{{ $tindakan->id }}"
+                                                                class="tindakan-checkbox rounded border-gray-300"
+                                                                data-harga="{{ $tindakan->harga }}" checked disabled>
+                                                            <input type="hidden" name="tindakans[]"
+                                                                value="{{ $tindakan->id }}">
+                                                            <span>{{ $tindakan->keterangan }} <span
+                                                                    class="text-gray-500">(Rp
+                                                                    {{ number_format($tindakan->harga, 0, ',', '.') }})</span></span>
                                                         </label>
                                                     @endforeach
                                                 </div>
@@ -88,7 +101,7 @@
                             <h3 class="text-lg font-bold mb-4">Tindakan Medis Tambahan Dokter</h3>
                             <div class="space-y-2">
                                 @foreach ($daftarTindakans as $kategori)
-                                     @php
+                                    @php
                                         $tindakanLain = $kategori->tindakanItems->whereNotIn('id', $tindakanAwalIds);
                                     @endphp
                                     @if ($tindakanLain->isNotEmpty())
@@ -100,17 +113,25 @@
                                                 <svg class="w-5 h-5 transform transition-transform"
                                                     :class="{ 'rotate-180': openKategori === '{{ $kategori->id }}_dokter' }"
                                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                                 </svg>
                                             </button>
-                                            <div x-show="openKategori === '{{ $kategori->id }}_dokter'" x-collapse class="p-4">
+                                            <div x-show="openKategori === '{{ $kategori->id }}_dokter'" x-collapse
+                                                class="p-4">
                                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                                     @foreach ($tindakanLain as $tindakan)
-                                                        <label class="flex items-center space-x-2 p-2 border rounded-md bg-white hover:bg-gray-100">
-                                                            <input type="checkbox" name="tindakans[]" value="{{ $tindakan->id }}" class="tindakan-checkbox rounded border-gray-300" data-harga="{{ $tindakan->harga }}" {{ in_array($tindakan->id, old('tindakans', [])) ? 'checked' : '' }}>
+                                                        <label
+                                                            class="flex items-center space-x-2 p-2 border rounded-md bg-white hover:bg-gray-100">
+                                                            <input type="checkbox" name="tindakans[]"
+                                                                value="{{ $tindakan->id }}"
+                                                                class="tindakan-checkbox rounded border-gray-300"
+                                                                data-harga="{{ $tindakan->harga }}"
+                                                                {{ in_array($tindakan->id, old('tindakans', [])) ? 'checked' : '' }}>
                                                             <span>
                                                                 {{ $tindakan->keterangan }}
-                                                                <span class="text-gray-500">(Rp {{ number_format($tindakan->harga, 0, ',', '.') }})</span>
+                                                                <span class="text-gray-500">(Rp
+                                                                    {{ number_format($tindakan->harga, 0, ',', '.') }})</span>
                                                             </span>
                                                         </label>
                                                     @endforeach
@@ -126,25 +147,74 @@
                         <div class="mt-6 border-t pt-6">
                             <div class="flex justify-between items-center mb-4">
                                 <h3 class="text-lg font-bold">Resep Obat</h3>
-                                <button type="button" id="tambah-resep" class="px-3 py-1 bg-green-500 text-white rounded-md text-sm hover:bg-green-600">Tambah Obat</button>
+                                <button type="button" id="tambah-resep"
+                                    class="px-3 py-1 bg-green-500 text-white rounded-md text-sm hover:bg-green-600">Tambah
+                                    Obat</button>
                             </div>
                             <div id="resep-container" class="space-y-4"></div>
                         </div>
 
                         <div class="mt-6 border-t pt-6">
                             <h3 class="text-lg font-bold mb-4">Foto Pendukung (Opsional)</h3>
-                            <input type="file" name="foto[]" multiple class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100" />
+                            <input type="file" name="foto[]" multiple
+                                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100" />
                         </div>
 
                         <div class="mt-6 border-t pt-6">
-                            <h3 class="text-2xl font-bold text-right text-gray-800">
-                                Total Estimasi Biaya: <span id="total-biaya" class="text-purple-600">Rp 0</span>
-                            </h3>
+                            <div class="space-y-3 max-w-md ml-auto">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">Subtotal Tindakan</span>
+                                    <span id="subtotal-tindakan" class="font-semibold text-gray-800">Rp 0</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">Subtotal Obat</span>
+                                    <span id="subtotal-obat" class="font-semibold text-gray-800">Rp 0</span>
+                                </div>
+                        
+                                {{-- Potongan BPJS --}}
+                                @if ($pemesanan->status_pasien == 'BPJS')
+                                    <div id="baris-potongan-tindakan" 
+                                        class="flex justify-between items-center text-red-600" style="display: none;">
+                                        <span>Potongan BPJS Tindakan</span>
+                                        <span id="potongan-tindakan-display">- Rp 0</span>
+                                    </div>
+                                    <div id="baris-potongan-obat" 
+                                        class="flex justify-between items-center text-red-600" style="display: none;">
+                                        <span>Potongan BPJS Obat</span>
+                                        <span id="potongan-obat-display">- Rp 0</span>
+                                    </div>
+                                @endif
+                        
+                                {{-- Potongan Inhealth --}}
+                                @if ($pemesanan->status_pasien == 'Inhealth')
+                                    <div class="flex justify-between items-center">
+                                        <label for="potongan" class="text-gray-600">Potongan Inhealth</label>
+                                        <div class="flex items-center">
+                                            <span class="mr-2 text-gray-500">Rp.</span>
+                                            <x-text-input type="number" name="potongan" id="potongan"
+                                                value="{{ old('potongan', 0) }}" min="0"
+                                                class="text-right w-36" oninput="calculateTotal()" />
+                                        </div>
+                                    </div>
+                                @endif
+                        
+                                {{-- Total Akhir --}}
+                                <div class="flex justify-between items-center border-t pt-3">
+                                    <h3 class="text-lg font-bold text-gray-800">Total Akhir</h3>
+                                    <span id="total-biaya" class="text-xl font-bold text-purple-600">Rp 0</span>
+                                </div>
+                            </div>
                         </div>
+                        
+                        
+
+
 
                         <div class="flex items-center justify-end mt-6">
-                            <a href="{{ route('dokter.dashboard') }}" class="text-gray-600 hover:text-gray-900 mr-4">Batal</a>
-                            <x-primary-button class="bg-purple-600 hover:bg-purple-700">Simpan Rekam Medis</x-primary-button>
+                            <a href="{{ route('dokter.dashboard') }}"
+                                class="text-gray-600 hover:text-gray-900 mr-4">Batal</a>
+                            <x-primary-button class="bg-purple-600 hover:bg-purple-700">Simpan Rekam
+                                Medis</x-primary-button>
                         </div>
                     </form>
                 </div>
@@ -156,74 +226,176 @@
         {{-- Script tidak berubah, karena logika kalkulasi tetap sama --}}
         <script>
             const obats = @json($obats);
+            const statusPasien = @json($pemesanan->status_pasien);
+
             document.addEventListener('DOMContentLoaded', function() {
                 const resepContainer = document.getElementById('resep-container');
                 const addButton = document.getElementById('tambah-resep');
+                const subtotalBiayaEl = document.getElementById('subtotal-biaya');
                 const totalBiayaEl = document.getElementById('total-biaya');
+                const barisPotonganBpjs = document.getElementById('baris-potongan-bpjs');
+                const potonganBpjsDisplay = document.getElementById('potongan-bpjs-display');
+
+                window.calculateTotal = function() {
+    let subtotalTindakan = 0;
+    let subtotalObat = 0;
+    let potonganTindakan = 0;
+    let potonganObat = 0;
+
+    // === Hitung tindakan
+    document.querySelectorAll('.tindakan-checkbox:not(:disabled):checked, .tindakan-checkbox:disabled')
+        .forEach(checkbox => {
+            let hargaTindakan = parseFloat(checkbox.dataset.harga) || 0;
+            subtotalTindakan += hargaTindakan;
+
+            if (statusPasien === 'BPJS') {
+                potonganTindakan += 2500; // potongan per tindakan
+            }
+        });
+
+    // === Hitung obat
+    document.querySelectorAll('#resep-container .resep-row').forEach(row => {
+        const obatSelect = row.querySelector('.obat-select');
+        const jumlah = parseFloat(row.querySelector('.jumlah-input').value) || 0;
+        const tipeHarga = row.querySelector('.tipe-harga-select').value;
+        const hargaDisplay = row.querySelector('.harga-obat');
+
+        if (obatSelect && obatSelect.value && jumlah > 0) {
+            const selectedOption = obatSelect.options[obatSelect.selectedIndex];
+            let hargaSatuan = tipeHarga === 'resep'
+                ? parseFloat(selectedOption.dataset.hargaResep)
+                : parseFloat(selectedOption.dataset.hargaNonresep);
+
+            subtotalObat += hargaSatuan * jumlah;
+            hargaDisplay.value = 'Rp ' + (hargaSatuan * jumlah).toLocaleString('id-ID');
+
+            if (statusPasien === 'BPJS') {
+                potonganObat += hargaSatuan * jumlah; // seluruh harga obat gratis
+            }
+        } else {
+            hargaDisplay.value = 'Rp 0';
+        }
+    });
+
+    // Update subtotal tampilan
+    document.getElementById('subtotal-tindakan').textContent =
+        'Rp ' + subtotalTindakan.toLocaleString('id-ID');
+    document.getElementById('subtotal-obat').textContent =
+        'Rp ' + subtotalObat.toLocaleString('id-ID');
+
+    // Potongan BPJS
+    if (statusPasien === 'BPJS') {
+        // tampilkan potongan tindakan
+        const barisPotTind = document.getElementById('baris-potongan-tindakan');
+        const potTindDisp = document.getElementById('potongan-tindakan-display');
+        if (potonganTindakan > 0) {
+            barisPotTind.style.display = 'flex';
+            potTindDisp.textContent = '- Rp ' + potonganTindakan.toLocaleString('id-ID');
+        } else {
+            barisPotTind.style.display = 'none';
+        }
+
+        // tampilkan potongan obat
+        const barisPotObat = document.getElementById('baris-potongan-obat');
+        const potObatDisp = document.getElementById('potongan-obat-display');
+        if (potonganObat > 0) {
+            barisPotObat.style.display = 'flex';
+            potObatDisp.textContent = '- Rp ' + potonganObat.toLocaleString('id-ID');
+        } else {
+            barisPotObat.style.display = 'none';
+        }
+    }
+
+    // Potongan Inhealth
+    let potonganInhealth = 0;
+    if (statusPasien === 'Inhealth') {
+        const potonganEl = document.getElementById('potongan');
+        if (potonganEl) {
+            potonganInhealth = parseFloat(potonganEl.value) || 0;
+        }
+    }
+
+    // Total akhir
+    const totalAkhir = Math.max(0, subtotalTindakan + subtotalObat - potonganTindakan - potonganObat - potonganInhealth);
+    document.getElementById('total-biaya').textContent = 'Rp ' + totalAkhir.toLocaleString('id-ID');
+}
+
+
+
+
+
                 let resepIndex = 0;
 
-                function calculateTotal() {
-                    let total = 0;
-                    document.querySelectorAll('.tindakan-checkbox:not(:disabled):checked').forEach(checkbox => {
-                        total += parseFloat(checkbox.dataset.harga) || 0;
-                    });
-                    document.querySelectorAll('.tindakan-checkbox:disabled').forEach(checkbox => {
-                        total += parseFloat(checkbox.dataset.harga) || 0;
-                    });
-                    document.querySelectorAll('#resep-container .resep-row').forEach(row => {
-                        const obatId = row.querySelector('.obat-select').value;
-                        const jumlah = parseFloat(row.querySelector('.jumlah-input').value) || 0;
-                        const tipeHarga = row.querySelector('.tipe-harga-select').value;
-                        if (obatId && jumlah > 0) {
-                            const obat = obats.find(o => o.id == obatId);
-                            if (obat) {
-                                const harga = tipeHarga === 'resep' ? obat.harga_jual_resep : obat.harga_jual_non_resep;
-                                total += (parseFloat(harga) || 0) * jumlah;
-                            }
-                        }
-                    });
-                    totalBiayaEl.textContent = 'Rp ' + total.toLocaleString('id-ID');
-                }
 
                 function addResepRow() {
                     const selectId = `select-obat-${resepIndex}`;
                     const row = document.createElement('div');
                     row.classList.add('resep-row', 'p-4', 'border', 'rounded-md', 'bg-gray-50', 'space-y-3');
                     row.innerHTML = `
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Pilih Obat</label>
-                                <select id="${selectId}" name="resep[${resepIndex}][obat_id]" class="obat-select" required placeholder="Ketik untuk mencari obat..."><option value="">-- Pilih dari Stok --</option>${obats.map(obat => `<option value="${obat.id}">${obat.nama_obat} (Stok: ${obat.stok})</option>`).join('')}</select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Tipe Harga</label>
-                                <select name="resep[${resepIndex}][tipe_harga]" class="tipe-harga-select mt-1 block w-full rounded-md border-gray-300" required><option value="resep">Harga Resep</option><option value="non_resep">Harga Non-Resep</option></select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Jumlah</label>
-                                <input type="number" name="resep[${resepIndex}][jumlah]" class="jumlah-input mt-1 block w-full rounded-md border-gray-300" min="1" required>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Dosis</label>
-                                <input type="text" name="resep[${resepIndex}][dosis]" class="mt-1 block w-full rounded-md border-gray-300">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Instruksi</label>
-                                <input type="text" name="resep[${resepIndex}][instruksi]" class="mt-1 block w-full rounded-md border-gray-300">
-                            </div>
-                        </div>
-                        <button type="button" class="hapus-resep text-red-500 text-sm hover:text-red-700">Hapus</button>
-                    `;
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Pilih Obat</label>
+                <select id="${selectId}" name="resep[${resepIndex}][obat_id]" class="obat-select" required>
+                    <option value="">-- Pilih dari Stok --</option>
+                    ${obats.map(obat =>
+                        `<option value="${obat.id}" 
+                                                                                                 data-harga-resep="${obat.harga_jual_resep}" 
+                                                                                                 data-harga-nonresep="${obat.harga_jual_non_resep}">
+                                                                                            ${obat.nama_obat} (Stok: ${obat.stok})
+                                                                                         </option>`
+                    ).join('')}
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Tipe Harga</label>
+                <select name="resep[${resepIndex}][tipe_harga]" 
+                        class="tipe-harga-select mt-1 block w-full rounded-md border-gray-300" required>
+                    <option value="resep">Harga Resep</option>
+                    <option value="non_resep">Harga Non-Resep</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Jumlah</label>
+                <input type="number" name="resep[${resepIndex}][jumlah]" 
+                       class="jumlah-input mt-1 block w-full rounded-md border-gray-300" 
+                       min="1" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Harga</label>
+                <input type="text" class="harga-obat mt-1 block w-full rounded-md border-gray-300 bg-gray-100 text-right" 
+                       value="Rp 0" readonly>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Dosis</label>
+                <input type="text" name="resep[${resepIndex}][dosis]" 
+                       class="mt-1 block w-full rounded-md border-gray-300">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Instruksi</label>
+                <input type="text" name="resep[${resepIndex}][instruksi]" 
+                       class="mt-1 block w-full rounded-md border-gray-300">
+            </div>
+        </div>
+        <button type="button" class="hapus-resep text-red-500 text-sm hover:text-red-700">Hapus</button>
+    `;
                     resepContainer.appendChild(row);
-                    new TomSelect(`#${selectId}`, { create: false, sortField: { field: "text", direction: "asc" } });
+                    new TomSelect(`#${selectId}`, {
+                        create: false,
+                        sortField: {
+                            field: "text",
+                            direction: "asc"
+                        }
+                    });
                     resepIndex++;
                 }
 
+
                 addButton.addEventListener('click', addResepRow);
                 document.body.addEventListener('change', (e) => {
-                    if (e.target.matches('.tindakan-checkbox, .obat-select, .tipe-harga-select, .jumlah-input')) {
+                    if (e.target.matches(
+                            '.tindakan-checkbox, .obat-select, .tipe-harga-select, .jumlah-input')) {
                         calculateTotal();
                     }
                 });
@@ -238,8 +410,9 @@
                         calculateTotal();
                     }
                 });
+
                 addResepRow();
-                calculateTotal();
+                calculateTotal(); // <-- INI YANG AKTIFKAN
             });
         </script>
     @endpush

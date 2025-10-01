@@ -40,72 +40,75 @@
                     </div>
 
                     {{-- Rincian Pembayaran --}}
-                    @if($rekamMedis->pemesanan->pembayaran)
-                    <div class="mt-6 border-t pt-6">
-                        <h3 class="text-lg font-semibold mb-4 text-gray-800">Rincian Pembayaran</h3>
-                        
-                        @php
-                            $tindakanPasien = $rekamMedis->tindakan->whereIn('id', $tindakanAwalIds);
-                            $tindakanDokter = $rekamMedis->tindakan->whereNotIn('id', $tindakanAwalIds);
-                        @endphp
+                    {{-- Rincian Pembayaran --}}
+@if($rekamMedis->pemesanan->pembayaran)
+<div class="mt-6 border-t pt-6">
+    <h3 class="text-lg font-semibold mb-4 text-gray-800">Rincian Pembayaran</h3>
 
-                        {{-- [MODIFIKASI] Blok untuk Tindakan Pilihan Pasien --}}
-                        @if($tindakanPasien->isNotEmpty())
-                            <div class="mb-4">
-                                <h4 class="text-md font-semibold text-gray-700 mb-2">Tindakan Pilihan Anda</h4>
-                                <div class="space-y-2">
-                                    @foreach($tindakanPasien as $tindakan)
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-gray-600">{{ $tindakan->keterangan }}</span>
-                                        <span class="font-medium text-gray-800">Rp {{ number_format($tindakan->pivot->harga_saat_itu, 0, ',', '.') }}</span>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endif
+    @php
+        $subtotalTindakan = $rekamMedis->tindakan->sum(fn($t) => $t->pivot->harga_saat_itu);
+        $subtotalObat = $rekamMedis->resep->sum(fn($r) => $r->jumlah * $r->harga_saat_resep);
+        $jumlahTindakan = $rekamMedis->tindakan->count();
+        $pembayaran = $rekamMedis->pemesanan->pembayaran;
 
-                        {{-- [MODIFIKASI] Blok untuk Tindakan Tambahan Dokter --}}
-                        @if($tindakanDokter->isNotEmpty())
-                             <div class="mb-4 pt-4 border-t border-dashed">
-                                <h4 class="text-md font-semibold text-gray-700 mb-2">Tindakan Tambahan Dokter</h4>
-                                <div class="space-y-2">
-                                    @foreach($tindakanDokter as $tindakan)
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-gray-600">{{ $tindakan->keterangan }}</span>
-                                        <span class="font-medium text-gray-800">Rp {{ number_format($tindakan->pivot->harga_saat_itu, 0, ',', '.') }}</span>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endif
-                        
-                        {{-- Rincian Obat --}}
-                        @if($rekamMedis->resep->isNotEmpty())
-                            <div class="pt-4 mt-4 border-t border-dashed">
-                                <h4 class="text-md font-semibold text-gray-700 mb-2">Biaya Obat</h4>
-                                @foreach($rekamMedis->resep as $item)
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-600">Obat: {{ $item->obat->nama_obat }} ({{ $item->jumlah }} x Rp {{ number_format($item->harga_saat_resep, 0, ',', '.') }})</span>
-                                    <span class="font-medium text-gray-800">Rp {{ number_format($item->jumlah * $item->harga_saat_resep, 0, ',', '.') }}</span>
-                                </div>
-                                @endforeach
-                            </div>
-                        @endif
-                    
-                        {{-- Total Biaya --}}
-                        <div class="flex justify-between items-center p-3 mt-6 bg-purple-50 rounded-lg">
-                            <span class="font-bold text-purple-800">Total Biaya Keseluruhan</span>
-                            <span class="font-bold text-lg text-purple-900">
-                                Rp {{ number_format($rekamMedis->pemesanan->pembayaran->total_biaya, 0, ',', '.') }}
-                            </span>
-                        </div>
-                         <div class="mt-4 text-right">
-                            <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                LUNAS
-                            </span>
-                        </div>
-                    </div>
-                    @endif
+        $potonganTindakan = 0;
+        $potonganObat = 0;
+        $potonganInhealth = 0;
+
+        if ($rekamMedis->pemesanan->status_pasien == 'BPJS') {
+            $potonganTindakan = $jumlahTindakan * 2500;
+            $potonganObat = $subtotalObat;
+        }
+
+        if ($rekamMedis->pemesanan->status_pasien == 'Inhealth' && $pembayaran) {
+            $potonganInhealth = $pembayaran->potongan;
+        }
+    @endphp
+
+    {{-- Subtotal --}}
+    <div class="flex justify-between items-center">
+        <span class="text-gray-600">Subtotal Tindakan</span>
+        <span class="font-medium text-gray-800">Rp {{ number_format($subtotalTindakan, 0, ',', '.') }}</span>
+    </div>
+    <div class="flex justify-between items-center">
+        <span class="text-gray-600">Subtotal Obat</span>
+        <span class="font-medium text-gray-800">Rp {{ number_format($subtotalObat, 0, ',', '.') }}</span>
+    </div>
+
+    {{-- Potongan --}}
+    @if($rekamMedis->pemesanan->status_pasien == 'BPJS')
+        <div class="flex justify-between items-center text-red-600">
+            <span>Potongan BPJS Tindakan</span>
+            <span>- Rp {{ number_format($potonganTindakan, 0, ',', '.') }}</span>
+        </div>
+        <div class="flex justify-between items-center text-red-600">
+            <span>Potongan BPJS Obat</span>
+            <span>- Rp {{ number_format($potonganObat, 0, ',', '.') }}</span>
+        </div>
+    @elseif($rekamMedis->pemesanan->status_pasien == 'Inhealth' && $potonganInhealth > 0)
+        <div class="flex justify-between items-center text-red-600">
+            <span>Potongan Inhealth</span>
+            <span>- Rp {{ number_format($potonganInhealth, 0, ',', '.') }}</span>
+        </div>
+    @endif
+
+    {{-- Total --}}
+    <div class="flex justify-between items-center p-3 mt-6 bg-purple-50 rounded-lg">
+        <span class="font-bold text-purple-800">Total Biaya Keseluruhan</span>
+        <span class="font-bold text-lg text-purple-900">
+            Rp {{ number_format($pembayaran->total_biaya, 0, ',', '.') }}
+        </span>
+    </div>
+
+    {{-- Status --}}
+    <div class="mt-4 text-right">
+        <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+            {{ strtoupper($pembayaran->status_pembayaran ?? 'Lunas') }}
+        </span>
+    </div>
+</div>
+@endif
+
 
                     {{-- Detail Resep & Foto (jika ada) --}}
                     @if($rekamMedis->resep->isNotEmpty())

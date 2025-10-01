@@ -36,9 +36,9 @@ class RekamMedisController extends Controller
 
         // Pencarian diperluas untuk bisa mencari berdasarkan NIK
         if ($request->has('search') && $request->search != '') {
-            $query->where(function($q) use ($request) {
+            $query->where(function ($q) use ($request) {
                 $q->where('u.name', 'like', '%' . $request->search . '%')
-                  ->orWhere('bp.nik', 'like', '%' . $request->search . '%');
+                    ->orWhere('bp.nik', 'like', '%' . $request->search . '%');
             });
         }
 
@@ -65,125 +65,108 @@ class RekamMedisController extends Controller
         return view('dokter.rekam-medis.pasien', compact('pasien', 'rekamMedisList'));
     }
     public function create(Request $request)
-{
-    $pemesanan = Pemesanan::with('pasien', 'tindakanAwal')->findOrFail($request->query('id_pemesanan'));
-    if ($pemesanan->id_dokter !== Auth::user()->dokter->id) {
-        abort(403);
-    }
-
-    $daftarTindakans = DaftarTindakan::with('tindakanItems')->orderBy('nama_kategori')->get();
-
-    $obats = Obat::where('stok', '>', 0)->orderBy('nama_obat')->get();
-    $tindakanAwalIds = $pemesanan->tindakanAwal->pluck('id')->toArray();
-    
-    return view('dokter.rekam-medis.create', compact('pemesanan', 'daftarTindakans', 'obats', 'tindakanAwalIds'));
-}
-
-    public function store(Request $request)
     {
-        // [MODIFIKASI] Validasi diganti total untuk resep
-        $request->validate([
-            'id_pemesanan' => ['required', 'exists:pemesanan,id'],
-            'diagnosis' => ['required', 'string'],
-            'perawatan' => ['required', 'string'],
-            'catatan' => ['nullable', 'string'],
-            'tindakans' => ['nullable', 'array'],
-            'tindakans.*' => ['exists:tindakan,id'],
-            'foto.*' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
-            // Validasi baru untuk resep yang terintegrasi
-            'resep' => ['nullable', 'array'],
-            'resep.*.obat_id' => ['required_with:resep', 'exists:obat,id'],
-            'resep.*.tipe_harga' => ['required_with:resep', 'in:resep,non_resep'],
-            'resep.*.jumlah' => ['required_with:resep', 'integer', 'min:1'],
-            'resep.*.dosis' => ['nullable', 'string', 'max:100'],
-            'resep.*.instruksi' => ['nullable', 'string'],
-        ]);
-
-        $pemesanan = Pemesanan::with('pembayaran')->findOrFail($request->id_pemesanan);
+        $pemesanan = Pemesanan::with('pasien', 'tindakanAwal')->findOrFail($request->query('id_pemesanan'));
         if ($pemesanan->id_dokter !== Auth::user()->dokter->id) {
             abort(403);
         }
 
-        if ($pemesanan->status === 'Selesai') {
-            return redirect()->route('dokter.dashboard')->with('error', 'Tidak dapat mengubah rekam medis karena pembayaran sudah lunas.');
-        }
+        $daftarTindakans = DaftarTindakan::with('tindakanItems')->orderBy('nama_kategori')->get();
 
-        DB::transaction(function () use ($request, $pemesanan) {
-            $rekamMedis = RekamMedis::updateOrCreate(
-                ['id_pemesanan' => $pemesanan->id],
-                $request->only('diagnosis', 'perawatan', 'catatan')
-            );
+        $obats = Obat::where('stok', '>', 0)->orderBy('nama_obat')->get();
+        $tindakanAwalIds = $pemesanan->tindakanAwal->pluck('id')->toArray();
 
-            // --- [REVISI TOTAL] Logika Kalkulasi Biaya & Penyimpanan ---
-            $totalBiaya = 0;
-
-            // 1. Hitung biaya dari tindakan
-            $tindakansToSync = [];
-            if ($request->has('tindakans')) {
-                $tindakansTerpilih = Tindakan::find($request->tindakans);
-                foreach ($tindakansTerpilih as $tindakan) {
-                    $tindakansToSync[$tindakan->id] = ['harga_saat_itu' => $tindakan->harga];
-                    $totalBiaya += $tindakan->harga;
-                }
-            }
-            $rekamMedis->tindakan()->sync($tindakansToSync);
-
-            // 2. Proses resep, hitung biayanya, dan simpan (TERMASUK HARGA)
-            if ($request->has('resep') && is_array($request->resep)) {
-                $rekamMedis->resep()->delete(); // Hapus resep lama
-
-                foreach ($request->resep as $item) {
-                    if (!empty($item['obat_id']) && !empty($item['jumlah'])) {
-                        $obat = Obat::find($item['obat_id']);
-                        if ($obat) {
-                            // Tentukan harga satuan berdasarkan pilihan dokter
-                            $hargaSatuan = ($item['tipe_harga'] === 'resep')
-                                ? $obat->harga_jual_resep
-                                : $obat->harga_jual_non_resep;
-
-                            // Tambahkan total harga obat ke total biaya keseluruhan
-                            $totalBiaya += $hargaSatuan * $item['jumlah'];
-
-                            // Buat resep baru DAN SIMPAN HARGANYA
-                            $rekamMedis->resep()->create([
-                                'obat_id'          => $item['obat_id'],
-                                'jumlah'           => $item['jumlah'],
-                                'harga_saat_resep' => $hargaSatuan, // <-- INI BAGIAN PENTINGNYA
-                                'dosis'            => $item['dosis'] ?? null,
-                                'instruksi'        => $item['instruksi'] ?? null,
-                            ]);
-
-                            // Kurangi stok obat
-                            $obat->decrement('stok', $item['jumlah']);
-                        }
-                    }
-                }
-            }
-
-            // 3. Setelah semua biaya terhitung, baru simpan ke pembayaran
-            if ($totalBiaya > 0) {
-                $pemesanan->pembayaran()->updateOrCreate(
-                    ['pemesanan_id' => $pemesanan->id],
-                    ['total_biaya' => $totalBiaya, 'status' => 'Belum Lunas']
-                );
-            } elseif ($pemesanan->pembayaran) {
-                $pemesanan->pembayaran->delete();
-            }
-            // --- Akhir Revisi ---
-
-            // Logika Foto & Status (Biarkan sama)
-            if ($request->hasFile('foto')) {
-                // ... (kode foto Anda) ...
-            }
-
-            if ($pemesanan->status !== 'Selesai') {
-                $statusAkhir = ($totalBiaya > 0) ? 'Menunggu Pembayaran' : 'Selesai';
-                $pemesanan->update(['status' => $statusAkhir]);
-            }
-        });
-
-        return redirect()->route('dokter.dashboard')->with('success', 'Rekam medis berhasil disimpan.');
+        return view('dokter.rekam-medis.create', compact('pemesanan', 'daftarTindakans', 'obats', 'tindakanAwalIds'));
     }
+
+    public function store(Request $request)
+{
+    $pemesanan = Pemesanan::findOrFail($request->id_pemesanan);
+
+    $rekamMedis = $pemesanan->rekamMedis()->create([
+        'diagnosis' => $request->diagnosis,
+        'perawatan' => $request->perawatan,
+        'catatan'   => $request->catatan,
+    ]);
+
+    $subtotalTindakan = 0;
+    $subtotalObat = 0;
+    $potongan = 0;
+
+    // === Tindakan ===
+    if ($request->tindakans) {
+        foreach ($request->tindakans as $id) {
+            $tindakan = Tindakan::find($id);
+            if ($tindakan) {
+                $rekamMedis->tindakan()->attach($id, [
+                    'harga_saat_itu' => $tindakan->harga
+                ]);
+                $subtotalTindakan += $tindakan->harga;
+
+                // Potongan BPJS untuk tindakan (Rp 2.500 per tindakan)
+                if ($pemesanan->status_pasien == 'BPJS') {
+                    $potongan += 2500;
+                }
+            }
+        }
+    }
+
+    // === Obat ===
+    if ($request->resep) {
+        foreach ($request->resep as $item) {
+            if (!empty($item['obat_id']) && !empty($item['jumlah'])) {
+                $obat = Obat::find($item['obat_id']);
+                if ($obat) {
+                    $hargaSatuan = ($item['tipe_harga'] === 'resep')
+                        ? $obat->harga_jual_resep
+                        : $obat->harga_jual_non_resep;
+
+                    $rekamMedis->resep()->create([
+                        'obat_id'          => $item['obat_id'],
+                        'jumlah'           => $item['jumlah'],
+                        'harga_saat_resep' => $hargaSatuan,
+                        'dosis'            => $item['dosis'] ?? null,
+                        'instruksi'        => $item['instruksi'] ?? null,
+                    ]);
+
+                    $subtotalObat += $hargaSatuan * $item['jumlah'];
+
+                    // Potongan BPJS: seluruh harga obat digratiskan
+                    if ($pemesanan->status_pasien == 'BPJS') {
+                        $potongan += $hargaSatuan * $item['jumlah'];
+                    }
+
+                    $obat->decrement('stok', $item['jumlah']);
+                }
+            }
+        }
+    }
+
+    // === Subtotal & Total ===
+    $subtotal = $subtotalTindakan + $subtotalObat;
+
+    // Inhealth: potongan manual dari input form
+    if ($pemesanan->status_pasien == 'Inhealth' && $request->filled('potongan')) {
+        $potongan = (float) $request->potongan;
+    }
+
+    $totalFinal = max(0, $subtotal - $potongan);
+
+    // === Simpan ke Pembayaran ===
+    $pemesanan->pembayaran()->updateOrCreate(
+        ['pemesanan_id' => $pemesanan->id],
+        [
+            'subtotal'         => $subtotal,
+            'potongan'         => $potongan,
+            'total_biaya'      => $totalFinal,
+            'status_pembayaran'=> $totalFinal > 0 ? 'Menunggu Pembayaran' : 'Selesai'
+        ]
+    );
+
+    return redirect()->route('dokter.dashboard')
+        ->with('success', 'Rekam medis berhasil dibuat.');
+}
+
 
     public function show(RekamMedis $rekamMedi) // Menggunakan nama variabel $rekamMedi dari route
     {
@@ -191,7 +174,7 @@ class RekamMedisController extends Controller
         if ($rekamMedi->pemesanan->id_dokter !== Auth::user()->dokter->id) {
             abort(403);
         }
-    
+
         // Muat semua relasi yang dibutuhkan untuk rincian biaya
         $rekamMedi->load([
             'pemesanan.pasien',
@@ -201,13 +184,13 @@ class RekamMedisController extends Controller
             'resep.obat', // Untuk rincian resep & harga
             'foto'
         ]);
-    
+
         // [MODIFIKASI] Ambil ID tindakan awal dari relasi pemesanan yang sudah di-load
         $tindakanAwalIds = $rekamMedi->pemesanan->tindakan->pluck('id')->toArray();
-    
+
         // Ganti nama variabel agar konsisten di view
         $rekamMedis = $rekamMedi;
-    
+
         // [MODIFIKASI] Kirim data tindakanAwalIds ke view
         return view('dokter.rekam-medis.show', compact('rekamMedis', 'tindakanAwalIds'));
     }
