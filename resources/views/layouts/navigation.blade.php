@@ -1,13 +1,17 @@
 <aside class="h-full flex flex-col bg-white border-r border-gray-200 md:h-screen md:sticky md:top-0">
     <!-- Logo -->
-    <div class="p-6 border-b border-gray-200 flex items-center gap-3">
-        <a href="{{ route('dashboard') }}" class="flex items-center">
-            <svg class="h-8 w-8 text-purple-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-               <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-            </svg>
-            <span class="ml-2 text-1xl font-bold text-purple-800">Deliyana Dental Care</span>
+    <div class="p-6 border-b border-gray-200">
+        <a href="{{ route('dashboard') }}" 
+           class="flex items-center gap-3 whitespace-nowrap">
+            <img src="{{ asset('images/logodeliyana.png') }}" 
+                 alt="Logo Deliyana Dental Care"
+                 class="h-8 w-10">
+            <span class="text-l font-bold text-purple-800">
+                Deliyana Dental Care
+            </span>
         </a>
     </div>
+    
 
     <!-- Nav Links -->
     <nav class="flex-1 px-4 py-6 space-y-2">

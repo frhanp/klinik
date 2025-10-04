@@ -25,15 +25,14 @@
         <!-- Kolom Kiri (Branding) -->
         <div class="hidden md:flex flex-col justify-center items-center p-12 bg-gradient-purple-auth text-white text-center">
             <a href="/" class="flex items-center mb-6 text-3xl font-bold">
-                <svg class="h-10 w-10 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                   <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                </svg>
+                {{-- <img src="{{ asset('images/logodeliyana.png') }}" alt="Logo Deliyana Dental Care"
+                            class="h-10 w-10 mr-2"> --}}
                 Deliyana Dental Care
             </a>
             <p class="max-w-md">
                 Memberikan layanan terbaik untuk senyum sehat Anda. Daftar atau masuk untuk mengatur janji temu Anda dengan mudah.
             </p>
-            <img src="https://placehold.co/400x300/FFFFFF/6D28D9?text=Ilustrasi+Gigi" alt="Ilustrasi Klinik Gigi" class="mt-8 rounded-lg">
+            <img src="{{ asset('images/deli.jpeg') }}" alt="Ilustrasi Klinik Gigi" class="mt-8 rounded-lg">
         </div>
 
         <!-- Kolom Kanan (Form) -->
