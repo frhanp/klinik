@@ -14,10 +14,13 @@ class PembayaranController extends Controller
      */
     public function index()
     {
-        $pemesanans = Pemesanan::whereIn('status', ['Menunggu Pembayaran', 'Selesai'])
+        // [MODIFIKASI] Hapus filter 'whereIn' agar semua status yang relevan dengan pembayaran ditampilkan
+        $pemesanans = Pemesanan::query()
+            ->whereHas('pembayaran') // Hanya ambil pemesanan yang sudah punya tagihan
             ->with(['pasien', 'pembayaran'])
             ->latest()
             ->get();
+            
         return view('admin.pembayaran.index', compact('pemesanans'));
     }
 
@@ -55,6 +58,7 @@ class PembayaranController extends Controller
             'rekamMedis.tindakan',
             'rekamMedis.resep.obat', // <-- Relasi penting yang ditambahkan
             'pembayaran'
+            
         ]);
 
         if (!$pemesanan->pembayaran) {
