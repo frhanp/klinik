@@ -14,7 +14,7 @@ class DashboardController extends Controller
         $idDokter = Auth::user()->dokter->id;
         $pemesananHariIni = Pemesanan::where('id_dokter', $idDokter)
             ->whereDate('tanggal_pesan', today())
-            ->whereIn('status', ['Dipesan', 'Dikonfirmasi'])
+            ->whereIn('status', ['Dikonfirmasi'])
             // --- UBAH BARIS DI BAWAH INI ---
             ->with('pasien', 'tindakanAwal') // Tambahkan 'tindakanAwal'
             // -----------------------------
