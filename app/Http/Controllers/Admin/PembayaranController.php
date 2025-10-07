@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Pemesanan;
 use Carbon\Carbon;
+use App\Models\Tindakan;
 
 class PembayaranController extends Controller
 {
@@ -50,23 +51,56 @@ class PembayaranController extends Controller
     // app/Http/Controllers/Admin/PembayaranController.php
 
     public function show(Pemesanan $pemesanan)
-    {
-        // [MODIFIKASI] Muat semua relasi, termasuk resep dan obat
-        $pemesanan->load([
-            'pasien',
-            'dokter.user',
-            'rekamMedis.tindakan',
-            'rekamMedis.resep.obat', // <-- Relasi penting yang ditambahkan
-            'pembayaran'
-            
-        ]);
+{
+    $pemesanan->load([
+        'pasien.biodata',
+        'dokter.user',
+        'pembayaran',
+        'rekamMedis.tindakan',
+        'rekamMedis.resep.obat',
+        'rekamMedis.foto',
+        'tindakan',
+    ]);
 
-        if (!$pemesanan->pembayaran) {
-            return redirect()->route('admin.pembayaran.index')->with('error', 'Pemesanan ini tidak memiliki tagihan.');
-        }
+    $rekamMedis = $pemesanan->rekamMedis;
+    $tindakanAwalIds = $pemesanan->tindakan()->pluck('tindakan.id')->toArray();
 
-        return view('admin.pembayaran.show', compact('pemesanan'));
+    $subtotalTindakan   = 0;
+    $subtotalObat       = 0;
+    $potonganTindakan   = 0;
+    $potonganObat       = 0;
+    $potonganInhealth   = 0;
+
+    if ($rekamMedis) {
+        // subtotal tindakan dari harga tindakan yang tersimpan
+        $subtotalTindakan = (int) $rekamMedis->tindakan->sum('harga');
+
+        // subtotal obat dari harga_saat_resep agar konsisten dengan tampilan
+        $subtotalObat = $rekamMedis->resep->sum(function ($r) {
+            return ((int) $r->jumlah) * (int) ($r->harga_saat_resep ?? 0);
+        });
     }
+
+    $subtotal = $subtotalTindakan + $subtotalObat;
+
+    if ($rekamMedis && $pemesanan->status_pasien === 'BPJS') {
+        $potonganTindakan = $rekamMedis->tindakan->count() * 2500;
+        $potonganObat     = $subtotalObat; // seluruh obat ditanggung BPJS (gratis)
+    } elseif ($pemesanan->status_pasien === 'Inhealth' && $pemesanan->pembayaran) {
+        $potonganInhealth = (int) ($pemesanan->pembayaran->potongan ?? 0);
+    }
+
+    return view('admin.pembayaran.show', compact(
+        'pemesanan',
+        'rekamMedis',
+        'tindakanAwalIds',
+        'subtotal',
+        'potonganTindakan',
+        'potonganObat',
+        'potonganInhealth'
+    ));
+}
+
 
     /**
      * Menyimpan data pembayaran dan menyelesaikan transaksi.

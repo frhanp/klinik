@@ -31,4 +31,8 @@ class Tindakan extends Model
     {
         return $this->belongsToMany(Pemesanan::class, 'pemesanan_tindakan', 'tindakan_id', 'pemesanan_id');
     }
+    public function daftarTindakan()
+    {
+        return $this->belongsTo(DaftarTindakan::class, 'daftar_tindakan_id');
+    }
 }

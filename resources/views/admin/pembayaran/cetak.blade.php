@@ -4,11 +4,16 @@
     <div class="max-w-2xl mx-auto my-8 bg-white shadow-lg">
         <div class="p-8">
             <div class="flex justify-between items-start pb-4 border-b">
-                <div>
-                    <h1 class="text-2xl font-bold text-purple-700">INVOICE</h1>
-                    <p class="text-gray-500">Klinik Sehat Selalu</p>
-                    <p class="text-xs text-gray-500">Jl. Kesehatan No. 123, Kota Anda</p>
+                <div class="flex items-center mb-6">
+                    <img src="{{ asset('images/logodeliyana.png') }}" 
+                         alt="Logo Deliyana Dental Care" 
+                         class="w-14 h-14 object-contain mr-4">
+                    <div>
+                        <h1 class="text-2xl font-bold text-purple-700">Deliyana Dental Care</h1>
+                        <p class="text-gray-500 text-sm">Klinik Gigi & Estetika</p>
+                    </div>
                 </div>
+                
                 <div class="text-right">
                     <p class="font-semibold">Invoice #{{ str_pad($pemesanan->pembayaran->id, 6, '0', STR_PAD_LEFT) }}</p>
                     <p class="text-sm text-gray-600">Tanggal: {{ \Carbon\Carbon::parse($pemesanan->pembayaran->tanggal_bayar ?? now())->translatedFormat('d F Y') }}</p>
