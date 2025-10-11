@@ -160,6 +160,7 @@ class PemesananController extends Controller
             'nama_pasien_booking' => ['required', 'string', 'max:255'],
             'nik' => ['nullable', 'string', 'digits:16'],
             'status_pasien' => ['required', 'in:BPJS,Umum,Inhealth'],
+            'nomor_bpjs' => ['nullable', 'string', 'max:20'],
 
             // Validasi untuk jadwal (Langkah 2)
             'id_dokter' => ['required', 'exists:dokter,id'],
@@ -202,6 +203,7 @@ class PemesananController extends Controller
                 'status_pasien' => $request->status_pasien,
                 'catatan' => $request->catatan,
                 'status' => 'Dipesan',
+                'nomor_bpjs' => $request->nomor_bpjs,
             ]);
 
             // 3. Simpan data tindakan awal ke tabel pivot

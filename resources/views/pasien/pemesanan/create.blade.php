@@ -43,6 +43,10 @@
                                     <option value="Inhealth">Inhealth</option>
                                 </select>
                             </div>
+                            <div x-show="formData.status_pasien === 'BPJS'" x-transition>
+                                <x-input-label for="nomor_bpjs" value="Nomor BPJS" />
+                                <x-text-input id="nomor_bpjs" class="block mt-1 w-full" type="text" name="nomor_bpjs" x-model="formData.nomor_bpjs" />
+                            </div>
                         </div>
                         <div class="flex justify-end mt-6">
                             <button type="button" @click="nextStep()" :disabled="!isStep1Complete()" class="px-6 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 disabled:bg-gray-400">
@@ -152,6 +156,7 @@
                     nama_pasien_booking: '{{ Auth::user()->name }}',
                     nik: '{{ Auth::user()->biodata->nik ?? '' }}',
                     status_pasien: '',
+                    nomor_bpjs: '',
                 },
                 selectedDokter: '',
                 jadwalDokter: [],
@@ -162,7 +167,11 @@
                 loadingSlot: '',
                 selectedSlot: '',
                 isStep1Complete() {
+                    if (this.formData.status_pasien === 'BPJS') {
+                        return this.formData.nama_pasien_booking && this.formData.status_pasien && this.formData.nomor_bpjs;
+                    }
                     return this.formData.nama_pasien_booking && this.formData.status_pasien;
+
                 },
                 nextStep() {
                     if (this.isStep1Complete()) {

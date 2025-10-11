@@ -25,6 +25,14 @@
                     {{-- Informasi Kunjungan --}}
                     <div class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b">
                         <div>
+                            <h3 class="text-sm text-gray-500">Status Pasien</h3>
+                            <p class="font-bold text-lg text-gray-800">{{ $rekamMedis->pemesanan->status_pasien }}</p>
+                        </div>
+                        <div>
+                            <h3 class="text-sm text-gray-500">Nomor BPJS</h3>
+                            <p class="font-bold text-lg text-gray-800">{{ $rekamMedis->pemesanan->nomor_bpjs }}</p>
+                        </div>
+                        <div>
                             <h3 class="text-sm text-gray-500">Tanggal Perawatan</h3>
                             <p class="font-bold text-lg text-gray-800">
                                 {{ \Carbon\Carbon::parse($rekamMedis->created_at)->translatedFormat('d F Y') }}
