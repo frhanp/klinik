@@ -65,6 +65,19 @@
                             </div>
                         @endif
                     </div>
+                    @if ($rekamMedis->foto->isNotEmpty())
+                        <div class="mt-6 border-t pt-6">
+                            <h4 class="text-lg font-semibold mb-4 text-gray-800">Foto Pendukung</h4>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                @foreach ($rekamMedis->foto as $foto)
+                                    <a href="{{ asset('storage/' . $foto->path_foto) }}" target="_blank">
+                                        <img src="{{ asset('storage/' . $foto->path_foto) }}" alt="Foto Rekam Medis"
+                                            class="rounded-lg object-cover w-full h-32 hover:opacity-80 transition">
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
 
                     
                     <div class="mt-6 border-t pt-6">
@@ -224,19 +237,7 @@
                         </div>
                     @endif
 
-                    @if ($rekamMedis->foto->isNotEmpty())
-                        <div class="mt-6 border-t pt-6">
-                            <h4 class="text-lg font-semibold mb-4 text-gray-800">Foto Pendukung</h4>
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                @foreach ($rekamMedis->foto as $foto)
-                                    <a href="{{ asset('storage/' . $foto->path_foto) }}" target="_blank">
-                                        <img src="{{ asset('storage/' . $foto->path_foto) }}" alt="Foto Rekam Medis"
-                                            class="rounded-lg object-cover w-full h-32 hover:opacity-80 transition">
-                                    </a>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
+                    
                 </div>
             </div>
         </div>

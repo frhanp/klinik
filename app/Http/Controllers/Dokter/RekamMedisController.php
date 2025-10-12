@@ -19,8 +19,6 @@ class RekamMedisController extends Controller
     public function index(Request $request)
     {
         $dokterId = Auth::user()->dokter->id;
-
-        // [MODIFIKASI] Query diubah untuk join ke biodata_pasien dan mengambil NIK
         $query = RekamMedis::query()
             ->selectRaw('u.id as pasien_id, u.name as nama_pasien, bp.nik as nik_pasien,
                COUNT(rm.id) as jumlah_kunjungan,
@@ -34,7 +32,6 @@ class RekamMedisController extends Controller
             ->groupBy('u.id', 'u.name', 'bp.nik') // Tambah NIK ke group by
             ->orderByDesc('terakhir_kunjungan');
 
-        // Pencarian diperluas untuk bisa mencari berdasarkan NIK
         if ($request->has('search') && $request->search != '') {
             $query->where(function ($q) use ($request) {
                 $q->where('u.name', 'like', '%' . $request->search . '%')
@@ -47,7 +44,7 @@ class RekamMedisController extends Controller
         return view('dokter.rekam-medis.index', compact('pasienRingkas'));
     }
 
-    // tambahan: tampilkan semua rekam medis milik pasien tertentu
+    
     public function showByPasien(User $pasien)
     {
         $dokterId = Auth::user()->dokter->id;
@@ -81,13 +78,29 @@ class RekamMedisController extends Controller
 
     public function store(Request $request)
 {
+    $request->validate([
+        'id_pemesanan' => 'required|exists:pemesanan,id',
+        'diagnosis' => 'required|string|max:255',
+        'perawatan' => 'required|string|max:255',
+        'foto.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Validasi untuk setiap file foto
+    ]);
+    
     $pemesanan = Pemesanan::findOrFail($request->id_pemesanan);
 
     $rekamMedis = $pemesanan->rekamMedis()->create([
         'diagnosis' => $request->diagnosis,
         'perawatan' => $request->perawatan,
         'catatan'   => $request->catatan,
+        
     ]);
+
+    if ($request->hasFile('foto')) {
+        foreach ($request->file('foto') as $file) {
+            
+            $path = $file->store('foto-rekam-medis', 'public');
+            $rekamMedis->foto()->create(['path_foto' => $path]);
+        }
+    }
 
     $subtotalTindakan = 0;
     $subtotalObat = 0;
@@ -103,7 +116,7 @@ class RekamMedisController extends Controller
                 ]);
                 $subtotalTindakan += $tindakan->harga;
 
-                // Potongan BPJS untuk tindakan (Rp 2.500 per tindakan)
+                
                 if ($pemesanan->status_pasien == 'BPJS') {
                     $potongan += 2500;
                 }
@@ -131,7 +144,7 @@ class RekamMedisController extends Controller
 
                     $subtotalObat += $hargaSatuan * $item['jumlah'];
 
-                    // Potongan BPJS: seluruh harga obat digratiskan
+                    
                     if ($pemesanan->status_pasien == 'BPJS') {
                         $potongan += $hargaSatuan * $item['jumlah'];
                     }
