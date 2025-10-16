@@ -15,7 +15,7 @@ class PemesananController extends Controller
      */
     public function index()
     {
-        $pemesanans = Pemesanan::with(['pasien', 'dokter.user'])->latest()->get();
+        $pemesanans = Pemesanan::with(['pasien.biodata', 'dokter.user'])->latest()->get();
         return view('admin.pemesanan.index', compact('pemesanans'));
     }
 
@@ -64,7 +64,7 @@ class PemesananController extends Controller
     public function edit(Pemesanan $pemesanan)
     {
         // Memuat relasi yang dibutuhkan untuk ditampilkan di view
-        $pemesanan->load(['pasien', 'dokter.user', 'jadwal']);
+        $pemesanan->load(['pasien.biodata', 'dokter.user', 'jadwal']);
         return view('admin.pemesanan.edit', compact('pemesanan'));
     }
 

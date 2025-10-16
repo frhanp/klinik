@@ -14,22 +14,21 @@ class PasienController extends Controller
 {
     public function index(Request $request)
     {
-        $query = User::where('peran', 'pasien')->with('biodata');
+        $query = User::where('peran', 'pasien')->with(['biodata', 'pemesanan' => function ($query) {
+            $query->latest()->limit(1); // Ambil 1 pemesanan terbaru
+        }]);
 
-        // [MODIFIKASI] Logika pencarian diperbarui
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
-                // Kondisi 1: Cari berdasarkan nama pasien
                 $q->where('name', 'like', '%' . $search . '%')
-                    // Kondisi 2: ATAU cari berdasarkan NIK di tabel biodata
                     ->orWhereHas('biodata', function ($subQ) use ($search) {
                         $subQ->where('nik', 'like', '%' . $search . '%');
                     });
             });
         }
 
-        $pasiens = $query->latest()->paginate(15)->withQueryString(); // withQueryString() agar pencarian tidak hilang saat pindah halaman
+        $pasiens = $query->latest()->paginate(15)->withQueryString();
         return view('admin.pasien.index', compact('pasiens'));
     }
 

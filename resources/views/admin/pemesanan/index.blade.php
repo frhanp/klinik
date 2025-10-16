@@ -15,6 +15,8 @@
                             <thead class="bg-gray-200">
                                 <tr>
                                     <th class="py-2 px-4 border-b">Pasien</th>
+                                    <th class="py-2 px-4 border-b">NIK</th>
+                                    <th class="py-2 px-4 border-b">Status Pasien</th>
                                     <th class="py-2 px-4 border-b">Dokter</th>
                                     <th class="py-2 px-4 border-b">Tanggal</th>
                                     <th class="py-2 px-4 border-b">Waktu</th>
@@ -26,6 +28,20 @@
                                 @forelse ($pemesanans as $pemesanan)
                                     <tr class="hover:bg-gray-50">
                                         <td class="py-2 px-4 border-b">{{ $pemesanan->pasien->name }}</td>
+                                        <td class="py-2 px-4 border-b">{{ $pemesanan->pasien->biodata->nik ?? '-' }}</td>
+                                        <td class="py-2 px-4 border-b">
+                                            @php
+                                                $statusPasien = $pemesanan->status_pasien;
+                                                $badgeColorPasien = [
+                                                    'BPJS' => 'bg-blue-100 text-blue-800',
+                                                    'Inhealth' => 'bg-yellow-100 text-yellow-800',
+                                                    'Umum' => 'bg-green-100 text-green-800',
+                                                ][$statusPasien] ?? 'bg-gray-100 text-gray-800';
+                                            @endphp
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $badgeColorPasien }}">
+                                                {{ $statusPasien }}
+                                            </span>
+                                        </td>
                                         <td class="py-2 px-4 border-b">{{ $pemesanan->dokter->user->name }}</td>
                                         <td class="py-2 px-4 border-b">{{ \Carbon\Carbon::parse($pemesanan->tanggal_pesan)->translatedFormat('d F Y') }}</td>
                                         <td class="py-2 px-4 border-b">{{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</td>

@@ -15,6 +15,8 @@
                         <div class="grid grid-cols-2 gap-4 text-sm">
                             <div><strong>Pasien:</strong> {{ $pemesanan->nama_pasien_booking }}</div>
                             <div><strong>Dokter:</strong> {{ $pemesanan->dokter->user->name }}</div>
+                            <div><strong>NIK:</strong> {{ $pemesanan->pasien->biodata->nik ?? '-' }}</div>
+                            <div><strong>Status Pasien:</strong> {{ $pemesanan->status_pasien }}</div>
                             <div><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($pemesanan->tanggal_pesan)->isoFormat('D MMMM YYYY') }}</div>
                             <div><strong>Waktu:</strong> {{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</div>
                             <div class="col-span-2"><strong>Status Saat Ini:</strong> {{ $pemesanan->status }}</div>
