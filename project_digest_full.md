@@ -1,5 +1,5 @@
 ﻿# Project Digest (Full Content)
-_Generated: 2025-10-22 13:15:12_
+_Generated: 2025-10-22 15:10:00_
 **Root:** D:\Laragon\www\klinik
 
 
@@ -141,6 +141,7 @@ database\migrations\2025_09_02_180434_ubah_struktur_tabel_tindakan.php
 database\migrations\2025_09_02_191228_hapus_kolom_satuan_dari_obat.php
 database\migrations\2025_10_01_232639_tambah_kolom_potongan_ke_tabel_pembayaran.php
 database\migrations\2025_10_11_093935_tambah_kolom_nomor_bpjs_ke_tabel_pemesanan.php
+database\migrations\2025_10_22_133136_tambah_field_lengkap_termasuk_umur_ke_biodata_pasien.php
 database\seeders\DatabaseSeeder.php
 database\seeders\DokterSeeder.php
 database\seeders\JadwalSeeder.php
@@ -200,6 +201,7 @@ resources\views\admin\pasien\index.blade.php
 resources\views\admin\pembayaran\cetak.blade.php
 resources\views\admin\pembayaran\index.blade.php
 resources\views\admin\pembayaran\show.blade.php
+resources\views\admin\pemesanan\create.blade.php
 resources\views\admin\pemesanan\edit.blade.php
 resources\views\admin\pemesanan\index.blade.php
 resources\views\admin\tindakan\create.blade.php
@@ -295,6 +297,7 @@ storage\framework\views\2a830ecd468f435f1747c72e21677166.php
 storage\framework\views\30b1c19e0a7e8f356ba46eb87bbfd8b7.php
 storage\framework\views\35b948da9e966c78a172e74616518c9c.php
 storage\framework\views\391ebb746ed9d90abf51620fa811007f.php
+storage\framework\views\3b1e10f885219c77cae6e0fd498bac94.php
 storage\framework\views\3c2589d59eeea174b043b4970b0dbb98.php
 storage\framework\views\4226155521e5bcb508f11fbc6ffb499c.php
 storage\framework\views\43cd2c320e451f9a26231447b724fcfe.php
@@ -326,6 +329,7 @@ storage\framework\views\b15c1c717568cd4fb1c9fbc2e3cea052.php
 storage\framework\views\b9de74b4b9c066a89043f5e1c38c6960.php
 storage\framework\views\bb4b1fb801bbaeca186516088ac54e1e.php
 storage\framework\views\bb81c05887fc4897ea0b8a4be4d2931a.php
+storage\framework\views\bc0c85a243c6659e6e934a4d0259ad9a.php
 storage\framework\views\be5779b819f9903611be5ef8b4c91b6b.php
 storage\framework\views\bebbcc12d82febc3d9d74e01e7ce326d.php
 storage\framework\views\c05084a2686c20935959c3419b4ff8dc.php
@@ -372,11 +376,11 @@ Branch:
 main
 
 Last 5 commits:
+00dd38c add biodata lengkap
 78263e2 add nik dan status pada view
 08ae041 add foto pendukung
 b0d612d add nomor bpjs
 c7904bd hilangkan pasien unik
-6bae744 fix tampilan dan bug v1
 ```
 
 
@@ -540,6 +544,8 @@ Route::middleware(['auth', 'cekperan:admin'])->prefix('admin')->name('admin.')->
 
     Route::resource('pasien', AdminPasienController::class)->except(['show', 'destroy']);
     Route::get('laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
+
+    Route::get('/get-slot-waktu/{dokter}/{tanggal}', [AdminPemesananController::class, 'getSlotWaktuAdmin'])->name('pemesanan.getSlotWaktuAdmin');
 });
 
 
@@ -600,6 +606,7 @@ require __DIR__ . '/auth.php';
   PUT|PATCH       admin/dokter/{dokter} .................................. admin.dokter.update ΓÇ║ Admin\DokterController@update
   DELETE          admin/dokter/{dokter} ................................ admin.dokter.destroy ΓÇ║ Admin\DokterController@destroy
   GET|HEAD        admin/dokter/{dokter}/edit ................................. admin.dokter.edit ΓÇ║ Admin\DokterController@edit
+  GET|HEAD        admin/get-slot-waktu/{dokter}/{tanggal} admin.pemesanan.getSlotWaktuAdmin ΓÇ║ Admin\PemesananController@getSlΓÇª
   GET|HEAD        admin/jadwal ............................................. admin.jadwal.index ΓÇ║ Admin\JadwalController@index
   POST            admin/jadwal ............................................. admin.jadwal.store ΓÇ║ Admin\JadwalController@store
   GET|HEAD        admin/jadwal-generate ........................ admin.jadwal.generate ΓÇ║ Admin\JadwalController@createMultiple
@@ -685,7 +692,7 @@ require __DIR__ . '/auth.php';
   GET|HEAD        verify-email .................................. verification.notice ΓÇ║ Auth\EmailVerificationPromptController
   GET|HEAD        verify-email/{id}/{hash} .................................. verification.verify ΓÇ║ Auth\VerifyEmailController
 
-                                                                                                           Showing [99] routes
+                                                                                                          Showing [100] routes
 
 ```
 
@@ -1260,6 +1267,19 @@ class PasienController extends Controller
             'password' => 'required|string|min:8',
             'nomor_telepon' => 'nullable|string|max:20',
             'nik' => 'nullable|string|numeric|digits:16|unique:biodata_pasien,nik',
+            'tempat_lahir' => 'nullable|string|max:100',
+            'tanggal_lahir' => 'nullable|date',
+            'umur' => 'nullable|integer|min:0|max:150', // Tambah validasi umur
+            'jenis_kelamin' => 'nullable|in:Laki-laki,Perempuan',
+            'alamat' => 'nullable|string',
+            'pekerjaan' => 'nullable|string|max:100',
+            'nama_orang_tua' => 'nullable|string|max:255',
+            'status_pasien' => 'nullable|string|max:50',
+            'golongan_darah' => 'nullable|string|max:3',
+            'riwayat_penyakit' => 'nullable|string',
+            'riwayat_alergi_obat' => 'nullable|string',
+            'riwayat_alergi_makanan' => 'nullable|string',
+            'penyakit_penting' => 'nullable|string',
         ]);
 
         $user = User::create([
@@ -1270,8 +1290,15 @@ class PasienController extends Controller
             'peran' => 'pasien',
         ]);
 
-        if ($request->filled('nik')) {
-            $user->biodata()->create(['nik' => $request->nik]);
+        $biodataFields = $request->only([
+            'nik', 'tempat_lahir', 'tanggal_lahir', 'umur', 'jenis_kelamin', 'alamat', // Tambahkan umur
+            'pekerjaan', 'nama_orang_tua', 'status_pasien', 'golongan_darah',
+            'riwayat_penyakit', 'riwayat_alergi_obat', 'riwayat_alergi_makanan',
+            'penyakit_penting',
+        ]);
+
+        if (count(array_filter($biodataFields)) > 0) {
+            $user->biodata()->create($biodataFields);
         }
 
         return redirect()->route('admin.pasien.index')->with('success', 'Pasien berhasil ditambahkan.');
@@ -1293,14 +1320,30 @@ class PasienController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,' . $pasien->id,
             'nomor_telepon' => 'nullable|string|max:20',
             'nik' => 'nullable|string|numeric|digits:16|unique:biodata_pasien,nik,' . optional($pasien->biodata)->id,
+            'tempat_lahir' => 'nullable|string|max:100',
+            'tanggal_lahir' => 'nullable|date',
+            'umur' => 'nullable|integer|min:0|max:150', // Tambah validasi umur
+            'jenis_kelamin' => 'nullable|in:Laki-laki,Perempuan',
+            'alamat' => 'nullable|string',
+            'pekerjaan' => 'nullable|string|max:100',
+            'nama_orang_tua' => 'nullable|string|max:255',
+            'status_pasien' => 'nullable|string|max:50',
+            'golongan_darah' => 'nullable|string|max:3',
+            'riwayat_penyakit' => 'nullable|string',
+            'riwayat_alergi_obat' => 'nullable|string',
+            'riwayat_alergi_makanan' => 'nullable|string',
+            'penyakit_penting' => 'nullable|string',
         ]);
 
         $pasien->update($request->only('name', 'email', 'nomor_telepon'));
+        $biodataFields = $request->only([
+            'nik', 'tempat_lahir', 'tanggal_lahir', 'umur', 'jenis_kelamin', 'alamat', // Tambahkan umur
+            'pekerjaan', 'nama_orang_tua', 'status_pasien', 'golongan_darah',
+            'riwayat_penyakit', 'riwayat_alergi_obat', 'riwayat_alergi_makanan',
+            'penyakit_penting',
+        ]);
 
-        $pasien->biodata()->updateOrCreate(
-            ['user_id' => $pasien->id],
-            ['nik' => $request->nik]
-        );
+        $pasien->biodata()->updateOrCreate(['user_id' => $pasien->id], $biodataFields);
 
         return redirect()->route('admin.pasien.index')->with('success', 'Data pasien berhasil diperbarui.');
     }
@@ -1458,6 +1501,10 @@ use Illuminate\Http\Request;
 use App\Models\Pemesanan;
 use App\Models\User;
 use App\Models\Dokter;
+use App\Models\DaftarTindakan;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use App\Models\Jadwal;
 
 class PemesananController extends Controller
 {
@@ -1475,10 +1522,53 @@ class PemesananController extends Controller
      */
     public function create()
     {
-        $pasiens = User::where('peran', 'pasien')->get();
-        $dokters = Dokter::with('user')->get();
-        // Logika untuk mengambil jadwal akan lebih kompleks, bisa ditambahkan dengan AJAX nanti
-        return view('admin.pemesanan.create', compact('pasiens', 'dokters'));
+        $pasiens = User::where('peran', 'pasien')->orderBy('name')->get();
+        $dokters = Dokter::with('user')->orderBy('id')->get();
+        // Ambil data tindakan seperti di PasienController
+        $daftarTindakans = DaftarTindakan::with('tindakanItems')->orderBy('nama_kategori')->get();
+
+        return view('admin.pemesanan.create', compact('pasiens', 'dokters', 'daftarTindakans'));
+    }
+
+    public function getSlotWaktuAdmin(Dokter $dokter, $tanggal)
+    {
+        try {
+            $date = Carbon::parse($tanggal);
+            $dayOfWeekNumber = $date->dayOfWeek;
+            $dayMap = [1 => 'Senin', 2 => 'Selasa', 3 => 'Rabu', 4 => 'Kamis', 5 => 'Jumat', 6 => 'Sabtu', 0 => 'Minggu'];
+            $dayName = $dayMap[$dayOfWeekNumber] ?? null;
+
+            $jadwal = $dokter->jadwal()->where('hari', $dayName)->first();
+
+            if (!$jadwal) {
+                return response()->json([]); // Kembalikan array kosong jika tidak ada jadwal
+            }
+
+            $startTime = Carbon::parse($jadwal->jam_mulai);
+            $endTime = Carbon::parse($jadwal->jam_selesai);
+            $slotDuration = $jadwal->durasi_slot_menit ?? 30; // Default 30 menit jika null
+            $allSlots = [];
+
+            while ($startTime < $endTime) {
+                $allSlots[] = $startTime->format('H:i');
+                $startTime->addMinutes($slotDuration);
+            }
+
+            $bookedSlots = Pemesanan::where('id_dokter', $dokter->id)
+                ->where('tanggal_pesan', $date->format('Y-m-d'))
+                ->whereIn('status', ['Dipesan', 'Dikonfirmasi']) // Hanya cek status aktif
+                ->pluck('waktu_pesan')
+                ->map(fn ($time) => Carbon::parse($time)->format('H:i'))
+                ->toArray();
+
+            $availableSlots = array_values(array_diff($allSlots, $bookedSlots));
+
+            return response()->json($availableSlots);
+
+        } catch (\Exception $e) {
+            // Log error jika perlu: Log::error($e);
+            return response()->json(['error' => 'Gagal memuat slot waktu.', 'message' => $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -1487,17 +1577,67 @@ class PemesananController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_pasien' => ['required', 'exists:users,id'],
+            'id_pasien' => ['required', 'exists:users,id,peran,pasien'], // Pastikan user adalah pasien
             'id_dokter' => ['required', 'exists:dokter,id'],
-            'id_jadwal' => ['required', 'exists:jadwal,id'],
-            'tanggal_pesan' => ['required', 'date'],
+            'tanggal_pesan' => ['required', 'date', 'after_or_equal:today'],
             'waktu_pesan' => ['required', 'date_format:H:i'],
-            'status' => ['required', 'in:Dikonfirmasi,Selesai'], // Admin bisa langsung konfirmasi
+            'status_pasien' => ['required', 'in:BPJS,Umum,Inhealth'],
+            'nomor_bpjs' => ['nullable', 'required_if:status_pasien,BPJS', 'string', 'max:20'],
+            'tindakan_awal' => ['nullable', 'array'],
+            'tindakan_awal.*' => ['exists:tindakan,id'],
+            'catatan' => ['nullable', 'string'],
+            'status' => ['required', 'in:Dikonfirmasi,Selesai'], // Status awal dari Admin
         ]);
 
-        Pemesanan::create($request->all());
+        $pasien = User::findOrFail($request->id_pasien);
+        $tanggal = Carbon::parse($request->tanggal_pesan);
+        $hariPraktek = $tanggal->translatedFormat('l'); // e.g., Senin, Selasa
 
-        return redirect()->route('admin.pemesanan.index')->with('success', 'Pemesanan manual berhasil ditambahkan.');
+        // Cari jadwal yang cocok
+        $jadwal = Jadwal::where('id_dokter', $request->id_dokter)
+            ->where('hari', $hariPraktek)
+            // ->where('jam_mulai', '<=', $request->waktu_pesan) // Uncomment jika perlu validasi jam
+            // ->where('jam_selesai', '>', $request->waktu_pesan)
+            ->first();
+
+        if (!$jadwal) {
+            return back()->with('error', 'Dokter tidak memiliki jadwal pada hari/jam yang dipilih.')->withInput();
+        }
+
+        // Cek ketersediaan slot (opsional tapi disarankan)
+        $slotExists = Pemesanan::where('id_dokter', $request->id_dokter)
+                        ->where('tanggal_pesan', $request->tanggal_pesan)
+                        ->where('waktu_pesan', $request->waktu_pesan)
+                        ->whereIn('status', ['Dipesan', 'Dikonfirmasi'])
+                        ->exists();
+
+        if ($slotExists) {
+             return back()->with('error', 'Slot waktu yang dipilih sudah dipesan.')->withInput();
+        }
+
+
+        DB::transaction(function () use ($request, $pasien, $jadwal) {
+            // Buat data pemesanan
+            $pemesanan = Pemesanan::create([
+                'id_pasien' => $pasien->id,
+                'nama_pasien_booking' => $pasien->name, // Ambil nama dari user pasien
+                'id_dokter' => $request->id_dokter,
+                'id_jadwal' => $jadwal->id,
+                'tanggal_pesan' => $request->tanggal_pesan,
+                'waktu_pesan' => $request->waktu_pesan,
+                'status_pasien' => $request->status_pasien,
+                'catatan' => $request->catatan,
+                'status' => $request->status, // Status awal (misal: Dikonfirmasi)
+                'nomor_bpjs' => $request->nomor_bpjs,
+            ]);
+
+            // Simpan data tindakan awal ke tabel pivot
+            if ($request->has('tindakan_awal')) {
+                $pemesanan->tindakanAwal()->attach($request->tindakan_awal);
+            }
+        });
+
+        return redirect()->route('admin.pemesanan.index')->with('success', 'Pemesanan untuk pasien berhasil ditambahkan.');
     }
 
     /**
@@ -2652,6 +2792,19 @@ class BiodataPasien extends Model
     protected $fillable = [
         'user_id',
         'nik',
+        'tempat_lahir',
+        'tanggal_lahir',
+        'umur',
+        'jenis_kelamin',
+        'alamat',
+        'pekerjaan',
+        'nama_orang_tua',
+        'status_pasien',
+        'golongan_darah',
+        'riwayat_penyakit',
+        'riwayat_alergi_obat',
+        'riwayat_alergi_makanan',
+        'penyakit_penting',
     ];
 
     /**
@@ -4019,6 +4172,7 @@ class Tindakan extends Model
 </x-app-layout>
 
 ===== resources\views\admin\pasien\create.blade.php =====
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -4034,27 +4188,108 @@ class Tindakan extends Model
                     <form method="POST" action="{{ route('admin.pasien.store') }}">
                         @csrf
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <x-input-label for="name" :value="__('Nama Pasien')" />
-                                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required />
+                        <h3 class="text-lg font-semibold mb-4 border-b pb-2">Data Pasien</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-6">
+                            {{-- Kolom Kiri --}}
+                            <div class="space-y-4">
+                                <div>
+                                    <x-input-label for="name" :value="__('Nama Pasien')" />
+                                    <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required />
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <x-input-label for="tempat_lahir" :value="__('Tempat Lahir')" />
+                                        <x-text-input id="tempat_lahir" class="block mt-1 w-full" type="text" name="tempat_lahir" :value="old('tempat_lahir')" />
+                                    </div>
+                                    <div>
+                                        <x-input-label for="tanggal_lahir" :value="__('Tgl. Lahir')" />
+                                        <x-text-input id="tanggal_lahir" class="block mt-1 w-full" type="date" name="tanggal_lahir" :value="old('tanggal_lahir')" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <x-input-label for="umur" :value="__('Umur (Tahun)')" />
+                                    <x-text-input id="umur" class="block mt-1 w-full" type="number" name="umur" :value="old('umur')" min="0" />
+                                </div>
+                                <div>
+                                    <x-input-label for="jenis_kelamin" :value="__('Jenis Kelamin')" />
+                                    <select id="jenis_kelamin" name="jenis_kelamin" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">
+                                        <option value="">-- Pilih --</option>
+                                        <option value="Laki-laki" @selected(old('jenis_kelamin') == 'Laki-laki')>Laki-laki</option>
+                                        <option value="Perempuan" @selected(old('jenis_kelamin') == 'Perempuan')>Perempuan</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <x-input-label for="alamat" :value="__('Alamat')" />
+                                    <textarea id="alamat" name="alamat" rows="2" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">{{ old('alamat') }}</textarea>
+                                </div>
+                                <div>
+                                    <x-input-label for="nomor_telepon" :value="__('Nomor HP')" />
+                                    <x-text-input id="nomor_telepon" class="block mt-1 w-full" type="text" name="nomor_telepon" :value="old('nomor_telepon')" />
+                                </div>
+                                <div>
+                                    <x-input-label for="pekerjaan" :value="__('Pekerjaan')" />
+                                    <x-text-input id="pekerjaan" class="block mt-1 w-full" type="text" name="pekerjaan" :value="old('pekerjaan')" />
+                                </div>
+                                <div>
+                                    <x-input-label for="nama_orang_tua" :value="__('Nama Orang Tua (Jika pasien anak)')" />
+                                    <x-text-input id="nama_orang_tua" class="block mt-1 w-full" type="text" name="nama_orang_tua" :value="old('nama_orang_tua')" />
+                                </div>
                             </div>
-                            <div>
+
+                            {{-- Kolom Kanan --}}
+                            <div class="space-y-4">
+                                <div>
+                                    <x-input-label for="status_pasien" :value="__('Status Pasien')" />
+                                    <select id="status_pasien" name="status_pasien" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">
+                                        <option value="">-- Pilih --</option>
+                                        <option value="BPJS" @selected(old('status_pasien') == 'BPJS')>BPJS</option>
+                                        <option value="Umum" @selected(old('status_pasien') == 'Umum')>Umum</option>
+                                        <option value="Inhealth" @selected(old('status_pasien') == 'Inhealth')>Inhealth</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <x-input-label for="golongan_darah" :value="__('Golongan Darah')" />
+                                    <select id="golongan_darah" name="golongan_darah" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">
+                                        <option value="">-- Pilih --</option>
+                                        <option value="A" @selected(old('golongan_darah') == 'A')>A</option>
+                                        <option value="B" @selected(old('golongan_darah') == 'B')>B</option>
+                                        <option value="AB" @selected(old('golongan_darah') == 'AB')>AB</option>
+                                        <option value="O" @selected(old('golongan_darah') == 'O')>O</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <x-input-label for="riwayat_penyakit" :value="__('Riwayat Penyakit')" />
+                                    <textarea id="riwayat_penyakit" name="riwayat_penyakit" rows="2" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">{{ old('riwayat_penyakit') }}</textarea>
+                                </div>
+                                 <div>
+                                    <x-input-label for="riwayat_alergi_obat" :value="__('Riwayat Alergi Obat')" />
+                                    <textarea id="riwayat_alergi_obat" name="riwayat_alergi_obat" rows="2" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">{{ old('riwayat_alergi_obat') }}</textarea>
+                                </div>
+                                 <div>
+                                    <x-input-label for="riwayat_alergi_makanan" :value="__('Riwayat Alergi Makanan')" />
+                                    <textarea id="riwayat_alergi_makanan" name="riwayat_alergi_makanan" rows="2" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">{{ old('riwayat_alergi_makanan') }}</textarea>
+                                </div>
+                                 <div>
+                                    <x-input-label for="penyakit_penting" :value="__('Penyakit Penting Lainnya')" />
+                                    <textarea id="penyakit_penting" name="penyakit_penting" rows="2" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">{{ old('penyakit_penting') }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                         <h3 class="text-lg font-semibold mb-4 border-b pb-2 mt-8">Data Akun</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                             <div>
                                 <x-input-label for="email" :value="__('Email')" />
                                 <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-                            </div>
-                            <div>
-                                <x-input-label for="nik" :value="__('NIK')" />
-                                <x-text-input id="nik" class="block mt-1 w-full" type="text" name="nik" :value="old('nik')" />
-                                <x-input-error :messages="$errors->get('nik')" class="mt-2" />
-                            </div>
-                            <div>
-                                <x-input-label for="nomor_telepon" :value="__('Nomor HP')" />
-                                <x-text-input id="nomor_telepon" class="block mt-1 w-full" type="text" name="nomor_telepon" :value="old('nomor_telepon')" />
                             </div>
                              <div>
                                 <x-input-label for="password" :value="__('Password Sementara')" />
                                 <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required />
+                            </div>
+                             <div>
+                                <x-input-label for="nik" :value="__('NIK')" />
+                                <x-text-input id="nik" class="block mt-1 w-full" type="text" name="nik" :value="old('nik')" />
+                                <x-input-error :messages="$errors->get('nik')" class="mt-2" />
                             </div>
                         </div>
 
@@ -4074,6 +4309,7 @@ class Tindakan extends Model
 </x-app-layout>
 
 ===== resources\views\admin\pasien\edit.blade.php =====
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -4090,23 +4326,102 @@ class Tindakan extends Model
                         @csrf
                         @method('PUT')
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <x-input-label for="name" :value="__('Nama Pasien')" />
-                                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name', $pasien->name)" required />
+                         <h3 class="text-lg font-semibold mb-4 border-b pb-2">Data Pasien</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-6">
+                            {{-- Kolom Kiri --}}
+                            <div class="space-y-4">
+                                <div>
+                                    <x-input-label for="name" :value="__('Nama Pasien')" />
+                                    <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name', $pasien->name)" required />
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <x-input-label for="tempat_lahir" :value="__('Tempat Lahir')" />
+                                        <x-text-input id="tempat_lahir" class="block mt-1 w-full" type="text" name="tempat_lahir" :value="old('tempat_lahir', optional($pasien->biodata)->tempat_lahir)" />
+                                    </div>
+                                    <div>
+                                        <x-input-label for="tanggal_lahir" :value="__('Tgl. Lahir')" />
+                                        <x-text-input id="tanggal_lahir" class="block mt-1 w-full" type="date" name="tanggal_lahir" :value="old('tanggal_lahir', optional($pasien->biodata)->tanggal_lahir)" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <x-input-label for="umur" :value="__('Umur (Tahun)')" />
+                                    <x-text-input id="umur" class="block mt-1 w-full" type="number" name="umur" :value="old('umur', optional($pasien->biodata)->umur)" min="0" />
+                                </div>
+                                <div>
+                                    <x-input-label for="jenis_kelamin" :value="__('Jenis Kelamin')" />
+                                    <select id="jenis_kelamin" name="jenis_kelamin" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">
+                                        <option value="">-- Pilih --</option>
+                                        <option value="Laki-laki" @selected(old('jenis_kelamin', optional($pasien->biodata)->jenis_kelamin) == 'Laki-laki')>Laki-laki</option>
+                                        <option value="Perempuan" @selected(old('jenis_kelamin', optional($pasien->biodata)->jenis_kelamin) == 'Perempuan')>Perempuan</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <x-input-label for="alamat" :value="__('Alamat')" />
+                                    <textarea id="alamat" name="alamat" rows="2" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">{{ old('alamat', optional($pasien->biodata)->alamat) }}</textarea>
+                                </div>
+                                <div>
+                                    <x-input-label for="nomor_telepon" :value="__('Nomor HP')" />
+                                    <x-text-input id="nomor_telepon" class="block mt-1 w-full" type="text" name="nomor_telepon" :value="old('nomor_telepon', $pasien->nomor_telepon)" />
+                                </div>
+                                <div>
+                                    <x-input-label for="pekerjaan" :value="__('Pekerjaan')" />
+                                    <x-text-input id="pekerjaan" class="block mt-1 w-full" type="text" name="pekerjaan" :value="old('pekerjaan', optional($pasien->biodata)->pekerjaan)" />
+                                </div>
+                                <div>
+                                    <x-input-label for="nama_orang_tua" :value="__('Nama Orang Tua (Jika pasien anak)')" />
+                                    <x-text-input id="nama_orang_tua" class="block mt-1 w-full" type="text" name="nama_orang_tua" :value="old('nama_orang_tua', optional($pasien->biodata)->nama_orang_tua)" />
+                                </div>
                             </div>
 
+                            {{-- Kolom Kanan --}}
+                            <div class="space-y-4">
+                                <div>
+                                    <x-input-label for="status_pasien" :value="__('Status Pasien')" />
+                                    <select id="status_pasien" name="status_pasien" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">
+                                        <option value="">-- Pilih --</option>
+                                        <option value="BPJS" @selected(old('status_pasien', optional($pasien->biodata)->status_pasien) == 'BPJS')>BPJS</option>
+                                        <option value="Umum" @selected(old('status_pasien', optional($pasien->biodata)->status_pasien) == 'Umum')>Umum</option>
+                                        <option value="Inhealth" @selected(old('status_pasien', optional($pasien->biodata)->status_pasien) == 'Inhealth')>Inhealth</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <x-input-label for="golongan_darah" :value="__('Golongan Darah')" />
+                                    <select id="golongan_darah" name="golongan_darah" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">
+                                        <option value="">-- Pilih --</option>
+                                        <option value="A" @selected(old('golongan_darah', optional($pasien->biodata)->golongan_darah) == 'A')>A</option>
+                                        <option value="B" @selected(old('golongan_darah', optional($pasien->biodata)->golongan_darah) == 'B')>B</option>
+                                        <option value="AB" @selected(old('golongan_darah', optional($pasien->biodata)->golongan_darah) == 'AB')>AB</option>
+                                        <option value="O" @selected(old('golongan_darah', optional($pasien->biodata)->golongan_darah) == 'O')>O</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <x-input-label for="riwayat_penyakit" :value="__('Riwayat Penyakit')" />
+                                    <textarea id="riwayat_penyakit" name="riwayat_penyakit" rows="2" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">{{ old('riwayat_penyakit', optional($pasien->biodata)->riwayat_penyakit) }}</textarea>
+                                </div>
+                                 <div>
+                                    <x-input-label for="riwayat_alergi_obat" :value="__('Riwayat Alergi Obat')" />
+                                    <textarea id="riwayat_alergi_obat" name="riwayat_alergi_obat" rows="2" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">{{ old('riwayat_alergi_obat', optional($pasien->biodata)->riwayat_alergi_obat) }}</textarea>
+                                </div>
+                                 <div>
+                                    <x-input-label for="riwayat_alergi_makanan" :value="__('Riwayat Alergi Makanan')" />
+                                    <textarea id="riwayat_alergi_makanan" name="riwayat_alergi_makanan" rows="2" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">{{ old('riwayat_alergi_makanan', optional($pasien->biodata)->riwayat_alergi_makanan) }}</textarea>
+                                </div>
+                                 <div>
+                                    <x-input-label for="penyakit_penting" :value="__('Penyakit Penting Lainnya')" />
+                                    <textarea id="penyakit_penting" name="penyakit_penting" rows="2" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">{{ old('penyakit_penting', optional($pasien->biodata)->penyakit_penting) }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                         <h3 class="text-lg font-semibold mb-4 border-b pb-2 mt-8">Data Akun</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                              <div>
                                 <x-input-label for="email" :value="__('Email')" />
                                 <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $pasien->email)" required />
                             </div>
-
-                            <div>
-                                <x-input-label for="nomor_telepon" :value="__('Nomor HP')" />
-                                <x-text-input id="nomor_telepon" class="block mt-1 w-full" type="text" name="nomor_telepon" :value="old('nomor_telepon', $pasien->nomor_telepon)" />
-                            </div>
-
-                            <div>
+                             {{-- Password tidak diubah di sini --}}
+                             <div>
                                 <x-input-label for="nik" :value="__('NIK')" />
                                 <x-text-input id="nik" class="block mt-1 w-full" type="text" name="nik" :value="old('nik', optional($pasien->biodata)->nik)" />
                                 <x-input-error :messages="$errors->get('nik')" class="mt-2" />
@@ -4608,6 +4923,239 @@ class Tindakan extends Model
     </div>
 </x-app-layout>
 
+===== resources\views\admin\pemesanan\create.blade.php =====
+<x-app-layout>
+    {{-- Tambahkan CSS & JS Tom Select jika belum ada di layout utama admin --}}
+    <x-slot name="header_scripts">
+        <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+    </x-slot>
+
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Buat Pemesanan untuk Pasien') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 md:p-8" 
+                 x-data="adminBookingForm()"> {{-- Nama fungsi JS diubah --}}
+                
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">Formulir Janji Temu (Admin)</h3>
+                <x-notification />
+
+                <form method="POST" action="{{ route('admin.pemesanan.store') }}">
+                    @csrf
+                    
+                    {{-- LANGKAH 1: PILIH PASIEN & STATUS --}}
+                    <div>
+                        <h4 class="text-lg font-semibold text-gray-700 border-b pb-2 mb-4">Langkah 1: Pilih Pasien & Status</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                             <div>
+                                <x-input-label for="id_pasien" value="Pilih Pasien" />
+                                <select id="id_pasien" name="id_pasien" required>
+                                    <option value="">-- Cari Pasien --</option>
+                                    @foreach($pasiens as $pasien)
+                                        <option value="{{ $pasien->id }}" @selected(old('id_pasien') == $pasien->id)>
+                                            {{ $pasien->name }} {{ $pasien->biodata?->nik ? '('.$pasien->biodata->nik.')' : '' }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <x-input-error :messages="$errors->get('id_pasien')" class="mt-2" />
+                            </div>
+                            <div>
+                                <x-input-label for="status_pasien" value="Status Pasien" />
+                                <select id="status_pasien" name="status_pasien" x-model="formData.status_pasien" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm" required>
+                                    <option value="">-- Pilih Status --</option>
+                                    <option value="BPJS">BPJS</option>
+                                    <option value="Umum">Umum</option>
+                                    <option value="Inhealth">Inhealth</option>
+                                </select>
+                            </div>
+                            <div x-show="formData.status_pasien === 'BPJS'" x-transition class="md:col-span-2">
+                                <x-input-label for="nomor_bpjs" value="Nomor BPJS" />
+                                <x-text-input id="nomor_bpjs" class="block mt-1 w-full" type="text" name="nomor_bpjs" x-model="formData.nomor_bpjs" />
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- LANGKAH 2: JADWAL & KELUHAN --}}
+                    <div class="mt-8 border-t pt-6">
+                        <h4 class="text-lg font-semibold text-gray-700 border-b pb-2 mb-4">Langkah 2: Pilih Jadwal & Keluhan</h4>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {{-- Pilih Dokter --}}
+                            <div>
+                                <x-input-label value="Pilih Dokter" />
+                                {{-- @change dihapus dari sini --}}
+                                <select x-model="selectedDokter" name="id_dokter" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm" required>
+                                    <option value="">-- Pilih Dokter --</option>
+                                    @foreach($dokters as $dokter)
+                                        <option value="{{ $dokter->id }}" @selected(old('id_dokter') == $dokter->id)>{{ $dokter->user->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            {{-- Pilih Tanggal --}}
+                            <div x-show="selectedDokter" x-transition>
+                                <x-input-label value="Pilih Tanggal" />
+                                {{-- [FIX] Hapus ':' dari value dan gunakan sintaks Blade biasa --}}
+                                <input type="date" x-model="selectedTanggal" name="tanggal_pesan" :min="today" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm" required value="{{ old('tanggal_pesan', '') }}">
+                            </div>
+                        </div>
+
+                        {{-- Pilih Jam --}}
+                        <div class="mt-6" x-show="selectedTanggal && !loadingSlot" x-transition>
+                            <x-input-label value="Pilih Jam Tersedia" />
+                            <div x-show="availableSlots.length > 0" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 mt-1">
+                                <template x-for="slot in availableSlots" :key="slot">
+                                    <label :class="{'bg-purple-600 text-white': selectedSlot === slot, 'bg-gray-100 hover:bg-purple-100': selectedSlot !== slot}" class="cursor-pointer text-center p-3 rounded-md transition-colors duration-200">
+                                        <input type="radio" x-model="selectedSlot" name="waktu_pesan" :value="slot" class="hidden" required>
+                                        <span x-text="slot"></span>
+                                    </label>
+                                </template>
+                            </div>
+                             <div x-show="loadingSlot" class="text-sm text-gray-500 mt-2" x-text="loadingSlot"></div>
+                            <div x-show="availableSlots.length === 0 && selectedTanggal && !loadingSlot" class="text-sm text-red-500 p-3 bg-red-50 rounded-md mt-1">
+                                Tidak ada slot tersedia atau jadwal tidak ditemukan. Periksa kembali jadwal dokter.
+                            </div>
+                             <x-input-error :messages="$errors->get('waktu_pesan')" class="mt-2" />
+                        </div>
+
+                        {{-- Keluhan Awal & Catatan --}}
+                        <div class="mt-6">
+                            <x-input-label for="tindakan_awal" value="Keluhan / Tindakan Awal (Opsional)" />
+                            <select name="tindakan_awal[]" id="tindakan_awal" multiple>
+                                @foreach($daftarTindakans as $kategori)
+                                    <optgroup label="{{ $kategori->nama_kategori }}">
+                                        @foreach($kategori->tindakanItems as $tindakan)
+                                            <option value="{{ $tindakan->id }}" data-harga="{{ $tindakan->harga }}">
+                                                {{ $tindakan->keterangan }}
+                                            </option>
+                                        @endforeach
+                                    </optgroup>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mt-4">
+                            <x-input-label for="catatan" value="Catatan Tambahan (Opsional)" />
+                            <textarea name="catatan" id="catatan" rows="3" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">{{ old('catatan') }}</textarea>
+                        </div>
+
+                        {{-- Status Pemesanan Awal --}}
+                         <div class="mt-4">
+                            <x-input-label for="status" value="Status Pemesanan Awal" />
+                            <select id="status" name="status" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm" required>
+                                <option value="Dikonfirmasi" @selected(old('status', 'Dikonfirmasi') == 'Dikonfirmasi')>Langsung Dikonfirmasi</option>
+                                <option value="Selesai" @selected(old('status') == 'Selesai')>Langsung Selesai (Pasien sudah diperiksa)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-end mt-6 border-t pt-6">
+                         <a href="{{ route('admin.pemesanan.index') }}" class="text-gray-600 hover:text-gray-900 mr-4">Batal</a>
+                         <x-primary-button type="submit" x-bind:disabled="!isFormComplete()" class="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400">
+
+                            Simpan Pemesanan
+                        </x-primary-button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inisialisasi Tom Select untuk Pasien
+            new TomSelect('#id_pasien',{ create: false, sortField: { field: "text", direction: "asc" } });
+            
+            // Inisialisasi Tom Select untuk Tindakan
+            new TomSelect('#tindakan_awal', {
+                plugins: ['remove_button'],
+                render: {
+                    option: function(data, escape) {
+                        const optionElement = document.querySelector(`#tindakan_awal option[value="${data.value}"]`);
+                        const harga = optionElement ? optionElement.getAttribute('data-harga') : null;
+                        const hargaFormatted = harga ? new Intl.NumberFormat('id-ID').format(harga) : 'N/A';
+                        return `<div><span class="font-medium">${escape(data.text)}</span><span class="text-sm text-gray-500 ml-2">(Rp ${hargaFormatted})</span></div>`;
+                    },
+                    item: function(data, escape) { return `<div>${escape(data.text)}</div>`; }
+                }
+            });
+        });
+        
+        function adminBookingForm() {
+            return {
+                formData: { 
+                    status_pasien: '{{ old('status_pasien', '') }}',
+                    nomor_bpjs: '{{ old('nomor_bpjs', '') }}',
+                },
+                selectedDokter: '{{ old('id_dokter', '') }}',
+                selectedTanggal: '{{ old('tanggal_pesan', '') }}',
+                today: new Date().toISOString().split('T')[0],
+                availableSlots: [],
+                loadingSlot: '',
+                selectedSlot: '{{ old('waktu_pesan', '') }}',
+                
+                init() {
+                    if (this.selectedDokter && this.selectedTanggal) {
+                        this.fetchSlotWaktu();
+                    }
+                    this.$watch('selectedDokter', () => this.resetTanggalDanSlot());
+                    this.$watch('selectedTanggal', () => this.fetchSlotWaktu());
+                },
+                
+                isFormComplete() {
+                    const pasienSelected = document.getElementById('id_pasien').value !== '';
+                    return pasienSelected && this.selectedDokter && this.selectedTanggal && this.selectedSlot;
+                },
+
+                fetchSlotWaktu() {
+                    this.availableSlots = [];
+                    this.selectedSlot = ''; 
+                    if (!this.selectedTanggal || !this.selectedDokter) {
+                        this.loadingSlot = ''; 
+                        return;
+                    }
+
+                    this.loadingSlot = 'Mencari slot waktu...';
+                    // Fetch ke route admin
+                    fetch(`/admin/get-slot-waktu/${this.selectedDokter}/${this.selectedTanggal}`) 
+                        .then(response => {
+                            if (!response.ok) {
+                                return response.json().then(err => { throw new Error(err.message || 'Jadwal tidak ditemukan atau terjadi kesalahan server.'); });
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (Array.isArray(data)) {
+                                this.availableSlots = data;
+                                this.loadingSlot = data.length === 0 ? 'Tidak ada slot tersedia.' : '';
+                            } else {
+                                console.error('Data slot tidak valid:', data);
+                                this.loadingSlot = 'Gagal memuat slot (format data salah).';
+                                this.availableSlots = [];
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Error fetching slots:', error);
+                            this.loadingSlot = `Error: ${error.message || 'Gagal memuat slot.'}`;
+                            this.availableSlots = []; 
+                        });
+                },
+
+                resetTanggalDanSlot() {
+                    this.selectedTanggal = '';
+                    this.availableSlots = [];
+                    this.selectedSlot = '';
+                    this.loadingSlot = '';
+                }
+            }
+        }
+    </script>
+</x-app-layout>
+
 ===== resources\views\admin\pemesanan\edit.blade.php =====
 <x-app-layout>
     <x-slot name="header">
@@ -4674,9 +5222,14 @@ class Tindakan extends Model
 ===== resources\views\admin\pemesanan\index.blade.php =====
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Kelola Semua Pemesanan') }}
-        </h2>
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Kelola Semua Pemesanan') }}
+            </h2>
+            <a href="{{ route('admin.pemesanan.create') }}" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 shadow-md text-sm font-medium">
+                Buat Pemesanan Baru
+            </a>
+        </div>
     </x-slot>
 
     <div class="py-12">
@@ -6617,7 +7170,7 @@ $classes = ($active ?? false)
             </main>
         </div>
     </div>
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
     @stack('scripts')
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
 </body>

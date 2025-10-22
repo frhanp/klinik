@@ -70,6 +70,8 @@ Route::middleware(['auth', 'cekperan:admin'])->prefix('admin')->name('admin.')->
 
     Route::resource('pasien', AdminPasienController::class)->except(['show', 'destroy']);
     Route::get('laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
+
+    Route::get('/get-slot-waktu/{dokter}/{tanggal}', [AdminPemesananController::class, 'getSlotWaktuAdmin'])->name('pemesanan.getSlotWaktuAdmin');
 });
 
 

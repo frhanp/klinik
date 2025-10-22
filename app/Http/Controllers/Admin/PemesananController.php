@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Pemesanan;
 use App\Models\User;
 use App\Models\Dokter;
+use App\Models\DaftarTindakan;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use App\Models\Jadwal;
 
 class PemesananController extends Controller
 {
@@ -24,10 +28,53 @@ class PemesananController extends Controller
      */
     public function create()
     {
-        $pasiens = User::where('peran', 'pasien')->get();
-        $dokters = Dokter::with('user')->get();
-        // Logika untuk mengambil jadwal akan lebih kompleks, bisa ditambahkan dengan AJAX nanti
-        return view('admin.pemesanan.create', compact('pasiens', 'dokters'));
+        $pasiens = User::where('peran', 'pasien')->orderBy('name')->get();
+        $dokters = Dokter::with('user')->orderBy('id')->get();
+        // Ambil data tindakan seperti di PasienController
+        $daftarTindakans = DaftarTindakan::with('tindakanItems')->orderBy('nama_kategori')->get();
+
+        return view('admin.pemesanan.create', compact('pasiens', 'dokters', 'daftarTindakans'));
+    }
+
+    public function getSlotWaktuAdmin(Dokter $dokter, $tanggal)
+    {
+        try {
+            $date = Carbon::parse($tanggal);
+            $dayOfWeekNumber = $date->dayOfWeek;
+            $dayMap = [1 => 'Senin', 2 => 'Selasa', 3 => 'Rabu', 4 => 'Kamis', 5 => 'Jumat', 6 => 'Sabtu', 0 => 'Minggu'];
+            $dayName = $dayMap[$dayOfWeekNumber] ?? null;
+
+            $jadwal = $dokter->jadwal()->where('hari', $dayName)->first();
+
+            if (!$jadwal) {
+                return response()->json([]); // Kembalikan array kosong jika tidak ada jadwal
+            }
+
+            $startTime = Carbon::parse($jadwal->jam_mulai);
+            $endTime = Carbon::parse($jadwal->jam_selesai);
+            $slotDuration = $jadwal->durasi_slot_menit ?? 30; // Default 30 menit jika null
+            $allSlots = [];
+
+            while ($startTime < $endTime) {
+                $allSlots[] = $startTime->format('H:i');
+                $startTime->addMinutes($slotDuration);
+            }
+
+            $bookedSlots = Pemesanan::where('id_dokter', $dokter->id)
+                ->where('tanggal_pesan', $date->format('Y-m-d'))
+                ->whereIn('status', ['Dipesan', 'Dikonfirmasi']) // Hanya cek status aktif
+                ->pluck('waktu_pesan')
+                ->map(fn ($time) => Carbon::parse($time)->format('H:i'))
+                ->toArray();
+
+            $availableSlots = array_values(array_diff($allSlots, $bookedSlots));
+
+            return response()->json($availableSlots);
+
+        } catch (\Exception $e) {
+            // Log error jika perlu: Log::error($e);
+            return response()->json(['error' => 'Gagal memuat slot waktu.', 'message' => $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -36,17 +83,67 @@ class PemesananController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_pasien' => ['required', 'exists:users,id'],
+            'id_pasien' => ['required', 'exists:users,id,peran,pasien'], // Pastikan user adalah pasien
             'id_dokter' => ['required', 'exists:dokter,id'],
-            'id_jadwal' => ['required', 'exists:jadwal,id'],
-            'tanggal_pesan' => ['required', 'date'],
+            'tanggal_pesan' => ['required', 'date', 'after_or_equal:today'],
             'waktu_pesan' => ['required', 'date_format:H:i'],
-            'status' => ['required', 'in:Dikonfirmasi,Selesai'], // Admin bisa langsung konfirmasi
+            'status_pasien' => ['required', 'in:BPJS,Umum,Inhealth'],
+            'nomor_bpjs' => ['nullable', 'required_if:status_pasien,BPJS', 'string', 'max:20'],
+            'tindakan_awal' => ['nullable', 'array'],
+            'tindakan_awal.*' => ['exists:tindakan,id'],
+            'catatan' => ['nullable', 'string'],
+            'status' => ['required', 'in:Dikonfirmasi,Selesai'], // Status awal dari Admin
         ]);
 
-        Pemesanan::create($request->all());
+        $pasien = User::findOrFail($request->id_pasien);
+        $tanggal = Carbon::parse($request->tanggal_pesan);
+        $hariPraktek = $tanggal->translatedFormat('l'); // e.g., Senin, Selasa
 
-        return redirect()->route('admin.pemesanan.index')->with('success', 'Pemesanan manual berhasil ditambahkan.');
+        // Cari jadwal yang cocok
+        $jadwal = Jadwal::where('id_dokter', $request->id_dokter)
+            ->where('hari', $hariPraktek)
+            // ->where('jam_mulai', '<=', $request->waktu_pesan) // Uncomment jika perlu validasi jam
+            // ->where('jam_selesai', '>', $request->waktu_pesan)
+            ->first();
+
+        if (!$jadwal) {
+            return back()->with('error', 'Dokter tidak memiliki jadwal pada hari/jam yang dipilih.')->withInput();
+        }
+
+        // Cek ketersediaan slot (opsional tapi disarankan)
+        $slotExists = Pemesanan::where('id_dokter', $request->id_dokter)
+                        ->where('tanggal_pesan', $request->tanggal_pesan)
+                        ->where('waktu_pesan', $request->waktu_pesan)
+                        ->whereIn('status', ['Dipesan', 'Dikonfirmasi'])
+                        ->exists();
+
+        if ($slotExists) {
+             return back()->with('error', 'Slot waktu yang dipilih sudah dipesan.')->withInput();
+        }
+
+
+        DB::transaction(function () use ($request, $pasien, $jadwal) {
+            // Buat data pemesanan
+            $pemesanan = Pemesanan::create([
+                'id_pasien' => $pasien->id,
+                'nama_pasien_booking' => $pasien->name, // Ambil nama dari user pasien
+                'id_dokter' => $request->id_dokter,
+                'id_jadwal' => $jadwal->id,
+                'tanggal_pesan' => $request->tanggal_pesan,
+                'waktu_pesan' => $request->waktu_pesan,
+                'status_pasien' => $request->status_pasien,
+                'catatan' => $request->catatan,
+                'status' => $request->status, // Status awal (misal: Dikonfirmasi)
+                'nomor_bpjs' => $request->nomor_bpjs,
+            ]);
+
+            // Simpan data tindakan awal ke tabel pivot
+            if ($request->has('tindakan_awal')) {
+                $pemesanan->tindakanAwal()->attach($request->tindakan_awal);
+            }
+        });
+
+        return redirect()->route('admin.pemesanan.index')->with('success', 'Pemesanan untuk pasien berhasil ditambahkan.');
     }
 
     /**

@@ -1,8 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Kelola Semua Pemesanan') }}
-        </h2>
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Kelola Semua Pemesanan') }}
+            </h2>
+            <a href="{{ route('admin.pemesanan.create') }}" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 shadow-md text-sm font-medium">
+                Buat Pemesanan Baru
+            </a>
+        </div>
     </x-slot>
 
     <div class="py-12">
