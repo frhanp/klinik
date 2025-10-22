@@ -1,5 +1,5 @@
 ﻿# Project Digest (Full Content)
-_Generated: 2025-10-16 14:00:00_
+_Generated: 2025-10-22 13:15:12_
 **Root:** D:\Laragon\www\klinik
 
 
@@ -328,6 +328,7 @@ storage\framework\views\bb4b1fb801bbaeca186516088ac54e1e.php
 storage\framework\views\bb81c05887fc4897ea0b8a4be4d2931a.php
 storage\framework\views\be5779b819f9903611be5ef8b4c91b6b.php
 storage\framework\views\bebbcc12d82febc3d9d74e01e7ce326d.php
+storage\framework\views\c05084a2686c20935959c3419b4ff8dc.php
 storage\framework\views\c0cb1c2254e2f73325c9b89c03f94db5.php
 storage\framework\views\db1babe5d66f2504b7d3d3dde40548c6.php
 storage\framework\views\ddac27db3c0539b7d2822063d7ec6bb7.php
@@ -371,11 +372,11 @@ Branch:
 main
 
 Last 5 commits:
+78263e2 add nik dan status pada view
 08ae041 add foto pendukung
 b0d612d add nomor bpjs
 c7904bd hilangkan pasien unik
 6bae744 fix tampilan dan bug v1
-ac50d8a perbagus dan fix pembayaran
 ```
 
 
@@ -584,107 +585,107 @@ require __DIR__ . '/auth.php';
 ## Routes (from command)
 ```
 
-  GET|HEAD        / ............................................................................................... 
-  GET|HEAD        _debugbar/assets/javascript ......... debugbar.assets.js ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@js
-  GET|HEAD        _debugbar/assets/stylesheets ...... debugbar.assets.css ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@css
-  DELETE          _debugbar/cache/{key}/{tags?} debugbar.cache.delete ΓÇ║ Barryvdh\Debugbar ΓÇ║ CacheController@delete
-  GET|HEAD        _debugbar/clockwork/{id} debugbar.clockwork ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@clockwork
-  GET|HEAD        _debugbar/open .......... debugbar.openhandler ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@handle
-  POST            _debugbar/queries/explain debugbar.queries.explain ΓÇ║ Barryvdh\Debugbar ΓÇ║ QueriesController@explaΓÇª
-  GET|HEAD        admin/dashboard ............................... admin.dashboard ΓÇ║ Admin\DashboardController@index
-  GET|HEAD        admin/dokter .................................. admin.dokter.index ΓÇ║ Admin\DokterController@index
-  POST            admin/dokter .................................. admin.dokter.store ΓÇ║ Admin\DokterController@store
-  GET|HEAD        admin/dokter/create ......................... admin.dokter.create ΓÇ║ Admin\DokterController@create
-  GET|HEAD        admin/dokter/{dokter} ........................... admin.dokter.show ΓÇ║ Admin\DokterController@show
-  PUT|PATCH       admin/dokter/{dokter} ....................... admin.dokter.update ΓÇ║ Admin\DokterController@update
-  DELETE          admin/dokter/{dokter} ..................... admin.dokter.destroy ΓÇ║ Admin\DokterController@destroy
-  GET|HEAD        admin/dokter/{dokter}/edit ...................... admin.dokter.edit ΓÇ║ Admin\DokterController@edit
-  GET|HEAD        admin/jadwal .................................. admin.jadwal.index ΓÇ║ Admin\JadwalController@index
-  POST            admin/jadwal .................................. admin.jadwal.store ΓÇ║ Admin\JadwalController@store
-  GET|HEAD        admin/jadwal-generate ............. admin.jadwal.generate ΓÇ║ Admin\JadwalController@createMultiple
-  POST            admin/jadwal-generate ......... admin.jadwal.storeMultiple ΓÇ║ Admin\JadwalController@storeMultiple
-  GET|HEAD        admin/jadwal/create ......................... admin.jadwal.create ΓÇ║ Admin\JadwalController@create
-  GET|HEAD        admin/jadwal/dokter/{dokter} .................... admin.jadwal.show ΓÇ║ Admin\JadwalController@show
-  PUT|PATCH       admin/jadwal/{jadwal} ....................... admin.jadwal.update ΓÇ║ Admin\JadwalController@update
-  DELETE          admin/jadwal/{jadwal} ..................... admin.jadwal.destroy ΓÇ║ Admin\JadwalController@destroy
-  GET|HEAD        admin/jadwal/{jadwal}/edit ...................... admin.jadwal.edit ΓÇ║ Admin\JadwalController@edit
-  GET|HEAD        admin/laporan ............................... admin.laporan.index ΓÇ║ Admin\LaporanController@index
-  GET|HEAD        admin/laporan/cetak ......................... admin.laporan.cetak ΓÇ║ Admin\LaporanController@cetak
-  GET|HEAD        admin/obat ........................................ admin.obat.index ΓÇ║ Admin\ObatController@index
-  POST            admin/obat ........................................ admin.obat.store ΓÇ║ Admin\ObatController@store
-  GET|HEAD        admin/obat/create ............................... admin.obat.create ΓÇ║ Admin\ObatController@create
-  GET|HEAD        admin/obat/{obat} ................................... admin.obat.show ΓÇ║ Admin\ObatController@show
-  PUT|PATCH       admin/obat/{obat} ............................... admin.obat.update ΓÇ║ Admin\ObatController@update
-  DELETE          admin/obat/{obat} ............................. admin.obat.destroy ΓÇ║ Admin\ObatController@destroy
-  GET|HEAD        admin/obat/{obat}/edit .............................. admin.obat.edit ΓÇ║ Admin\ObatController@edit
-  GET|HEAD        admin/pasien .................................. admin.pasien.index ΓÇ║ Admin\PasienController@index
-  POST            admin/pasien .................................. admin.pasien.store ΓÇ║ Admin\PasienController@store
-  GET|HEAD        admin/pasien/create ......................... admin.pasien.create ΓÇ║ Admin\PasienController@create
-  PUT|PATCH       admin/pasien/{pasien} ....................... admin.pasien.update ΓÇ║ Admin\PasienController@update
-  GET|HEAD        admin/pasien/{pasien}/edit ...................... admin.pasien.edit ΓÇ║ Admin\PasienController@edit
-  GET|HEAD        admin/pembayaran ...................... admin.pembayaran.index ΓÇ║ Admin\PembayaranController@index
-  GET|HEAD        admin/pembayaran/{pemesanan} ............ admin.pembayaran.show ΓÇ║ Admin\PembayaranController@show
-  POST            admin/pembayaran/{pemesanan} .......... admin.pembayaran.store ΓÇ║ Admin\PembayaranController@store
-  GET|HEAD        admin/pembayaran/{pemesanan}/cetak .... admin.pembayaran.cetak ΓÇ║ Admin\PembayaranController@cetak
-  GET|HEAD        admin/pemesanan ......................... admin.pemesanan.index ΓÇ║ Admin\PemesananController@index
-  POST            admin/pemesanan ......................... admin.pemesanan.store ΓÇ║ Admin\PemesananController@store
-  GET|HEAD        admin/pemesanan/create ................ admin.pemesanan.create ΓÇ║ Admin\PemesananController@create
-  GET|HEAD        admin/pemesanan/{pemesanan} ............... admin.pemesanan.show ΓÇ║ Admin\PemesananController@show
-  PUT|PATCH       admin/pemesanan/{pemesanan} ........... admin.pemesanan.update ΓÇ║ Admin\PemesananController@update
-  DELETE          admin/pemesanan/{pemesanan} ......... admin.pemesanan.destroy ΓÇ║ Admin\PemesananController@destroy
-  GET|HEAD        admin/pemesanan/{pemesanan}/edit .......... admin.pemesanan.edit ΓÇ║ Admin\PemesananController@edit
-  GET|HEAD        admin/tindakan ............................ admin.tindakan.index ΓÇ║ Admin\TindakanController@index
-  POST            admin/tindakan ............................ admin.tindakan.store ΓÇ║ Admin\TindakanController@store
-  GET|HEAD        admin/tindakan/create ................... admin.tindakan.create ΓÇ║ Admin\TindakanController@create
-  GET|HEAD        admin/tindakan/{tindakan} ................... admin.tindakan.show ΓÇ║ Admin\TindakanController@show
-  PUT|PATCH       admin/tindakan/{tindakan} ............... admin.tindakan.update ΓÇ║ Admin\TindakanController@update
-  DELETE          admin/tindakan/{tindakan} ............. admin.tindakan.destroy ΓÇ║ Admin\TindakanController@destroy
-  GET|HEAD        admin/tindakan/{tindakan}/edit .............. admin.tindakan.edit ΓÇ║ Admin\TindakanController@edit
-  GET|HEAD        confirm-password ..................... password.confirm ΓÇ║ Auth\ConfirmablePasswordController@show
-  POST            confirm-password ....................................... Auth\ConfirmablePasswordController@store
-  GET|HEAD        dashboard ............................................................................. dashboard
-  GET|HEAD        dokter/dashboard ............................ dokter.dashboard ΓÇ║ Dokter\DashboardController@index
-  GET|HEAD        dokter/jadwal ............................... dokter.jadwal.index ΓÇ║ Dokter\JadwalController@index
-  GET|HEAD        dokter/jadwal/{jadwal} ........................ dokter.jadwal.show ΓÇ║ Dokter\JadwalController@show
-  GET|HEAD        dokter/rekam-medis ................. dokter.rekam-medis.index ΓÇ║ Dokter\RekamMedisController@index
-  POST            dokter/rekam-medis ................. dokter.rekam-medis.store ΓÇ║ Dokter\RekamMedisController@store
-  GET|HEAD        dokter/rekam-medis/create ........ dokter.rekam-medis.create ΓÇ║ Dokter\RekamMedisController@create
-  GET|HEAD        dokter/rekam-medis/pasien/{pasien} dokter.rekam-medis.pasien ΓÇ║ Dokter\RekamMedisController@showBΓÇª
-  GET|HEAD        dokter/rekam-medis/{rekam_medi} ...... dokter.rekam-medis.show ΓÇ║ Dokter\RekamMedisController@show
-  PUT|PATCH       dokter/rekam-medis/{rekam_medi} .. dokter.rekam-medis.update ΓÇ║ Dokter\RekamMedisController@update
-  DELETE          dokter/rekam-medis/{rekam_medi} dokter.rekam-medis.destroy ΓÇ║ Dokter\RekamMedisController@destroy
-  GET|HEAD        dokter/rekam-medis/{rekam_medi}/edit . dokter.rekam-medis.edit ΓÇ║ Dokter\RekamMedisController@edit
-  POST            email/verification-notification verification.send ΓÇ║ Auth\EmailVerificationNotificationControllerΓÇª
-  GET|HEAD        forgot-password ...................... password.request ΓÇ║ Auth\PasswordResetLinkController@create
-  POST            forgot-password ......................... password.email ΓÇ║ Auth\PasswordResetLinkController@store
-  GET|HEAD        login ........................................ login ΓÇ║ Auth\AuthenticatedSessionController@create
-  POST            login ................................................. Auth\AuthenticatedSessionController@store
-  POST            logout ..................................... logout ΓÇ║ Auth\AuthenticatedSessionController@destroy
-  GET|HEAD        pasien/dashboard ............................ pasien.dashboard ΓÇ║ Pasien\DashboardController@index
-  GET|HEAD        pasien/get-jadwal-dokter/{dokter} pasien.pemesanan.getJadwalDokter ΓÇ║ Pasien\PemesananController@ΓÇª
-  GET|HEAD        pasien/get-slot-waktu/{dokter}/{tanggal} pasien.pemesanan.getSlotWaktu ΓÇ║ Pasien\PemesananControlΓÇª
-  GET|HEAD        pasien/pemesanan ...................... pasien.pemesanan.index ΓÇ║ Pasien\PemesananController@index
-  POST            pasien/pemesanan ...................... pasien.pemesanan.store ΓÇ║ Pasien\PemesananController@store
-  GET|HEAD        pasien/pemesanan/create ............. pasien.pemesanan.create ΓÇ║ Pasien\PemesananController@create
-  GET|HEAD        pasien/pemesanan/{pemesanan} ............ pasien.pemesanan.show ΓÇ║ Pasien\PemesananController@show
-  PUT|PATCH       pasien/pemesanan/{pemesanan} ........ pasien.pemesanan.update ΓÇ║ Pasien\PemesananController@update
-  DELETE          pasien/pemesanan/{pemesanan} ...... pasien.pemesanan.destroy ΓÇ║ Pasien\PemesananController@destroy
-  GET|HEAD        pasien/pemesanan/{pemesanan}/edit ....... pasien.pemesanan.edit ΓÇ║ Pasien\PemesananController@edit
-  GET|HEAD        pasien/rekam-medis/{rekamMedis} pasien.rekamMedis.show ΓÇ║ Pasien\PemesananController@showRekamMedΓÇª
-  PUT             password ....................................... password.update ΓÇ║ Auth\PasswordController@update
-  GET|HEAD        profile ................................................... profile.edit ΓÇ║ ProfileController@edit
-  PATCH           profile ............................................... profile.update ΓÇ║ ProfileController@update
-  DELETE          profile ............................................. profile.destroy ΓÇ║ ProfileController@destroy
-  GET|HEAD        register ........................................ register ΓÇ║ Auth\RegisteredUserController@create
-  POST            register .................................................... Auth\RegisteredUserController@store
-  POST            reset-password ................................ password.store ΓÇ║ Auth\NewPasswordController@store
-  GET|HEAD        reset-password/{token} ....................... password.reset ΓÇ║ Auth\NewPasswordController@create
-  GET|HEAD        storage/{path} .................................................................... storage.local
-  GET|HEAD        up .............................................................................................. 
-  GET|HEAD        verify-email ....................... verification.notice ΓÇ║ Auth\EmailVerificationPromptController
-  GET|HEAD        verify-email/{id}/{hash} ....................... verification.verify ΓÇ║ Auth\VerifyEmailController
+  GET|HEAD        / .......................................................................................................... 
+  GET|HEAD        _debugbar/assets/javascript .................... debugbar.assets.js ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@js
+  GET|HEAD        _debugbar/assets/stylesheets ................. debugbar.assets.css ΓÇ║ Barryvdh\Debugbar ΓÇ║ AssetController@css
+  DELETE          _debugbar/cache/{key}/{tags?} ........... debugbar.cache.delete ΓÇ║ Barryvdh\Debugbar ΓÇ║ CacheController@delete
+  GET|HEAD        _debugbar/clockwork/{id} .......... debugbar.clockwork ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@clockwork
+  GET|HEAD        _debugbar/open ..................... debugbar.openhandler ΓÇ║ Barryvdh\Debugbar ΓÇ║ OpenHandlerController@handle
+  POST            _debugbar/queries/explain ......... debugbar.queries.explain ΓÇ║ Barryvdh\Debugbar ΓÇ║ QueriesController@explain
+  GET|HEAD        admin/dashboard .......................................... admin.dashboard ΓÇ║ Admin\DashboardController@index
+  GET|HEAD        admin/dokter ............................................. admin.dokter.index ΓÇ║ Admin\DokterController@index
+  POST            admin/dokter ............................................. admin.dokter.store ΓÇ║ Admin\DokterController@store
+  GET|HEAD        admin/dokter/create .................................... admin.dokter.create ΓÇ║ Admin\DokterController@create
+  GET|HEAD        admin/dokter/{dokter} ...................................... admin.dokter.show ΓÇ║ Admin\DokterController@show
+  PUT|PATCH       admin/dokter/{dokter} .................................. admin.dokter.update ΓÇ║ Admin\DokterController@update
+  DELETE          admin/dokter/{dokter} ................................ admin.dokter.destroy ΓÇ║ Admin\DokterController@destroy
+  GET|HEAD        admin/dokter/{dokter}/edit ................................. admin.dokter.edit ΓÇ║ Admin\DokterController@edit
+  GET|HEAD        admin/jadwal ............................................. admin.jadwal.index ΓÇ║ Admin\JadwalController@index
+  POST            admin/jadwal ............................................. admin.jadwal.store ΓÇ║ Admin\JadwalController@store
+  GET|HEAD        admin/jadwal-generate ........................ admin.jadwal.generate ΓÇ║ Admin\JadwalController@createMultiple
+  POST            admin/jadwal-generate .................... admin.jadwal.storeMultiple ΓÇ║ Admin\JadwalController@storeMultiple
+  GET|HEAD        admin/jadwal/create .................................... admin.jadwal.create ΓÇ║ Admin\JadwalController@create
+  GET|HEAD        admin/jadwal/dokter/{dokter} ............................... admin.jadwal.show ΓÇ║ Admin\JadwalController@show
+  PUT|PATCH       admin/jadwal/{jadwal} .................................. admin.jadwal.update ΓÇ║ Admin\JadwalController@update
+  DELETE          admin/jadwal/{jadwal} ................................ admin.jadwal.destroy ΓÇ║ Admin\JadwalController@destroy
+  GET|HEAD        admin/jadwal/{jadwal}/edit ................................. admin.jadwal.edit ΓÇ║ Admin\JadwalController@edit
+  GET|HEAD        admin/laporan .......................................... admin.laporan.index ΓÇ║ Admin\LaporanController@index
+  GET|HEAD        admin/laporan/cetak .................................... admin.laporan.cetak ΓÇ║ Admin\LaporanController@cetak
+  GET|HEAD        admin/obat ................................................... admin.obat.index ΓÇ║ Admin\ObatController@index
+  POST            admin/obat ................................................... admin.obat.store ΓÇ║ Admin\ObatController@store
+  GET|HEAD        admin/obat/create .......................................... admin.obat.create ΓÇ║ Admin\ObatController@create
+  GET|HEAD        admin/obat/{obat} .............................................. admin.obat.show ΓÇ║ Admin\ObatController@show
+  PUT|PATCH       admin/obat/{obat} .......................................... admin.obat.update ΓÇ║ Admin\ObatController@update
+  DELETE          admin/obat/{obat} ........................................ admin.obat.destroy ΓÇ║ Admin\ObatController@destroy
+  GET|HEAD        admin/obat/{obat}/edit ......................................... admin.obat.edit ΓÇ║ Admin\ObatController@edit
+  GET|HEAD        admin/pasien ............................................. admin.pasien.index ΓÇ║ Admin\PasienController@index
+  POST            admin/pasien ............................................. admin.pasien.store ΓÇ║ Admin\PasienController@store
+  GET|HEAD        admin/pasien/create .................................... admin.pasien.create ΓÇ║ Admin\PasienController@create
+  PUT|PATCH       admin/pasien/{pasien} .................................. admin.pasien.update ΓÇ║ Admin\PasienController@update
+  GET|HEAD        admin/pasien/{pasien}/edit ................................. admin.pasien.edit ΓÇ║ Admin\PasienController@edit
+  GET|HEAD        admin/pembayaran ................................. admin.pembayaran.index ΓÇ║ Admin\PembayaranController@index
+  GET|HEAD        admin/pembayaran/{pemesanan} ....................... admin.pembayaran.show ΓÇ║ Admin\PembayaranController@show
+  POST            admin/pembayaran/{pemesanan} ..................... admin.pembayaran.store ΓÇ║ Admin\PembayaranController@store
+  GET|HEAD        admin/pembayaran/{pemesanan}/cetak ............... admin.pembayaran.cetak ΓÇ║ Admin\PembayaranController@cetak
+  GET|HEAD        admin/pemesanan .................................... admin.pemesanan.index ΓÇ║ Admin\PemesananController@index
+  POST            admin/pemesanan .................................... admin.pemesanan.store ΓÇ║ Admin\PemesananController@store
+  GET|HEAD        admin/pemesanan/create ........................... admin.pemesanan.create ΓÇ║ Admin\PemesananController@create
+  GET|HEAD        admin/pemesanan/{pemesanan} .......................... admin.pemesanan.show ΓÇ║ Admin\PemesananController@show
+  PUT|PATCH       admin/pemesanan/{pemesanan} ...................... admin.pemesanan.update ΓÇ║ Admin\PemesananController@update
+  DELETE          admin/pemesanan/{pemesanan} .................... admin.pemesanan.destroy ΓÇ║ Admin\PemesananController@destroy
+  GET|HEAD        admin/pemesanan/{pemesanan}/edit ..................... admin.pemesanan.edit ΓÇ║ Admin\PemesananController@edit
+  GET|HEAD        admin/tindakan ....................................... admin.tindakan.index ΓÇ║ Admin\TindakanController@index
+  POST            admin/tindakan ....................................... admin.tindakan.store ΓÇ║ Admin\TindakanController@store
+  GET|HEAD        admin/tindakan/create .............................. admin.tindakan.create ΓÇ║ Admin\TindakanController@create
+  GET|HEAD        admin/tindakan/{tindakan} .............................. admin.tindakan.show ΓÇ║ Admin\TindakanController@show
+  PUT|PATCH       admin/tindakan/{tindakan} .......................... admin.tindakan.update ΓÇ║ Admin\TindakanController@update
+  DELETE          admin/tindakan/{tindakan} ........................ admin.tindakan.destroy ΓÇ║ Admin\TindakanController@destroy
+  GET|HEAD        admin/tindakan/{tindakan}/edit ......................... admin.tindakan.edit ΓÇ║ Admin\TindakanController@edit
+  GET|HEAD        confirm-password ................................ password.confirm ΓÇ║ Auth\ConfirmablePasswordController@show
+  POST            confirm-password .................................................. Auth\ConfirmablePasswordController@store
+  GET|HEAD        dashboard ........................................................................................ dashboard
+  GET|HEAD        dokter/dashboard ....................................... dokter.dashboard ΓÇ║ Dokter\DashboardController@index
+  GET|HEAD        dokter/jadwal .......................................... dokter.jadwal.index ΓÇ║ Dokter\JadwalController@index
+  GET|HEAD        dokter/jadwal/{jadwal} ................................... dokter.jadwal.show ΓÇ║ Dokter\JadwalController@show
+  GET|HEAD        dokter/rekam-medis ............................ dokter.rekam-medis.index ΓÇ║ Dokter\RekamMedisController@index
+  POST            dokter/rekam-medis ............................ dokter.rekam-medis.store ΓÇ║ Dokter\RekamMedisController@store
+  GET|HEAD        dokter/rekam-medis/create ................... dokter.rekam-medis.create ΓÇ║ Dokter\RekamMedisController@create
+  GET|HEAD        dokter/rekam-medis/pasien/{pasien} .... dokter.rekam-medis.pasien ΓÇ║ Dokter\RekamMedisController@showByPasien
+  GET|HEAD        dokter/rekam-medis/{rekam_medi} ................. dokter.rekam-medis.show ΓÇ║ Dokter\RekamMedisController@show
+  PUT|PATCH       dokter/rekam-medis/{rekam_medi} ............. dokter.rekam-medis.update ΓÇ║ Dokter\RekamMedisController@update
+  DELETE          dokter/rekam-medis/{rekam_medi} ........... dokter.rekam-medis.destroy ΓÇ║ Dokter\RekamMedisController@destroy
+  GET|HEAD        dokter/rekam-medis/{rekam_medi}/edit ............ dokter.rekam-medis.edit ΓÇ║ Dokter\RekamMedisController@edit
+  POST            email/verification-notification ..... verification.send ΓÇ║ Auth\EmailVerificationNotificationController@store
+  GET|HEAD        forgot-password ................................. password.request ΓÇ║ Auth\PasswordResetLinkController@create
+  POST            forgot-password .................................... password.email ΓÇ║ Auth\PasswordResetLinkController@store
+  GET|HEAD        login ................................................... login ΓÇ║ Auth\AuthenticatedSessionController@create
+  POST            login ............................................................ Auth\AuthenticatedSessionController@store
+  POST            logout ................................................ logout ΓÇ║ Auth\AuthenticatedSessionController@destroy
+  GET|HEAD        pasien/dashboard ....................................... pasien.dashboard ΓÇ║ Pasien\DashboardController@index
+  GET|HEAD        pasien/get-jadwal-dokter/{dokter} pasien.pemesanan.getJadwalDokter ΓÇ║ Pasien\PemesananController@getJadwalDoΓÇª
+  GET|HEAD        pasien/get-slot-waktu/{dokter}/{tanggal} pasien.pemesanan.getSlotWaktu ΓÇ║ Pasien\PemesananController@getSlotΓÇª
+  GET|HEAD        pasien/pemesanan ................................. pasien.pemesanan.index ΓÇ║ Pasien\PemesananController@index
+  POST            pasien/pemesanan ................................. pasien.pemesanan.store ΓÇ║ Pasien\PemesananController@store
+  GET|HEAD        pasien/pemesanan/create ........................ pasien.pemesanan.create ΓÇ║ Pasien\PemesananController@create
+  GET|HEAD        pasien/pemesanan/{pemesanan} ....................... pasien.pemesanan.show ΓÇ║ Pasien\PemesananController@show
+  PUT|PATCH       pasien/pemesanan/{pemesanan} ................... pasien.pemesanan.update ΓÇ║ Pasien\PemesananController@update
+  DELETE          pasien/pemesanan/{pemesanan} ................. pasien.pemesanan.destroy ΓÇ║ Pasien\PemesananController@destroy
+  GET|HEAD        pasien/pemesanan/{pemesanan}/edit .................. pasien.pemesanan.edit ΓÇ║ Pasien\PemesananController@edit
+  GET|HEAD        pasien/rekam-medis/{rekamMedis} ......... pasien.rekamMedis.show ΓÇ║ Pasien\PemesananController@showRekamMedis
+  PUT             password .................................................. password.update ΓÇ║ Auth\PasswordController@update
+  GET|HEAD        profile .............................................................. profile.edit ΓÇ║ ProfileController@edit
+  PATCH           profile .......................................................... profile.update ΓÇ║ ProfileController@update
+  DELETE          profile ........................................................ profile.destroy ΓÇ║ ProfileController@destroy
+  GET|HEAD        register ................................................... register ΓÇ║ Auth\RegisteredUserController@create
+  POST            register ............................................................... Auth\RegisteredUserController@store
+  POST            reset-password ........................................... password.store ΓÇ║ Auth\NewPasswordController@store
+  GET|HEAD        reset-password/{token} .................................. password.reset ΓÇ║ Auth\NewPasswordController@create
+  GET|HEAD        storage/{path} ............................................................................... storage.local
+  GET|HEAD        up ......................................................................................................... 
+  GET|HEAD        verify-email .................................. verification.notice ΓÇ║ Auth\EmailVerificationPromptController
+  GET|HEAD        verify-email/{id}/{hash} .................................. verification.verify ΓÇ║ Auth\VerifyEmailController
 
-                                                                                                Showing [99] routes
+                                                                                                           Showing [99] routes
 
 ```
 
@@ -1228,22 +1229,21 @@ class PasienController extends Controller
 {
     public function index(Request $request)
     {
-        $query = User::where('peran', 'pasien')->with('biodata');
+        $query = User::where('peran', 'pasien')->with(['biodata', 'pemesanan' => function ($query) {
+            $query->latest()->limit(1); // Ambil 1 pemesanan terbaru
+        }]);
 
-        // [MODIFIKASI] Logika pencarian diperbarui
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
-                // Kondisi 1: Cari berdasarkan nama pasien
                 $q->where('name', 'like', '%' . $search . '%')
-                    // Kondisi 2: ATAU cari berdasarkan NIK di tabel biodata
                     ->orWhereHas('biodata', function ($subQ) use ($search) {
                         $subQ->where('nik', 'like', '%' . $search . '%');
                     });
             });
         }
 
-        $pasiens = $query->latest()->paginate(15)->withQueryString(); // withQueryString() agar pencarian tidak hilang saat pindah halaman
+        $pasiens = $query->latest()->paginate(15)->withQueryString();
         return view('admin.pasien.index', compact('pasiens'));
     }
 
@@ -1466,7 +1466,7 @@ class PemesananController extends Controller
      */
     public function index()
     {
-        $pemesanans = Pemesanan::with(['pasien', 'dokter.user'])->latest()->get();
+        $pemesanans = Pemesanan::with(['pasien.biodata', 'dokter.user'])->latest()->get();
         return view('admin.pemesanan.index', compact('pemesanans'));
     }
 
@@ -1515,7 +1515,7 @@ class PemesananController extends Controller
     public function edit(Pemesanan $pemesanan)
     {
         // Memuat relasi yang dibutuhkan untuk ditampilkan di view
-        $pemesanan->load(['pasien', 'dokter.user', 'jadwal']);
+        $pemesanan->load(['pasien.biodata', 'dokter.user', 'jadwal']);
         return view('admin.pemesanan.edit', compact('pemesanan'));
     }
 
@@ -4162,6 +4162,7 @@ class Tindakan extends Model
                                     <th class="py-3 px-4 border-b text-left">Nama Pasien</th>
                                     <th class="py-3 px-4 border-b text-left">Kontak</th>
                                     <th class="py-3 px-4 border-b text-left">NIK</th>
+                                    <th class="py-3 px-4 border-b text-left">Status Pasien</th>
                                     <th class="py-3 px-4 border-b text-center">Aksi</th>
                                 </tr>
                             </thead>
@@ -4171,6 +4172,20 @@ class Tindakan extends Model
                                         <td class="py-3 px-4 border-b">{{ $pasien->name }}</td>
                                         <td class="py-3 px-4 border-b">{{ $pasien->email }} <br> <span class="text-sm text-gray-500">{{ $pasien->nomor_telepon }}</span></td>
                                         <td class="py-3 px-4 border-b">{{ $pasien->biodata->nik ?? '-' }}</td>
+                                        <td class="py-3 px-4 border-b">
+                                            @php
+                                                $latestPemesanan = $pasien->pemesanan->first();
+                                                $status = $latestPemesanan->status_pasien ?? null;
+                                                $badgeColor = [
+                                                    'BPJS' => 'bg-blue-100 text-blue-800',
+                                                    'Inhealth' => 'bg-yellow-100 text-yellow-800',
+                                                    'Umum' => 'bg-green-100 text-green-800',
+                                                ][$status] ?? 'bg-gray-100 text-gray-800';
+                                            @endphp
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $badgeColor }}">
+                                                {{ $status ?? '-' }}
+                                            </span>
+                                        </td>
                                         <td class="py-3 px-4 border-b text-center">
                                             <a href="{{ route('admin.pasien.edit', $pasien->id) }}" class="text-purple-600 hover:text-purple-800 font-semibold">
                                                 Edit
@@ -4611,6 +4626,8 @@ class Tindakan extends Model
                         <div class="grid grid-cols-2 gap-4 text-sm">
                             <div><strong>Pasien:</strong> {{ $pemesanan->nama_pasien_booking }}</div>
                             <div><strong>Dokter:</strong> {{ $pemesanan->dokter->user->name }}</div>
+                            <div><strong>NIK:</strong> {{ $pemesanan->pasien->biodata->nik ?? '-' }}</div>
+                            <div><strong>Status Pasien:</strong> {{ $pemesanan->status_pasien }}</div>
                             <div><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($pemesanan->tanggal_pesan)->isoFormat('D MMMM YYYY') }}</div>
                             <div><strong>Waktu:</strong> {{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</div>
                             <div class="col-span-2"><strong>Status Saat Ini:</strong> {{ $pemesanan->status }}</div>
@@ -4672,6 +4689,8 @@ class Tindakan extends Model
                             <thead class="bg-gray-200">
                                 <tr>
                                     <th class="py-2 px-4 border-b">Pasien</th>
+                                    <th class="py-2 px-4 border-b">NIK</th>
+                                    <th class="py-2 px-4 border-b">Status Pasien</th>
                                     <th class="py-2 px-4 border-b">Dokter</th>
                                     <th class="py-2 px-4 border-b">Tanggal</th>
                                     <th class="py-2 px-4 border-b">Waktu</th>
@@ -4683,6 +4702,20 @@ class Tindakan extends Model
                                 @forelse ($pemesanans as $pemesanan)
                                     <tr class="hover:bg-gray-50">
                                         <td class="py-2 px-4 border-b">{{ $pemesanan->pasien->name }}</td>
+                                        <td class="py-2 px-4 border-b">{{ $pemesanan->pasien->biodata->nik ?? '-' }}</td>
+                                        <td class="py-2 px-4 border-b">
+                                            @php
+                                                $statusPasien = $pemesanan->status_pasien;
+                                                $badgeColorPasien = [
+                                                    'BPJS' => 'bg-blue-100 text-blue-800',
+                                                    'Inhealth' => 'bg-yellow-100 text-yellow-800',
+                                                    'Umum' => 'bg-green-100 text-green-800',
+                                                ][$statusPasien] ?? 'bg-gray-100 text-gray-800';
+                                            @endphp
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $badgeColorPasien }}">
+                                                {{ $statusPasien }}
+                                            </span>
+                                        </td>
                                         <td class="py-2 px-4 border-b">{{ $pemesanan->dokter->user->name }}</td>
                                         <td class="py-2 px-4 border-b">{{ \Carbon\Carbon::parse($pemesanan->tanggal_pesan)->translatedFormat('d F Y') }}</td>
                                         <td class="py-2 px-4 border-b">{{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</td>

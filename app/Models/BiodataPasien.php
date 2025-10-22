@@ -14,6 +14,19 @@ class BiodataPasien extends Model
     protected $fillable = [
         'user_id',
         'nik',
+        'tempat_lahir',
+        'tanggal_lahir',
+        'umur',
+        'jenis_kelamin',
+        'alamat',
+        'pekerjaan',
+        'nama_orang_tua',
+        'status_pasien',
+        'golongan_darah',
+        'riwayat_penyakit',
+        'riwayat_alergi_obat',
+        'riwayat_alergi_makanan',
+        'penyakit_penting',
     ];
 
     /**
