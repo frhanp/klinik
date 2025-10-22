@@ -68,7 +68,7 @@ Route::middleware(['auth', 'cekperan:admin'])->prefix('admin')->name('admin.')->
     Route::get('jadwal-generate', [JadwalController::class, 'createMultiple'])->name('jadwal.generate');
     Route::post('jadwal-generate', [JadwalController::class, 'storeMultiple'])->name('jadwal.storeMultiple');
 
-    Route::resource('pasien', AdminPasienController::class)->except(['show', 'destroy']);
+    Route::resource('pasien', AdminPasienController::class)->except(['destroy']);
     Route::get('laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
 
     Route::get('/get-slot-waktu/{dokter}/{tanggal}', [AdminPemesananController::class, 'getSlotWaktuAdmin'])->name('pemesanan.getSlotWaktuAdmin');

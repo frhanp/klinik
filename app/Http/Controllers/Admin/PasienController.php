@@ -126,6 +126,16 @@ class PasienController extends Controller
         return redirect()->route('admin.pasien.index')->with('success', 'Data pasien berhasil diperbarui.');
     }
 
+    public function show(User $pasien)
+    {
+        // Pastikan user yang diakses adalah pasien
+        if ($pasien->peran !== 'pasien') {
+            abort(404);
+        }
+        $pasien->load('biodata'); // Load biodata
+        return view('admin.pasien.show', compact('pasien'));
+    }
+
     public function destroy(User $pasien)
     {
         $pasien->delete();

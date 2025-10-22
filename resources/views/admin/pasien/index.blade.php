@@ -41,7 +41,23 @@
                                         <td class="py-3 px-4 border-b">{{ $pasien->name }}</td>
                                         <td class="py-3 px-4 border-b">{{ $pasien->email }} <br> <span class="text-sm text-gray-500">{{ $pasien->nomor_telepon }}</span></td>
                                         <td class="py-3 px-4 border-b">{{ $pasien->biodata->nik ?? '-' }}</td>
+
                                         <td class="py-3 px-4 border-b">
+                                            {{-- [MODIFIKASI] Ambil status dari biodata --}}
+                                            @php
+                                                // Ambil status langsung dari relasi biodata
+                                                $status = $pasien->biodata->status_pasien ?? null;
+                                                $badgeColor = [
+                                                    'BPJS' => 'bg-blue-100 text-blue-800',
+                                                    'Inhealth' => 'bg-yellow-100 text-yellow-800',
+                                                    'Umum' => 'bg-green-100 text-green-800',
+                                                ][$status] ?? 'bg-gray-100 text-gray-800';
+                                            @endphp
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $badgeColor }}">
+                                                {{ $status ?? '-' }}
+                                            </span>
+                                        </td>
+                                        {{-- <td class="py-3 px-4 border-b">
                                             @php
                                                 $latestPemesanan = $pasien->pemesanan->first();
                                                 $status = $latestPemesanan->status_pasien ?? null;
@@ -54,8 +70,11 @@
                                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $badgeColor }}">
                                                 {{ $status ?? '-' }}
                                             </span>
-                                        </td>
+                                        </td> --}}
                                         <td class="py-3 px-4 border-b text-center">
+                                            <a href="{{ route('admin.pasien.show', $pasien->id) }}" class="text-blue-600 hover:text-blue-800 font-semibold mr-3">
+                                                Lihat Detail
+                                            </a>
                                             <a href="{{ route('admin.pasien.edit', $pasien->id) }}" class="text-purple-600 hover:text-purple-800 font-semibold">
                                                 Edit
                                             </a>
