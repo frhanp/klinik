@@ -35,7 +35,8 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <h3 class="font-semibold text-lg mb-4">Filter Laporan</h3>
                     <form action="{{ route('admin.laporan.index') }}" method="GET">
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                        {{-- [MODIFIKASI] Ubah grid layout untuk 5 item --}}
+                        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-end">
                             <div>
                                 <x-input-label for="start_date" :value="__('Tanggal Mulai')" />
                                 <x-text-input type="date" id="start_date" name="start_date" class="mt-1 block w-full"
@@ -58,12 +59,24 @@
                                 </select>
                             </div>
                             <div>
-                                <x-input-label for="status" :value="__('Status')" />
+                                <x-input-label for="status" :value="__('Status Janji')" />
                                 <select name="status" id="status"
                                     class="mt-1 block w-full rounded-md shadow-sm border-gray-300">
                                     <option value="">Semua</option>
                                     @foreach ($statusOptions as $status)
                                         <option value="{{ $status }}" @selected(request('status') == $status)>
+                                            {{ ucfirst($status) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            {{-- [MODIFIKASI] Tambahkan dropdown Status Pasien --}}
+                            <div>
+                                <x-input-label for="status_pasien" :value="__('Status Pasien')" />
+                                <select name="status_pasien" id="status_pasien"
+                                    class="mt-1 block w-full rounded-md shadow-sm border-gray-300">
+                                    <option value="">Semua</option>
+                                    @foreach ($statusPasienOptions as $status)
+                                        <option value="{{ $status }}" @selected(request('status_pasien') == $status)>
                                             {{ ucfirst($status) }}</option>
                                     @endforeach
                                 </select>
@@ -87,6 +100,8 @@
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">NIK</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Pasien
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status Pasien
                                     </th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Dokter
                                     </th>
@@ -112,7 +127,10 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                             {{ $item->pasien->name }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ $item->pasien->biodata->status_pasien ?? '-' }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             {{ $item->dokter->user->name }}</td>
+                                        </td>
                                         <td class="px-6 py-4 text-sm text-gray-500">
                                             @if ($item->rekamMedis && $item->rekamMedis->tindakan->isNotEmpty())
                                                 <ul class="list-disc list-inside">

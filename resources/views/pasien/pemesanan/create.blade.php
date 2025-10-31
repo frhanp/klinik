@@ -7,7 +7,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Buat Pemesanan Baru') }}
+            {{ __('Buat Janji Temu') }}
         </h2>
     </x-slot>
 
@@ -95,7 +95,7 @@
                         <!-- Keluhan Awal & Catatan -->
                         <div x-show="selectedSlot" x-transition>
                             <div class="mb-6">
-                                <x-input-label for="tindakan_awal" value="Keluhan / Tindakan Awal (Opsional)" />
+                                <x-input-label for="tindakan_awal" value="Layanan yang diinginkan" />
                                 <select name="tindakan_awal[]" id="tindakan_awal" multiple>
                                     @foreach($daftarTindakans as $kategori)
                                         <optgroup label="{{ $kategori->nama_kategori }}">

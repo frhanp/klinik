@@ -13,7 +13,7 @@ class LaporanController extends Controller
 {
     public function index(Request $request)
     {
-        // [MODIFIKASI] Tambahkan kondisi untuk mengabaikan status 'Dibatalkan' di awal
+        
         $query = Pemesanan::query()
             ->where('pemesanan.status', '!=', 'Dibatalkan') 
             ->leftJoin('pembayaran', 'pemesanan.id', '=', 'pembayaran.pemesanan_id')
@@ -35,6 +35,10 @@ class LaporanController extends Controller
         // Filter Metode Pembayaran
         if ($request->filled('metode_pembayaran')) {
             $query->where('pembayaran.metode_pembayaran', $request->metode_pembayaran);
+        }
+
+        if ($request->filled('status_pasien')) {
+            $query->where('pemesanan.status_pasien', $request->status_pasien);
         }
 
         $laporan = $query->select('pemesanan.*')->latest('pemesanan.created_at')->get();
@@ -66,13 +70,15 @@ class LaporanController extends Controller
         // Opsi untuk dropdown filter
         $metodePembayaranOptions = Pembayaran::whereNotNull('metode_pembayaran')->distinct()->pluck('metode_pembayaran');
         
-        // [MODIFIKASI] Sesuaikan dengan status yang ada dan hilangkan 'Dibatalkan'
+        
         $statusOptions = ['Menunggu Pembayaran', 'Selesai', 'Dikonfirmasi'];
+        $statusPasienOptions = ['BPJS', 'Umum', 'InHealth'];
 
         return view('admin.laporan.index', compact(
             'laporan',
             'totalPendapatan',
             'metodePembayaranOptions',
+            'statusPasienOptions',
             'statusOptions',
             'totalTransaksi',
             'pasienUnik',
