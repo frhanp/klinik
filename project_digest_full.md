@@ -1,5 +1,5 @@
 ﻿# Project Digest (Full Content)
-_Generated: 2025-10-22 15:10:00_
+_Generated: 2025-11-01 02:17:50_
 **Root:** D:\Laragon\www\klinik
 
 
@@ -198,6 +198,7 @@ resources\views\admin\obat\index.blade.php
 resources\views\admin\pasien\create.blade.php
 resources\views\admin\pasien\edit.blade.php
 resources\views\admin\pasien\index.blade.php
+resources\views\admin\pasien\show.blade.php
 resources\views\admin\pembayaran\cetak.blade.php
 resources\views\admin\pembayaran\index.blade.php
 resources\views\admin\pembayaran\show.blade.php
@@ -283,6 +284,7 @@ storage\framework\testing\.gitignore
 storage\framework\views\.gitignore
 storage\framework\views\099c916a77d38b4857b9622613938d44.php
 storage\framework\views\0b1239d75d2de431037266d08ed4f703.php
+storage\framework\views\0c617c98432933a95814e28d89db8e04.php
 storage\framework\views\0dde4a8697d8768fbaa33a58a45b8550.php
 storage\framework\views\14f333af3f64fc5dbad9e5850c525a64.php
 storage\framework\views\1846ad195a36ec593251411dc8172134.php
@@ -376,11 +378,11 @@ Branch:
 main
 
 Last 5 commits:
+85ed5c3 add detail dan status dari biodata
+74105ed admin bisa mesan
 00dd38c add biodata lengkap
 78263e2 add nik dan status pada view
 08ae041 add foto pendukung
-b0d612d add nomor bpjs
-c7904bd hilangkan pasien unik
 ```
 
 
@@ -542,7 +544,7 @@ Route::middleware(['auth', 'cekperan:admin'])->prefix('admin')->name('admin.')->
     Route::get('jadwal-generate', [JadwalController::class, 'createMultiple'])->name('jadwal.generate');
     Route::post('jadwal-generate', [JadwalController::class, 'storeMultiple'])->name('jadwal.storeMultiple');
 
-    Route::resource('pasien', AdminPasienController::class)->except(['show', 'destroy']);
+    Route::resource('pasien', AdminPasienController::class)->except(['destroy']);
     Route::get('laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
 
     Route::get('/get-slot-waktu/{dokter}/{tanggal}', [AdminPemesananController::class, 'getSlotWaktuAdmin'])->name('pemesanan.getSlotWaktuAdmin');
@@ -628,6 +630,7 @@ require __DIR__ . '/auth.php';
   GET|HEAD        admin/pasien ............................................. admin.pasien.index ΓÇ║ Admin\PasienController@index
   POST            admin/pasien ............................................. admin.pasien.store ΓÇ║ Admin\PasienController@store
   GET|HEAD        admin/pasien/create .................................... admin.pasien.create ΓÇ║ Admin\PasienController@create
+  GET|HEAD        admin/pasien/{pasien} ...................................... admin.pasien.show ΓÇ║ Admin\PasienController@show
   PUT|PATCH       admin/pasien/{pasien} .................................. admin.pasien.update ΓÇ║ Admin\PasienController@update
   GET|HEAD        admin/pasien/{pasien}/edit ................................. admin.pasien.edit ΓÇ║ Admin\PasienController@edit
   GET|HEAD        admin/pembayaran ................................. admin.pembayaran.index ΓÇ║ Admin\PembayaranController@index
@@ -692,7 +695,7 @@ require __DIR__ . '/auth.php';
   GET|HEAD        verify-email .................................. verification.notice ΓÇ║ Auth\EmailVerificationPromptController
   GET|HEAD        verify-email/{id}/{hash} .................................. verification.verify ΓÇ║ Auth\VerifyEmailController
 
-                                                                                                          Showing [100] routes
+                                                                                                          Showing [101] routes
 
 ```
 
@@ -1346,6 +1349,16 @@ class PasienController extends Controller
         $pasien->biodata()->updateOrCreate(['user_id' => $pasien->id], $biodataFields);
 
         return redirect()->route('admin.pasien.index')->with('success', 'Data pasien berhasil diperbarui.');
+    }
+
+    public function show(User $pasien)
+    {
+        // Pastikan user yang diakses adalah pasien
+        if ($pasien->peran !== 'pasien') {
+            abort(404);
+        }
+        $pasien->load('biodata'); // Load biodata
+        return view('admin.pasien.show', compact('pasien'));
     }
 
     public function destroy(User $pasien)
@@ -4487,7 +4500,23 @@ class Tindakan extends Model
                                         <td class="py-3 px-4 border-b">{{ $pasien->name }}</td>
                                         <td class="py-3 px-4 border-b">{{ $pasien->email }} <br> <span class="text-sm text-gray-500">{{ $pasien->nomor_telepon }}</span></td>
                                         <td class="py-3 px-4 border-b">{{ $pasien->biodata->nik ?? '-' }}</td>
+
                                         <td class="py-3 px-4 border-b">
+                                            {{-- [MODIFIKASI] Ambil status dari biodata --}}
+                                            @php
+                                                // Ambil status langsung dari relasi biodata
+                                                $status = $pasien->biodata->status_pasien ?? null;
+                                                $badgeColor = [
+                                                    'BPJS' => 'bg-blue-100 text-blue-800',
+                                                    'Inhealth' => 'bg-yellow-100 text-yellow-800',
+                                                    'Umum' => 'bg-green-100 text-green-800',
+                                                ][$status] ?? 'bg-gray-100 text-gray-800';
+                                            @endphp
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $badgeColor }}">
+                                                {{ $status ?? '-' }}
+                                            </span>
+                                        </td>
+                                        {{-- <td class="py-3 px-4 border-b">
                                             @php
                                                 $latestPemesanan = $pasien->pemesanan->first();
                                                 $status = $latestPemesanan->status_pasien ?? null;
@@ -4500,8 +4529,11 @@ class Tindakan extends Model
                                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $badgeColor }}">
                                                 {{ $status ?? '-' }}
                                             </span>
-                                        </td>
+                                        </td> --}}
                                         <td class="py-3 px-4 border-b text-center">
+                                            <a href="{{ route('admin.pasien.show', $pasien->id) }}" class="text-blue-600 hover:text-blue-800 font-semibold mr-3">
+                                                Lihat Detail
+                                            </a>
                                             <a href="{{ route('admin.pasien.edit', $pasien->id) }}" class="text-purple-600 hover:text-purple-800 font-semibold">
                                                 Edit
                                             </a>
@@ -4523,6 +4555,142 @@ class Tindakan extends Model
         </div>
     </div>
 </x-app-layout>
+
+===== resources\views\admin\pasien\show.blade.php =====
+{{-- AWAL MODIFIKASI: resources/views/admin/pasien.show.blade.php --}}
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex flex-col md:flex-row justify-between md:items-center gap-4">
+             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                Detail Pasien: <span class="font-bold text-purple-700">{{ $pasien->name }}</span>
+            </h2>
+             <a href="{{ route('admin.pasien.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-200 border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition ease-in-out duration-150">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Kembali
+             </a>
+        </div>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="p-6 md:p-8 bg-white border-b border-gray-200">
+                    <div class="flex items-center mb-8">
+                        <img src="{{ asset('images/logodeliyana.png') }}" alt="Logo Klinik" class="h-16 w-auto mr-4">
+                        <div>
+                            <h2 class="text-2xl font-bold text-purple-800 leading-tight">Deliyana Dental Care</h2>
+                            <p class="text-sm text-gray-500">Detail Informasi Pasien</p>
+                        </div>
+                    </div>
+
+                    {{-- Data Akun --}}
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold text-purple-800 mb-4 pb-2 border-b border-purple-200">Data Akun</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 text-base">
+                            <div class="space-y-1">
+                                <p class="text-sm font-medium text-gray-500">Nama Lengkap</p>
+                                <p class="text-gray-900">{{ $pasien->name }}</p>
+                            </div>
+                            <div class="space-y-1">
+                                <p class="text-sm font-medium text-gray-500">Email</p>
+                                <p class="text-gray-900">{{ $pasien->email }}</p>
+                            </div>
+                            <div class="space-y-1">
+                                <p class="text-sm font-medium text-gray-500">Nomor HP</p>
+                                <p class="text-gray-900">{{ $pasien->nomor_telepon ?? '-' }}</p>
+                            </div>
+                            <div class="space-y-1">
+                                <p class="text-sm font-medium text-gray-500">Terdaftar Sejak</p>
+                                <p class="text-gray-900">{{ $pasien->created_at->translatedFormat('d F Y H:i') }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Data Pribadi & Medis --}}
+                    @if($pasien->biodata)
+                    <div class="mt-8 pt-8 border-t border-gray-200">
+                         <h3 class="text-xl font-bold text-purple-800 mb-4 pb-2 border-b border-purple-200">Data Pribadi & Medis</h3>
+                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6 text-base">
+                             {{-- Kolom Kiri --}}
+                             <div class="space-y-4">
+                                <div class="space-y-1">
+                                    <p class="text-sm font-medium text-gray-500">NIK</p>
+                                    <p class="text-gray-900">{{ $pasien->biodata->nik ?? '-' }}</p>
+                                </div>
+                                <div class="space-y-1">
+                                    <p class="text-sm font-medium text-gray-500">Tempat, Tanggal Lahir</p>
+                                    <p class="text-gray-900">{{ $pasien->biodata->tempat_lahir ?? '-' }}, {{ $pasien->biodata->tanggal_lahir ? \Carbon\Carbon::parse($pasien->biodata->tanggal_lahir)->translatedFormat('d F Y') : '-' }}</p>
+                                </div>
+                                <div class="space-y-1">
+                                    <p class="text-sm font-medium text-gray-500">Umur</p>
+                                    <p class="text-gray-900">{{ $pasien->biodata->umur ? $pasien->biodata->umur . ' Tahun' : ($pasien->biodata->tanggal_lahir ? \Carbon\Carbon::parse($pasien->biodata->tanggal_lahir)->age . ' Tahun' : '-') }}</p>
+                                </div>
+                                <div class="space-y-1">
+                                    <p class="text-sm font-medium text-gray-500">Jenis Kelamin</p>
+                                    <p class="text-gray-900">{{ $pasien->biodata->jenis_kelamin ?? '-' }}</p>
+                                </div>
+                                <div class="space-y-1">
+                                    <p class="text-sm font-medium text-gray-500">Alamat</p>
+                                    <p class="text-gray-900">{{ $pasien->biodata->alamat ?? '-' }}</p>
+                                </div>
+                                <div class="space-y-1">
+                                    <p class="text-sm font-medium text-gray-500">Pekerjaan</p>
+                                    <p class="text-gray-900">{{ $pasien->biodata->pekerjaan ?? '-' }}</p>
+                                </div>
+                                <div class="space-y-1">
+                                    <p class="text-sm font-medium text-gray-500">Nama Orang Tua</p>
+                                    <p class="text-gray-900">{{ $pasien->biodata->nama_orang_tua ?? '-' }}</p>
+                                </div>
+                            </div>
+                            {{-- Kolom Kanan --}}
+                            <div class="space-y-4">
+                                <div class="space-y-1">
+                                    <p class="text-sm font-medium text-gray-500">Status Pasien Terakhir</p>
+                                    <p class="text-gray-900">{{ $pasien->biodata->status_pasien ?? '-' }}</p>
+                                </div>
+                                <div class="space-y-1">
+                                    <p class="text-sm font-medium text-gray-500">Golongan Darah</p>
+                                    <p class="text-gray-900 uppercase">{{ $pasien->biodata->golongan_darah ?? '-' }}</p>
+                                </div>
+                                <div class="space-y-1">
+                                    <p class="text-sm font-medium text-gray-500">Riwayat Penyakit</p>
+                                    <p class="text-gray-900">{{ $pasien->biodata->riwayat_penyakit ?? '-' }}</p>
+                                </div>
+                                <div class="space-y-1">
+                                    <p class="text-sm font-medium text-gray-500">Riwayat Alergi Obat</p>
+                                    <p class="text-gray-900">{{ $pasien->biodata->riwayat_alergi_obat ?? '-' }}</p>
+                                </div>
+                                <div class="space-y-1">
+                                    <p class="text-sm font-medium text-gray-500">Riwayat Alergi Makanan</p>
+                                    <p class="text-gray-900">{{ $pasien->biodata->riwayat_alergi_makanan ?? '-' }}</p>
+                                </div>
+                                <div class="space-y-1">
+                                    <p class="text-sm font-medium text-gray-500">Penyakit Penting Lainnya</p>
+                                    <p class="text-gray-900">{{ $pasien->biodata->penyakit_penting ?? '-' }}</p>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                    @else
+                     <div class="mt-8 pt-8 border-t border-gray-200">
+                        <p class="text-center text-gray-500 italic">Biodata lengkap pasien belum diisi.</p>
+                     </div>
+                    @endif
+
+                    {{-- Tombol Edit --}}
+                    <div class="mt-8 pt-6 border-t flex justify-end">
+                        <a href="{{ route('admin.pasien.edit', $pasien->id) }}" class="inline-flex items-center px-5 py-2 bg-purple-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-purple-700 focus:bg-purple-700 active:bg-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition ease-in-out duration-150 shadow-md">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                            Edit Data Pasien
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+{{-- AKHIR MODIFIKASI --}}
 
 ===== resources\views\admin\pembayaran\cetak.blade.php =====
 <x-print-layout>
@@ -4939,8 +5107,10 @@ class Tindakan extends Model
 
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 md:p-8" 
-                 x-data="adminBookingForm()"> {{-- Nama fungsi JS diubah --}}
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 md:p-8"
+     x-data="adminBookingForm()"
+     x-init="init()">
+ {{-- Nama fungsi JS diubah --}}
                 
                 <h3 class="text-2xl font-bold text-gray-800 mb-6">Formulir Janji Temu (Admin)</h3>
                 <x-notification />
@@ -5057,6 +5227,7 @@ class Tindakan extends Model
                          <a href="{{ route('admin.pemesanan.index') }}" class="text-gray-600 hover:text-gray-900 mr-4">Batal</a>
                          <x-primary-button type="submit" x-bind:disabled="!isFormComplete()" class="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400">
 
+
                             Simpan Pemesanan
                         </x-primary-button>
                     </div>
@@ -5067,9 +5238,14 @@ class Tindakan extends Model
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            console.log("âœ… DOMContentLoaded â€” Inisialisasi TomSelect");
+    
             // Inisialisasi Tom Select untuk Pasien
-            new TomSelect('#id_pasien',{ create: false, sortField: { field: "text", direction: "asc" } });
-            
+            new TomSelect('#id_pasien', { 
+                create: false, 
+                sortField: { field: "text", direction: "asc" } 
+            });
+    
             // Inisialisasi Tom Select untuk Tindakan
             new TomSelect('#tindakan_awal', {
                 plugins: ['remove_button'],
@@ -5080,12 +5256,16 @@ class Tindakan extends Model
                         const hargaFormatted = harga ? new Intl.NumberFormat('id-ID').format(harga) : 'N/A';
                         return `<div><span class="font-medium">${escape(data.text)}</span><span class="text-sm text-gray-500 ml-2">(Rp ${hargaFormatted})</span></div>`;
                     },
-                    item: function(data, escape) { return `<div>${escape(data.text)}</div>`; }
+                    item: function(data, escape) { 
+                        return `<div>${escape(data.text)}</div>`; 
+                    }
                 }
             });
         });
         
         function adminBookingForm() {
+            console.log("ðŸ§© Alpine component adminBookingForm() DIINISIALISASI");
+    
             return {
                 formData: { 
                     status_pasien: '{{ old('status_pasien', '') }}',
@@ -5097,34 +5277,61 @@ class Tindakan extends Model
                 availableSlots: [],
                 loadingSlot: '',
                 selectedSlot: '{{ old('waktu_pesan', '') }}',
-                
+    
                 init() {
+                    console.log("ðŸš€ init() DIPANGGIL â€” Alpine aktif dan watcher disiapkan");
+                    
                     if (this.selectedDokter && this.selectedTanggal) {
+                        console.log("ðŸ“… Dokter & tanggal sudah ada di awal, ambil slot...");
                         this.fetchSlotWaktu();
                     }
-                    this.$watch('selectedDokter', () => this.resetTanggalDanSlot());
-                    this.$watch('selectedTanggal', () => this.fetchSlotWaktu());
+    
+                    this.$watch('selectedDokter', (val) => {
+                        console.log("ðŸ‘©â€âš•ï¸ selectedDokter berubah:", val);
+                        this.resetTanggalDanSlot();
+                    });
+    
+                    this.$watch('selectedTanggal', (val) => {
+                        console.log("ðŸ“† selectedTanggal berubah:", val);
+                        this.fetchSlotWaktu();
+                    });
+    
+                    this.$watch('selectedSlot', (val) => {
+                        console.log("â° Slot waktu dipilih:", val);
+                    });
                 },
                 
                 isFormComplete() {
                     const pasienSelected = document.getElementById('id_pasien').value !== '';
-                    return pasienSelected && this.selectedDokter && this.selectedTanggal && this.selectedSlot;
+                    const complete = pasienSelected && this.selectedDokter && this.selectedTanggal && this.selectedSlot;
+                    console.log("âœ… Mengecek kelengkapan form:", {
+                        pasienSelected,
+                        selectedDokter: this.selectedDokter,
+                        selectedTanggal: this.selectedTanggal,
+                        selectedSlot: this.selectedSlot,
+                        complete
+                    });
+                    return complete;
                 },
-
+    
                 fetchSlotWaktu() {
+                    console.log("ðŸ”Ž Fetch slot waktu untuk dokter:", this.selectedDokter, "tanggal:", this.selectedTanggal);
+                    
                     this.availableSlots = [];
                     this.selectedSlot = ''; 
                     if (!this.selectedTanggal || !this.selectedDokter) {
                         this.loadingSlot = ''; 
+                        console.warn("âš ï¸ fetchSlotWaktu dibatalkan â€” tanggal atau dokter kosong");
                         return;
                     }
-
+    
                     this.loadingSlot = 'Mencari slot waktu...';
-                    // Fetch ke route admin
                     fetch(`/admin/get-slot-waktu/${this.selectedDokter}/${this.selectedTanggal}`) 
                         .then(response => {
                             if (!response.ok) {
-                                return response.json().then(err => { throw new Error(err.message || 'Jadwal tidak ditemukan atau terjadi kesalahan server.'); });
+                                return response.json().then(err => { 
+                                    throw new Error(err.message || 'Jadwal tidak ditemukan atau terjadi kesalahan server.'); 
+                                });
                             }
                             return response.json();
                         })
@@ -5132,6 +5339,7 @@ class Tindakan extends Model
                             if (Array.isArray(data)) {
                                 this.availableSlots = data;
                                 this.loadingSlot = data.length === 0 ? 'Tidak ada slot tersedia.' : '';
+                                console.log("ðŸ•“ Slot tersedia:", data);
                             } else {
                                 console.error('Data slot tidak valid:', data);
                                 this.loadingSlot = 'Gagal memuat slot (format data salah).';
@@ -5139,13 +5347,14 @@ class Tindakan extends Model
                             }
                         })
                         .catch((error) => {
-                            console.error('Error fetching slots:', error);
+                            console.error('âŒ Error fetching slots:', error);
                             this.loadingSlot = `Error: ${error.message || 'Gagal memuat slot.'}`;
                             this.availableSlots = []; 
                         });
                 },
-
+    
                 resetTanggalDanSlot() {
+                    console.log("ðŸ”„ Reset tanggal & slot karena dokter berubah");
                     this.selectedTanggal = '';
                     this.availableSlots = [];
                     this.selectedSlot = '';
@@ -5154,6 +5363,7 @@ class Tindakan extends Model
             }
         }
     </script>
+    
 </x-app-layout>
 
 ===== resources\views\admin\pemesanan\edit.blade.php =====

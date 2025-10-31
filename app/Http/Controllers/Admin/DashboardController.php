@@ -10,6 +10,7 @@ use App\Models\Pemesanan;
 use App\Models\Pembayaran;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\BiodataPasien;
 
 class DashboardController extends Controller
 {
@@ -46,14 +47,56 @@ class DashboardController extends Controller
         $tindakanLabels = $tindakanPopuler->pluck('keterangan');
         $tindakanData = $tindakanPopuler->pluck('jumlah');
 
+
+        $statusPasienData = BiodataPasien::select('status_pasien', DB::raw('count(*) as jumlah'))
+            ->whereNotNull('status_pasien')
+            ->where('status_pasien', '!=', '')
+            ->groupBy('status_pasien')
+            ->get();
+        
+        $statusPasienLabels = $statusPasienData->pluck('status_pasien');
+        $statusPasienData = $statusPasienData->pluck('jumlah');
+
+        $kunjunganPasien = Pemesanan::select(
+            DB::raw('DATE(tanggal_pesan) as tanggal'),
+            DB::raw('COUNT(*) as jumlah')
+        )
+        ->where('status', 'Selesai') // Hanya hitung kunjungan yang selesai
+        ->where('tanggal_pesan', '>=', Carbon::now()->subDays(30))
+        ->groupBy('tanggal')
+        ->orderBy('tanggal', 'asc')
+        ->get();
+    $kunjunganLabels = $kunjunganPasien->pluck('tanggal');
+    $kunjunganData = $kunjunganPasien->pluck('jumlah');
+
+    // 5. [BARU] GRAFIK TOP DOKTER (Berdasarkan Tindakan)
+    $dokterPopuler = DB::table('rekam_medis_tindakan as rmt')
+        ->join('rekam_medis as rm', 'rmt.rekam_medis_id', '=', 'rm.id')
+        ->join('pemesanan as p', 'rm.id_pemesanan', '=', 'p.id')
+        ->join('dokter as d', 'p.id_dokter', '=', 'd.id')
+        ->join('users as u', 'd.user_id', '=', 'u.id')
+        ->select('u.name as nama_dokter', DB::raw('COUNT(rmt.tindakan_id) as jumlah_tindakan'))
+        ->groupBy('u.name')
+        ->orderBy('jumlah_tindakan', 'desc')
+        ->limit(5)
+        ->get();
+    $dokterLabels = $dokterPopuler->pluck('nama_dokter');
+    $dokterData = $dokterPopuler->pluck('jumlah_tindakan');
+
         return view('admin.dashboard', compact(
             'jumlahPasien', 
             'jumlahDokter', 
             'pemesananHariIni', 
             'labels', 
             'data', 
-            'tindakanLabels', // Kirim data label tindakan
-            'tindakanData'    // Kirim data jumlah tindakan
+            'tindakanLabels', 
+            'tindakanData',
+            'statusPasienLabels', 
+            'statusPasienData',
+            'kunjunganLabels',
+            'kunjunganData',
+            'dokterLabels',
+            'dokterData'
         ));
     }
 }
