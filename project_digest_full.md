@@ -1,5 +1,5 @@
 ﻿# Project Digest (Full Content)
-_Generated: 2025-11-01 02:17:50_
+_Generated: 2025-11-01 13:07:33_
 **Root:** D:\Laragon\www\klinik
 
 
@@ -98,12 +98,12 @@ app\View\Components\GuestLayout.php
 bootstrap\cache
 bootstrap\app.php
 bootstrap\providers.php
-bootstrap\cache\.gitignore
 bootstrap\cache\packages.php
 bootstrap\cache\services.php
 config\app.php
 config\auth.php
 config\cache.php
+config\captcha.php
 config\database.php
 config\filesystems.php
 config\logging.php
@@ -282,76 +282,52 @@ storage\framework\cache\data\.gitignore
 storage\framework\sessions\.gitignore
 storage\framework\testing\.gitignore
 storage\framework\views\.gitignore
-storage\framework\views\099c916a77d38b4857b9622613938d44.php
-storage\framework\views\0b1239d75d2de431037266d08ed4f703.php
-storage\framework\views\0c617c98432933a95814e28d89db8e04.php
-storage\framework\views\0dde4a8697d8768fbaa33a58a45b8550.php
-storage\framework\views\14f333af3f64fc5dbad9e5850c525a64.php
+storage\framework\views\059c55a96ee3c6dae65a022354ffc036.php
+storage\framework\views\0a303c72d761a68921594a49713d4510.php
+storage\framework\views\0afe6ab13daf12a6674687a76eddc1b2.php
 storage\framework\views\1846ad195a36ec593251411dc8172134.php
-storage\framework\views\1d50ad26fa9db2f8e498ce54859823a5.php
+storage\framework\views\1a89655d329c7963e3aac340c661d4eb.php
 storage\framework\views\1e837dfe9fa57a9b4c37dae5b1a3f0b5.php
-storage\framework\views\209b15fabc9ac3380a395651e05ea398.php
-storage\framework\views\224d5991eef2ead468479abfc7745e16.php
-storage\framework\views\25b164ca6d9b35899e445c3243b63643.php
 storage\framework\views\26019b94edbe1c23ccddae68839d38e0.php
-storage\framework\views\28b33f8e5c03e7fb8682fc9b72d32f2d.php
-storage\framework\views\2a830ecd468f435f1747c72e21677166.php
-storage\framework\views\30b1c19e0a7e8f356ba46eb87bbfd8b7.php
+storage\framework\views\323e0d4cb6aa3a79df371502459f3f95.php
+storage\framework\views\34a28d1c5975e6a80cf8e90545c1042d.php
 storage\framework\views\35b948da9e966c78a172e74616518c9c.php
 storage\framework\views\391ebb746ed9d90abf51620fa811007f.php
-storage\framework\views\3b1e10f885219c77cae6e0fd498bac94.php
-storage\framework\views\3c2589d59eeea174b043b4970b0dbb98.php
-storage\framework\views\4226155521e5bcb508f11fbc6ffb499c.php
-storage\framework\views\43cd2c320e451f9a26231447b724fcfe.php
-storage\framework\views\45a511ac94b858088f8c488900084c75.php
-storage\framework\views\49d2988d7ab7a37f316ac97460cf0d4f.php
-storage\framework\views\4b50d759db4c428ed5a03be84a9ed913.php
-storage\framework\views\4e5d1e7a637f21bb73bb39e4daac3d76.php
-storage\framework\views\523d555e5519213c7f65005b1c2ecc79.php
-storage\framework\views\6476e2ef62b06efca0dc001eff659fea.php
+storage\framework\views\3f78f7c3950888e24e17f0f2153164ba.php
+storage\framework\views\3f97fad1046eebed23dea96fef8be649.php
+storage\framework\views\3fe124fd1ab53367f3db7d5c4f61a949.php
+storage\framework\views\4093f5cd207932011562c32ddaa82537.php
+storage\framework\views\5c2a7c738b827bf614a05d851f279e56.php
+storage\framework\views\5c569f0a687a604dd7f3a8d4447910a2.php
+storage\framework\views\5e818641b234edb8405df092be320eea.php
+storage\framework\views\655d3f3e826a7a4d5fe83a14ac6cb4d3.php
 storage\framework\views\662ec6b9fc235e3b098c2320dafe372c.php
-storage\framework\views\668a2ece4a1ac7e48394b27d4e519e47.php
-storage\framework\views\6702457c4b34bc4666866b4bbcd1439a.php
-storage\framework\views\6787602fc1fe7c2d5934c9d12634bc91.php
-storage\framework\views\6a08ce534097ba81157bc6e83c44a78c.php
-storage\framework\views\6a29ecd21ebae639e72bd8efeeed7a2f.php
+storage\framework\views\6a717951ad3990d989a07e05d1f1e765.php
 storage\framework\views\6f99de5660a2ce6fcab43b45591e19aa.php
-storage\framework\views\71555e52960fc6410084a8f55b21390e.php
-storage\framework\views\7b7091f5a95344deb1c9fc06cc5be79e.php
-storage\framework\views\7f8ea05fa5ed27510431c21464520fe8.php
-storage\framework\views\8a8c75978fc25ce10731b8c47d60e7f0.php
-storage\framework\views\939765e98ee99ea6c3678ae15afd18a4.php
-storage\framework\views\94b64436a3a632efca44aa3abf323c28.php
+storage\framework\views\6fb1e90d4a4d0f72868fca0b625fbb93.php
+storage\framework\views\738743497017023635a44cfb07348ef6.php
+storage\framework\views\792564f6be86d5ac31086322eb7293c8.php
+storage\framework\views\7b402872e29f6f895b12d3671d0adb35.php
+storage\framework\views\8a67838763e8a04e278800e4d370ef93.php
+storage\framework\views\8d75112a3f71eab1be73b5746a8b6e9d.php
 storage\framework\views\9a480b0fba443393c56b5664d5a8cb00.php
-storage\framework\views\9dc1191835caef2454dba92e93d09e03.php
-storage\framework\views\9e62399cfa0826aae9058d6317f05beb.php
-storage\framework\views\a8e896af52f3b928bd5b4710bd88d53e.php
-storage\framework\views\ae0523d13e73cef276c10bcb952d6d6b.php
+storage\framework\views\9fdd7ca1bc4d6f5af47fddae768463e6.php
+storage\framework\views\a47da49129c2ec197d8718d23247af49.php
+storage\framework\views\a739b139d9f5f171daeeaf3b81c8dad1.php
 storage\framework\views\b15c1c717568cd4fb1c9fbc2e3cea052.php
-storage\framework\views\b9de74b4b9c066a89043f5e1c38c6960.php
-storage\framework\views\bb4b1fb801bbaeca186516088ac54e1e.php
-storage\framework\views\bb81c05887fc4897ea0b8a4be4d2931a.php
-storage\framework\views\bc0c85a243c6659e6e934a4d0259ad9a.php
-storage\framework\views\be5779b819f9903611be5ef8b4c91b6b.php
+storage\framework\views\b280f2904c5bff00cc744a575a706c5f.php
+storage\framework\views\b7c48775358bf8612429412cdf309287.php
+storage\framework\views\bd5da35130d7a2f0bc7e7ad7110a9e0b.php
 storage\framework\views\bebbcc12d82febc3d9d74e01e7ce326d.php
-storage\framework\views\c05084a2686c20935959c3419b4ff8dc.php
-storage\framework\views\c0cb1c2254e2f73325c9b89c03f94db5.php
-storage\framework\views\db1babe5d66f2504b7d3d3dde40548c6.php
-storage\framework\views\ddac27db3c0539b7d2822063d7ec6bb7.php
-storage\framework\views\df7c8d03deaec504e7226da044cc9385.php
-storage\framework\views\df9f8e03031713776f7951a3bdc95946.php
+storage\framework\views\c957773180b2d2287705b897b60f75a9.php
+storage\framework\views\cb1fba32553bf47107a2240b7da65c66.php
+storage\framework\views\cd0cd98ac51fd3bfeeea9827aaad4bdf.php
+storage\framework\views\da53ee5125379d964aa803207bdcf2b3.php
 storage\framework\views\e4230712cc46b6a4b60cb1d2adcdf49b.php
-storage\framework\views\e916b2526dec9c2c9c8950b27d414b0f.php
-storage\framework\views\e92955e7d3642302f6a51929236518ae.php
-storage\framework\views\ea406da005b4cd76dccac7b20424e182.php
-storage\framework\views\ea43987bcde4437a96cf2ec8399e8758.php
-storage\framework\views\ee3a40a42db5fc8f3b6f46d1bfa55b60.php
-storage\framework\views\f3b03175780f346293b384b6d476d4f4.php
-storage\framework\views\f4f0e45db0792760bb2c5ec050ed8ea1.php
-storage\framework\views\f97a950f1ee4517c7a6d7794bd304b7a.php
-storage\framework\views\faf56ae91916039096754864d30e515d.php
-storage\framework\views\fe989a9fa0b3ba0128fe9d5a63322909.php
-storage\framework\views\fee8b7affbea0b617c158a4aabf516f5.php
+storage\framework\views\f6939232881a5a3e95e1217e1623e78d.php
+storage\framework\views\f6c972f146e7ba607cb449d9433fa422.php
+storage\framework\views\fdf72d7c0e0e65d6cdbbb3d8b5f7121b.php
+storage\framework\views\ff9e50544edecda8603349ef7c792734.php
 tests\Feature
 tests\Unit
 tests\TestCase.php
@@ -378,11 +354,11 @@ Branch:
 main
 
 Last 5 commits:
+2dcd74a ubah kata jadi layanan yang di inginkan
+efc257f tambah grafik
 85ed5c3 add detail dan status dari biodata
 74105ed admin bisa mesan
 00dd38c add biodata lengkap
-78263e2 add nik dan status pada view
-08ae041 add foto pendukung
 ```
 
 
@@ -651,6 +627,8 @@ require __DIR__ . '/auth.php';
   PUT|PATCH       admin/tindakan/{tindakan} .......................... admin.tindakan.update ΓÇ║ Admin\TindakanController@update
   DELETE          admin/tindakan/{tindakan} ........................ admin.tindakan.destroy ΓÇ║ Admin\TindakanController@destroy
   GET|HEAD        admin/tindakan/{tindakan}/edit ......................... admin.tindakan.edit ΓÇ║ Admin\TindakanController@edit
+  GET|HEAD        captcha/api/{config?} ....................................... Mews\Captcha ΓÇ║ CaptchaController@getCaptchaApi
+  GET|HEAD        captcha/{config?} .............................................. Mews\Captcha ΓÇ║ CaptchaController@getCaptcha
   GET|HEAD        confirm-password ................................ password.confirm ΓÇ║ Auth\ConfirmablePasswordController@show
   POST            confirm-password .................................................. Auth\ConfirmablePasswordController@store
   GET|HEAD        dashboard ........................................................................................ dashboard
@@ -695,7 +673,7 @@ require __DIR__ . '/auth.php';
   GET|HEAD        verify-email .................................. verification.notice ΓÇ║ Auth\EmailVerificationPromptController
   GET|HEAD        verify-email/{id}/{hash} .................................. verification.verify ΓÇ║ Auth\VerifyEmailController
 
-                                                                                                          Showing [101] routes
+                                                                                                          Showing [103] routes
 
 ```
 
@@ -715,6 +693,7 @@ use App\Models\Pemesanan;
 use App\Models\Pembayaran;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\BiodataPasien;
 
 class DashboardController extends Controller
 {
@@ -751,14 +730,56 @@ class DashboardController extends Controller
         $tindakanLabels = $tindakanPopuler->pluck('keterangan');
         $tindakanData = $tindakanPopuler->pluck('jumlah');
 
+
+        $statusPasienData = BiodataPasien::select('status_pasien', DB::raw('count(*) as jumlah'))
+            ->whereNotNull('status_pasien')
+            ->where('status_pasien', '!=', '')
+            ->groupBy('status_pasien')
+            ->get();
+        
+        $statusPasienLabels = $statusPasienData->pluck('status_pasien');
+        $statusPasienData = $statusPasienData->pluck('jumlah');
+
+        $kunjunganPasien = Pemesanan::select(
+            DB::raw('DATE(tanggal_pesan) as tanggal'),
+            DB::raw('COUNT(*) as jumlah')
+        )
+        ->where('status', 'Selesai') // Hanya hitung kunjungan yang selesai
+        ->where('tanggal_pesan', '>=', Carbon::now()->subDays(30))
+        ->groupBy('tanggal')
+        ->orderBy('tanggal', 'asc')
+        ->get();
+    $kunjunganLabels = $kunjunganPasien->pluck('tanggal');
+    $kunjunganData = $kunjunganPasien->pluck('jumlah');
+
+    // 5. [BARU] GRAFIK TOP DOKTER (Berdasarkan Tindakan)
+    $dokterPopuler = DB::table('rekam_medis_tindakan as rmt')
+        ->join('rekam_medis as rm', 'rmt.rekam_medis_id', '=', 'rm.id')
+        ->join('pemesanan as p', 'rm.id_pemesanan', '=', 'p.id')
+        ->join('dokter as d', 'p.id_dokter', '=', 'd.id')
+        ->join('users as u', 'd.user_id', '=', 'u.id')
+        ->select('u.name as nama_dokter', DB::raw('COUNT(rmt.tindakan_id) as jumlah_tindakan'))
+        ->groupBy('u.name')
+        ->orderBy('jumlah_tindakan', 'desc')
+        ->limit(5)
+        ->get();
+    $dokterLabels = $dokterPopuler->pluck('nama_dokter');
+    $dokterData = $dokterPopuler->pluck('jumlah_tindakan');
+
         return view('admin.dashboard', compact(
             'jumlahPasien', 
             'jumlahDokter', 
             'pemesananHariIni', 
             'labels', 
             'data', 
-            'tindakanLabels', // Kirim data label tindakan
-            'tindakanData'    // Kirim data jumlah tindakan
+            'tindakanLabels', 
+            'tindakanData',
+            'statusPasienLabels', 
+            'statusPasienData',
+            'kunjunganLabels',
+            'kunjunganData',
+            'dokterLabels',
+            'dokterData'
         ));
     }
 }
@@ -1056,7 +1077,7 @@ class LaporanController extends Controller
 {
     public function index(Request $request)
     {
-        // [MODIFIKASI] Tambahkan kondisi untuk mengabaikan status 'Dibatalkan' di awal
+        
         $query = Pemesanan::query()
             ->where('pemesanan.status', '!=', 'Dibatalkan') 
             ->leftJoin('pembayaran', 'pemesanan.id', '=', 'pembayaran.pemesanan_id')
@@ -1078,6 +1099,10 @@ class LaporanController extends Controller
         // Filter Metode Pembayaran
         if ($request->filled('metode_pembayaran')) {
             $query->where('pembayaran.metode_pembayaran', $request->metode_pembayaran);
+        }
+
+        if ($request->filled('status_pasien')) {
+            $query->where('pemesanan.status_pasien', $request->status_pasien);
         }
 
         $laporan = $query->select('pemesanan.*')->latest('pemesanan.created_at')->get();
@@ -1109,13 +1134,15 @@ class LaporanController extends Controller
         // Opsi untuk dropdown filter
         $metodePembayaranOptions = Pembayaran::whereNotNull('metode_pembayaran')->distinct()->pluck('metode_pembayaran');
         
-        // [MODIFIKASI] Sesuaikan dengan status yang ada dan hilangkan 'Dibatalkan'
+        
         $statusOptions = ['Menunggu Pembayaran', 'Selesai', 'Dikonfirmasi'];
+        $statusPasienOptions = ['BPJS', 'Umum', 'InHealth'];
 
         return view('admin.laporan.index', compact(
             'laporan',
             'totalPendapatan',
             'metodePembayaranOptions',
+            'statusPasienOptions',
             'statusOptions',
             'totalTransaksi',
             'pasienUnik',
@@ -3858,7 +3885,8 @@ class Tindakan extends Model
                 <div class="p-6 bg-white border-b border-gray-200">
                     <h3 class="font-semibold text-lg mb-4">Filter Laporan</h3>
                     <form action="{{ route('admin.laporan.index') }}" method="GET">
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                        {{-- [MODIFIKASI] Ubah grid layout untuk 5 item --}}
+                        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-end">
                             <div>
                                 <x-input-label for="start_date" :value="__('Tanggal Mulai')" />
                                 <x-text-input type="date" id="start_date" name="start_date" class="mt-1 block w-full"
@@ -3881,12 +3909,24 @@ class Tindakan extends Model
                                 </select>
                             </div>
                             <div>
-                                <x-input-label for="status" :value="__('Status')" />
+                                <x-input-label for="status" :value="__('Status Janji')" />
                                 <select name="status" id="status"
                                     class="mt-1 block w-full rounded-md shadow-sm border-gray-300">
                                     <option value="">Semua</option>
                                     @foreach ($statusOptions as $status)
                                         <option value="{{ $status }}" @selected(request('status') == $status)>
+                                            {{ ucfirst($status) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            {{-- [MODIFIKASI] Tambahkan dropdown Status Pasien --}}
+                            <div>
+                                <x-input-label for="status_pasien" :value="__('Status Pasien')" />
+                                <select name="status_pasien" id="status_pasien"
+                                    class="mt-1 block w-full rounded-md shadow-sm border-gray-300">
+                                    <option value="">Semua</option>
+                                    @foreach ($statusPasienOptions as $status)
+                                        <option value="{{ $status }}" @selected(request('status_pasien') == $status)>
                                             {{ ucfirst($status) }}</option>
                                     @endforeach
                                 </select>
@@ -3910,6 +3950,8 @@ class Tindakan extends Model
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">NIK</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Pasien
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status Pasien
                                     </th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Dokter
                                     </th>
@@ -3935,7 +3977,10 @@ class Tindakan extends Model
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                             {{ $item->pasien->name }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ $item->pasien->biodata->status_pasien ?? '-' }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             {{ $item->dokter->user->name }}</td>
+                                        </td>
                                         <td class="px-6 py-4 text-sm text-gray-500">
                                             @if ($item->rekamMedis && $item->rekamMedis->tindakan->isNotEmpty())
                                                 <ul class="list-disc list-inside">
@@ -5740,6 +5785,30 @@ class Tindakan extends Model
                         <canvas id="tindakanChart"></canvas>
                     </div>
                 </div>
+
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900">
+                        <h3 class="text-lg font-semibold mb-4">Distribusi Status Pasien</h3>
+                        <canvas id="statusPasienChart"></canvas>
+                    </div>
+                </div>
+                
+                {{-- Grafik Kunjungan Pasien (Baru) --}}
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900">
+                        <h3 class="text-lg font-semibold mb-4">Kunjungan Selesai (30 Hari Terakhir)</h3>
+                        <canvas id="kunjunganChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Grafik Top Dokter (Baru) --}}
+            <div class="mt-8 bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <h3 class="text-lg font-semibold mb-4">Top 5 Dokter (Berdasarkan Tindakan)</h3>
+                    <canvas id="dokterChart"></canvas>
+                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -5799,12 +5868,13 @@ class Tindakan extends Model
                     datasets: [{
                         label: 'Jumlah Dilakukan',
                         data: {!! json_encode($tindakanData) !!},
+                        {{-- [MODIFIKASI] Ubah warna menjadi berbeda --}}
                         backgroundColor: [
-                            'rgba(139, 92, 246, 0.7)',
-                            'rgba(124, 58, 237, 0.7)',
-                            'rgba(109, 40, 217, 0.7)',
-                            'rgba(91, 33, 182, 0.7)',
-                            'rgba(76, 29, 149, 0.7)'
+                            'rgba(139, 92, 246, 0.7)',  // Ungu
+                            'rgba(16, 185, 129, 0.7)', // Hijau
+                            'rgba(239, 68, 68, 0.7)',   // Merah
+                            'rgba(234, 179, 8, 0.7)',  // Kuning
+                            'rgba(59, 130, 246, 0.7)'   // Biru
                         ],
                         borderColor: '#ffffff',
                         borderWidth: 2
@@ -5829,6 +5899,85 @@ class Tindakan extends Model
                             }
                         }
                     }
+                }
+            });
+
+            const statusPasienCtx = document.getElementById('statusPasienChart').getContext('2d');
+            new Chart(statusPasienCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: {!! json_encode($statusPasienLabels) !!},
+                    datasets: [{
+                        label: 'Jumlah Pasien',
+                        data: {!! json_encode($statusPasienData) !!},
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.7)',  // Biru (misal: BPJS)
+                            'rgba(16, 185, 129, 0.7)', // Hijau (misal: Umum)
+                            'rgba(234, 179, 8, 0.7)',  // Kuning (misal: Inhealth)
+                        ],
+                        borderColor: '#ffffff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) { label += ': '; }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed + ' pasien';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 4. [BARU] Grafik Kunjungan Pasien (Line Chart)
+            const kunjunganCtx = document.getElementById('kunjunganChart').getContext('2d');
+            new Chart(kunjunganCtx, {
+                type: 'line',
+                data: {
+                    labels: {!! json_encode($kunjunganLabels) !!},
+                    datasets: [{
+                        label: 'Jumlah Kunjungan Selesai',
+                        data: {!! json_encode($kunjunganData) !!},
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderColor: 'rgba(16, 185, 129, 1)',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: { scales: { y: { beginAtZero: true } }, plugins: { tooltip: { callbacks: { label: context => `${context.parsed.y} kunjungan` } } } }
+            });
+
+            // 5. [BARU] Grafik Top Dokter (Horizontal Bar Chart)
+            const dokterCtx = document.getElementById('dokterChart').getContext('2d');
+            new Chart(dokterCtx, {
+                type: 'bar',
+                data: {
+                    labels: {!! json_encode($dokterLabels) !!},
+                    datasets: [{
+                        label: 'Jumlah Tindakan Dilakukan',
+                        data: {!! json_encode($dokterData) !!},
+                        backgroundColor: 'rgba(239, 68, 68, 0.5)',
+                        borderColor: 'rgba(239, 68, 68, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y', // <-- Ini membuatnya horizontal
+                    scales: { x: { beginAtZero: true } },
+                    plugins: { legend: { display: false }, tooltip: { callbacks: { label: context => `${context.parsed.x} tindakan` } } }
                 }
             });
         });
@@ -5899,26 +6048,24 @@ class Tindakan extends Model
 </x-guest-layout>
 
 ===== resources\views\auth\login.blade.php =====
+{{-- AWAL MODIFIKASI: resources/views/auth/login.blade.php --}}
 <x-guest-layout>
     <div class="mb-6 text-center">
         <h2 class="text-3xl font-bold text-gray-800">Selamat Datang Kembali!</h2>
         <p class="text-gray-500 mt-2">Silakan masuk ke akun Anda.</p>
     </div>
 
-    <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
-        <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Password -->
         <div class="mt-4">
             <div class="flex justify-between items-center">
                 <x-input-label for="password" :value="__('Password')" />
@@ -5932,7 +6079,6 @@ class Tindakan extends Model
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
                 <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-purple-600 shadow-sm focus:ring-purple-500" name="remember">
@@ -5940,6 +6086,18 @@ class Tindakan extends Model
             </label>
         </div>
 
+        <div class="mt-4">
+            <x-input-label for="captcha" :value="__('Verifikasi Keamanan')" />
+            <div class="flex items-center space-x-2 mt-1">
+                {{-- Tampilkan gambar captcha --}}
+                <span class="border rounded-md p-1 bg-gray-100">
+                    {!! captcha_img() !!}
+                </span>
+                {{-- Input untuk kode --}}
+                <x-text-input id="captcha" class="block w-full" type="text" name="captcha" required />
+            </div>
+            <x-input-error :messages="$errors->get('captcha')" class="mt-2" />
+        </div>
         <div class="mt-6">
             <x-primary-button class="w-full justify-center bg-purple-600 hover:bg-purple-700 focus:bg-purple-700 active:bg-purple-800 focus:ring-purple-500">
                 {{ __('Log in') }}
@@ -5954,6 +6112,7 @@ class Tindakan extends Model
         </div>
     </form>
 </x-guest-layout>
+{{-- AKHIR MODIFIKASI --}}
 
 ===== resources\views\auth\register.blade.php =====
 <x-guest-layout>
@@ -7514,7 +7673,7 @@ $classes = ($active ?? false)
             </x-nav-link>
             <x-nav-link :href="route('pasien.pemesanan.create')" :active="request()->routeIs('pasien.pemesanan.create')">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                <span>{{ __('Buat Pemesanan Baru') }}</span>
+                <span>{{ __('Buat Janji Temu') }}</span>
             </x-nav-link>
             <x-nav-link :href="route('pasien.pemesanan.index')" :active="request()->routeIs('pasien.pemesanan.index')">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
@@ -7575,7 +7734,7 @@ $classes = ($active ?? false)
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Buat Pemesanan Baru') }}
+            {{ __('Buat Janji Temu') }}
         </h2>
     </x-slot>
 
@@ -7663,7 +7822,7 @@ $classes = ($active ?? false)
                         <!-- Keluhan Awal & Catatan -->
                         <div x-show="selectedSlot" x-transition>
                             <div class="mb-6">
-                                <x-input-label for="tindakan_awal" value="Keluhan / Tindakan Awal (Opsional)" />
+                                <x-input-label for="tindakan_awal" value="Layanan yang diinginkan" />
                                 <select name="tindakan_awal[]" id="tindakan_awal" multiple>
                                     @foreach($daftarTindakans as $kategori)
                                         <optgroup label="{{ $kategori->nama_kategori }}">
