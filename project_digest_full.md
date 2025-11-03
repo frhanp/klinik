@@ -1,5 +1,5 @@
 ﻿# Project Digest (Full Content)
-_Generated: 2025-11-02 17:45:23_
+_Generated: 2025-11-03 21:25:32_
 **Root:** D:\Laragon\www\klinik
 
 
@@ -145,6 +145,7 @@ database\migrations\2025_09_02_191228_hapus_kolom_satuan_dari_obat.php
 database\migrations\2025_10_01_232639_tambah_kolom_potongan_ke_tabel_pembayaran.php
 database\migrations\2025_10_11_093935_tambah_kolom_nomor_bpjs_ke_tabel_pemesanan.php
 database\migrations\2025_10_22_133136_tambah_field_lengkap_termasuk_umur_ke_biodata_pasien.php
+database\migrations\2025_11_02_174811_tambah_kolom_nomor_antrian_ke_pemesanan_table.php
 database\seeders\DatabaseSeeder.php
 database\seeders\DokterSeeder.php
 database\seeders\JadwalSeeder.php
@@ -302,6 +303,7 @@ storage\framework\views\323e0d4cb6aa3a79df371502459f3f95.php
 storage\framework\views\34a28d1c5975e6a80cf8e90545c1042d.php
 storage\framework\views\35b948da9e966c78a172e74616518c9c.php
 storage\framework\views\391ebb746ed9d90abf51620fa811007f.php
+storage\framework\views\3b1e10f885219c77cae6e0fd498bac94.php
 storage\framework\views\3f78f7c3950888e24e17f0f2153164ba.php
 storage\framework\views\3f97fad1046eebed23dea96fef8be649.php
 storage\framework\views\3fe124fd1ab53367f3db7d5c4f61a949.php
@@ -387,11 +389,11 @@ Branch:
 main
 
 Last 5 commits:
+9941a63 nomor antrian
 7172917 add captcha
 2dcd74a ubah kata jadi layanan yang di inginkan
 efc257f tambah grafik
 85ed5c3 add detail dan status dari biodata
-74105ed admin bisa mesan
 ```
 
 
@@ -1690,7 +1692,16 @@ class PemesananController extends Controller
 
 
         DB::transaction(function () use ($request, $pasien, $jadwal) {
+
             // Buat data pemesanan
+            $nomorAntrianBaru = null;
+            if ($request->status == 'Dikonfirmasi') {
+                $maxAntrian = Pemesanan::where('id_dokter', $request->id_dokter)
+                                    ->where('tanggal_pesan', $request->tanggal_pesan)
+                                    ->where('status', 'Dikonfirmasi')
+                                    ->max('nomor_antrian');
+                $nomorAntrianBaru = $maxAntrian + 1;
+            }
             $pemesanan = Pemesanan::create([
                 'id_pasien' => $pasien->id,
                 'nama_pasien_booking' => $pasien->name, // Ambil nama dari user pasien
@@ -1702,6 +1713,7 @@ class PemesananController extends Controller
                 'catatan' => $request->catatan,
                 'status' => $request->status, // Status awal (misal: Dikonfirmasi)
                 'nomor_bpjs' => $request->nomor_bpjs,
+                'nomor_antrian' => $nomorAntrianBaru,
             ]);
 
             // Simpan data tindakan awal ke tabel pivot
@@ -1737,16 +1749,73 @@ class PemesananController extends Controller
      */
     public function update(Request $request, Pemesanan $pemesanan)
     {
-        $request->validate([
+        // [MODIFIKASI] Tambahkan validasi untuk tanggal & waktu baru
+        $rules = [
             'status' => 'required|string|in:Dikonfirmasi,Selesai,Dibatalkan,Dijadwalkan Ulang',
-            // Catatan wajib diisi jika statusnya Dibatalkan atau Dijadwalkan Ulang
-            'catatan_admin' => 'required_if:status,Dibatalkan,Dijadwalkan Ulang|nullable|string|max:1000',
-        ]);
+            'catatan_admin' => 'required_if:status,Dibatalkan|nullable|string|max:1000',
+        ];
 
-        $pemesanan->update([
-            'status' => $request->status,
-            'catatan_admin' => $request->catatan_admin,
-        ]);
+        // Jika statusnya "Dijadwalkan Ulang", wajibkan tanggal & waktu baru
+        if ($request->status == 'Dijadwalkan Ulang') {
+            $rules['tanggal_pesan_baru'] = 'required|date|after_or_equal:today';
+            $rules['waktu_pesan_baru'] = 'required|date_format:H:i';
+        }
+        $request->validate($rules);
+        // [AKHIR MODIFIKASI VALIDASI]
+
+        $dataToUpdate = $request->only('status', 'catatan_admin');
+        $statusAsal = $pemesanan->status;
+        $tanggalPesan = $pemesanan->tanggal_pesan;
+
+        // [MODIFIKASI] Logika penanganan "Dijadwalkan Ulang"
+        if ($request->status == 'Dijadwalkan Ulang') {
+            
+            // 1. Validasi Jadwal & Slot Baru
+            $tanggal = Carbon::parse($request->tanggal_pesan_baru);
+            $hariPraktek = $tanggal->translatedFormat('l');
+            $jadwal = Jadwal::where('id_dokter', $pemesanan->id_dokter)
+                            ->where('hari', $hariPraktek)
+                            ->first();
+
+            if (!$jadwal) {
+                return back()->with('error', 'Dokter tidak memiliki jadwal pada hari baru yang dipilih.')->withInput();
+            }
+
+            $slotExists = Pemesanan::where('id_dokter', $pemesanan->id_dokter)
+                            ->where('tanggal_pesan', $request->tanggal_pesan_baru)
+                            ->where('waktu_pesan', $request->waktu_pesan_baru)
+                            ->where('id', '!=', $pemesanan->id) // Abaikan pemesanan ini sendiri
+                            ->whereIn('status', ['Dipesan', 'Dikonfirmasi'])
+                            ->exists();
+
+            if ($slotExists) {
+                 return back()->with('error', 'Slot waktu baru sudah dipesan. Silakan pilih jam lain.')->withInput();
+            }
+
+            // 2. Jika valid, siapkan data untuk update
+            $dataToUpdate['tanggal_pesan'] = $request->tanggal_pesan_baru;
+            $dataToUpdate['waktu_pesan'] = $request->waktu_pesan_baru;
+            $dataToUpdate['id_jadwal'] = $jadwal->id;
+            $dataToUpdate['status'] = 'Dikonfirmasi'; // Status otomatis jadi Dikonfirmasi
+            $tanggalPesan = $request->tanggal_pesan_baru; // Gunakan tanggal baru untuk generate antrian
+        }
+
+        // [MODIFIKASI] Sesuaikan logika nomor antrian
+        // Jika status (baru) adalah Dikonfirmasi DAN status (lama) BUKAN Dikonfirmasi
+        if ($dataToUpdate['status'] == 'Dikonfirmasi' && $statusAsal != 'Dikonfirmasi') {
+            $maxAntrian = Pemesanan::where('id_dokter', $pemesanan->id_dokter)
+                                ->where('tanggal_pesan', $tanggalPesan) // Gunakan tanggal yang relevan
+                                ->whereIn('status', ['Dikonfirmasi', 'Selesai'])
+                                ->max('nomor_antrian');
+            
+            $dataToUpdate['nomor_antrian'] = $maxAntrian + 1;
+        } 
+        // Reset nomor antrian jika Dibatalkan atau Selesai
+        elseif (in_array($dataToUpdate['status'], ['Dibatalkan', 'Selesai'])) {
+            $dataToUpdate['nomor_antrian'] = null;
+        }
+
+        $pemesanan->update($dataToUpdate);
 
         return redirect()->route('admin.pemesanan.index')->with('success', 'Status pemesanan berhasil diperbarui.');
     }
@@ -3048,7 +3117,7 @@ class Pemesanan extends Model
 {
     use HasFactory;
     protected $table = 'pemesanan';
-    protected $fillable = ['id_pasien', 'id_dokter', 'id_jadwal', 'tanggal_pesan', 'waktu_pesan', 'catatan', 'status', 'status_pasien', 'nama_pasien_booking', 'catatan_admin', 'nomor_bpjs'];
+    protected $fillable = ['id_pasien', 'id_dokter', 'id_jadwal', 'tanggal_pesan', 'waktu_pesan', 'catatan', 'status', 'status_pasien', 'nama_pasien_booking', 'catatan_admin', 'nomor_bpjs', 'nomor_antrian'];
 
     public function pasien()
     {
@@ -5452,8 +5521,54 @@ class Tindakan extends Model
         </h2>
     </x-slot>
 
+    <script>
+        function rescheduleForm(dokterId) {
+            return {
+                selectedStatus: '{{ old('status', $pemesanan->status) }}', // Ambil status awal
+                selectedDokter: dokterId,
+                selectedTanggal: '{{ old('tanggal_pesan_baru', '') }}',
+                today: new Date().toISOString().split('T')[0],
+                availableSlots: [],
+                loadingSlot: '',
+                selectedSlot: '{{ old('waktu_pesan_baru', '') }}',
+                
+                init() {
+                    // Panggil fetchSlotWaktu saat init jika data old() ada
+                    if (this.selectedTanggal) {
+                        this.fetchSlotWaktu();
+                    }
+                    this.$watch('selectedTanggal', () => this.fetchSlotWaktu());
+                },
+
+                fetchSlotWaktu() {
+                    this.availableSlots = [];
+                    this.selectedSlot = '';
+                    if (!this.selectedTanggal || !this.selectedDokter) {
+                        this.loadingSlot = '';
+                        return;
+                    }
+
+                    this.loadingSlot = 'Mencari slot waktu...';
+                    fetch(`/admin/get-slot-waktu/${this.selectedDokter}/${this.selectedTanggal}`) 
+                        .then(response => {
+                            if (!response.ok) throw new Error('Jadwal tidak ditemukan');
+                            return response.json();
+                        })
+                        .then(data => {
+                            this.availableSlots = data;
+                            this.loadingSlot = data.length === 0 ? 'Tidak ada slot tersedia.' : '';
+                        })
+                        .catch((error) => {
+                            console.error('Error fetching slots:', error);
+                            this.loadingSlot = 'Gagal memuat slot.';
+                        });
+                }
+            }
+        }
+    </script>
+
     <div class="py-12">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8" x-data="rescheduleForm({{ $pemesanan->id_dokter }})" x-init="init()">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 md:p-8 bg-white border-b border-gray-200">
 
@@ -5464,8 +5579,10 @@ class Tindakan extends Model
                             <div><strong>Dokter:</strong> {{ $pemesanan->dokter->user->name }}</div>
                             <div><strong>NIK:</strong> {{ $pemesanan->pasien->biodata->nik ?? '-' }}</div>
                             <div><strong>Status Pasien:</strong> {{ $pemesanan->status_pasien }}</div>
-                            <div><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($pemesanan->tanggal_pesan)->isoFormat('D MMMM YYYY') }}</div>
-                            <div><strong>Waktu:</strong> {{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</div>
+                            <div><strong>Tanggal:</strong>
+                                {{ \Carbon\Carbon::parse($pemesanan->tanggal_pesan)->isoFormat('D MMMM YYYY') }}</div>
+                            <div><strong>Waktu:</strong>
+                                {{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</div>
                             <div class="col-span-2"><strong>Status Saat Ini:</strong> {{ $pemesanan->status }}</div>
                         </div>
                     </div>
@@ -5476,24 +5593,53 @@ class Tindakan extends Model
 
                         <div>
                             <x-input-label for="status" :value="__('Ubah Status')" class="font-bold" />
-                            <select name="status" id="status" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-purple-300 focus:ring focus:ring-purple-200 focus:ring-opacity-50">
+                            <select name="status" id="status"
+                                class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-purple-300 focus:ring focus:ring-purple-200 focus:ring-opacity-50">
                                 <option value="Dikonfirmasi" @selected(old('status', $pemesanan->status) == 'Dikonfirmasi')>Konfirmasi Janji Temu</option>
                                 <option value="Dijadwalkan Ulang" @selected(old('status', $pemesanan->status) == 'Dijadwalkan Ulang')>Jadwalkan Ulang</option>
                                 <option value="Dibatalkan" @selected(old('status', $pemesanan->status) == 'Dibatalkan')>Batalkan Janji Temu</option>
-                                <option value="Selesai" @selected(old('status', $pemesanan->status) == 'Selesai')>Selesaikan (Telah Diperiksa)</option>
+                                <option value="Selesai" @selected(old('status', $pemesanan->status) == 'Selesai')>Selesaikan (Telah Diperiksa)
+                                </option>
                             </select>
+                        </div>
+
+                        <div x-show="selectedStatus === 'Dijadwalkan Ulang'" x-transition class="mt-6 p-4 border border-yellow-300 bg-yellow-50 rounded-lg space-y-4">
+                            <h4 class="font-semibold text-yellow-800">Atur Jadwal Baru</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {{-- Pilih Tanggal Baru --}}
+                                <div>
+                                    <x-input-label for="tanggal_pesan_baru" value="Tanggal Baru" />
+                                    {{-- [FIX] Hapus ':' dari 'value' dan biarkan 'x-model' yang bekerja --}}
+                                    <input type="date" x-model="selectedTanggal" id="tanggal_pesan_baru" name="tanggal_pesan_baru" :min="today" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm" value="{{ old('tanggal_pesan_baru') }}">
+                                </div>
+                                {{-- Pilih Waktu Baru --}}
+                                <div>
+                                    <x-input-label for="waktu_pesan_baru" value="Waktu Baru" />
+                                    <select id="waktu_pesan_baru" name="waktu_pesan_baru" x-model="selectedSlot" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm" :disabled="!selectedTanggal || availableSlots.length === 0">
+                                        <option value="">-- Pilih Jam --</option>
+                                        <template x-for="slot in availableSlots" :key="slot">
+                                            <option :value="slot" x-text="slot"></option>
+                                        </template>
+                                    </select>
+                                    <div x-show="loadingSlot" class="text-sm text-gray-500 mt-1" x-text="loadingSlot"></div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="mt-4">
                             <x-input-label for="catatan_admin">
-                                Catatan untuk Pasien <span class="text-gray-500 text-xs">(Wajib diisi jika dibatalkan/dijadwalkan ulang)</span>
+                                Catatan untuk Pasien <span class="text-gray-500 text-xs">(Wajib diisi jika
+                                    dibatalkan/dijadwalkan ulang)</span>
                             </x-input-label>
-                            <textarea id="catatan_admin" name="catatan_admin" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-purple-300 focus:ring focus:ring-purple-200 focus:ring-opacity-50" rows="4">{{ old('catatan_admin', $pemesanan->catatan_admin) }}</textarea>
+                            <textarea id="catatan_admin" name="catatan_admin"
+                                class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-purple-300 focus:ring focus:ring-purple-200 focus:ring-opacity-50"
+                                rows="4">{{ old('catatan_admin', $pemesanan->catatan_admin) }}</textarea>
                             <x-input-error :messages="$errors->get('catatan_admin')" class="mt-2" />
                         </div>
 
                         <div class="flex items-center justify-end mt-6">
-                            <a href="{{ route('admin.pemesanan.index') }}" class="text-gray-600 hover:text-gray-900 mr-4">
+                            <a href="{{ route('admin.pemesanan.index') }}"
+                                class="text-gray-600 hover:text-gray-900 mr-4">
                                 Kembali
                             </a>
                             <x-primary-button class="bg-purple-600 hover:bg-purple-700">
@@ -5529,6 +5675,7 @@ class Tindakan extends Model
                         <table class="min-w-full bg-white">
                             <thead class="bg-gray-200">
                                 <tr>
+                                    <th class="py-2 px-4 border-b">Nomor Antrian</th>
                                     <th class="py-2 px-4 border-b">Pasien</th>
                                     <th class="py-2 px-4 border-b">NIK</th>
                                     <th class="py-2 px-4 border-b">Status Pasien</th>
@@ -5542,6 +5689,7 @@ class Tindakan extends Model
                             <tbody>
                                 @forelse ($pemesanans as $pemesanan)
                                     <tr class="hover:bg-gray-50">
+                                        <td class="py-2 px-4 border-b">{{ $pemesanan->nomor_antrian }}</td>
                                         <td class="py-2 px-4 border-b">{{ $pemesanan->pasien->name }}</td>
                                         <td class="py-2 px-4 border-b">{{ $pemesanan->pasien->biodata->nik ?? '-' }}</td>
                                         <td class="py-2 px-4 border-b">
@@ -7384,6 +7532,7 @@ $classes = ($active ?? false)
 </x-app-layout>
 
 ===== resources\views\dokter\dashboard.blade.php =====
+{{-- AWAL MODIFIKASI: resources/views/dokter/dashboard.blade.php --}}
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -7400,16 +7549,17 @@ $classes = ($active ?? false)
 
                     {{-- Header Judul --}}
                     <h3 class="text-lg font-semibold mb-4">
-                        Antrian Pasien ({{ \Carbon\Carbon::now()->translatedFormat('d F Y') }})
+                        Antrian Pasien
+                        ({{ \Carbon\Carbon::parse(request('tanggal', now()))->translatedFormat('d F Y') }})
                     </h3>
 
-                    {{-- AWAL MODIFIKASI: Tambah filter tanggal --}}
-                    <form method="GET" action="{{ route('dokter.dashboard') }}" class="flex flex-wrap items-end gap-4 mb-6">
+                    {{-- Form filter tanggal --}}
+                    <form method="GET" action="{{ route('dokter.dashboard') }}"
+                        class="flex flex-wrap items-end gap-4 mb-6">
                         <div>
                             <x-input-label for="tanggal" value="Tanggal" />
                             <x-text-input id="tanggal" name="tanggal" type="date"
-                                value="{{ request('tanggal') ?? now()->toDateString() }}"
-                                class="mt-1 block w-full" />
+                                value="{{ request('tanggal') ?? now()->toDateString() }}" class="mt-1 block w-full" />
                         </div>
 
                         <div>
@@ -7425,80 +7575,90 @@ $classes = ($active ?? false)
                             @endif
                         </div>
                     </form>
-                    {{-- AKHIR MODIFIKASI --}}
 
-                    {{-- AWAL MODIFIKASI: Tabel antrian pasien dirapikan --}}
-<div class="overflow-x-auto">
-    <table class="min-w-full border border-gray-200 rounded-lg shadow-sm">
-        <thead class="bg-purple-100 text-purple-800">
-            <tr>
-                <th class="py-3 px-4 text-left text-sm font-semibold border-b border-gray-200">Waktu</th>
-                <th class="py-3 px-4 text-left text-sm font-semibold border-b border-gray-200">Nama Pasien & Keluhan</th>
-                <th class="py-3 px-4 text-left text-sm font-semibold border-b border-gray-200">Status</th>
-                <th class="py-3 px-4 text-center text-sm font-semibold border-b border-gray-200">Aksi</th>
-            </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-100">
-            @forelse ($pemesananHariIni as $pemesanan)
-                <tr class="hover:bg-purple-50 transition-colors">
-                    <td class="py-3 px-4 align-top text-gray-700 whitespace-nowrap">
-                        {{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}
-                    </td>
+                    {{-- Tabel antrian pasien dirapikan --}}
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full border border-gray-200 rounded-lg shadow-sm">
+                            <thead class="bg-purple-100 text-purple-800">
+                                <tr>
+                                    {{-- [MODIFIKASI] Tambah Kolom Antrian --}}
+                                    <th class="py-3 px-4 text-left text-sm font-semibold border-b border-gray-200">
+                                        Antrian</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold border-b border-gray-200">Waktu
+                                    </th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold border-b border-gray-200">Nama
+                                        Pasien & Keluhan</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold border-b border-gray-200">
+                                        Status</th>
+                                    <th class="py-3 px-4 text-center text-sm font-semibold border-b border-gray-200">
+                                        Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                @forelse ($pemesananHariIni as $pemesanan)
+                                    <tr class="hover:bg-purple-50 transition-colors">
+                                        {{-- [MODIFIKASI] Tampilkan Nomor Antrian --}}
+                                        <td class="py-3 px-4 align-top text-center font-bold text-lg text-purple-700">
+                                            {{ $pemesanan->nomor_antrian ?? '-' }}
+                                        </td>
+                                        <td class="py-3 px-4 align-top text-gray-700 whitespace-nowrap">
+                                            {{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}
+                                        </td>
 
-                    <td class="py-3 px-4 align-top">
-                        {{-- Nama Pasien --}}
-                        <div class="font-semibold text-gray-900">{{ $pemesanan->pasien->name }}</div>
+                                        <td class="py-3 px-4 align-top">
+                                            {{-- [MODIFIKASI] Tampilkan Status Pasien --}}
+                                            <div class="font-semibold text-gray-900">{{ $pemesanan->pasien->name }}
+                                                ({{ $pemesanan->status_pasien }})
+                                            </div>
 
-                        {{-- Keluhan Awal --}}
-                        {{-- AWAL MODIFIKASI: tampilkan kategori + keterangan + harga tindakan --}}
-@if ($pemesanan->tindakanAwal->isNotEmpty())
-<div class="text-xs text-gray-600 mt-1 space-x-1">
-    <span class="font-medium text-gray-500">Keluhan:</span>
-    @foreach ($pemesanan->tindakanAwal as $tindakan)
-        <span class="inline-block bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full mb-1">
-            {{ $tindakan->daftarTindakan->nama_kategori ?? '-' }} â€” {{ $tindakan->keterangan }} â€”
-            Rp {{ number_format($tindakan->harga, 0, ',', '.') }}
-        </span>
-    @endforeach
-</div>
-@endif
-{{-- AKHIR MODIFIKASI --}}
+                                            {{-- Keluhan Awal --}}
+                                            @if ($pemesanan->tindakanAwal->isNotEmpty())
+                                                <div class="text-xs text-gray-600 mt-1 space-x-1">
+                                                    <span class="font-medium text-gray-500">Keluhan:</span>
+                                                    @foreach ($pemesanan->tindakanAwal as $tindakan)
+                                                        <span
+                                                            class="inline-block bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full mb-1">
+                                                            {{ $tindakan->daftarTindakan->nama_kategori ?? '-' }} â€”
+                                                            {{ $tindakan->keterangan }} â€”
+                                                            Rp {{ number_format($tindakan->harga, 0, ',', '.') }}
+                                                        </span>
+                                                    @endforeach
+                                                </div>
+                                            @endif
+                                        </td>
 
-                    </td>
+                                        <td class="py-3 px-4 align-top">
+                                            <span
+                                                class="inline-block px-3 py-1 text-xs font-semibold rounded-full
+                                                {{ $pemesanan->status === 'Dikonfirmasi' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600' }}">
+                                                {{ $pemesanan->status }}
+                                            </span>
+                                        </td>
 
-                    <td class="py-3 px-4 align-top">
-                        <span
-                            class="inline-block px-3 py-1 text-xs font-semibold rounded-full
-                            {{ $pemesanan->status === 'Dikonfirmasi' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600' }}">
-                            {{ $pemesanan->status }}
-                        </span>
-                    </td>
-
-                    <td class="py-3 px-4 align-top text-center">
-                        <a href="{{ route('dokter.rekam-medis.create', ['id_pemesanan' => $pemesanan->id]) }}"
-                            class="inline-block text-sm font-semibold text-white bg-green-600 hover:bg-green-700 px-4 py-1.5 rounded-md shadow-sm transition">
-                            Proses
-                        </a>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="4" class="py-6 px-4 text-center text-gray-600">
-                        Tidak ada antrian untuk tanggal ini.
-                    </td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
-</div>
-{{-- AKHIR MODIFIKASI --}}
-
-
+                                        <td class="py-3 px-4 align-top text-center">
+                                            <a href="{{ route('dokter.rekam-medis.create', ['id_pemesanan' => $pemesanan->id]) }}"
+                                                class="inline-block text-sm font-semibold text-white bg-green-600 hover:bg-green-700 px-4 py-1.5 rounded-md shadow-sm transition">
+                                                Proses
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        {{-- [MODIFIKASI] Colspan diubah jadi 5 --}}
+                                        <td colspan="5" class="py-6 px-4 text-center text-gray-600">
+                                            Tidak ada antrian untuk tanggal ini.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </x-app-layout>
+{{-- AKHIR MODIFIKASI --}}
 
 ===== resources\views\layouts\app.blade.php =====
 <!DOCTYPE html>
@@ -7996,6 +8156,7 @@ $classes = ($active ?? false)
 </x-app-layout>
 
 ===== resources\views\pasien\pemesanan\index.blade.php =====
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -8012,7 +8173,8 @@ $classes = ($active ?? false)
                         <table class="min-w-full bg-white">
                             <thead class="bg-gray-200">
                                 <tr>
-                                    <th class="py-2 px-4 border-b">Tanggal</th>
+                                    <th class="py-2 px-4 border-b">Tanggal & Waktu</th>
+                                    <th class="py-2 px-4 border-b">Antrian</th>
                                     <th class="py-2 px-4 border-b">Dokter</th>
                                     <th class="py-2 px-4 border-b">Status</th>
                                     <th class="py-2 px-4 border-b">Aksi</th>
@@ -8020,12 +8182,11 @@ $classes = ($active ?? false)
                             </thead>
                             <tbody>
                                 @forelse ($pemesanans as $pemesanan)
-                                    {{-- BARIS UTAMA UNTUK SETIAP PEMESANAN --}}
                                     <tr class="hover:bg-gray-50">
                                         <td class="py-2 px-4 border-b">{{ \Carbon\Carbon::parse($pemesanan->tanggal_pesan)->translatedFormat('d M Y') }} - {{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</td>
+                                        <td class="py-2 px-4 border-b text-center font-bold text-purple-700">{{ $pemesanan->nomor_antrian ?? '-' }}</td>
                                         <td class="py-2 px-4 border-b">{{ $pemesanan->dokter->user->name }}</td>
                                         <td class="py-2 px-4 border-b">
-                                            {{-- [MODIFIKASI] Menambahkan warna untuk status "Dijadwalkan Ulang" --}}
                                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                                                 @if($pemesanan->status == 'Selesai') bg-green-100 text-green-800 
                                                 @elseif($pemesanan->status == 'Dibatalkan') bg-red-100 text-red-800
@@ -8046,19 +8207,17 @@ $classes = ($active ?? false)
                                             @endif
                                         </td>
                                     </tr>
-
-                                    {{-- Baris ini akan muncul HANYA JIKA ada catatan dari admin --}}
                                     @if($pemesanan->catatan_admin)
                                     <tr class="bg-yellow-50 hover:bg-yellow-100">
-                                        <td colspan="4" class="py-3 px-4 border-b text-sm">
+                                        <td colspan="5" class="py-3 px-4 border-b text-sm">
                                             <strong class="text-yellow-800">Catatan dari Klinik:</strong>
                                             <p class="mt-1 text-gray-700">{{ $pemesanan->catatan_admin}}</p>
                                         </td>
                                     </tr>
                                     @endif
-                                    @empty
+                                @empty
                                     <tr>
-                                        <td colspan="4" class="py-4 px-4 text-center">Anda belum pernah membuat pemesanan.</td>
+                                        <td colspan="5" class="py-4 px-4 text-center">Anda belum pernah membuat pemesanan.</td>
                                     </tr>
                                 @endforelse
                             </tbody>

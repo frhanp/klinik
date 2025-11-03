@@ -5,8 +5,54 @@
         </h2>
     </x-slot>
 
+    <script>
+        function rescheduleForm(dokterId) {
+            return {
+                selectedStatus: '{{ old('status', $pemesanan->status) }}', // Ambil status awal
+                selectedDokter: dokterId,
+                selectedTanggal: '{{ old('tanggal_pesan_baru', '') }}',
+                today: new Date().toISOString().split('T')[0],
+                availableSlots: [],
+                loadingSlot: '',
+                selectedSlot: '{{ old('waktu_pesan_baru', '') }}',
+
+                init() {
+                    // Panggil fetchSlotWaktu saat init jika data old() ada
+                    if (this.selectedTanggal) {
+                        this.fetchSlotWaktu();
+                    }
+                    this.$watch('selectedTanggal', () => this.fetchSlotWaktu());
+                },
+
+                fetchSlotWaktu() {
+                    this.availableSlots = [];
+                    this.selectedSlot = '';
+                    if (!this.selectedTanggal || !this.selectedDokter) {
+                        this.loadingSlot = '';
+                        return;
+                    }
+
+                    this.loadingSlot = 'Mencari slot waktu...';
+                    fetch(`/admin/get-slot-waktu/${this.selectedDokter}/${this.selectedTanggal}`)
+                        .then(response => {
+                            if (!response.ok) throw new Error('Jadwal tidak ditemukan');
+                            return response.json();
+                        })
+                        .then(data => {
+                            this.availableSlots = data;
+                            this.loadingSlot = data.length === 0 ? 'Tidak ada slot tersedia.' : '';
+                        })
+                        .catch((error) => {
+                            console.error('Error fetching slots:', error);
+                            this.loadingSlot = 'Gagal memuat slot.';
+                        });
+                }
+            }
+        }
+    </script>
+
     <div class="py-12">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8" x-data="rescheduleForm({{ $pemesanan->id_dokter }})" x-init="init()">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 md:p-8 bg-white border-b border-gray-200">
 
@@ -17,8 +63,10 @@
                             <div><strong>Dokter:</strong> {{ $pemesanan->dokter->user->name }}</div>
                             <div><strong>NIK:</strong> {{ $pemesanan->pasien->biodata->nik ?? '-' }}</div>
                             <div><strong>Status Pasien:</strong> {{ $pemesanan->status_pasien }}</div>
-                            <div><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($pemesanan->tanggal_pesan)->isoFormat('D MMMM YYYY') }}</div>
-                            <div><strong>Waktu:</strong> {{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</div>
+                            <div><strong>Tanggal:</strong>
+                                {{ \Carbon\Carbon::parse($pemesanan->tanggal_pesan)->isoFormat('D MMMM YYYY') }}</div>
+                            <div><strong>Waktu:</strong>
+                                {{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</div>
                             <div class="col-span-2"><strong>Status Saat Ini:</strong> {{ $pemesanan->status }}</div>
                         </div>
                     </div>
@@ -29,24 +77,70 @@
 
                         <div>
                             <x-input-label for="status" :value="__('Ubah Status')" class="font-bold" />
-                            <select name="status" id="status" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-purple-300 focus:ring focus:ring-purple-200 focus:ring-opacity-50">
-                                <option value="Dikonfirmasi" @selected(old('status', $pemesanan->status) == 'Dikonfirmasi')>Konfirmasi Janji Temu</option>
-                                <option value="Dijadwalkan Ulang" @selected(old('status', $pemesanan->status) == 'Dijadwalkan Ulang')>Jadwalkan Ulang</option>
-                                <option value="Dibatalkan" @selected(old('status', $pemesanan->status) == 'Dibatalkan')>Batalkan Janji Temu</option>
-                                <option value="Selesai" @selected(old('status', $pemesanan->status) == 'Selesai')>Selesaikan (Telah Diperiksa)</option>
+                            <select name="status" id="status" x-model="selectedStatus"
+                                class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-purple-300 focus:ring focus:ring-purple-200 focus:ring-opacity-50">
+                                <option value="Dikonfirmasi" @selected(old('status', $pemesanan->status) == 'Dikonfirmasi')>
+                                    Konfirmasi Janji Temu
+                                </option>
+                                <option value="Dijadwalkan Ulang" @selected(old('status', $pemesanan->status) == 'Dijadwalkan Ulang')>
+                                    Jadwalkan Ulang
+                                </option>
+                                <option value="Dibatalkan" @selected(old('status', $pemesanan->status) == 'Dibatalkan')>
+                                    Batalkan Janji Temu
+                                </option>
+                                <option value="Selesai" @selected(old('status', $pemesanan->status) == 'Selesai')>
+                                    Tandai Selesai
+                                </option>
                             </select>
+
                         </div>
+
+                        <div x-show="selectedStatus === 'Dijadwalkan Ulang'" x-transition class="mt-6 p-4 border border-yellow-300 bg-yellow-50 rounded-lg space-y-4">
+                            <h4 class="font-semibold text-yellow-800">Atur Jadwal Baru</h4>
+                        
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Pilih Tanggal Baru -->
+                                <div>
+                                    <x-input-label for="tanggal_pesan_baru" value="Tanggal Baru" />
+                                    <input type="date" id="tanggal_pesan_baru" name="tanggal_pesan_baru"
+                                        x-model="selectedTanggal"
+                                        :min="today"
+                                        class="block mt-1 w-full border-gray-300 rounded-md shadow-sm"
+                                        value="{{ old('tanggal_pesan_baru') }}">
+                                </div>
+                        
+                                <!-- Pilih Waktu Baru -->
+                                <div>
+                                    <x-input-label for="waktu_pesan_baru" value="Waktu Baru" />
+                                    <select id="waktu_pesan_baru" name="waktu_pesan_baru"
+                                        x-model="selectedSlot"
+                                        class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">
+                                        
+                                        <template x-for="slot in availableSlots" :key="slot">
+                                            <option x-text="slot"></option>
+                                        </template>
+                                    </select>
+                        
+                                    <p class="text-xs text-gray-500 mt-1" x-text="loadingSlot"></p>
+                                </div>
+                            </div>
+                        </div>
+                        
 
                         <div class="mt-4">
                             <x-input-label for="catatan_admin">
-                                Catatan untuk Pasien <span class="text-gray-500 text-xs">(Wajib diisi jika dibatalkan/dijadwalkan ulang)</span>
+                                Catatan untuk Pasien <span class="text-gray-500 text-xs">(Wajib diisi jika
+                                    dibatalkan/dijadwalkan ulang)</span>
                             </x-input-label>
-                            <textarea id="catatan_admin" name="catatan_admin" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-purple-300 focus:ring focus:ring-purple-200 focus:ring-opacity-50" rows="4">{{ old('catatan_admin', $pemesanan->catatan_admin) }}</textarea>
+                            <textarea id="catatan_admin" name="catatan_admin"
+                                class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-purple-300 focus:ring focus:ring-purple-200 focus:ring-opacity-50"
+                                rows="4">{{ old('catatan_admin', $pemesanan->catatan_admin) }}</textarea>
                             <x-input-error :messages="$errors->get('catatan_admin')" class="mt-2" />
                         </div>
 
                         <div class="flex items-center justify-end mt-6">
-                            <a href="{{ route('admin.pemesanan.index') }}" class="text-gray-600 hover:text-gray-900 mr-4">
+                            <a href="{{ route('admin.pemesanan.index') }}"
+                                class="text-gray-600 hover:text-gray-900 mr-4">
                                 Kembali
                             </a>
                             <x-primary-button class="bg-purple-600 hover:bg-purple-700">

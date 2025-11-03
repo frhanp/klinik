@@ -180,22 +180,70 @@ class PemesananController extends Controller
      */
     public function update(Request $request, Pemesanan $pemesanan)
     {
-        $request->validate([
+        // [MODIFIKASI] Tambahkan validasi untuk tanggal & waktu baru
+        $rules = [
             'status' => 'required|string|in:Dikonfirmasi,Selesai,Dibatalkan,Dijadwalkan Ulang',
-            // Catatan wajib diisi jika statusnya Dibatalkan atau Dijadwalkan Ulang
-            'catatan_admin' => 'required_if:status,Dibatalkan,Dijadwalkan Ulang|nullable|string|max:1000',
-        ]);
+            'catatan_admin' => 'required_if:status,Dibatalkan|nullable|string|max:1000',
+        ];
+
+        // Jika statusnya "Dijadwalkan Ulang", wajibkan tanggal & waktu baru
+        if ($request->status == 'Dijadwalkan Ulang') {
+            $rules['tanggal_pesan_baru'] = 'required|date|after_or_equal:today';
+            $rules['waktu_pesan_baru'] = 'required|date_format:H:i';
+        }
+        $request->validate($rules);
+        // [AKHIR MODIFIKASI VALIDASI]
 
         $dataToUpdate = $request->only('status', 'catatan_admin');
+        $statusAsal = $pemesanan->status;
+        $tanggalPesan = $pemesanan->tanggal_pesan;
 
-        // [MODIFIKASI] Logika penomoran antrian saat dikonfirmasi
-        if ($request->status == 'Dikonfirmasi' && $pemesanan->status != 'Dikonfirmasi') {
+        // [MODIFIKASI] Logika penanganan "Dijadwalkan Ulang"
+        if ($request->status == 'Dijadwalkan Ulang') {
+            
+            // 1. Validasi Jadwal & Slot Baru
+            $tanggal = Carbon::parse($request->tanggal_pesan_baru);
+            $hariPraktek = $tanggal->translatedFormat('l');
+            $jadwal = Jadwal::where('id_dokter', $pemesanan->id_dokter)
+                            ->where('hari', $hariPraktek)
+                            ->first();
+
+            if (!$jadwal) {
+                return back()->with('error', 'Dokter tidak memiliki jadwal pada hari baru yang dipilih.')->withInput();
+            }
+
+            $slotExists = Pemesanan::where('id_dokter', $pemesanan->id_dokter)
+                            ->where('tanggal_pesan', $request->tanggal_pesan_baru)
+                            ->where('waktu_pesan', $request->waktu_pesan_baru)
+                            ->where('id', '!=', $pemesanan->id) // Abaikan pemesanan ini sendiri
+                            ->whereIn('status', ['Dipesan', 'Dikonfirmasi'])
+                            ->exists();
+
+            if ($slotExists) {
+                 return back()->with('error', 'Slot waktu baru sudah dipesan. Silakan pilih jam lain.')->withInput();
+            }
+
+            // 2. Jika valid, siapkan data untuk update
+            $dataToUpdate['tanggal_pesan'] = $request->tanggal_pesan_baru;
+            $dataToUpdate['waktu_pesan'] = $request->waktu_pesan_baru;
+            $dataToUpdate['id_jadwal'] = $jadwal->id;
+            $dataToUpdate['status'] = 'Dikonfirmasi'; // Status otomatis jadi Dikonfirmasi
+            $tanggalPesan = $request->tanggal_pesan_baru; // Gunakan tanggal baru untuk generate antrian
+        }
+
+        // [MODIFIKASI] Sesuaikan logika nomor antrian
+        // Jika status (baru) adalah Dikonfirmasi DAN status (lama) BUKAN Dikonfirmasi
+        if ($dataToUpdate['status'] == 'Dikonfirmasi' && $statusAsal != 'Dikonfirmasi') {
             $maxAntrian = Pemesanan::where('id_dokter', $pemesanan->id_dokter)
-                                ->where('tanggal_pesan', $pemesanan->tanggal_pesan)
-                                ->whereIn('status', ['Dikonfirmasi', 'Selesai']) // Hitung juga yang sudah selesai
+                                ->where('tanggal_pesan', $tanggalPesan) // Gunakan tanggal yang relevan
+                                ->whereIn('status', ['Dikonfirmasi', 'Selesai'])
                                 ->max('nomor_antrian');
             
             $dataToUpdate['nomor_antrian'] = $maxAntrian + 1;
+        } 
+        // Reset nomor antrian jika Dibatalkan atau Selesai
+        elseif (in_array($dataToUpdate['status'], ['Dibatalkan', 'Selesai'])) {
+            $dataToUpdate['nomor_antrian'] = null;
         }
 
         $pemesanan->update($dataToUpdate);
