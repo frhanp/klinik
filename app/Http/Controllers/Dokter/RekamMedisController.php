@@ -63,7 +63,12 @@ class RekamMedisController extends Controller
     }
     public function create(Request $request)
     {
-        $pemesanan = Pemesanan::with('pasien', 'tindakanAwal')->findOrFail($request->query('id_pemesanan'));
+        $pemesanan = Pemesanan::with([
+            'pasien.biodata',  // ini baru bisa jalan setelah relasi di atas dibuat
+            'tindakanAwal'
+        ])->findOrFail($request->query('id_pemesanan'));
+        
+        
         if ($pemesanan->id_dokter !== Auth::user()->dokter->id) {
             abort(403);
         }

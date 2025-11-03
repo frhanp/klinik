@@ -33,7 +33,9 @@
                                                 @if($pemesanan->status == 'Selesai') bg-green-100 text-green-800 
                                                 @elseif($pemesanan->status == 'Dibatalkan') bg-red-100 text-red-800
                                                 @elseif($pemesanan->status == 'Dijadwalkan Ulang') bg-yellow-100 text-yellow-800
+                                                @elseif($pemesanan->status == 'Dibatalkan Dokter') bg-red-100 text-red-800
                                                 @else bg-blue-100 text-blue-800 @endif">
+                                                
                                                 {{ $pemesanan->status }}
                                             </span>
                                         </td>

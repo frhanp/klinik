@@ -4,7 +4,8 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Kelola Semua Pemesanan') }}
             </h2>
-            <a href="{{ route('admin.pemesanan.create') }}" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 shadow-md text-sm font-medium">
+            <a href="{{ route('admin.pemesanan.create') }}"
+                class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 shadow-md text-sm font-medium">
                 Buat Pemesanan Baru
             </a>
         </div>
@@ -35,34 +36,49 @@
                                     <tr class="hover:bg-gray-50">
                                         <td class="py-2 px-4 border-b">{{ $pemesanan->nomor_antrian }}</td>
                                         <td class="py-2 px-4 border-b">{{ $pemesanan->pasien->name }}</td>
-                                        <td class="py-2 px-4 border-b">{{ $pemesanan->pasien->biodata->nik ?? '-' }}</td>
+                                        <td class="py-2 px-4 border-b">{{ $pemesanan->pasien->biodata->nik ?? '-' }}
+                                        </td>
                                         <td class="py-2 px-4 border-b">
                                             @php
                                                 $statusPasien = $pemesanan->status_pasien;
-                                                $badgeColorPasien = [
-                                                    'BPJS' => 'bg-blue-100 text-blue-800',
-                                                    'Inhealth' => 'bg-yellow-100 text-yellow-800',
-                                                    'Umum' => 'bg-green-100 text-green-800',
-                                                ][$statusPasien] ?? 'bg-gray-100 text-gray-800';
+                                                $badgeColorPasien =
+                                                    [
+                                                        'BPJS' => 'bg-blue-100 text-blue-800',
+                                                        'Inhealth' => 'bg-yellow-100 text-yellow-800',
+                                                        'Umum' => 'bg-green-100 text-green-800',
+                                                    ][$statusPasien] ?? 'bg-gray-100 text-gray-800';
                                             @endphp
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $badgeColorPasien }}">
+                                            <span
+                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $badgeColorPasien }}">
                                                 {{ $statusPasien }}
                                             </span>
                                         </td>
                                         <td class="py-2 px-4 border-b">{{ $pemesanan->dokter->user->name }}</td>
-                                        <td class="py-2 px-4 border-b">{{ \Carbon\Carbon::parse($pemesanan->tanggal_pesan)->translatedFormat('d F Y') }}</td>
-                                        <td class="py-2 px-4 border-b">{{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</td>
                                         <td class="py-2 px-4 border-b">
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                                @if($pemesanan->status == 'Selesai') bg-green-100 text-green-800 
+                                            {{ \Carbon\Carbon::parse($pemesanan->tanggal_pesan)->translatedFormat('d F Y') }}
+                                        </td>
+                                        <td class="py-2 px-4 border-b">
+                                            {{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</td>
+                                        <td class="py-2 px-4 border-b">
+                                            <span
+                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                @if ($pemesanan->status == 'Selesai') bg-green-100 text-green-800 
                                                 @elseif($pemesanan->status == 'Dibatalkan') bg-red-100 text-red-800
                                                 @elseif($pemesanan->status == 'Dikonfirmasi') bg-blue-100 text-blue-800
                                                 @else bg-yellow-100 text-yellow-800 @endif">
                                                 {{ $pemesanan->status }}
+
                                             </span>
+                                            @if ($pemesanan->status == 'Dibatalkan Dokter' && $pemesanan->catatan_admin)
+                                                <div class="text-xs text-red-600 mt-1">
+                                                    Alasan: {{ $pemesanan->catatan_admin }}
+                                                </div>
+                                            @endif
+
                                         </td>
                                         <td class="py-2 px-4 border-b">
-                                            <a href="{{ route('admin.pemesanan.edit', $pemesanan->id) }}" class="text-indigo-600 hover:text-indigo-900">Ubah Status</a>
+                                            <a href="{{ route('admin.pemesanan.edit', $pemesanan->id) }}"
+                                                class="text-indigo-600 hover:text-indigo-900">Ubah Status</a>
                                         </td>
                                     </tr>
                                 @empty

@@ -24,6 +24,11 @@
                                 {{ $pemesanan->status == 'Menunggu Konfirmasi Pasien' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800' }}">
                                         {{ $pemesanan->status }}
                                     </span>
+                                    @if ($pemesanan->status == 'Dibatalkan Dokter' && $pemesanan->catatan_admin)
+                                        <div class="text-xs text-red-600 mt-1">
+                                            Alasan: {{ $pemesanan->catatan_admin }}
+                                        </div>
+                                    @endif
                                 </p>
 
                                 {{-- AWAL MODIFIKASI: Konfirmasi Jadwal Baru --}}

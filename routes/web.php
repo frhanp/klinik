@@ -82,7 +82,8 @@ Route::middleware(['auth', 'cekperan:dokter'])->prefix('dokter')->name('dokter.'
     Route::resource('rekam-medis', DokterRekamMedisController::class);
     Route::get('rekam-medis/pasien/{pasien}', [DokterRekamMedisController::class, 'showByPasien'])
             ->name('rekam-medis.pasien');
-    
+    Route::put('pemesanan/{pemesanan}/cancel', [DokterDashboardController::class, 'cancel'])
+            ->name('pemesanan.cancel');
 });
 
 

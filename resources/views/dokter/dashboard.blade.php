@@ -1,4 +1,3 @@
-{{-- AWAL MODIFIKASI: resources/views/dokter/dashboard.blade.php --}}
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -102,10 +101,35 @@
                                         </td>
 
                                         <td class="py-3 px-4 align-top text-center">
-                                            <a href="{{ route('dokter.rekam-medis.create', ['id_pemesanan' => $pemesanan->id]) }}"
-                                                class="inline-block text-sm font-semibold text-white bg-green-600 hover:bg-green-700 px-4 py-1.5 rounded-md shadow-sm transition">
-                                                Proses
-                                            </a>
+                                            <div class="flex justify-center items-center gap-2">
+
+                                                {{-- Tombol Proses --}}
+                                                <a href="{{ route('dokter.rekam-medis.create', ['id_pemesanan' => $pemesanan->id]) }}"
+                                                    class="inline-block text-xs font-semibold text-white bg-green-600 hover:bg-green-700 px-3 py-1.5 rounded-md shadow-sm transition">
+                                                    Proses
+                                                </a>
+
+                                                {{-- Tombol Batalkan --}}
+                                                @if ($pemesanan->status === 'Dikonfirmasi')
+    <form action="{{ route('dokter.pemesanan.cancel', $pemesanan->id) }}" method="POST" class="inline-flex items-center gap-2">
+        @csrf
+        @method('PUT')
+
+        <input type="text"
+               name="reason"
+               placeholder="Alasan (opsional)"
+               class="border text-xs px-2 py-1 rounded"
+               style="width:120px" />
+
+        <button type="submit"
+                onclick="return confirm('Batalkan pemesanan ini?')"
+                class="text-xs font-semibold px-3 py-1.5 rounded-md shadow-sm bg-red-600 text-white hover:bg-red-700 transition">
+            Batalkan
+        </button>
+    </form>
+@endif
+
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty
@@ -124,4 +148,3 @@
         </div>
     </div>
 </x-app-layout>
-{{-- AKHIR MODIFIKASI --}}
