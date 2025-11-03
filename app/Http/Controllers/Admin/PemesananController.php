@@ -123,7 +123,16 @@ class PemesananController extends Controller
 
 
         DB::transaction(function () use ($request, $pasien, $jadwal) {
+
             // Buat data pemesanan
+            $nomorAntrianBaru = null;
+            if ($request->status == 'Dikonfirmasi') {
+                $maxAntrian = Pemesanan::where('id_dokter', $request->id_dokter)
+                                    ->where('tanggal_pesan', $request->tanggal_pesan)
+                                    ->where('status', 'Dikonfirmasi')
+                                    ->max('nomor_antrian');
+                $nomorAntrianBaru = $maxAntrian + 1;
+            }
             $pemesanan = Pemesanan::create([
                 'id_pasien' => $pasien->id,
                 'nama_pasien_booking' => $pasien->name, // Ambil nama dari user pasien
@@ -135,6 +144,7 @@ class PemesananController extends Controller
                 'catatan' => $request->catatan,
                 'status' => $request->status, // Status awal (misal: Dikonfirmasi)
                 'nomor_bpjs' => $request->nomor_bpjs,
+                'nomor_antrian' => $nomorAntrianBaru,
             ]);
 
             // Simpan data tindakan awal ke tabel pivot
@@ -176,10 +186,19 @@ class PemesananController extends Controller
             'catatan_admin' => 'required_if:status,Dibatalkan,Dijadwalkan Ulang|nullable|string|max:1000',
         ]);
 
-        $pemesanan->update([
-            'status' => $request->status,
-            'catatan_admin' => $request->catatan_admin,
-        ]);
+        $dataToUpdate = $request->only('status', 'catatan_admin');
+
+        // [MODIFIKASI] Logika penomoran antrian saat dikonfirmasi
+        if ($request->status == 'Dikonfirmasi' && $pemesanan->status != 'Dikonfirmasi') {
+            $maxAntrian = Pemesanan::where('id_dokter', $pemesanan->id_dokter)
+                                ->where('tanggal_pesan', $pemesanan->tanggal_pesan)
+                                ->whereIn('status', ['Dikonfirmasi', 'Selesai']) // Hitung juga yang sudah selesai
+                                ->max('nomor_antrian');
+            
+            $dataToUpdate['nomor_antrian'] = $maxAntrian + 1;
+        }
+
+        $pemesanan->update($dataToUpdate);
 
         return redirect()->route('admin.pemesanan.index')->with('success', 'Status pemesanan berhasil diperbarui.');
     }

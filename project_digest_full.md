@@ -1,5 +1,5 @@
 ﻿# Project Digest (Full Content)
-_Generated: 2025-11-01 13:07:33_
+_Generated: 2025-11-02 17:45:23_
 **Root:** D:\Laragon\www\klinik
 
 
@@ -7,6 +7,7 @@ _Generated: 2025-11-01 13:07:33_
 ```
 .git
 app
+assets
 bootstrap
 config
 database
@@ -95,6 +96,8 @@ app\Providers\AppServiceProvider.php
 app\View\Components
 app\View\Components\AppLayout.php
 app\View\Components\GuestLayout.php
+assets\backgrounds
+assets\fonts
 bootstrap\cache
 bootstrap\app.php
 bootstrap\providers.php
@@ -103,7 +106,7 @@ bootstrap\cache\services.php
 config\app.php
 config\auth.php
 config\cache.php
-config\captcha.php
+config\captcha.php.bak
 config\database.php
 config\filesystems.php
 config\logging.php
@@ -285,10 +288,16 @@ storage\framework\views\.gitignore
 storage\framework\views\059c55a96ee3c6dae65a022354ffc036.php
 storage\framework\views\0a303c72d761a68921594a49713d4510.php
 storage\framework\views\0afe6ab13daf12a6674687a76eddc1b2.php
+storage\framework\views\0c617c98432933a95814e28d89db8e04.php
+storage\framework\views\0dde4a8697d8768fbaa33a58a45b8550.php
+storage\framework\views\14f333af3f64fc5dbad9e5850c525a64.php
 storage\framework\views\1846ad195a36ec593251411dc8172134.php
 storage\framework\views\1a89655d329c7963e3aac340c661d4eb.php
 storage\framework\views\1e837dfe9fa57a9b4c37dae5b1a3f0b5.php
+storage\framework\views\25b164ca6d9b35899e445c3243b63643.php
 storage\framework\views\26019b94edbe1c23ccddae68839d38e0.php
+storage\framework\views\28b33f8e5c03e7fb8682fc9b72d32f2d.php
+storage\framework\views\2a830ecd468f435f1747c72e21677166.php
 storage\framework\views\323e0d4cb6aa3a79df371502459f3f95.php
 storage\framework\views\34a28d1c5975e6a80cf8e90545c1042d.php
 storage\framework\views\35b948da9e966c78a172e74616518c9c.php
@@ -297,37 +306,61 @@ storage\framework\views\3f78f7c3950888e24e17f0f2153164ba.php
 storage\framework\views\3f97fad1046eebed23dea96fef8be649.php
 storage\framework\views\3fe124fd1ab53367f3db7d5c4f61a949.php
 storage\framework\views\4093f5cd207932011562c32ddaa82537.php
+storage\framework\views\43cd2c320e451f9a26231447b724fcfe.php
+storage\framework\views\45a511ac94b858088f8c488900084c75.php
+storage\framework\views\49d2988d7ab7a37f316ac97460cf0d4f.php
+storage\framework\views\4b50d759db4c428ed5a03be84a9ed913.php
 storage\framework\views\5c2a7c738b827bf614a05d851f279e56.php
 storage\framework\views\5c569f0a687a604dd7f3a8d4447910a2.php
 storage\framework\views\5e818641b234edb8405df092be320eea.php
+storage\framework\views\6476e2ef62b06efca0dc001eff659fea.php
 storage\framework\views\655d3f3e826a7a4d5fe83a14ac6cb4d3.php
 storage\framework\views\662ec6b9fc235e3b098c2320dafe372c.php
+storage\framework\views\668a2ece4a1ac7e48394b27d4e519e47.php
+storage\framework\views\6787602fc1fe7c2d5934c9d12634bc91.php
+storage\framework\views\6a08ce534097ba81157bc6e83c44a78c.php
 storage\framework\views\6a717951ad3990d989a07e05d1f1e765.php
 storage\framework\views\6f99de5660a2ce6fcab43b45591e19aa.php
 storage\framework\views\6fb1e90d4a4d0f72868fca0b625fbb93.php
 storage\framework\views\738743497017023635a44cfb07348ef6.php
 storage\framework\views\792564f6be86d5ac31086322eb7293c8.php
 storage\framework\views\7b402872e29f6f895b12d3671d0adb35.php
+storage\framework\views\7b7091f5a95344deb1c9fc06cc5be79e.php
+storage\framework\views\7f8ea05fa5ed27510431c21464520fe8.php
 storage\framework\views\8a67838763e8a04e278800e4d370ef93.php
+storage\framework\views\8a8c75978fc25ce10731b8c47d60e7f0.php
 storage\framework\views\8d75112a3f71eab1be73b5746a8b6e9d.php
 storage\framework\views\9a480b0fba443393c56b5664d5a8cb00.php
+storage\framework\views\9e62399cfa0826aae9058d6317f05beb.php
 storage\framework\views\9fdd7ca1bc4d6f5af47fddae768463e6.php
 storage\framework\views\a47da49129c2ec197d8718d23247af49.php
 storage\framework\views\a739b139d9f5f171daeeaf3b81c8dad1.php
+storage\framework\views\ae0523d13e73cef276c10bcb952d6d6b.php
 storage\framework\views\b15c1c717568cd4fb1c9fbc2e3cea052.php
 storage\framework\views\b280f2904c5bff00cc744a575a706c5f.php
 storage\framework\views\b7c48775358bf8612429412cdf309287.php
+storage\framework\views\bb81c05887fc4897ea0b8a4be4d2931a.php
 storage\framework\views\bd5da35130d7a2f0bc7e7ad7110a9e0b.php
+storage\framework\views\be5779b819f9903611be5ef8b4c91b6b.php
 storage\framework\views\bebbcc12d82febc3d9d74e01e7ce326d.php
 storage\framework\views\c957773180b2d2287705b897b60f75a9.php
 storage\framework\views\cb1fba32553bf47107a2240b7da65c66.php
 storage\framework\views\cd0cd98ac51fd3bfeeea9827aaad4bdf.php
 storage\framework\views\da53ee5125379d964aa803207bdcf2b3.php
+storage\framework\views\df7c8d03deaec504e7226da044cc9385.php
+storage\framework\views\df9f8e03031713776f7951a3bdc95946.php
 storage\framework\views\e4230712cc46b6a4b60cb1d2adcdf49b.php
+storage\framework\views\ea406da005b4cd76dccac7b20424e182.php
+storage\framework\views\ee3a40a42db5fc8f3b6f46d1bfa55b60.php
+storage\framework\views\f4f0e45db0792760bb2c5ec050ed8ea1.php
 storage\framework\views\f6939232881a5a3e95e1217e1623e78d.php
 storage\framework\views\f6c972f146e7ba607cb449d9433fa422.php
+storage\framework\views\f97a950f1ee4517c7a6d7794bd304b7a.php
+storage\framework\views\faf56ae91916039096754864d30e515d.php
 storage\framework\views\fdf72d7c0e0e65d6cdbbb3d8b5f7121b.php
+storage\framework\views\fe989a9fa0b3ba0128fe9d5a63322909.php
 storage\framework\views\ff9e50544edecda8603349ef7c792734.php
+storage\framework\views\fff3efb7920daa1d875f58dc75176871.php
 tests\Feature
 tests\Unit
 tests\TestCase.php
@@ -354,11 +387,11 @@ Branch:
 main
 
 Last 5 commits:
+7172917 add captcha
 2dcd74a ubah kata jadi layanan yang di inginkan
 efc257f tambah grafik
 85ed5c3 add detail dan status dari biodata
 74105ed admin bisa mesan
-00dd38c add biodata lengkap
 ```
 
 
@@ -6091,7 +6124,8 @@ class Tindakan extends Model
             <div class="flex items-center space-x-2 mt-1">
                 {{-- Tampilkan gambar captcha --}}
                 <span class="border rounded-md p-1 bg-gray-100">
-                    {!! captcha_img() !!}
+                    <img src="{{ captcha_src() }}" alt="captcha">
+
                 </span>
                 {{-- Input untuk kode --}}
                 <x-text-input id="captcha" class="block w-full" type="text" name="captcha" required />

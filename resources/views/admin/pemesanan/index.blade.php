@@ -19,6 +19,7 @@
                         <table class="min-w-full bg-white">
                             <thead class="bg-gray-200">
                                 <tr>
+                                    <th class="py-2 px-4 border-b">Nomor Antrian</th>
                                     <th class="py-2 px-4 border-b">Pasien</th>
                                     <th class="py-2 px-4 border-b">NIK</th>
                                     <th class="py-2 px-4 border-b">Status Pasien</th>
@@ -32,6 +33,7 @@
                             <tbody>
                                 @forelse ($pemesanans as $pemesanan)
                                     <tr class="hover:bg-gray-50">
+                                        <td class="py-2 px-4 border-b">{{ $pemesanan->nomor_antrian }}</td>
                                         <td class="py-2 px-4 border-b">{{ $pemesanan->pasien->name }}</td>
                                         <td class="py-2 px-4 border-b">{{ $pemesanan->pasien->biodata->nik ?? '-' }}</td>
                                         <td class="py-2 px-4 border-b">
