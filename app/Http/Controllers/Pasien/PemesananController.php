@@ -223,6 +223,41 @@ class PemesananController extends Controller
         return view('pasien.pemesanan.show', compact('pemesanan'));
     }
 
+    public function update(Request $request, Pemesanan $pemesanan)
+{
+    // Pastikan pemesanan memang milik pasien yang sedang login
+    if ($pemesanan->id_pasien !== Auth::id()) {
+        abort(403, 'Tidak memiliki akses.');
+    }
+
+    // Pasien menyetujui reschedule
+    if ($request->aksi == 'setuju_reschedule') {
+        // Hitung nomor antrian baru (sama seperti logika admin)
+        $maxAntrian = Pemesanan::where('id_dokter', $pemesanan->id_dokter)
+            ->where('tanggal_pesan', $pemesanan->tanggal_pesan)
+            ->whereIn('status', ['Dikonfirmasi', 'Selesai'])
+            ->max('nomor_antrian');
+
+        $pemesanan->update([
+            'status' => 'Dikonfirmasi',
+            'nomor_antrian' => $maxAntrian + 1
+        ]);
+
+        return back()->with('success', 'Anda telah menyetujui jadwal baru.');
+    }
+
+    // Pasien menolak reschedule
+    if ($request->aksi == 'tolak_reschedule') {
+        $pemesanan->update([
+            'status' => 'Ditolak Pasien'
+        ]);
+
+        return back()->with('error', 'Anda menolak jadwal baru. Silakan hubungi klinik.');
+    }
+
+    return back()->with('info', 'Tidak ada perubahan.');
+}
+
     public function destroy(Pemesanan $pemesanan)
     {
         if ($pemesanan->id_pasien !== Auth::id()) abort(403);

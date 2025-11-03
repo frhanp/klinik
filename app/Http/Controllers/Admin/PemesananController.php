@@ -180,7 +180,7 @@ class PemesananController extends Controller
      */
     public function update(Request $request, Pemesanan $pemesanan)
     {
-        // [MODIFIKASI] Tambahkan validasi untuk tanggal & waktu baru
+        
         $rules = [
             'status' => 'required|string|in:Dikonfirmasi,Selesai,Dibatalkan,Dijadwalkan Ulang',
             'catatan_admin' => 'required_if:status,Dibatalkan|nullable|string|max:1000',
@@ -192,13 +192,13 @@ class PemesananController extends Controller
             $rules['waktu_pesan_baru'] = 'required|date_format:H:i';
         }
         $request->validate($rules);
-        // [AKHIR MODIFIKASI VALIDASI]
+        
 
         $dataToUpdate = $request->only('status', 'catatan_admin');
         $statusAsal = $pemesanan->status;
         $tanggalPesan = $pemesanan->tanggal_pesan;
 
-        // [MODIFIKASI] Logika penanganan "Dijadwalkan Ulang"
+        
         if ($request->status == 'Dijadwalkan Ulang') {
             
             // 1. Validasi Jadwal & Slot Baru
@@ -227,11 +227,11 @@ class PemesananController extends Controller
             $dataToUpdate['tanggal_pesan'] = $request->tanggal_pesan_baru;
             $dataToUpdate['waktu_pesan'] = $request->waktu_pesan_baru;
             $dataToUpdate['id_jadwal'] = $jadwal->id;
-            $dataToUpdate['status'] = 'Dikonfirmasi'; // Status otomatis jadi Dikonfirmasi
+            $dataToUpdate['status'] = 'Menunggu Konfirmasi Pasien';
             $tanggalPesan = $request->tanggal_pesan_baru; // Gunakan tanggal baru untuk generate antrian
         }
 
-        // [MODIFIKASI] Sesuaikan logika nomor antrian
+        
         // Jika status (baru) adalah Dikonfirmasi DAN status (lama) BUKAN Dikonfirmasi
         if ($dataToUpdate['status'] == 'Dikonfirmasi' && $statusAsal != 'Dikonfirmasi') {
             $maxAntrian = Pemesanan::where('id_dokter', $pemesanan->id_dokter)
