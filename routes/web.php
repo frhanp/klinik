@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\PasienController as AdminPasienController;
 use App\Http\Controllers\Admin\LaporanController as LaporanController;
 use App\Http\Controllers\Pasien\BiodataController as PasienBiodataController;
 use App\Http\Controllers\Admin\JadwalController as JadwalController;
+use App\Http\Controllers\Pasien\NotifikasiController as PasienNotifikasiController;
 
 
 /*
@@ -98,6 +99,10 @@ Route::middleware(['auth', 'cekperan:pasien'])->prefix('pasien')->name('pasien.'
 
     // Route untuk mendapatkan slot waktu yang tersedia pada tanggal tertentu
     Route::get('/get-slot-waktu/{dokter}/{tanggal}', [PasienPemesananController::class, 'getSlotWaktu'])->name('pemesanan.getSlotWaktu');
+
+    //Route Notifikasi
+    Route::get('notifikasi', [PasienNotifikasiController::class, 'index'])->name('notifikasi.index');
+    Route::post('notifikasi/{id}/read', [PasienNotifikasiController::class, 'markAsRead'])->name('notifikasi.read');
 });
 
 

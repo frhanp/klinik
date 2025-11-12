@@ -11,6 +11,8 @@ use App\Models\DaftarTindakan;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Jadwal;
+use App\Notifications\PemesananStatusUpdated;
+use Illuminate\Support\Facades\Log;
 
 class PemesananController extends Controller
 {
@@ -247,6 +249,15 @@ class PemesananController extends Controller
         }
 
         $pemesanan->update($dataToUpdate);
+        try {
+            $pasien = $pemesanan->pasien; // Dapatkan user pasien dari relasi
+            if ($pasien) {
+                $pasien->notify(new PemesananStatusUpdated($pemesanan));
+            }
+        } catch (\Exception $e) {
+            // Opsional: Catat log jika pengiriman notif gagal
+            Log::error('Gagal mengirim notifikasi: ' . $e->getMessage());
+        }
 
         return redirect()->route('admin.pemesanan.index')->with('success', 'Status pemesanan berhasil diperbarui.');
     }
