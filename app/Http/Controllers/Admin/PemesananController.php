@@ -249,6 +249,7 @@ class PemesananController extends Controller
         }
 
         $pemesanan->update($dataToUpdate);
+        $statusBaru = $dataToUpdate['status'];
         try {
             $pasien = $pemesanan->pasien; // Dapatkan user pasien dari relasi
             if ($pasien) {
@@ -257,6 +258,17 @@ class PemesananController extends Controller
         } catch (\Exception $e) {
             // Opsional: Catat log jika pengiriman notif gagal
             Log::error('Gagal mengirim notifikasi: ' . $e->getMessage());
+        }
+
+        if (in_array($statusBaru, ['Dikonfirmasi', 'Dibatalkan', 'Dijadwalkan Ulang'])) {
+            try {
+                $dokterUser = $pemesanan->dokter->user;
+                if ($dokterUser) {
+                    $dokterUser->notify(new PemesananStatusUpdated($pemesanan));
+                }
+            } catch (\Exception $e) {
+                // Abaikan
+            }
         }
 
         return redirect()->route('admin.pemesanan.index')->with('success', 'Status pemesanan berhasil diperbarui.');

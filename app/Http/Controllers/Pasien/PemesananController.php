@@ -14,6 +14,10 @@ use App\Models\BiodataPasien;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Models\DaftarTindakan;
+use App\Models\User;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\PemesananBaruUntukAdmin;
+use App\Notifications\PemesananStatusUpdated;
 
 class PemesananController extends Controller
 {
@@ -225,6 +229,15 @@ class PemesananController extends Controller
             if ($request->has('tindakan_awal')) {
                 $pemesanan->tindakanAwal()->attach($request->tindakan_awal);
             }
+
+            try {
+                $adminUsers = User::where('peran', 'admin')->get();
+                if ($adminUsers->isNotEmpty()) {
+                    Notification::send($adminUsers, new PemesananBaruUntukAdmin($pemesanan));
+                }
+            } catch (\Exception $e) {
+                // Abaikan jika notif gagal
+            }
         });
 
         return redirect()->route('pasien.pemesanan.index')->with('success', 'Pemesanan berhasil dibuat.');
@@ -276,11 +289,25 @@ class PemesananController extends Controller
     public function destroy(Pemesanan $pemesanan)
     {
         if ($pemesanan->id_pasien !== Auth::id()) abort(403);
+        $statusAsal = $pemesanan->status;
 
         if (in_array($pemesanan->status, ['Dipesan', 'Dikonfirmasi'])) {
             $pemesanan->update(['status' => 'Dibatalkan']);
+
+            if ($statusAsal == 'Dikonfirmasi') {
+                try {
+                    $dokterUser = $pemesanan->dokter->user;
+                    if ($dokterUser) {
+                        $dokterUser->notify(new PemesananStatusUpdated($pemesanan));
+                    }
+                } catch (\Exception $e) {
+                    // Abaikan jika notif gagal
+                }
+            }
             return redirect()->route('pasien.pemesanan.index')->with('success', 'Pemesanan berhasil dibatalkan.');
         }
+
+
 
         return redirect()->route('pasien.pemesanan.index')->with('error', 'Pemesanan yang sudah selesai tidak dapat dibatalkan.');
     }

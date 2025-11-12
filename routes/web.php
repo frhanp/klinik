@@ -25,6 +25,9 @@ use App\Http\Controllers\Pasien\BiodataController as PasienBiodataController;
 use App\Http\Controllers\Admin\JadwalController as JadwalController;
 use App\Http\Controllers\Pasien\NotifikasiController as PasienNotifikasiController;
 
+use App\Http\Controllers\Admin\NotifikasiController as AdminNotifikasiController;
+use App\Http\Controllers\Dokter\NotifikasiController as DokterNotifikasiController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +76,9 @@ Route::middleware(['auth', 'cekperan:admin'])->prefix('admin')->name('admin.')->
     Route::get('laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
 
     Route::get('/get-slot-waktu/{dokter}/{tanggal}', [AdminPemesananController::class, 'getSlotWaktuAdmin'])->name('pemesanan.getSlotWaktuAdmin');
+
+    
+    Route::get('notifikasi', [AdminNotifikasiController::class, 'index'])->name('notifikasi.index'); // [MODIFIKASI] Tambah ini
 });
 
 
@@ -85,6 +91,9 @@ Route::middleware(['auth', 'cekperan:dokter'])->prefix('dokter')->name('dokter.'
             ->name('rekam-medis.pasien');
     Route::put('pemesanan/{pemesanan}/cancel', [DokterDashboardController::class, 'cancel'])
             ->name('pemesanan.cancel');
+    Route::get('notifikasi', [DokterNotifikasiController::class, 'index'])->name('notifikasi.index');
+
+
 });
 
 

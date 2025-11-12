@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\PasienBaruUntukAdmin;
 
 class RegisteredUserController extends Controller
 {
@@ -40,6 +42,15 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        try {
+            $adminUsers = User::where('peran', 'admin')->get();
+            if ($adminUsers->isNotEmpty()) {
+                Notification::send($adminUsers, new PasienBaruUntukAdmin($user));
+            }
+        } catch (\Exception $e) {
+            // Abaikan jika notif gagal
+        }
 
         event(new Registered($user));
 
