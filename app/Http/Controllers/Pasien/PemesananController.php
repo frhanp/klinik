@@ -144,17 +144,32 @@ class PemesananController extends Controller
     //----------------------------------
 
     public function create()
-{
-    $dokters = Dokter::with('user')->get();
+    {
+        
+        $adaPemesananAktif = Pemesanan::where('id_pasien', Auth::id())
+            ->whereIn('status', ['Dipesan', 'Dikonfirmasi', 'Menunggu Konfirmasi Pasien', 'Dijadwalkan Ulang'])
+            ->exists();
+            
+        if ($adaPemesananAktif) {
+            return redirect()->route('pasien.dashboard')->with('error', 'Anda sudah memiliki janji temu aktif.');
+        }
+        
 
-    // [MODIFIKASI] Ambil data tindakan yang sudah dikelompokkan berdasarkan kategori
-    $daftarTindakans = DaftarTindakan::with('tindakanItems')->orderBy('nama_kategori')->get();
-
-    return view('pasien.pemesanan.create', compact('dokters', 'daftarTindakans'));
-}
+        $dokters = Dokter::with('user')->get();
+        $daftarTindakans = DaftarTindakan::with('tindakanItems')->orderBy('nama_kategori')->get();
+        return view('pasien.pemesanan.create', compact('dokters', 'daftarTindakans'));
+    }
 
     public function store(Request $request)
     {
+        $adaPemesananAktif = Pemesanan::where('id_pasien', Auth::id())
+            ->whereIn('status', ['Dipesan', 'Dikonfirmasi', 'Menunggu Konfirmasi Pasien', 'Dijadwalkan Ulang'])
+            ->exists();
+            
+        if ($adaPemesananAktif) {
+            return redirect()->route('pasien.pemesanan.index')->with('error', 'Gagal membuat janji temu. Anda masih memiliki janji temu yang aktif.');
+        }
+        
         $request->validate([
             // Validasi untuk data diri (Langkah 1)
             'nama_pasien_booking' => ['required', 'string', 'max:255'],

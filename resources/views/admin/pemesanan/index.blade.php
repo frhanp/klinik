@@ -59,23 +59,24 @@
                                         </td>
                                         <td class="py-2 px-4 border-b">
                                             {{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</td>
-                                        <td class="py-2 px-4 border-b">
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                                @if ($pemesanan->status == 'Selesai') bg-green-100 text-green-800 
-                                                @elseif($pemesanan->status == 'Dibatalkan') bg-red-100 text-red-800
-                                                @elseif($pemesanan->status == 'Dikonfirmasi') bg-blue-100 text-blue-800
-                                                @else bg-yellow-100 text-yellow-800 @endif">
-                                                {{ $pemesanan->status }}
-
-                                            </span>
-                                            @if ($pemesanan->status == 'Dibatalkan Dokter' && $pemesanan->catatan_admin)
-                                                <div class="text-xs text-red-600 mt-1">
-                                                    Alasan: {{ $pemesanan->catatan_admin }}
-                                                </div>
-                                            @endif
-
-                                        </td>
+                                            <td class="py-2 px-4 border-b">
+                                                <span
+                                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                    @if ($pemesanan->status == 'Selesai') bg-green-100 text-green-800 
+                                                    @elseif($pemesanan->status == 'Dibatalkan') bg-red-100 text-red-800
+                                                    @elseif($pemesanan->status == 'Dikonfirmasi') bg-blue-100 text-blue-800
+                                                    @else bg-yellow-100 text-yellow-800 @endif">
+                                                    
+                                                    {{ $pemesanan->status == 'Dipesan' ? 'Direservasi' : $pemesanan->status }}
+                                                </span>
+                                            
+                                                @if ($pemesanan->status == 'Dibatalkan Dokter' && $pemesanan->catatan_admin)
+                                                    <div class="text-xs text-red-600 mt-1">
+                                                        Alasan: {{ $pemesanan->catatan_admin }}
+                                                    </div>
+                                                @endif
+                                            </td>
+                                            
                                         <td class="py-2 px-4 border-b">
                                             <a href="{{ route('admin.pemesanan.edit', $pemesanan->id) }}"
                                                 class="text-indigo-600 hover:text-indigo-900">Ubah Status</a>

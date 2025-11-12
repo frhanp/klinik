@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h3 class="text-lg font-semibold mb-4">Pemesanan Aktif Anda</h3>
-                    @if ($pemesananAktif->isNotEmpty())
+                    @if ($adaPemesananAktif)
                         @foreach ($pemesananAktif as $pemesanan)
                             <div class="border p-4 rounded-lg mb-4">
                                 <p><strong>Dokter:</strong> {{ $pemesanan->dokter->user->name }}</p>
@@ -73,6 +73,9 @@
                                 {{-- AKHIR MODIFIKASI --}}
                             </div>
                         @endforeach
+                        <div class="mt-6 p-4 bg-yellow-50 border border-yellow-300 rounded-lg text-sm text-yellow-800">
+                            Anda sudah memiliki janji temu yang aktif. Anda baru dapat membuat janji temu baru setelah janji temu saat ini "Selesai" atau "Dibatalkan".
+                        </div>
                     @else
                         <p>Anda tidak memiliki pemesanan yang aktif saat ini.</p>
                         <a href="{{ route('pasien.pemesanan.create') }}"
@@ -84,4 +87,29 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            @if (session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: '{{ session('success') }}',
+                    confirmButtonColor: '#6D28D9' // Warna ungu
+                });
+            @endif
+
+            @if (session('error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: '{{ session('error') }}',
+                    confirmButtonColor: '#6D28D9' // Warna ungu
+                });
+            @endif
+        });
+    </script>
+    @endpush
 </x-app-layout>

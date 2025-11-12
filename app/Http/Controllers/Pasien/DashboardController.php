@@ -15,12 +15,15 @@ class DashboardController extends Controller
             ->whereIn('status', [
                 'Dipesan',
                 'Dikonfirmasi',
-                'Menunggu Konfirmasi Pasien'
+                'Menunggu Konfirmasi Pasien',
+                'Dijadwalkan Ulang'
             ])
-            ->orderBy('created_at', 'desc') // ambil yg terbaru dulu
-            ->get(); // HAPUS take(6)
+            ->orderBy('created_at', 'desc') 
+            ->get(); 
+
+            $adaPemesananAktif = $pemesananAktif->isNotEmpty();
 
 
-        return view('pasien.dashboard', compact('pemesananAktif'));
+        return view('pasien.dashboard', compact('pemesananAktif','adaPemesananAktif'));
     }
 }

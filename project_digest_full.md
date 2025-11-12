@@ -1,5 +1,5 @@
 ﻿# Project Digest (Full Content)
-_Generated: 2025-11-04 01:35:06_
+_Generated: 2025-11-12 09:29:20_
 **Root:** D:\Laragon\www\klinik
 
 
@@ -237,10 +237,20 @@ resources\views\dokter\jadwal
 resources\views\dokter\rekam-medis
 resources\views\dokter\dashboard.blade.php
 resources\views\dokter\jadwal\index.blade.php
+resources\views\dokter\rekam-medis\partials
 resources\views\dokter\rekam-medis\create.blade.php
 resources\views\dokter\rekam-medis\index.blade.php
 resources\views\dokter\rekam-medis\pasien.blade.php
 resources\views\dokter\rekam-medis\show.blade.php
+resources\views\dokter\rekam-medis\partials\_actions.blade.php
+resources\views\dokter\rekam-medis\partials\_biaya.blade.php
+resources\views\dokter\rekam-medis\partials\_diagnosa.blade.php
+resources\views\dokter\rekam-medis\partials\_foto.blade.php
+resources\views\dokter\rekam-medis\partials\_pasien.blade.php
+resources\views\dokter\rekam-medis\partials\_resep.blade.php
+resources\views\dokter\rekam-medis\partials\_scripts.blade.php
+resources\views\dokter\rekam-medis\partials\_tindakan_dokter.blade.php
+resources\views\dokter\rekam-medis\partials\_tindakan_pasien.blade.php
 resources\views\layouts\app.blade.php
 resources\views\layouts\guest.blade.php
 resources\views\layouts\navigation.blade.php
@@ -273,6 +283,7 @@ storage\app\private\public\foto-rekam-medis
 storage\app\private\public\foto-rekam-medis\FrH2SZ9445VmIL8m9Ni76KxC5RB17xWUM0pfGcJO.jpg
 storage\app\public\foto-rekam-medis
 storage\app\public\.gitignore
+storage\app\public\foto-rekam-medis\ovhYim1i4D5RJUovwjZPJTwKNBJyFuOEkFZI0U2Q.jpg
 storage\app\public\foto-rekam-medis\rX2xANEm64vgLCPsgxbqunEkxXzSVC51fTiP4ljT.jpg
 storage\framework\cache
 storage\framework\sessions
@@ -288,6 +299,7 @@ storage\framework\testing\.gitignore
 storage\framework\views\.gitignore
 storage\framework\views\059c55a96ee3c6dae65a022354ffc036.php
 storage\framework\views\0a303c72d761a68921594a49713d4510.php
+storage\framework\views\0a9bef67fe2b9d30708d407252dcb40b.php
 storage\framework\views\0afe6ab13daf12a6674687a76eddc1b2.php
 storage\framework\views\0c617c98432933a95814e28d89db8e04.php
 storage\framework\views\0dde4a8697d8768fbaa33a58a45b8550.php
@@ -298,12 +310,17 @@ storage\framework\views\1e837dfe9fa57a9b4c37dae5b1a3f0b5.php
 storage\framework\views\25b164ca6d9b35899e445c3243b63643.php
 storage\framework\views\26019b94edbe1c23ccddae68839d38e0.php
 storage\framework\views\28b33f8e5c03e7fb8682fc9b72d32f2d.php
+storage\framework\views\29b4ed0734f96adebb8727434fd2a0bc.php
 storage\framework\views\2a830ecd468f435f1747c72e21677166.php
+storage\framework\views\31cf726638bc38795333a43b0975ca99.php
 storage\framework\views\323e0d4cb6aa3a79df371502459f3f95.php
 storage\framework\views\34a28d1c5975e6a80cf8e90545c1042d.php
 storage\framework\views\35b948da9e966c78a172e74616518c9c.php
+storage\framework\views\38580b48f46094c41b92642cd9a4852b.php
 storage\framework\views\391ebb746ed9d90abf51620fa811007f.php
 storage\framework\views\3b1e10f885219c77cae6e0fd498bac94.php
+storage\framework\views\3c2589d59eeea174b043b4970b0dbb98.php
+storage\framework\views\3f2a31d9186295bd23534d52d3c2ed6a.php
 storage\framework\views\3f78f7c3950888e24e17f0f2153164ba.php
 storage\framework\views\3f97fad1046eebed23dea96fef8be649.php
 storage\framework\views\3fe124fd1ab53367f3db7d5c4f61a949.php
@@ -312,6 +329,9 @@ storage\framework\views\43cd2c320e451f9a26231447b724fcfe.php
 storage\framework\views\45a511ac94b858088f8c488900084c75.php
 storage\framework\views\49d2988d7ab7a37f316ac97460cf0d4f.php
 storage\framework\views\4b50d759db4c428ed5a03be84a9ed913.php
+storage\framework\views\4e5d1e7a637f21bb73bb39e4daac3d76.php
+storage\framework\views\512d8359d3a245cf35baaf616ad935f3.php
+storage\framework\views\53f5c90bad89c8ea91f12d3b90d6573f.php
 storage\framework\views\5c2a7c738b827bf614a05d851f279e56.php
 storage\framework\views\5c569f0a687a604dd7f3a8d4447910a2.php
 storage\framework\views\5e818641b234edb8405df092be320eea.php
@@ -321,10 +341,13 @@ storage\framework\views\662ec6b9fc235e3b098c2320dafe372c.php
 storage\framework\views\668a2ece4a1ac7e48394b27d4e519e47.php
 storage\framework\views\6787602fc1fe7c2d5934c9d12634bc91.php
 storage\framework\views\6a08ce534097ba81157bc6e83c44a78c.php
+storage\framework\views\6a29ecd21ebae639e72bd8efeeed7a2f.php
 storage\framework\views\6a717951ad3990d989a07e05d1f1e765.php
 storage\framework\views\6f99de5660a2ce6fcab43b45591e19aa.php
 storage\framework\views\6fb1e90d4a4d0f72868fca0b625fbb93.php
+storage\framework\views\734d34666a64831e4391dd422b4812cc.php
 storage\framework\views\738743497017023635a44cfb07348ef6.php
+storage\framework\views\751d7419ece1d01d043936caa087d5dc.php
 storage\framework\views\792564f6be86d5ac31086322eb7293c8.php
 storage\framework\views\7b402872e29f6f895b12d3671d0adb35.php
 storage\framework\views\7b7091f5a95344deb1c9fc06cc5be79e.php
@@ -336,18 +359,23 @@ storage\framework\views\9a480b0fba443393c56b5664d5a8cb00.php
 storage\framework\views\9e62399cfa0826aae9058d6317f05beb.php
 storage\framework\views\9fdd7ca1bc4d6f5af47fddae768463e6.php
 storage\framework\views\a47da49129c2ec197d8718d23247af49.php
+storage\framework\views\a6ff1b0bf65776c9c50a44d8a9f0271c.php
 storage\framework\views\a739b139d9f5f171daeeaf3b81c8dad1.php
 storage\framework\views\ae0523d13e73cef276c10bcb952d6d6b.php
+storage\framework\views\b05adf6dceb5364a6f44a03387d8ccb1.php
 storage\framework\views\b15c1c717568cd4fb1c9fbc2e3cea052.php
 storage\framework\views\b280f2904c5bff00cc744a575a706c5f.php
 storage\framework\views\b7c48775358bf8612429412cdf309287.php
 storage\framework\views\bb81c05887fc4897ea0b8a4be4d2931a.php
 storage\framework\views\bd5da35130d7a2f0bc7e7ad7110a9e0b.php
+storage\framework\views\be4858706812f8de7991ea5f2bf8f14a.php
 storage\framework\views\be5779b819f9903611be5ef8b4c91b6b.php
 storage\framework\views\bebbcc12d82febc3d9d74e01e7ce326d.php
 storage\framework\views\c05084a2686c20935959c3419b4ff8dc.php
 storage\framework\views\c957773180b2d2287705b897b60f75a9.php
+storage\framework\views\ca57b9227fa6864c5ff1a10bc3684e2c.php
 storage\framework\views\cb1fba32553bf47107a2240b7da65c66.php
+storage\framework\views\cbe4a8c82c88e371acaac7a023ecb8a3.php
 storage\framework\views\cd0cd98ac51fd3bfeeea9827aaad4bdf.php
 storage\framework\views\da53ee5125379d964aa803207bdcf2b3.php
 storage\framework\views\df7c8d03deaec504e7226da044cc9385.php
@@ -391,11 +419,11 @@ Branch:
 main
 
 Last 5 commits:
+eacaff6 deploy stengah
+5496461 revisi hasil v1
 f52a90f pasien sudah bisa konfirmasi jadwal
 5673302 sudah ada form jadwal baru di admin
 9941a63 nomor antrian
-7172917 add captcha
-2dcd74a ubah kata jadi layanan yang di inginkan
 ```
 
 
@@ -5796,23 +5824,24 @@ class Tindakan extends Model
                                         </td>
                                         <td class="py-2 px-4 border-b">
                                             {{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</td>
-                                        <td class="py-2 px-4 border-b">
-                                            <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                                @if ($pemesanan->status == 'Selesai') bg-green-100 text-green-800 
-                                                @elseif($pemesanan->status == 'Dibatalkan') bg-red-100 text-red-800
-                                                @elseif($pemesanan->status == 'Dikonfirmasi') bg-blue-100 text-blue-800
-                                                @else bg-yellow-100 text-yellow-800 @endif">
-                                                {{ $pemesanan->status }}
-
-                                            </span>
-                                            @if ($pemesanan->status == 'Dibatalkan Dokter' && $pemesanan->catatan_admin)
-                                                <div class="text-xs text-red-600 mt-1">
-                                                    Alasan: {{ $pemesanan->catatan_admin }}
-                                                </div>
-                                            @endif
-
-                                        </td>
+                                            <td class="py-2 px-4 border-b">
+                                                <span
+                                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                    @if ($pemesanan->status == 'Selesai') bg-green-100 text-green-800 
+                                                    @elseif($pemesanan->status == 'Dibatalkan') bg-red-100 text-red-800
+                                                    @elseif($pemesanan->status == 'Dikonfirmasi') bg-blue-100 text-blue-800
+                                                    @else bg-yellow-100 text-yellow-800 @endif">
+                                                    
+                                                    {{ $pemesanan->status == 'Dipesan' ? 'Direservasi' : $pemesanan->status }}
+                                                </span>
+                                            
+                                                @if ($pemesanan->status == 'Dibatalkan Dokter' && $pemesanan->catatan_admin)
+                                                    <div class="text-xs text-red-600 mt-1">
+                                                        Alasan: {{ $pemesanan->catatan_admin }}
+                                                    </div>
+                                                @endif
+                                            </td>
+                                            
                                         <td class="py-2 px-4 border-b">
                                             <a href="{{ route('admin.pemesanan.edit', $pemesanan->id) }}"
                                                 class="text-indigo-600 hover:text-indigo-900">Ubah Status</a>
@@ -6816,25 +6845,115 @@ $classes = ($active ?? false)
     </div>
 </x-app-layout>
 
-===== resources\views\dokter\rekam-medis\create.blade.php =====
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Buat Rekam Medis untuk: <span class="font-bold">{{ $pemesanan->pasien->name }}</span>
-        </h2>
-    </x-slot>
+===== resources\views\dokter\rekam-medis\partials\_actions.blade.php =====
+<div class="flex items-center justify-end mt-6">
+    <a href="{{ route('dokter.dashboard') }}"
+        class="text-gray-600 hover:text-gray-900 mr-4">Batal</a>
+    <x-primary-button class="bg-purple-600 hover:bg-purple-700">
+        Simpan Rekam Medis
+    </x-primary-button>
+</div>
 
-    <div class="py-12">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 md:p-8 bg-white border-b border-gray-200">
-                    {{-- AWAL MODIFIKASI: Data Pribadi & Medis Pasien --}}
-@if($pemesanan->pasien->biodata)
+===== resources\views\dokter\rekam-medis\partials\_biaya.blade.php =====
+{{-- Ringkasan Biaya --}}
+<div class="mt-6 border-t pt-6">
+    <div class="space-y-3 max-w-md ml-auto">
+        <div class="flex justify-between items-center">
+            <span class="text-gray-600">Subtotal Tindakan</span>
+            <span id="subtotal-tindakan" class="font-semibold text-gray-800">Rp 0</span>
+        </div>
+        <div class="flex justify-between items-center">
+            <span class="text-gray-600">Subtotal Obat</span>
+            <span id="subtotal-obat" class="font-semibold text-gray-800">Rp 0</span>
+        </div>
+
+        {{-- Potongan BPJS --}}
+        @if ($pemesanan->status_pasien == 'BPJS')
+            <div id="baris-potongan-tindakan" class="flex justify-between items-center text-red-600"
+                style="display: none;">
+                <span>Potongan BPJS Tindakan</span>
+                <span id="potongan-tindakan-display">- Rp 0</span>
+            </div>
+            <div id="baris-potongan-obat" class="flex justify-between items-center text-red-600" style="display: none;">
+                <span>Potongan BPJS Obat</span>
+                <span id="potongan-obat-display">- Rp 0</span>
+            </div>
+        @endif
+
+        {{-- Potongan Inhealth --}}
+        @if ($pemesanan->status_pasien == 'Inhealth')
+            <div class="flex justify-between items-center">
+                <label for="potongan" class="text-gray-600">Potongan Inhealth</label>
+                <div class="flex items-center">
+                    <span class="mr-2 text-gray-500">Rp.</span>
+                    <x-text-input type="number" name="potongan" id="potongan" value="{{ old('potongan', 0) }}"
+                        min="0" class="text-right w-36" oninput="calculateTotal()" />
+                </div>
+            </div>
+        @endif
+
+        {{-- Potongan General (Promo / Manual) --}}
+        <div class="flex justify-between items-center">
+            <label for="potongan_general" class="text-gray-600">Potongan Lainnya (Jika Ada)</label>
+            <div class="flex items-center">
+                <span class="mr-2 text-gray-500">Rp.</span>
+                <x-text-input type="number" name="potongan_general" id="potongan_general"
+                    value="{{ old('potongan_general', 0) }}" min="0" class="text-right w-36"
+                    oninput="calculateTotal()" />
+            </div>
+        </div>
+
+
+        {{-- Total Akhir --}}
+        <div class="flex justify-between items-center border-t pt-3">
+            <h3 class="text-lg font-bold text-gray-800">Total Akhir</h3>
+            <span id="total-biaya" class="text-xl font-bold text-purple-600">Rp 0</span>
+        </div>
+    </div>
+</div>
+
+===== resources\views\dokter\rekam-medis\partials\_diagnosa.blade.php =====
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+    <div>
+        <x-input-label for="diagnosis" :value="__('Diagnosis')" />
+        <x-text-input id="diagnosis" class="block mt-1 w-full"
+            type="text" name="diagnosis" :value="old('diagnosis')" required />
+    </div>
+
+    <div>
+        <x-input-label for="perawatan" :value="__('Perawatan')" />
+        <x-text-input id="perawatan" class="block mt-1 w-full"
+            type="text" name="perawatan" :value="old('perawatan')" required />
+    </div>
+
+    <div class="md:col-span-2">
+        <x-input-label for="catatan" :value="__('Catatan Tambahan (Opsional)')" />
+        <textarea id="catatan" name="catatan"
+            class="block mt-1 w-full rounded-md shadow-sm border-gray-300"
+            rows="3">{{ old('catatan') }}</textarea>
+    </div>
+</div>
+
+===== resources\views\dokter\rekam-medis\partials\_foto.blade.php =====
+{{-- Foto Pendukung --}}
+<div class="mt-6 border-t pt-6">
+    <h3 class="text-lg font-bold mb-4">Foto Pendukung (Opsional)</h3>
+    <input type="file" name="foto[]" multiple
+        class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 
+               file:rounded-full file:border-0 file:text-sm file:font-semibold 
+               file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100" />
+</div>
+
+===== resources\views\dokter\rekam-medis\partials\_pasien.blade.php =====
+{{-- Data Pribadi & Medis Pasien --}}
+@if ($pemesanan->pasien->biodata)
 <div class="mt-6 p-5 bg-gray-50 border border-gray-200 rounded-lg">
-    <h3 class="text-lg font-bold text-purple-800 mb-4 pb-2 border-b border-purple-200">Data Pribadi & Medis Pasien</h3>
+    <h3 class="text-lg font-bold text-purple-800 mb-4 pb-2 border-b border-purple-200">
+        Data Pribadi & Medis Pasien
+    </h3>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 text-sm">
-        
+
         {{-- Kolom kiri --}}
         <div class="space-y-2">
             <div>
@@ -6844,17 +6963,17 @@ $classes = ($active ?? false)
             <div>
                 <p class="text-gray-500 text-xs">Tempat, Tanggal Lahir</p>
                 <p class="font-semibold">
-                    {{ $pemesanan->pasien->biodata->tempat_lahir ?? '-' }}, 
+                    {{ $pemesanan->pasien->biodata->tempat_lahir ?? '-' }},
                     {{ $pemesanan->pasien->biodata->tanggal_lahir ? \Carbon\Carbon::parse($pemesanan->pasien->biodata->tanggal_lahir)->translatedFormat('d F Y') : '-' }}
                 </p>
             </div>
             <div>
                 <p class="text-gray-500 text-xs">Umur</p>
                 <p class="font-semibold">
-                    {{ $pemesanan->pasien->biodata->umur 
+                    {{ $pemesanan->pasien->biodata->umur
                         ? $pemesanan->pasien->biodata->umur . ' Tahun'
-                        : ($pemesanan->pasien->biodata->tanggal_lahir 
-                            ? \Carbon\Carbon::parse($pemesanan->pasien->biodata->tanggal_lahir)->age . ' Tahun' 
+                        : ($pemesanan->pasien->biodata->tanggal_lahir
+                            ? \Carbon\Carbon::parse($pemesanan->pasien->biodata->tanggal_lahir)->age . ' Tahun'
                             : '-') }}
                 </p>
             </div>
@@ -6911,415 +7030,365 @@ $classes = ($active ?? false)
     Biodata lengkap pasien belum diisi oleh admin.
 </div>
 @endif
-{{-- AKHIR MODIFIKASI --}}
+
+===== resources\views\dokter\rekam-medis\partials\_resep.blade.php =====
+{{-- Bagian Resep --}}
+<div class="mt-6 border-t pt-6">
+    <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-bold">Resep Obat</h3>
+        <button type="button" id="tambah-resep"
+            class="px-3 py-1 bg-green-500 text-white rounded-md text-sm hover:bg-green-600">
+            Tambah Obat
+        </button>
+    </div>
+    <div id="resep-container" class="space-y-4"></div>
+</div>
+
+===== resources\views\dokter\rekam-medis\partials\_scripts.blade.php =====
+@push('scripts')
+    <script>
+        const obats = @json($obats);
+        const statusPasien = @json($pemesanan->status_pasien);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const resepContainer = document.getElementById('resep-container');
+            const addButton = document.getElementById('tambah-resep');
+
+            window.calculateTotal = function() {
+                let subtotalTindakan = 0;
+                let subtotalObat = 0;
+                let potonganTindakan = 0;
+                let potonganObat = 0;
+
+                document.querySelectorAll(
+                        '.tindakan-checkbox:not(:disabled):checked, .tindakan-checkbox:disabled')
+                    .forEach(checkbox => {
+                        let hargaTindakan = parseFloat(checkbox.dataset.harga) || 0;
+                        subtotalTindakan += hargaTindakan;
+
+                        if (statusPasien === 'BPJS') {
+                            potonganTindakan += 2500;
+                        }
+                    });
+
+                document.querySelectorAll('#resep-container .resep-row').forEach(row => {
+                    const obatSelect = row.querySelector('.obat-select');
+                    const jumlah = parseFloat(row.querySelector('.jumlah-input').value) || 0;
+                    const tipeHarga = row.querySelector('.tipe-harga-select').value;
+                    const hargaDisplay = row.querySelector('.harga-obat');
+
+                    if (obatSelect && obatSelect.value && jumlah > 0) {
+                        const selectedOption = obatSelect.options[obatSelect.selectedIndex];
+                        let hargaSatuan = tipeHarga === 'resep' ?
+                            parseFloat(selectedOption.dataset.hargaResep) :
+                            parseFloat(selectedOption.dataset.hargaNonresep);
+
+                        subtotalObat += hargaSatuan * jumlah;
+                        hargaDisplay.value = 'Rp ' + (hargaSatuan * jumlah).toLocaleString('id-ID');
+
+                        if (statusPasien === 'BPJS') {
+                            potonganObat += hargaSatuan * jumlah;
+                        }
+                    } else {
+                        hargaDisplay.value = 'Rp 0';
+                    }
+                });
+
+                document.getElementById('subtotal-tindakan').textContent =
+                    'Rp ' + subtotalTindakan.toLocaleString('id-ID');
+                document.getElementById('subtotal-obat').textContent =
+                    'Rp ' + subtotalObat.toLocaleString('id-ID');
+
+                if (statusPasien === 'BPJS') {
+                    const barisPotTind = document.getElementById('baris-potongan-tindakan');
+                    const potTindDisp = document.getElementById('potongan-tindakan-display');
+                    if (potonganTindakan > 0) {
+                        barisPotTind.style.display = 'flex';
+                        potTindDisp.textContent = '- Rp ' + potonganTindakan.toLocaleString('id-ID');
+                    } else {
+                        barisPotTind.style.display = 'none';
+                    }
+
+                    const barisPotObat = document.getElementById('baris-potongan-obat');
+                    const potObatDisp = document.getElementById('potongan-obat-display');
+                    if (potonganObat > 0) {
+                        barisPotObat.style.display = 'flex';
+                        potObatDisp.textContent = '- Rp ' + potonganObat.toLocaleString('id-ID');
+                    } else {
+                        barisPotObat.style.display = 'none';
+                    }
+                }
+
+                let potonganInhealth = 0;
+                if (statusPasien === 'Inhealth') {
+                    const potonganEl = document.getElementById('potongan');
+                    if (potonganEl) {
+                        potonganInhealth = parseFloat(potonganEl.value) || 0;
+                    }
+                }
+
+                let potonganGeneral = 0;
+                const potonganGeneralEl = document.getElementById('potongan_general');
+                if (potonganGeneralEl) {
+                    potonganGeneral = parseFloat(potonganGeneralEl.value) || 0;
+                }
+
+                const totalAkhir = Math.max(0,
+                    subtotalTindakan + subtotalObat -
+                    potonganTindakan -
+                    potonganObat -
+                    potonganInhealth -
+                    potonganGeneral
+                );
+
+                document.getElementById('total-biaya').textContent =
+                    'Rp ' + totalAkhir.toLocaleString('id-ID');
+            }
+
+            let resepIndex = 0;
+
+            function addResepRow() {
+                const selectId = `select-obat-${resepIndex}`;
+                const row = document.createElement('div');
+                row.classList.add('resep-row', 'p-4', 'border', 'rounded-md', 'bg-gray-50', 'space-y-3');
+                row.innerHTML = `
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+    <div>
+        <label class="block text-sm font-medium text-gray-700">Pilih Obat</label>
+        <select id="${selectId}" name="resep[${resepIndex}][obat_id]" class="obat-select" required>
+            <option value="">-- Pilih dari Stok --</option>
+            ${obats.map(obat =>
+                `<option value="${obat.id}" 
+                                    data-harga-resep="${obat.harga_jual_resep}" 
+                                    data-harga-nonresep="${obat.harga_jual_non_resep}">
+                                    ${obat.nama_obat} (Stok: ${obat.stok})
+                                </option>`
+            ).join('')}
+        </select>
+    </div>
+    <div>
+        <label class="block text-sm font-medium text-gray-700">Tipe Harga</label>
+        <select name="resep[${resepIndex}][tipe_harga]" class="tipe-harga-select mt-1 block w-full rounded-md border-gray-300" required>
+            <option value="resep">Harga Resep</option>
+            <option value="non_resep">Harga Non-Resep</option>
+        </select>
+    </div>
+    <div>
+        <label class="block text-sm font-medium text-gray-700">Jumlah</label>
+        <input type="number" name="resep[${resepIndex}][jumlah]" class="jumlah-input mt-1 block w-full rounded-md border-gray-300" min="1" required>
+    </div>
+    <div>
+        <label class="block text-sm font-medium text-gray-700">Harga</label>
+        <input type="text" class="harga-obat mt-1 block w-full rounded-md border-gray-300 bg-gray-100 text-right" value="Rp 0" readonly>
+    </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+        <label class="block text-sm font-medium text-gray-700">Dosis</label>
+        <input type="text" name="resep[${resepIndex}][dosis]" class="mt-1 block w-full rounded-md border-gray-300">
+    </div>
+    <div>
+        <label class="block text-sm font-medium text-gray-700">Instruksi</label>
+        <input type="text" name="resep[${resepIndex}][instruksi]" class="mt-1 block w-full rounded-md border-gray-300">
+    </div>
+</div>
+<button type="button" class="hapus-resep text-red-500 text-sm hover:text-red-700">Hapus</button>
+`;
+                resepContainer.appendChild(row);
+                new TomSelect(`#${selectId}`, {
+                    create: false,
+                    sortField: {
+                        field: "text",
+                        direction: "asc"
+                    }
+                });
+                resepIndex++;
+            }
+
+            addButton.addEventListener('click', addResepRow);
+            document.body.addEventListener('change', (e) => {
+                if (e.target.matches(
+                        '.tindakan-checkbox, .obat-select, .tipe-harga-select, .jumlah-input')) {
+                    calculateTotal();
+                }
+            });
+            document.body.addEventListener('input', (e) => {
+                if (e.target.matches('.jumlah-input')) {
+                    calculateTotal();
+                }
+            });
+            document.body.addEventListener('click', (e) => {
+                if (e.target.classList.contains('hapus-resep')) {
+                    e.target.closest('.resep-row').remove();
+                    calculateTotal();
+                }
+            });
+
+            addResepRow();
+            calculateTotal();
+        });
+    </script>
+@endpush
+
+===== resources\views\dokter\rekam-medis\partials\_tindakan_dokter.blade.php =====
+{{-- [MODIFIKASI] Blok untuk Tindakan Tambahan Dokter --}}
+<div class="mt-6 border-t pt-6" x-data="{ openKategori: '' }">
+    <h3 class="text-lg font-bold mb-4">Tindakan Medis Tambahan Dokter</h3>
+    <div class="space-y-2">
+        @foreach ($daftarTindakans as $kategori)
+            @php
+                $tindakanLain = $kategori->tindakanItems->whereNotIn('id', $tindakanAwalIds);
+            @endphp
+            @if ($tindakanLain->isNotEmpty())
+                <div class="border rounded-md overflow-hidden">
+                    <button type="button"
+                        @click="openKategori = (openKategori === '{{ $kategori->id }}_dokter' ? '' : '{{ $kategori->id }}_dokter')"
+                        class="w-full flex justify-between items-center p-3 text-left font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100">
+                        <span>{{ $kategori->nama_kategori }}</span>
+                        <svg class="w-5 h-5 transform transition-transform"
+                            :class="{ 'rotate-180': openKategori === '{{ $kategori->id }}_dokter' }"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div x-show="openKategori === '{{ $kategori->id }}_dokter'" x-collapse class="p-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            @foreach ($tindakanLain as $tindakan)
+                                <label class="flex items-center space-x-2 p-2 border rounded-md bg-white hover:bg-gray-100">
+                                    <input type="checkbox" name="tindakans[]"
+                                        value="{{ $tindakan->id }}"
+                                        class="tindakan-checkbox rounded border-gray-300"
+                                        data-harga="{{ $tindakan->harga }}"
+                                        {{ in_array($tindakan->id, old('tindakans', [])) ? 'checked' : '' }}>
+                                    <span>
+                                        {{ $tindakan->keterangan }}
+                                        <span class="text-gray-500">(Rp {{ number_format($tindakan->harga, 0, ',', '.') }})</span>
+                                    </span>
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            @endif
+        @endforeach
+    </div>
+</div>
+
+===== resources\views\dokter\rekam-medis\partials\_tindakan_pasien.blade.php =====
+@php
+    $openKategoriId = '';
+    if ($daftarTindakans && $tindakanAwalIds) {
+        foreach ($daftarTindakans as $kategori) {
+            if (
+                count(
+                    array_intersect(
+                        $kategori->tindakanItems->pluck('id')->toArray(),
+                        $tindakanAwalIds,
+                    ),
+                ) > 0
+            ) {
+                $openKategoriId = $kategori->id;
+                break;
+            }
+        }
+    }
+@endphp
+
+{{-- [MODIFIKASI] Blok untuk Tindakan yang Dipilih Pasien --}}
+<div class="mt-6 border-t pt-6" x-data="{ openKategori: '{{ $openKategoriId }}_pasien' }">
+
+    <h3 class="text-lg font-bold mb-4">Tindakan Medis Dipilih Pasien</h3>
+    <div class="space-y-2">
+        @foreach ($daftarTindakans as $kategori)
+            @php
+                $pilihanPasien = $kategori->tindakanItems->whereIn('id', $tindakanAwalIds);
+            @endphp
+            @if ($pilihanPasien->isNotEmpty())
+                <div class="border rounded-md overflow-hidden">
+                    <button type="button"
+                        @click="openKategori = (openKategori === '{{ $kategori->id }}_pasien' ? '' : '{{ $kategori->id }}_pasien')"
+                        class="w-full flex justify-between items-center p-3 text-left font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100">
+                        <span>{{ $kategori->nama_kategori }}</span>
+                        <svg class="w-5 h-5 transform transition-transform"
+                            :class="{ 'rotate-180': openKategori === '{{ $kategori->id }}_pasien' }"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div x-show="openKategori === '{{ $kategori->id }}_pasien'" x-collapse class="p-4 bg-blue-50">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            @foreach ($pilihanPasien as $tindakan)
+                                <label class="flex items-center space-x-2 p-2 border rounded-md bg-white cursor-not-allowed">
+                                    <input type="checkbox" value="{{ $tindakan->id }}"
+                                        class="tindakan-checkbox rounded border-gray-300"
+                                        data-harga="{{ $tindakan->harga }}" checked disabled>
+                                    <input type="hidden" name="tindakans[]"
+                                        value="{{ $tindakan->id }}">
+                                    <span>{{ $tindakan->keterangan }} <span
+                                            class="text-gray-500">(Rp
+                                            {{ number_format($tindakan->harga, 0, ',', '.') }})</span></span>
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            @endif
+        @endforeach
+    </div>
+</div>
+
+===== resources\views\dokter\rekam-medis\create.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Buat Rekam Medis untuk: <span class="font-bold">{{ $pemesanan->pasien->name }}</span>
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 md:p-8 bg-white border-b border-gray-200">
+
+                    {{-- PASIEN INFO --}}
+                    @include('dokter.rekam-medis.partials._pasien')
 
                     <form method="POST" action="{{ route('dokter.rekam-medis.store') }}" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id_pemesanan" value="{{ $pemesanan->id }}">
 
-                        {{-- Bagian Diagnosis, Perawatan, Catatan --}}
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <x-input-label for="diagnosis" :value="__('Diagnosis')" />
-                                <x-text-input id="diagnosis" class="block mt-1 w-full" type="text" name="diagnosis"
-                                    :value="old('diagnosis')" required />
-                            </div>
-                            <div>
-                                <x-input-label for="perawatan" :value="__('Perawatan')" />
-                                <x-text-input id="perawatan" class="block mt-1 w-full" type="text" name="perawatan"
-                                    :value="old('perawatan')" required />
-                            </div>
-                            <div class="md:col-span-2">
-                                <x-input-label for="catatan" :value="__('Catatan Tambahan (Opsional)')" />
-                                <textarea id="catatan" name="catatan" class="block mt-1 w-full rounded-md shadow-sm border-gray-300" rows="3">{{ old('catatan') }}</textarea>
-                            </div>
-                        </div>
+                        {{-- DIAGNOSA / PERAWATAN / CATATAN --}}
+                        @include('dokter.rekam-medis.partials._diagnosa')
 
-                        @php
-                            $openKategoriId = '';
-                            if ($daftarTindakans && $tindakanAwalIds) {
-                                foreach ($daftarTindakans as $kategori) {
-                                    if (
-                                        count(
-                                            array_intersect(
-                                                $kategori->tindakanItems->pluck('id')->toArray(),
-                                                $tindakanAwalIds,
-                                            ),
-                                        ) > 0
-                                    ) {
-                                        $openKategoriId = $kategori->id;
-                                        break;
-                                    }
-                                }
-                            }
-                        @endphp
+                        {{-- TINDAKAN DIPILIH PASIEN --}}
+                        @include('dokter.rekam-medis.partials._tindakan_pasien')
 
-                        {{-- [MODIFIKASI] Blok untuk Tindakan yang Dipilih Pasien --}}
-                        <div class="mt-6 border-t pt-6" x-data="{ openKategori: '{{ $openKategoriId }}_pasien' }">
+                        {{-- TINDAKAN TAMBAHAN DOKTER --}}
+                        @include('dokter.rekam-medis.partials._tindakan_dokter')
 
-                            <h3 class="text-lg font-bold mb-4">Tindakan Medis Dipilih Pasien</h3>
-                            <div class="space-y-2">
-                                @foreach ($daftarTindakans as $kategori)
-                                    @php
-                                        $pilihanPasien = $kategori->tindakanItems->whereIn('id', $tindakanAwalIds);
-                                    @endphp
-                                    @if ($pilihanPasien->isNotEmpty())
-                                        <div class="border rounded-md overflow-hidden">
-                                            <button type="button"
-                                                @click="openKategori = (openKategori === '{{ $kategori->id }}_pasien' ? '' : '{{ $kategori->id }}_pasien')"
-                                                class="w-full flex justify-between items-center p-3 text-left font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100">
-                                                <span>{{ $kategori->nama_kategori }}</span>
-                                                <svg class="w-5 h-5 transform transition-transform"
-                                                    :class="{ 'rotate-180': openKategori === '{{ $kategori->id }}_pasien' }"
-                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                                </svg>
-                                            </button>
-                                            <div x-show="openKategori === '{{ $kategori->id }}_pasien'" x-collapse
-                                                class="p-4 bg-blue-50">
-                                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                                    @foreach ($pilihanPasien as $tindakan)
-                                                        <label
-                                                            class="flex items-center space-x-2 p-2 border rounded-md bg-white cursor-not-allowed">
-                                                            <input type="checkbox" value="{{ $tindakan->id }}"
-                                                                class="tindakan-checkbox rounded border-gray-300"
-                                                                data-harga="{{ $tindakan->harga }}" checked disabled>
-                                                            <input type="hidden" name="tindakans[]"
-                                                                value="{{ $tindakan->id }}">
-                                                            <span>{{ $tindakan->keterangan }} <span
-                                                                    class="text-gray-500">(Rp
-                                                                    {{ number_format($tindakan->harga, 0, ',', '.') }})</span></span>
-                                                        </label>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </div>
-                        </div>
+                        {{-- RESEP OBAT --}}
+                        @include('dokter.rekam-medis.partials._resep')
 
-                        {{-- [MODIFIKASI] Blok untuk Tindakan Tambahan Dokter --}}
-                        <div class="mt-6 border-t pt-6" x-data="{ openKategori: '' }">
-                            <h3 class="text-lg font-bold mb-4">Tindakan Medis Tambahan Dokter</h3>
-                            <div class="space-y-2">
-                                @foreach ($daftarTindakans as $kategori)
-                                    @php
-                                        $tindakanLain = $kategori->tindakanItems->whereNotIn('id', $tindakanAwalIds);
-                                    @endphp
-                                    @if ($tindakanLain->isNotEmpty())
-                                        <div class="border rounded-md overflow-hidden">
-                                            <button type="button"
-                                                @click="openKategori = (openKategori === '{{ $kategori->id }}_dokter' ? '' : '{{ $kategori->id }}_dokter')"
-                                                class="w-full flex justify-between items-center p-3 text-left font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100">
-                                                <span>{{ $kategori->nama_kategori }}</span>
-                                                <svg class="w-5 h-5 transform transition-transform"
-                                                    :class="{ 'rotate-180': openKategori === '{{ $kategori->id }}_dokter' }"
-                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                                </svg>
-                                            </button>
-                                            <div x-show="openKategori === '{{ $kategori->id }}_dokter'" x-collapse
-                                                class="p-4">
-                                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                                    @foreach ($tindakanLain as $tindakan)
-                                                        <label
-                                                            class="flex items-center space-x-2 p-2 border rounded-md bg-white hover:bg-gray-100">
-                                                            <input type="checkbox" name="tindakans[]"
-                                                                value="{{ $tindakan->id }}"
-                                                                class="tindakan-checkbox rounded border-gray-300"
-                                                                data-harga="{{ $tindakan->harga }}"
-                                                                {{ in_array($tindakan->id, old('tindakans', [])) ? 'checked' : '' }}>
-                                                            <span>
-                                                                {{ $tindakan->keterangan }}
-                                                                <span class="text-gray-500">(Rp
-                                                                    {{ number_format($tindakan->harga, 0, ',', '.') }})</span>
-                                                            </span>
-                                                        </label>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </div>
-                        </div>
+                        {{-- FOTO PENDUKUNG --}}
+                        @include('dokter.rekam-medis.partials._foto')
 
-                        {{-- Bagian Resep, Foto, dan Total Biaya --}}
-                        <div class="mt-6 border-t pt-6">
-                            <div class="flex justify-between items-center mb-4">
-                                <h3 class="text-lg font-bold">Resep Obat</h3>
-                                <button type="button" id="tambah-resep"
-                                    class="px-3 py-1 bg-green-500 text-white rounded-md text-sm hover:bg-green-600">Tambah
-                                    Obat</button>
-                            </div>
-                            <div id="resep-container" class="space-y-4"></div>
-                        </div>
+                        {{-- BIAYA --}}
+                        @include('dokter.rekam-medis.partials._biaya')
 
-                        <div class="mt-6 border-t pt-6">
-                            <h3 class="text-lg font-bold mb-4">Foto Pendukung (Opsional)</h3>
-                            <input type="file" name="foto[]" multiple
-                                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100" />
-                        </div>
-
-                        <div class="mt-6 border-t pt-6">
-                            <div class="space-y-3 max-w-md ml-auto">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-600">Subtotal Tindakan</span>
-                                    <span id="subtotal-tindakan" class="font-semibold text-gray-800">Rp 0</span>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-600">Subtotal Obat</span>
-                                    <span id="subtotal-obat" class="font-semibold text-gray-800">Rp 0</span>
-                                </div>
-                        
-                                {{-- Potongan BPJS --}}
-                                @if ($pemesanan->status_pasien == 'BPJS')
-                                    <div id="baris-potongan-tindakan" 
-                                        class="flex justify-between items-center text-red-600" style="display: none;">
-                                        <span>Potongan BPJS Tindakan</span>
-                                        <span id="potongan-tindakan-display">- Rp 0</span>
-                                    </div>
-                                    <div id="baris-potongan-obat" 
-                                        class="flex justify-between items-center text-red-600" style="display: none;">
-                                        <span>Potongan BPJS Obat</span>
-                                        <span id="potongan-obat-display">- Rp 0</span>
-                                    </div>
-                                @endif
-                        
-                                {{-- Potongan Inhealth --}}
-                                @if ($pemesanan->status_pasien == 'Inhealth')
-                                    <div class="flex justify-between items-center">
-                                        <label for="potongan" class="text-gray-600">Potongan Inhealth</label>
-                                        <div class="flex items-center">
-                                            <span class="mr-2 text-gray-500">Rp.</span>
-                                            <x-text-input type="number" name="potongan" id="potongan"
-                                                value="{{ old('potongan', 0) }}" min="0"
-                                                class="text-right w-36" oninput="calculateTotal()" />
-                                        </div>
-                                    </div>
-                                @endif
-                        
-                                {{-- Total Akhir --}}
-                                <div class="flex justify-between items-center border-t pt-3">
-                                    <h3 class="text-lg font-bold text-gray-800">Total Akhir</h3>
-                                    <span id="total-biaya" class="text-xl font-bold text-purple-600">Rp 0</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-
-
-
-                        <div class="flex items-center justify-end mt-6">
-                            <a href="{{ route('dokter.dashboard') }}"
-                                class="text-gray-600 hover:text-gray-900 mr-4">Batal</a>
-                            <x-primary-button class="bg-purple-600 hover:bg-purple-700">Simpan Rekam
-                                Medis</x-primary-button>
-                        </div>
+                        {{-- ACTION BUTTONS --}}
+                        @include('dokter.rekam-medis.partials._actions')
                     </form>
+
                 </div>
             </div>
         </div>
     </div>
 
-    @push('scripts')
-        {{-- Script tidak berubah, karena logika kalkulasi tetap sama --}}
-        <script>
-            const obats = @json($obats);
-            const statusPasien = @json($pemesanan->status_pasien);
+    {{-- SCRIPTS --}}
+    @include('dokter.rekam-medis.partials._scripts')
 
-            document.addEventListener('DOMContentLoaded', function() {
-                const resepContainer = document.getElementById('resep-container');
-                const addButton = document.getElementById('tambah-resep');
-                const subtotalBiayaEl = document.getElementById('subtotal-biaya');
-                const totalBiayaEl = document.getElementById('total-biaya');
-                const barisPotonganBpjs = document.getElementById('baris-potongan-bpjs');
-                const potonganBpjsDisplay = document.getElementById('potongan-bpjs-display');
-
-                window.calculateTotal = function() {
-    let subtotalTindakan = 0;
-    let subtotalObat = 0;
-    let potonganTindakan = 0;
-    let potonganObat = 0;
-
-    // === Hitung tindakan
-    document.querySelectorAll('.tindakan-checkbox:not(:disabled):checked, .tindakan-checkbox:disabled')
-        .forEach(checkbox => {
-            let hargaTindakan = parseFloat(checkbox.dataset.harga) || 0;
-            subtotalTindakan += hargaTindakan;
-
-            if (statusPasien === 'BPJS') {
-                potonganTindakan += 2500; // potongan per tindakan
-            }
-        });
-
-    // === Hitung obat
-    document.querySelectorAll('#resep-container .resep-row').forEach(row => {
-        const obatSelect = row.querySelector('.obat-select');
-        const jumlah = parseFloat(row.querySelector('.jumlah-input').value) || 0;
-        const tipeHarga = row.querySelector('.tipe-harga-select').value;
-        const hargaDisplay = row.querySelector('.harga-obat');
-
-        if (obatSelect && obatSelect.value && jumlah > 0) {
-            const selectedOption = obatSelect.options[obatSelect.selectedIndex];
-            let hargaSatuan = tipeHarga === 'resep'
-                ? parseFloat(selectedOption.dataset.hargaResep)
-                : parseFloat(selectedOption.dataset.hargaNonresep);
-
-            subtotalObat += hargaSatuan * jumlah;
-            hargaDisplay.value = 'Rp ' + (hargaSatuan * jumlah).toLocaleString('id-ID');
-
-            if (statusPasien === 'BPJS') {
-                potonganObat += hargaSatuan * jumlah; // seluruh harga obat gratis
-            }
-        } else {
-            hargaDisplay.value = 'Rp 0';
-        }
-    });
-
-    // Update subtotal tampilan
-    document.getElementById('subtotal-tindakan').textContent =
-        'Rp ' + subtotalTindakan.toLocaleString('id-ID');
-    document.getElementById('subtotal-obat').textContent =
-        'Rp ' + subtotalObat.toLocaleString('id-ID');
-
-    // Potongan BPJS
-    if (statusPasien === 'BPJS') {
-        // tampilkan potongan tindakan
-        const barisPotTind = document.getElementById('baris-potongan-tindakan');
-        const potTindDisp = document.getElementById('potongan-tindakan-display');
-        if (potonganTindakan > 0) {
-            barisPotTind.style.display = 'flex';
-            potTindDisp.textContent = '- Rp ' + potonganTindakan.toLocaleString('id-ID');
-        } else {
-            barisPotTind.style.display = 'none';
-        }
-
-        // tampilkan potongan obat
-        const barisPotObat = document.getElementById('baris-potongan-obat');
-        const potObatDisp = document.getElementById('potongan-obat-display');
-        if (potonganObat > 0) {
-            barisPotObat.style.display = 'flex';
-            potObatDisp.textContent = '- Rp ' + potonganObat.toLocaleString('id-ID');
-        } else {
-            barisPotObat.style.display = 'none';
-        }
-    }
-
-    // Potongan Inhealth
-    let potonganInhealth = 0;
-    if (statusPasien === 'Inhealth') {
-        const potonganEl = document.getElementById('potongan');
-        if (potonganEl) {
-            potonganInhealth = parseFloat(potonganEl.value) || 0;
-        }
-    }
-
-    // Total akhir
-    const totalAkhir = Math.max(0, subtotalTindakan + subtotalObat - potonganTindakan - potonganObat - potonganInhealth);
-    document.getElementById('total-biaya').textContent = 'Rp ' + totalAkhir.toLocaleString('id-ID');
-}
-
-
-
-
-
-                let resepIndex = 0;
-
-
-                function addResepRow() {
-                    const selectId = `select-obat-${resepIndex}`;
-                    const row = document.createElement('div');
-                    row.classList.add('resep-row', 'p-4', 'border', 'rounded-md', 'bg-gray-50', 'space-y-3');
-                    row.innerHTML = `
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Pilih Obat</label>
-                <select id="${selectId}" name="resep[${resepIndex}][obat_id]" class="obat-select" required>
-                    <option value="">-- Pilih dari Stok --</option>
-                    ${obats.map(obat =>
-                        `<option value="${obat.id}" 
-                                                                                                 data-harga-resep="${obat.harga_jual_resep}" 
-                                                                                                 data-harga-nonresep="${obat.harga_jual_non_resep}">
-                                                                                            ${obat.nama_obat} (Stok: ${obat.stok})
-                                                                                         </option>`
-                    ).join('')}
-                </select>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Tipe Harga</label>
-                <select name="resep[${resepIndex}][tipe_harga]" 
-                        class="tipe-harga-select mt-1 block w-full rounded-md border-gray-300" required>
-                    <option value="resep">Harga Resep</option>
-                    <option value="non_resep">Harga Non-Resep</option>
-                </select>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Jumlah</label>
-                <input type="number" name="resep[${resepIndex}][jumlah]" 
-                       class="jumlah-input mt-1 block w-full rounded-md border-gray-300" 
-                       min="1" required>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Harga</label>
-                <input type="text" class="harga-obat mt-1 block w-full rounded-md border-gray-300 bg-gray-100 text-right" 
-                       value="Rp 0" readonly>
-            </div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Dosis</label>
-                <input type="text" name="resep[${resepIndex}][dosis]" 
-                       class="mt-1 block w-full rounded-md border-gray-300">
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700">Instruksi</label>
-                <input type="text" name="resep[${resepIndex}][instruksi]" 
-                       class="mt-1 block w-full rounded-md border-gray-300">
-            </div>
-        </div>
-        <button type="button" class="hapus-resep text-red-500 text-sm hover:text-red-700">Hapus</button>
-    `;
-                    resepContainer.appendChild(row);
-                    new TomSelect(`#${selectId}`, {
-                        create: false,
-                        sortField: {
-                            field: "text",
-                            direction: "asc"
-                        }
-                    });
-                    resepIndex++;
-                }
-
-
-                addButton.addEventListener('click', addResepRow);
-                document.body.addEventListener('change', (e) => {
-                    if (e.target.matches(
-                            '.tindakan-checkbox, .obat-select, .tipe-harga-select, .jumlah-input')) {
-                        calculateTotal();
-                    }
-                });
-                document.body.addEventListener('input', (e) => {
-                    if (e.target.matches('.jumlah-input')) {
-                        calculateTotal();
-                    }
-                });
-                document.body.addEventListener('click', (e) => {
-                    if (e.target.classList.contains('hapus-resep')) {
-                        e.target.closest('.resep-row').remove();
-                        calculateTotal();
-                    }
-                });
-
-                addResepRow();
-                calculateTotal(); // <-- INI YANG AKTIFKAN
-            });
-        </script>
-    @endpush
 </x-app-layout>
 
 ===== resources\views\dokter\rekam-medis\index.blade.php =====
@@ -8361,7 +8430,6 @@ $classes = ($active ?? false)
 </x-app-layout>
 
 ===== resources\views\pasien\pemesanan\index.blade.php =====
-
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -8388,43 +8456,52 @@ $classes = ($active ?? false)
                             <tbody>
                                 @forelse ($pemesanans as $pemesanan)
                                     <tr class="hover:bg-gray-50">
-                                        <td class="py-2 px-4 border-b">{{ \Carbon\Carbon::parse($pemesanan->tanggal_pesan)->translatedFormat('d M Y') }} - {{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</td>
-                                        <td class="py-2 px-4 border-b text-center font-bold text-purple-700">{{ $pemesanan->nomor_antrian ?? '-' }}</td>
+                                        <td class="py-2 px-4 border-b">
+                                            {{ \Carbon\Carbon::parse($pemesanan->tanggal_pesan)->translatedFormat('d M Y') }}
+                                            - {{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}</td>
+                                        <td class="py-2 px-4 border-b text-center font-bold text-purple-700">
+                                            {{ $pemesanan->nomor_antrian ?? '-' }}</td>
                                         <td class="py-2 px-4 border-b">{{ $pemesanan->dokter->user->name }}</td>
                                         <td class="py-2 px-4 border-b">
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                                @if($pemesanan->status == 'Selesai') bg-green-100 text-green-800 
+                                            <span
+                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                @if ($pemesanan->status == 'Selesai') bg-green-100 text-green-800 
                                                 @elseif($pemesanan->status == 'Dibatalkan') bg-red-100 text-red-800
                                                 @elseif($pemesanan->status == 'Dijadwalkan Ulang') bg-yellow-100 text-yellow-800
                                                 @elseif($pemesanan->status == 'Dibatalkan Dokter') bg-red-100 text-red-800
                                                 @else bg-blue-100 text-blue-800 @endif">
-                                                
-                                                {{ $pemesanan->status }}
+                                                {{ $pemesanan->status == 'Dipesan' ? 'Direservasi' : $pemesanan->status }}
                                             </span>
                                         </td>
+
                                         <td class="py-2 px-4 border-b">
-                                            @if($pemesanan->status == 'Selesai' && $pemesanan->rekamMedis)
-                                                <a href="{{ route('pasien.rekamMedis.show', $pemesanan->rekamMedis->id) }}" class="text-blue-600 hover:text-blue-900">Lihat Rekam Medis</a>
+                                            @if ($pemesanan->status == 'Selesai' && $pemesanan->rekamMedis)
+                                                <a href="{{ route('pasien.rekamMedis.show', $pemesanan->rekamMedis->id) }}"
+                                                    class="text-blue-600 hover:text-blue-900">Lihat Rekam Medis</a>
                                             @elseif(in_array($pemesanan->status, ['Dipesan', 'Dikonfirmasi']))
-                                                <form action="{{ route('pasien.pemesanan.destroy', $pemesanan->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan pemesanan ini?');">
+                                                <form action="{{ route('pasien.pemesanan.destroy', $pemesanan->id) }}"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Apakah Anda yakin ingin membatalkan pemesanan ini?');">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="text-red-500 hover:text-red-700">Batalkan</button>
+                                                    <button type="submit"
+                                                        class="text-red-500 hover:text-red-700">Batalkan</button>
                                                 </form>
                                             @endif
                                         </td>
                                     </tr>
-                                    @if($pemesanan->catatan_admin)
-                                    <tr class="bg-yellow-50 hover:bg-yellow-100">
-                                        <td colspan="5" class="py-3 px-4 border-b text-sm">
-                                            <strong class="text-yellow-800">Catatan dari Klinik:</strong>
-                                            <p class="mt-1 text-gray-700">{{ $pemesanan->catatan_admin}}</p>
-                                        </td>
-                                    </tr>
+                                    @if ($pemesanan->catatan_admin)
+                                        <tr class="bg-yellow-50 hover:bg-yellow-100">
+                                            <td colspan="5" class="py-3 px-4 border-b text-sm">
+                                                <strong class="text-yellow-800">Catatan dari Klinik:</strong>
+                                                <p class="mt-1 text-gray-700">{{ $pemesanan->catatan_admin }}</p>
+                                            </td>
+                                        </tr>
                                     @endif
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="py-4 px-4 text-center">Anda belum pernah membuat pemesanan.</td>
+                                        <td colspan="5" class="py-4 px-4 text-center">Anda belum pernah membuat
+                                            pemesanan.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
