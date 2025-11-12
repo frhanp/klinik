@@ -19,10 +19,18 @@
                                     pukul {{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}
                                 </p>
                                 <p><strong>Status:</strong>
-                                    <span
-                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                {{ $pemesanan->status == 'Menunggu Konfirmasi Pasien' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800' }}">
-                                        {{ $pemesanan->status }}
+                                    @php
+                                        $status = $pemesanan->status;
+                                        $badgeColor = [
+                                            'Dipesan' => 'bg-blue-100 text-blue-800',
+                                            'Dikonfirmasi' => 'bg-blue-100 text-blue-800',
+                                            'Menunggu Konfirmasi Pasien' => 'bg-yellow-100 text-yellow-800',
+                                            'Dijadwalkan Ulang' => 'bg-yellow-100 text-yellow-800',
+                                            'Dibatalkan Dokter' => 'bg-red-100 text-red-800',
+                                        ][$status] ?? 'bg-gray-100 text-gray-800';
+                                    @endphp
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $badgeColor }}">
+                                        {{ $status == 'Dipesan' ? 'Direservasi' : $status }}
                                     </span>
                                     @if ($pemesanan->status == 'Dibatalkan Dokter' && $pemesanan->catatan_admin)
                                         <div class="text-xs text-red-600 mt-1">
@@ -86,30 +94,5 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            @if (session('success'))
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil!',
-                    text: '{{ session('success') }}',
-                    confirmButtonColor: '#6D28D9' // Warna ungu
-                });
-            @endif
-
-            @if (session('error'))
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: '{{ session('error') }}',
-                    confirmButtonColor: '#6D28D9' // Warna ungu
-                });
-            @endif
-        });
-    </script>
-    @endpush
+    </div>  
 </x-app-layout>

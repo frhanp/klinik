@@ -21,6 +21,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     {{ $header_scripts ?? '' }}
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body x-data="{ sidebarOpen: false }" class="font-sans antialiased bg-gray-100">
@@ -73,6 +74,27 @@
     {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
     @stack('scripts')
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            @if (session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: '{{ session('success') }}',
+                    confirmButtonColor: '#6D28D9' // Warna ungu
+                });
+            @endif
+
+            @if (session('error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal!',
+                    text: '{{ session('error') }}',
+                    confirmButtonColor: '#6D28D9' // Warna ungu
+                });
+            @endif
+        });
+    </script>
 </body>
 
 </html>
