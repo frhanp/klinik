@@ -44,14 +44,39 @@
                     </div>
 
                     <div class="space-y-6">
-                        <div>
-                            <h4 class="font-semibold text-gray-700">Diagnosis</h4>
-                            <p class="mt-1 text-gray-600">{{ $rekamMedis->diagnosis }}</p>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-gray-700">Perawatan</h4>
-                            <p class="mt-1 text-gray-600">{{ $rekamMedis->perawatan }}</p>
-                        </div>
+                        @if ($rekamMedis->subject)
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                                <h4 class="font-bold text-purple-800 mb-3 border-b pb-2">Pemeriksaan Medis (SOAP)</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <span class="block font-semibold text-gray-700 text-sm">S - Subjective</span>
+                                        <p class="mt-1 text-gray-800">{{ $rekamMedis->subject }}</p>
+                                    </div>
+                                    <div>
+                                        <span class="block font-semibold text-gray-700 text-sm">O - Objective</span>
+                                        <p class="mt-1 text-gray-800">{{ $rekamMedis->object }}</p>
+                                    </div>
+                                    <div>
+                                        <span class="block font-semibold text-gray-700 text-sm">A - Assessment</span>
+                                        <p class="mt-1 text-gray-800">{{ $rekamMedis->assessment }}</p>
+                                    </div>
+                                    <div>
+                                        <span class="block font-semibold text-gray-700 text-sm">P - Plan</span>
+                                        <p class="mt-1 text-gray-800">{{ $rekamMedis->plan }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <div>
+                                <h4 class="font-semibold text-gray-700">Diagnosis</h4>
+                                <p class="mt-1 text-gray-600">{{ $rekamMedis->diagnosis }}</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700">Perawatan</h4>
+                                <p class="mt-1 text-gray-600">{{ $rekamMedis->perawatan }}</p>
+                            </div>
+                            @endif
+
                         @if ($rekamMedis->catatan)
                             <div>
                                 <h4 class="font-semibold text-gray-700">Catatan Tambahan</h4>

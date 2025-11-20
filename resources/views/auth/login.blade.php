@@ -37,6 +37,7 @@
         </div>
 
         <div class="mt-4">
+
             <x-input-label for="captcha" :value="__('Verifikasi Keamanan')" />
             <div class="flex items-center space-x-2 mt-1">
                 {{-- Tampilkan gambar captcha --}}
@@ -49,6 +50,7 @@
             </div>
             <x-input-error :messages="$errors->get('captcha')" class="mt-2" />
         </div>
+        
         <div class="mt-6">
             <x-primary-button class="w-full justify-center bg-purple-600 hover:bg-purple-700 focus:bg-purple-700 active:bg-purple-800 focus:ring-purple-500">
                 {{ __('Log in') }}

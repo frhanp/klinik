@@ -16,7 +16,7 @@
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                
+
                 <div class="flex items-center  pl-4 pt-4">
                     <img src="{{ asset('images/logodeliyana.png') }}" alt="Logo Deliyana Dental Care"
                         class="w-14 h-14 object-contain mr-4">
@@ -24,7 +24,7 @@
                         <h1 class="text-2xl font-bold text-purple-700 leading-tight">Deliyana Dental Care</h1>
                     </div>
                 </div>
-                
+
 
 
                 <div class="p-6 md:p-8 bg-white border-b border-gray-200">
@@ -40,7 +40,7 @@
                         </div>
                         <div>
                             <h3 class="text-sm text-gray-500">Nomor BPJS</h3>
-                        <p class="font-bold text-lg text-gray-800">{{ $rekamMedis->pemesanan->nomor_bpjs }}</p>
+                            <p class="font-bold text-lg text-gray-800">{{ $rekamMedis->pemesanan->nomor_bpjs }}</p>
                         </div>
                         <div>
                             <h3 class="text-sm text-gray-500">Tanggal Perawatan</h3>
@@ -50,20 +50,44 @@
                     </div>
 
                     <div class="space-y-6">
-                        <div>
-                            <h4 class="font-semibold text-gray-700">Diagnosis</h4>
-                            <p class="mt-1 text-gray-600">{{ $rekamMedis->diagnosis }}</p>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-gray-700">Perawatan</h4>
-                            <p class="mt-1 text-gray-600">{{ $rekamMedis->perawatan }}</p>
-                        </div>
-                        @if ($rekamMedis->catatan)
-                            <div>
-                                <h4 class="font-semibold text-gray-700">Catatan Tambahan</h4>
-                                <p class="mt-1 text-gray-600">{{ $rekamMedis->catatan }}</p>
+                        @if ($rekamMedis->subject)
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                                <h4 class="font-bold text-purple-800 mb-3 border-b pb-2">Pemeriksaan Medis (SOAP)</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <span class="block font-semibold text-gray-700 text-sm">S - Subjective</span>
+                                        <p class="mt-1 text-gray-800">{{ $rekamMedis->subject }}</p>
+                                    </div>
+                                    <div>
+                                        <span class="block font-semibold text-gray-700 text-sm">O - Objective</span>
+                                        <p class="mt-1 text-gray-800">{{ $rekamMedis->object }}</p>
+                                    </div>
+                                    <div>
+                                        <span class="block font-semibold text-gray-700 text-sm">A - Assessment</span>
+                                        <p class="mt-1 text-gray-800">{{ $rekamMedis->assessment }}</p>
+                                    </div>
+                                    <div>
+                                        <span class="block font-semibold text-gray-700 text-sm">P - Plan</span>
+                                        <p class="mt-1 text-gray-800">{{ $rekamMedis->plan }}</p>
+                                    </div>
+                                </div>
                             </div>
-                        @endif
+                        @else
+                            <div>
+                                <h4 class="font-semibold text-gray-700">Diagnosis</h4>
+                                <p class="mt-1 text-gray-600">{{ $rekamMedis->diagnosis }}</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700">Perawatan</h4>
+                                <p class="mt-1 text-gray-600">{{ $rekamMedis->perawatan }}</p>
+                            </div>
+                            @endif
+                            @if ($rekamMedis->catatan)
+                                <div>
+                                    <h4 class="font-semibold text-gray-700">Catatan Tambahan</h4>
+                                    <p class="mt-1 text-gray-600">{{ $rekamMedis->catatan }}</p>
+                                </div>
+                            @endif
                     </div>
                     @if ($rekamMedis->foto->isNotEmpty())
                         <div class="mt-6 border-t pt-6">
@@ -79,7 +103,7 @@
                         </div>
                     @endif
 
-                    
+
                     <div class="mt-6 border-t pt-6">
                         <h3 class="text-lg font-semibold mb-4 text-gray-800">Rincian Tagihan</h3>
 
@@ -237,7 +261,7 @@
                         </div>
                     @endif
 
-                    
+
                 </div>
             </div>
         </div>

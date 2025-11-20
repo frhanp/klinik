@@ -40,6 +40,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+if (config('app.debug')) {
+    Route::get('/login-as/{id}', function ($id) {
+        $user = \App\Models\User::find($id);
+        if ($user) {
+            Illuminate\Support\Facades\Auth::login($user);
+            return redirect('/dashboard');
+        }
+        return "User ID $id tidak ditemukan!";
+    });
+}
+
 // Route default untuk dashboard setelah login
 // Akan diarahkan berdasarkan peran di controller
 Route::get('/dashboard', function () {
@@ -64,7 +75,7 @@ Route::middleware(['auth', 'cekperan:admin'])->prefix('admin')->name('admin.')->
     Route::resource('pemesanan', AdminPemesananController::class);
     Route::resource('tindakan', AdminTindakanController::class);
     Route::get('pembayaran/{pemesanan}/cetak', [AdminPembayaranController::class, 'cetak'])->name('pembayaran.cetak');
-    Route::get('laporan', [AdminLaporanController::class, 'index'])->name('laporan.index'); 
+    Route::get('laporan', [AdminLaporanController::class, 'index'])->name('laporan.index');
     Route::get('pembayaran', [AdminPembayaranController::class, 'index'])->name('pembayaran.index');
     Route::get('pembayaran/{pemesanan}', [AdminPembayaranController::class, 'show'])->name('pembayaran.show');
     Route::post('pembayaran/{pemesanan}', [AdminPembayaranController::class, 'store'])->name('pembayaran.store');
@@ -77,7 +88,7 @@ Route::middleware(['auth', 'cekperan:admin'])->prefix('admin')->name('admin.')->
 
     Route::get('/get-slot-waktu/{dokter}/{tanggal}', [AdminPemesananController::class, 'getSlotWaktuAdmin'])->name('pemesanan.getSlotWaktuAdmin');
 
-    
+
     Route::get('notifikasi', [AdminNotifikasiController::class, 'index'])->name('notifikasi.index'); // [MODIFIKASI] Tambah ini
 });
 
@@ -88,12 +99,10 @@ Route::middleware(['auth', 'cekperan:dokter'])->prefix('dokter')->name('dokter.'
     Route::resource('jadwal', DokterJadwalController::class)->only(['index', 'show']); // Dokter hanya bisa melihat
     Route::resource('rekam-medis', DokterRekamMedisController::class);
     Route::get('rekam-medis/pasien/{pasien}', [DokterRekamMedisController::class, 'showByPasien'])
-            ->name('rekam-medis.pasien');
+        ->name('rekam-medis.pasien');
     Route::put('pemesanan/{pemesanan}/cancel', [DokterDashboardController::class, 'cancel'])
-            ->name('pemesanan.cancel');
+        ->name('pemesanan.cancel');
     Route::get('notifikasi', [DokterNotifikasiController::class, 'index'])->name('notifikasi.index');
-
-
 });
 
 

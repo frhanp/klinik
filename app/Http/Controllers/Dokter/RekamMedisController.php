@@ -85,18 +85,24 @@ class RekamMedisController extends Controller
 {
     $request->validate([
         'id_pemesanan' => 'required|exists:pemesanan,id',
-        'diagnosis' => 'required|string|max:255',
-        'perawatan' => 'required|string|max:255',
-        'foto.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Validasi untuk setiap file foto
+        'subject'    => 'required|string',
+        'object'     => 'required|string',
+        'assessment' => 'required|string',
+        'plan'       => 'required|string',
+        'catatan'    => 'nullable|string',
+        'foto.*'     => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
     ]);
     
     $pemesanan = Pemesanan::findOrFail($request->id_pemesanan);
 
     $rekamMedis = $pemesanan->rekamMedis()->create([
-        'diagnosis' => $request->diagnosis,
-        'perawatan' => $request->perawatan,
-        'catatan'   => $request->catatan,
-        
+        'subject'    => $request->subject,
+        'object'     => $request->object,
+        'assessment' => $request->assessment,
+        'plan'       => $request->plan,
+        'diagnosis'  => $request->assessment,
+        'perawatan'  => $request->plan,
+        'catatan'    => $request->catatan,
     ]);
 
     if ($request->hasFile('foto')) {

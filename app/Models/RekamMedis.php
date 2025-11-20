@@ -9,7 +9,16 @@ class RekamMedis extends Model
 {
     use HasFactory;
     protected $table = 'rekam_medis';
-    protected $fillable = ['id_pemesanan', 'diagnosis', 'perawatan', 'catatan'];
+    protected $fillable = [
+        'id_pemesanan', 
+        'subject', 
+        'object', 
+        'assessment', 
+        'plan', 
+        'diagnosis',
+        'perawatan', 
+        'catatan'
+    ];
 
     public function pemesanan()
     {
