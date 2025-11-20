@@ -1,5 +1,5 @@
 ﻿# Project Digest (Full Content)
-_Generated: 2025-11-12 09:29:20_
+_Generated: 2025-11-20 13:25:55_
 **Root:** D:\Laragon\www\klinik
 
 
@@ -40,6 +40,7 @@ vite.config.js
 app\Http
 app\Imports
 app\Models
+app\Notifications
 app\Providers
 app\View
 app\Http\Controllers
@@ -55,6 +56,7 @@ app\Http\Controllers\Admin\DashboardController.php
 app\Http\Controllers\Admin\DokterController.php
 app\Http\Controllers\Admin\JadwalController.php
 app\Http\Controllers\Admin\LaporanController.php
+app\Http\Controllers\Admin\NotifikasiController.php
 app\Http\Controllers\Admin\ObatController.php
 app\Http\Controllers\Admin\PasienController.php
 app\Http\Controllers\Admin\PembayaranController.php
@@ -71,8 +73,10 @@ app\Http\Controllers\Auth\RegisteredUserController.php
 app\Http\Controllers\Auth\VerifyEmailController.php
 app\Http\Controllers\Dokter\DashboardController.php
 app\Http\Controllers\Dokter\JadwalController.php
+app\Http\Controllers\Dokter\NotifikasiController.php
 app\Http\Controllers\Dokter\RekamMedisController.php
 app\Http\Controllers\Pasien\DashboardController.php
+app\Http\Controllers\Pasien\NotifikasiController.php
 app\Http\Controllers\Pasien\PemesananController.php
 app\Http\Middleware\CekPeran.php
 app\Http\Requests\Auth
@@ -92,6 +96,9 @@ app\Models\RekamMedis.php
 app\Models\Resep.php
 app\Models\Tindakan.php
 app\Models\User.php
+app\Notifications\PasienBaruUntukAdmin.php
+app\Notifications\PemesananBaruUntukAdmin.php
+app\Notifications\PemesananStatusUpdated.php
 app\Providers\AppServiceProvider.php
 app\View\Components
 app\View\Components\AppLayout.php
@@ -146,6 +153,7 @@ database\migrations\2025_10_01_232639_tambah_kolom_potongan_ke_tabel_pembayaran.
 database\migrations\2025_10_11_093935_tambah_kolom_nomor_bpjs_ke_tabel_pemesanan.php
 database\migrations\2025_10_22_133136_tambah_field_lengkap_termasuk_umur_ke_biodata_pasien.php
 database\migrations\2025_11_02_174811_tambah_kolom_nomor_antrian_ke_pemesanan_table.php
+database\migrations\2025_11_12_105507_create_notifications_table.php
 database\seeders\DatabaseSeeder.php
 database\seeders\DokterSeeder.php
 database\seeders\JadwalSeeder.php
@@ -180,6 +188,7 @@ resources\views\welcome.blade.php
 resources\views\admin\dokter
 resources\views\admin\jadwal
 resources\views\admin\laporan
+resources\views\admin\notifikasi
 resources\views\admin\obat
 resources\views\admin\pasien
 resources\views\admin\pembayaran
@@ -196,6 +205,7 @@ resources\views\admin\jadwal\index.blade.php
 resources\views\admin\jadwal\show.blade.php
 resources\views\admin\laporan\cetak.blade.php
 resources\views\admin\laporan\index.blade.php
+resources\views\admin\notifikasi\index.blade.php
 resources\views\admin\obat\create.blade.php
 resources\views\admin\obat\edit.blade.php
 resources\views\admin\obat\index.blade.php
@@ -234,9 +244,11 @@ resources\views\components\responsive-nav-link.blade.php
 resources\views\components\secondary-button.blade.php
 resources\views\components\text-input.blade.php
 resources\views\dokter\jadwal
+resources\views\dokter\notifikasi
 resources\views\dokter\rekam-medis
 resources\views\dokter\dashboard.blade.php
 resources\views\dokter\jadwal\index.blade.php
+resources\views\dokter\notifikasi\index.blade.php
 resources\views\dokter\rekam-medis\partials
 resources\views\dokter\rekam-medis\create.blade.php
 resources\views\dokter\rekam-medis\index.blade.php
@@ -254,9 +266,11 @@ resources\views\dokter\rekam-medis\partials\_tindakan_pasien.blade.php
 resources\views\layouts\app.blade.php
 resources\views\layouts\guest.blade.php
 resources\views\layouts\navigation.blade.php
+resources\views\pasien\notifikasi
 resources\views\pasien\pemesanan
 resources\views\pasien\rekam-medis
 resources\views\pasien\dashboard.blade.php
+resources\views\pasien\notifikasi\index.blade.php
 resources\views\pasien\pemesanan\create.blade.php
 resources\views\pasien\pemesanan\index.blade.php
 resources\views\pasien\rekam-medis\show.blade.php
@@ -303,6 +317,7 @@ storage\framework\views\0a9bef67fe2b9d30708d407252dcb40b.php
 storage\framework\views\0afe6ab13daf12a6674687a76eddc1b2.php
 storage\framework\views\0c617c98432933a95814e28d89db8e04.php
 storage\framework\views\0dde4a8697d8768fbaa33a58a45b8550.php
+storage\framework\views\0fa16cf9e8d791a9afa5494908b60052.php
 storage\framework\views\14f333af3f64fc5dbad9e5850c525a64.php
 storage\framework\views\1846ad195a36ec593251411dc8172134.php
 storage\framework\views\1a89655d329c7963e3aac340c661d4eb.php
@@ -325,6 +340,7 @@ storage\framework\views\3f78f7c3950888e24e17f0f2153164ba.php
 storage\framework\views\3f97fad1046eebed23dea96fef8be649.php
 storage\framework\views\3fe124fd1ab53367f3db7d5c4f61a949.php
 storage\framework\views\4093f5cd207932011562c32ddaa82537.php
+storage\framework\views\411ee6cdaac44a5a7584af2c884ee674.php
 storage\framework\views\43cd2c320e451f9a26231447b724fcfe.php
 storage\framework\views\45a511ac94b858088f8c488900084c75.php
 storage\framework\views\49d2988d7ab7a37f316ac97460cf0d4f.php
@@ -419,11 +435,11 @@ Branch:
 main
 
 Last 5 commits:
+91e01ad notif dokter admin
+0cacc3f notif untuk pasien
+e13d3ca add sweetalert
+2c84077 janji temu hanya 1 kali
 eacaff6 deploy stengah
-5496461 revisi hasil v1
-f52a90f pasien sudah bisa konfirmasi jadwal
-5673302 sudah ada form jadwal baru di admin
-9941a63 nomor antrian
 ```
 
 
@@ -540,6 +556,10 @@ use App\Http\Controllers\Admin\PasienController as AdminPasienController;
 use App\Http\Controllers\Admin\LaporanController as LaporanController;
 use App\Http\Controllers\Pasien\BiodataController as PasienBiodataController;
 use App\Http\Controllers\Admin\JadwalController as JadwalController;
+use App\Http\Controllers\Pasien\NotifikasiController as PasienNotifikasiController;
+
+use App\Http\Controllers\Admin\NotifikasiController as AdminNotifikasiController;
+use App\Http\Controllers\Dokter\NotifikasiController as DokterNotifikasiController;
 
 
 /*
@@ -589,6 +609,9 @@ Route::middleware(['auth', 'cekperan:admin'])->prefix('admin')->name('admin.')->
     Route::get('laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
 
     Route::get('/get-slot-waktu/{dokter}/{tanggal}', [AdminPemesananController::class, 'getSlotWaktuAdmin'])->name('pemesanan.getSlotWaktuAdmin');
+
+    
+    Route::get('notifikasi', [AdminNotifikasiController::class, 'index'])->name('notifikasi.index'); // [MODIFIKASI] Tambah ini
 });
 
 
@@ -601,6 +624,9 @@ Route::middleware(['auth', 'cekperan:dokter'])->prefix('dokter')->name('dokter.'
             ->name('rekam-medis.pasien');
     Route::put('pemesanan/{pemesanan}/cancel', [DokterDashboardController::class, 'cancel'])
             ->name('pemesanan.cancel');
+    Route::get('notifikasi', [DokterNotifikasiController::class, 'index'])->name('notifikasi.index');
+
+
 });
 
 
@@ -615,6 +641,10 @@ Route::middleware(['auth', 'cekperan:pasien'])->prefix('pasien')->name('pasien.'
 
     // Route untuk mendapatkan slot waktu yang tersedia pada tanggal tertentu
     Route::get('/get-slot-waktu/{dokter}/{tanggal}', [PasienPemesananController::class, 'getSlotWaktu'])->name('pemesanan.getSlotWaktu');
+
+    //Route Notifikasi
+    Route::get('notifikasi', [PasienNotifikasiController::class, 'index'])->name('notifikasi.index');
+    Route::post('notifikasi/{id}/read', [PasienNotifikasiController::class, 'markAsRead'])->name('notifikasi.read');
 });
 
 
@@ -662,6 +692,7 @@ require __DIR__ . '/auth.php';
   GET|HEAD        admin/jadwal/{jadwal}/edit ................................. admin.jadwal.edit ΓÇ║ Admin\JadwalController@edit
   GET|HEAD        admin/laporan .......................................... admin.laporan.index ΓÇ║ Admin\LaporanController@index
   GET|HEAD        admin/laporan/cetak .................................... admin.laporan.cetak ΓÇ║ Admin\LaporanController@cetak
+  GET|HEAD        admin/notifikasi ................................. admin.notifikasi.index ΓÇ║ Admin\NotifikasiController@index
   GET|HEAD        admin/obat ................................................... admin.obat.index ΓÇ║ Admin\ObatController@index
   POST            admin/obat ................................................... admin.obat.store ΓÇ║ Admin\ObatController@store
   GET|HEAD        admin/obat/create .......................................... admin.obat.create ΓÇ║ Admin\ObatController@create
@@ -701,6 +732,7 @@ require __DIR__ . '/auth.php';
   GET|HEAD        dokter/dashboard ....................................... dokter.dashboard ΓÇ║ Dokter\DashboardController@index
   GET|HEAD        dokter/jadwal .......................................... dokter.jadwal.index ΓÇ║ Dokter\JadwalController@index
   GET|HEAD        dokter/jadwal/{jadwal} ................................... dokter.jadwal.show ΓÇ║ Dokter\JadwalController@show
+  GET|HEAD        dokter/notifikasi .............................. dokter.notifikasi.index ΓÇ║ Dokter\NotifikasiController@index
   PUT             dokter/pemesanan/{pemesanan}/cancel ............ dokter.pemesanan.cancel ΓÇ║ Dokter\DashboardController@cancel
   GET|HEAD        dokter/rekam-medis ............................ dokter.rekam-medis.index ΓÇ║ Dokter\RekamMedisController@index
   POST            dokter/rekam-medis ............................ dokter.rekam-medis.store ΓÇ║ Dokter\RekamMedisController@store
@@ -719,6 +751,8 @@ require __DIR__ . '/auth.php';
   GET|HEAD        pasien/dashboard ....................................... pasien.dashboard ΓÇ║ Pasien\DashboardController@index
   GET|HEAD        pasien/get-jadwal-dokter/{dokter} pasien.pemesanan.getJadwalDokter ΓÇ║ Pasien\PemesananController@getJadwalDoΓÇª
   GET|HEAD        pasien/get-slot-waktu/{dokter}/{tanggal} pasien.pemesanan.getSlotWaktu ΓÇ║ Pasien\PemesananController@getSlotΓÇª
+  GET|HEAD        pasien/notifikasi .............................. pasien.notifikasi.index ΓÇ║ Pasien\NotifikasiController@index
+  POST            pasien/notifikasi/{id}/read ................ pasien.notifikasi.read ΓÇ║ Pasien\NotifikasiController@markAsRead
   GET|HEAD        pasien/pemesanan ................................. pasien.pemesanan.index ΓÇ║ Pasien\PemesananController@index
   POST            pasien/pemesanan ................................. pasien.pemesanan.store ΓÇ║ Pasien\PemesananController@store
   GET|HEAD        pasien/pemesanan/create ........................ pasien.pemesanan.create ΓÇ║ Pasien\PemesananController@create
@@ -740,7 +774,7 @@ require __DIR__ . '/auth.php';
   GET|HEAD        verify-email .................................. verification.notice ΓÇ║ Auth\EmailVerificationPromptController
   GET|HEAD        verify-email/{id}/{hash} .................................. verification.verify ΓÇ║ Auth\VerifyEmailController
 
-                                                                                                          Showing [104] routes
+                                                                                                          Showing [108] routes
 
 ```
 
@@ -1248,6 +1282,25 @@ class LaporanController extends Controller
     }
 }
 
+===== app\Http\Controllers\Admin\NotifikasiController.php =====
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class NotifikasiController extends Controller
+{
+    public function index() {
+        $user = Auth::user();
+        $notifikasi = $user->notifications()->paginate(10);
+        $user->unreadNotifications->markAsRead();
+        return view('admin.notifikasi.index', compact('notifikasi'));
+    }
+}
+
 ===== app\Http\Controllers\Admin\ObatController.php =====
 <?php
 
@@ -1612,6 +1665,8 @@ use App\Models\DaftarTindakan;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Jadwal;
+use App\Notifications\PemesananStatusUpdated;
+use Illuminate\Support\Facades\Log;
 
 class PemesananController extends Controller
 {
@@ -1848,6 +1903,27 @@ class PemesananController extends Controller
         }
 
         $pemesanan->update($dataToUpdate);
+        $statusBaru = $dataToUpdate['status'];
+        try {
+            $pasien = $pemesanan->pasien; // Dapatkan user pasien dari relasi
+            if ($pasien) {
+                $pasien->notify(new PemesananStatusUpdated($pemesanan));
+            }
+        } catch (\Exception $e) {
+            // Opsional: Catat log jika pengiriman notif gagal
+            Log::error('Gagal mengirim notifikasi: ' . $e->getMessage());
+        }
+
+        if (in_array($statusBaru, ['Dikonfirmasi', 'Dibatalkan', 'Dijadwalkan Ulang'])) {
+            try {
+                $dokterUser = $pemesanan->dokter->user;
+                if ($dokterUser) {
+                    $dokterUser->notify(new PemesananStatusUpdated($pemesanan));
+                }
+            } catch (\Exception $e) {
+                // Abaikan
+            }
+        }
 
         return redirect()->route('admin.pemesanan.index')->with('success', 'Status pemesanan berhasil diperbarui.');
     }
@@ -2255,6 +2331,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\PasienBaruUntukAdmin;
 
 class RegisteredUserController extends Controller
 {
@@ -2284,6 +2362,15 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        try {
+            $adminUsers = User::where('peran', 'admin')->get();
+            if ($adminUsers->isNotEmpty()) {
+                Notification::send($adminUsers, new PasienBaruUntukAdmin($user));
+            }
+        } catch (\Exception $e) {
+            // Abaikan jika notif gagal
+        }
 
         event(new Registered($user));
 
@@ -2410,6 +2497,25 @@ class JadwalController extends Controller
         }
 
         return view('dokter.jadwal.show', compact('jadwal'));
+    }
+}
+
+===== app\Http\Controllers\Dokter\NotifikasiController.php =====
+<?php
+
+namespace App\Http\Controllers\Dokter;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class NotifikasiController extends Controller
+{
+    public function index() {
+        $user = Auth::user();
+        $notifikasi = $user->notifications()->paginate(10);
+        $user->unreadNotifications->markAsRead();
+        return view('dokter.notifikasi.index', compact('notifikasi'));
     }
 }
 
@@ -2648,13 +2754,60 @@ class DashboardController extends Controller
             ->whereIn('status', [
                 'Dipesan',
                 'Dikonfirmasi',
-                'Menunggu Konfirmasi Pasien'
+                'Menunggu Konfirmasi Pasien',
+                'Dijadwalkan Ulang'
             ])
-            ->orderBy('created_at', 'desc') // ambil yg terbaru dulu
-            ->get(); // HAPUS take(6)
+            ->orderBy('created_at', 'desc') 
+            ->get(); 
+
+            $adaPemesananAktif = $pemesananAktif->isNotEmpty();
 
 
-        return view('pasien.dashboard', compact('pemesananAktif'));
+        return view('pasien.dashboard', compact('pemesananAktif','adaPemesananAktif'));
+    }
+}
+
+===== app\Http\Controllers\Pasien\NotifikasiController.php =====
+<?php
+
+namespace App\Http\Controllers\Pasien;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class NotifikasiController extends Controller
+{
+    /**
+     * Menampilkan halaman daftar notifikasi.
+     */
+    public function index()
+    {
+        $user = Auth::user();
+        $notifikasi = $user->notifications()->paginate(10);
+        
+        // Tandai notifikasi yang belum dibaca sebagai telah dibaca
+        $user->unreadNotifications->markAsRead();
+
+        return view('pasien.notifikasi.index', compact('notifikasi'));
+    }
+
+    /**
+     * Menandai notifikasi sebagai dibaca (jika diperlukan oleh AJAX nanti)
+     */
+    public function markAsRead(Request $request, $notificationId)
+    {
+        $notification = Auth::user()->notifications()->find($notificationId);
+        if($notification) {
+            $notification->markAsRead();
+        }
+        
+        // Jika ada URL tujuan di notifikasi, redirect ke sana
+        if(isset($notification->data['url'])) {
+             return redirect($notification->data['url']);
+        }
+        
+        return back();
     }
 }
 
@@ -2675,6 +2828,10 @@ use App\Models\BiodataPasien;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Models\DaftarTindakan;
+use App\Models\User;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\PemesananBaruUntukAdmin;
+use App\Notifications\PemesananStatusUpdated;
 
 class PemesananController extends Controller
 {
@@ -2805,17 +2962,32 @@ class PemesananController extends Controller
     //----------------------------------
 
     public function create()
-{
-    $dokters = Dokter::with('user')->get();
+    {
+        
+        $adaPemesananAktif = Pemesanan::where('id_pasien', Auth::id())
+            ->whereIn('status', ['Dipesan', 'Dikonfirmasi', 'Menunggu Konfirmasi Pasien', 'Dijadwalkan Ulang'])
+            ->exists();
+            
+        if ($adaPemesananAktif) {
+            return redirect()->route('pasien.dashboard')->with('error', 'Anda sudah memiliki janji temu aktif.');
+        }
+        
 
-    // [MODIFIKASI] Ambil data tindakan yang sudah dikelompokkan berdasarkan kategori
-    $daftarTindakans = DaftarTindakan::with('tindakanItems')->orderBy('nama_kategori')->get();
-
-    return view('pasien.pemesanan.create', compact('dokters', 'daftarTindakans'));
-}
+        $dokters = Dokter::with('user')->get();
+        $daftarTindakans = DaftarTindakan::with('tindakanItems')->orderBy('nama_kategori')->get();
+        return view('pasien.pemesanan.create', compact('dokters', 'daftarTindakans'));
+    }
 
     public function store(Request $request)
     {
+        $adaPemesananAktif = Pemesanan::where('id_pasien', Auth::id())
+            ->whereIn('status', ['Dipesan', 'Dikonfirmasi', 'Menunggu Konfirmasi Pasien', 'Dijadwalkan Ulang'])
+            ->exists();
+            
+        if ($adaPemesananAktif) {
+            return redirect()->route('pasien.pemesanan.index')->with('error', 'Gagal membuat janji temu. Anda masih memiliki janji temu yang aktif.');
+        }
+        
         $request->validate([
             // Validasi untuk data diri (Langkah 1)
             'nama_pasien_booking' => ['required', 'string', 'max:255'],
@@ -2871,6 +3043,15 @@ class PemesananController extends Controller
             if ($request->has('tindakan_awal')) {
                 $pemesanan->tindakanAwal()->attach($request->tindakan_awal);
             }
+
+            try {
+                $adminUsers = User::where('peran', 'admin')->get();
+                if ($adminUsers->isNotEmpty()) {
+                    Notification::send($adminUsers, new PemesananBaruUntukAdmin($pemesanan));
+                }
+            } catch (\Exception $e) {
+                // Abaikan jika notif gagal
+            }
         });
 
         return redirect()->route('pasien.pemesanan.index')->with('success', 'Pemesanan berhasil dibuat.');
@@ -2922,11 +3103,25 @@ class PemesananController extends Controller
     public function destroy(Pemesanan $pemesanan)
     {
         if ($pemesanan->id_pasien !== Auth::id()) abort(403);
+        $statusAsal = $pemesanan->status;
 
         if (in_array($pemesanan->status, ['Dipesan', 'Dikonfirmasi'])) {
             $pemesanan->update(['status' => 'Dibatalkan']);
+
+            if ($statusAsal == 'Dikonfirmasi') {
+                try {
+                    $dokterUser = $pemesanan->dokter->user;
+                    if ($dokterUser) {
+                        $dokterUser->notify(new PemesananStatusUpdated($pemesanan));
+                    }
+                } catch (\Exception $e) {
+                    // Abaikan jika notif gagal
+                }
+            }
             return redirect()->route('pasien.pemesanan.index')->with('success', 'Pemesanan berhasil dibatalkan.');
         }
+
+
 
         return redirect()->route('pasien.pemesanan.index')->with('error', 'Pemesanan yang sudah selesai tidak dapat dibatalkan.');
     }
@@ -4269,6 +4464,33 @@ class Tindakan extends Model
             });
         </script>
     @endpush
+</x-app-layout>
+
+===== resources\views\admin\notifikasi\index.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('Notifikasi') }}</h2>
+    </x-slot>
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <h3 class="text-lg font-semibold mb-4">Semua Notifikasi</h3>
+                    <div class="space-y-4">
+                        @forelse ($notifikasi as $item)
+                            <div classa="p-4 rounded-lg {{ $item->read_at ? 'bg-gray-50' : 'bg-blue-50 border border-blue-200' }}">
+                                <p class="text-gray-800">{{ $item->data['pesan'] }}</p>
+                                <span class="text-xs text-gray-500">{{ $item->created_at->diffForHumans() }}</span>
+                            </div>
+                        @empty
+                            <p class="text-center text-gray-500">Anda belum memiliki notifikasi.</p>
+                        @endforelse
+                    </div>
+                    <div class="mt-6">{{ $notifikasi->links() }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </x-app-layout>
 
 ===== resources\views\admin\obat\create.blade.php =====
@@ -6845,6 +7067,33 @@ $classes = ($active ?? false)
     </div>
 </x-app-layout>
 
+===== resources\views\dokter\notifikasi\index.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('Notifikasi') }}</h2>
+    </x-slot>
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <h3 class="text-lg font-semibold mb-4">Semua Notifikasi</h3>
+                    <div class="space-y-4">
+                        @forelse ($notifikasi as $item)
+                            <div class="p-4 rounded-lg {{ $item->read_at ? 'bg-gray-50' : 'bg-blue-50 border border-blue-200' }}">
+                                <p class="text-gray-800">{{ $item->data['pesan'] }}</p>
+                                <span class="text-xs text-gray-500">{{ $item->created_at->diffForHumans() }}</span>
+                            </div>
+                        @empty
+                            <p class="text-center text-gray-500">Anda belum memiliki notifikasi.</p>
+                        @endforelse
+                    </div>
+                    <div class="mt-6">{{ $notifikasi->links() }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
 ===== resources\views\dokter\rekam-medis\partials\_actions.blade.php =====
 <div class="flex items-center justify-end mt-6">
     <a href="{{ route('dokter.dashboard') }}"
@@ -7958,6 +8207,7 @@ $classes = ($active ?? false)
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     {{ $header_scripts ?? '' }}
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body x-data="{ sidebarOpen: false }" class="font-sans antialiased bg-gray-100">
@@ -8010,6 +8260,27 @@ $classes = ($active ?? false)
     {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
     @stack('scripts')
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            @if (session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: '{{ session('success') }}',
+                    confirmButtonColor: '#6D28D9' // Warna ungu
+                });
+            @endif
+
+            @if (session('error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal!',
+                    text: '{{ session('error') }}',
+                    confirmButtonColor: '#6D28D9' // Warna ungu
+                });
+            @endif
+        });
+    </script>
 </body>
 
 </html>
@@ -8118,6 +8389,15 @@ $classes = ($active ?? false)
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                 <span>{{ __('Kelola Obat') }}</span>
             </x-nav-link>
+            <x-nav-link :href="route('admin.notifikasi.index')" :active="request()->routeIs('admin.notifikasi.index')">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341A6.002 6.002 0 006 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                <span>{{ __('Notifikasi') }}</span>
+                @if(auth()->user()->unreadNotifications->count() > 0)
+                    <span class="ml-auto bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                        {{ auth()->user()->unreadNotifications->count() }}
+                    </span>
+                @endif
+            </x-nav-link>
         @elseif (Auth::user()->peran == 'dokter')
             {{-- Menu untuk Dokter --}}
             <x-nav-link :href="route('dokter.dashboard')" :active="request()->routeIs('dokter.dashboard')">
@@ -8131,6 +8411,15 @@ $classes = ($active ?? false)
             <x-nav-link :href="route('dokter.rekam-medis.index')" :active="request()->routeIs('dokter.rekam-medis.*')">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3h2m-4 3h2m-4 3h2m-4 3h2"></path></svg>
                 <span>{{ __('Riwayat Rekam Medis') }}</span>
+            </x-nav-link>
+            <x-nav-link :href="route('dokter.notifikasi.index')" :active="request()->routeIs('dokter.notifikasi.index')">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341A6.002 6.002 0 006 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                <span>{{ __('Notifikasi') }}</span>
+                @if(auth()->user()->unreadNotifications->count() > 0)
+                    <span class="ml-auto bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                        {{ auth()->user()->unreadNotifications->count() }}
+                    </span>
+                @endif
             </x-nav-link>
 
         @elseif (Auth::user()->peran == 'pasien')
@@ -8146,6 +8435,15 @@ $classes = ($active ?? false)
             <x-nav-link :href="route('pasien.pemesanan.index')" :active="request()->routeIs('pasien.pemesanan.index')">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
                 <span>{{ __('Riwayat Pemesanan') }}</span>
+            </x-nav-link>
+            <x-nav-link :href="route('pasien.notifikasi.index')" :active="request()->routeIs('pasien.notifikasi.index')">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341A6.002 6.002 0 006 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                <span>{{ __('Notifikasi') }}</span>
+                @if(auth()->user()->unreadNotifications->count() > 0)
+                    <span class="ml-auto bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                        {{ auth()->user()->unreadNotifications->count() }}
+                    </span>
+                @endif
             </x-nav-link>
         @endif
     </nav>
@@ -8191,6 +8489,42 @@ $classes = ($active ?? false)
         </div>
     </div>
 </aside>
+
+===== resources\views\pasien\notifikasi\index.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Notifikasi Anda') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <h3 class="text-lg font-semibold mb-4">Semua Notifikasi</h3>
+                    
+                    <div class="space-y-4">
+                        @forelse ($notifikasi as $item)
+                            <div class="p-4 rounded-lg {{ $item->read_at ? 'bg-gray-50' : 'bg-blue-50 border border-blue-200' }}">
+                                <p class="text-gray-800">{{ $item->data['pesan'] }}</p>
+                                <span class="text-xs text-gray-500">
+                                    {{ $item->created_at->diffForHumans() }}
+                                </span>
+                            </div>
+                        @empty
+                            <p class="text-center text-gray-500">Anda belum memiliki notifikasi.</p>
+                        @endforelse
+                    </div>
+
+                    <div class="mt-6">
+                        {{ $notifikasi->links() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
 
 ===== resources\views\pasien\pemesanan\create.blade.php =====
 <x-app-layout>
@@ -8771,7 +9105,7 @@ $classes = ($active ?? false)
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h3 class="text-lg font-semibold mb-4">Pemesanan Aktif Anda</h3>
-                    @if ($pemesananAktif->isNotEmpty())
+                    @if ($adaPemesananAktif)
                         @foreach ($pemesananAktif as $pemesanan)
                             <div class="border p-4 rounded-lg mb-4">
                                 <p><strong>Dokter:</strong> {{ $pemesanan->dokter->user->name }}</p>
@@ -8780,10 +9114,18 @@ $classes = ($active ?? false)
                                     pukul {{ \Carbon\Carbon::parse($pemesanan->waktu_pesan)->format('H:i') }}
                                 </p>
                                 <p><strong>Status:</strong>
-                                    <span
-                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                {{ $pemesanan->status == 'Menunggu Konfirmasi Pasien' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800' }}">
-                                        {{ $pemesanan->status }}
+                                    @php
+                                        $status = $pemesanan->status;
+                                        $badgeColor = [
+                                            'Dipesan' => 'bg-blue-100 text-blue-800',
+                                            'Dikonfirmasi' => 'bg-blue-100 text-blue-800',
+                                            'Menunggu Konfirmasi Pasien' => 'bg-yellow-100 text-yellow-800',
+                                            'Dijadwalkan Ulang' => 'bg-yellow-100 text-yellow-800',
+                                            'Dibatalkan Dokter' => 'bg-red-100 text-red-800',
+                                        ][$status] ?? 'bg-gray-100 text-gray-800';
+                                    @endphp
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $badgeColor }}">
+                                        {{ $status == 'Dipesan' ? 'Direservasi' : $status }}
                                     </span>
                                     @if ($pemesanan->status == 'Dibatalkan Dokter' && $pemesanan->catatan_admin)
                                         <div class="text-xs text-red-600 mt-1">
@@ -8834,6 +9176,9 @@ $classes = ($active ?? false)
                                 {{-- AKHIR MODIFIKASI --}}
                             </div>
                         @endforeach
+                        <div class="mt-6 p-4 bg-yellow-50 border border-yellow-300 rounded-lg text-sm text-yellow-800">
+                            Anda sudah memiliki janji temu yang aktif. Anda baru dapat membuat janji temu baru setelah janji temu saat ini "Selesai" atau "Dibatalkan".
+                        </div>
                     @else
                         <p>Anda tidak memiliki pemesanan yang aktif saat ini.</p>
                         <a href="{{ route('pasien.pemesanan.create') }}"
@@ -8844,7 +9189,7 @@ $classes = ($active ?? false)
                 </div>
             </div>
         </div>
-    </div>
+    </div>  
 </x-app-layout>
 
 ===== resources\views\profile\partials\delete-user-form.blade.php =====

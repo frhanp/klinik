@@ -8,6 +8,23 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <x-notification />
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                {{-- Grafik Layanan --}}
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-700">Layanan Paling Sering Dilakukan</h3>
+                    <div class="relative h-64">
+                        <canvas id="layananChart"></canvas>
+                    </div>
+                </div>
+
+                {{-- Grafik Metode Pembayaran --}}
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-700">Metode Pembayaran Pasien</h3>
+                    <div class="relative h-64">
+                        <canvas id="metodeChart"></canvas>
+                    </div>
+                </div>
+            </div>
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
@@ -111,24 +128,24 @@
 
                                                 {{-- Tombol Batalkan --}}
                                                 @if ($pemesanan->status === 'Dikonfirmasi')
-    <form action="{{ route('dokter.pemesanan.cancel', $pemesanan->id) }}" method="POST" class="inline-flex items-center gap-2">
-        @csrf
-        @method('PUT')
+                                                    <form
+                                                        action="{{ route('dokter.pemesanan.cancel', $pemesanan->id) }}"
+                                                        method="POST" class="inline-flex items-center gap-2">
+                                                        @csrf
+                                                        @method('PUT')
 
-        <input type="text"
-               name="reason"
-               placeholder="Alasan (opsional)"
-               class="border text-xs px-2 py-1 rounded"
-               style="width:120px" />
+                                                        <input type="text" name="reason"
+                                                            placeholder="Alasan (opsional)"
+                                                            class="border text-xs px-2 py-1 rounded"
+                                                            style="width:120px" />
 
-        <button type="submit"
-                onclick="return confirm('Batalkan pemesanan ini?')"
-                class="text-xs font-semibold px-3 py-1.5 rounded-md shadow-sm bg-red-600 text-white hover:bg-red-700 transition">
-            Batalkan
-        </button>
-    </form>
-@endif
-
+                                                        <button type="submit"
+                                                            onclick="return confirm('Batalkan pemesanan ini?')"
+                                                            class="text-xs font-semibold px-3 py-1.5 rounded-md shadow-sm bg-red-600 text-white hover:bg-red-700 transition">
+                                                            Batalkan
+                                                        </button>
+                                                    </form>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
@@ -147,4 +164,79 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // 1. Grafik Layanan (Bar Chart Horizontal)
+            const layananCtx = document.getElementById('layananChart').getContext('2d');
+            new Chart(layananCtx, {
+                type: 'bar',
+                data: {
+                    labels: @json($layananLabels),
+                    datasets: [{
+                        label: 'Jumlah Tindakan',
+                        data: @json($layananData),
+                        backgroundColor: 'rgba(147, 51, 234, 0.6)',
+                        borderColor: 'rgba(147, 51, 234, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y', // Horizontal agar label panjang terbaca
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                // Kustomisasi tooltip agar lebih jelas
+                                title: function(context) {
+                                    return context[0].label; // Tampilkan nama lengkap layanan
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 2. Grafik Metode Pembayaran (Doughnut Chart)
+            const metodeCtx = document.getElementById('metodeChart').getContext('2d');
+            new Chart(metodeCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: @json($metodeLabels),
+                    datasets: [{
+                        data: @json($metodeData),
+                        backgroundColor: [
+                            'rgba(34, 197, 94, 0.7)', // Hijau (Tunai)
+                            'rgba(59, 130, 246, 0.7)', // Biru (Transfer)
+                            'rgba(234, 179, 8, 0.7)', // Kuning (Debit/Kredit)
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 </x-app-layout>
