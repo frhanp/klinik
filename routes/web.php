@@ -28,6 +28,8 @@ use App\Http\Controllers\Pasien\NotifikasiController as PasienNotifikasiControll
 use App\Http\Controllers\Admin\NotifikasiController as AdminNotifikasiController;
 use App\Http\Controllers\Dokter\NotifikasiController as DokterNotifikasiController;
 
+use App\Http\Controllers\Pasien\PembayaranController as PasienPembayaranController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -121,6 +123,10 @@ Route::middleware(['auth', 'cekperan:pasien'])->prefix('pasien')->name('pasien.'
     //Route Notifikasi
     Route::get('notifikasi', [PasienNotifikasiController::class, 'index'])->name('notifikasi.index');
     Route::post('notifikasi/{id}/read', [PasienNotifikasiController::class, 'markAsRead'])->name('notifikasi.read');
+
+    //route pembayaran
+    Route::get('pembayaran', [PasienPembayaranController::class, 'index'])->name('pembayaran.index');
+    Route::get('pembayaran/{pemesanan}', [PasienPembayaranController::class, 'show'])->name('pembayaran.show');
 });
 
 

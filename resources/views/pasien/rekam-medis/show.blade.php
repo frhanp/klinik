@@ -9,16 +9,13 @@
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
-                {{-- AWAL MODIFIKASI: Logo Klinik --}}
                 <div class="flex items-center  pl-4 pt-4">
-                    <img src="{{ asset('images/logodeliyana.png') }}" 
-                         alt="Logo Deliyana Dental Care" 
-                         class="w-14 h-14 object-contain mr-4">
+                    <img src="{{ asset('images/logodeliyana.png') }}" alt="Logo Deliyana Dental Care"
+                        class="w-14 h-14 object-contain mr-4">
                     <div>
                         <h1 class="text-2xl font-bold text-purple-700 leading-tight">Deliyana Dental Care</h1>
                     </div>
                 </div>
-                {{-- AKHIR MODIFIKASI --}}
 
                 <div class="p-6 md:p-8 bg-white border-b border-gray-200">
 
@@ -79,7 +76,7 @@
                                 <h4 class="font-semibold text-gray-700">Perawatan</h4>
                                 <p class="mt-1 text-gray-600">{{ $rekamMedis->perawatan }}</p>
                             </div>
-                            @endif
+                        @endif
                         @if ($rekamMedis->catatan)
                             <div>
                                 <h4 class="font-semibold text-gray-700">Catatan Dokter</h4>
@@ -93,17 +90,15 @@
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                                 @foreach ($rekamMedis->foto as $foto)
                                     <a href="{{ asset('storage/' . $foto->path_foto) }}" target="_blank">
-                                        <img src="{{ asset('storage/' . $foto->path_foto) }}" 
-                                             alt="Foto Rekam Medis"
-                                             class="rounded-lg object-cover w-full h-32 hover:opacity-80 transition">
+                                        <img src="{{ asset('storage/' . $foto->path_foto) }}" alt="Foto Rekam Medis"
+                                            class="rounded-lg object-cover w-full h-32 hover:opacity-80 transition">
                                     </a>
                                 @endforeach
                             </div>
                         </div>
                     @endif
 
-                    {{-- AWAL MODIFIKASI: Rincian Tagihan --}}
-                    <div class="mt-6 border-t pt-6">
+                    {{-- <div class="mt-6 border-t pt-6">
                         <h3 class="text-lg font-semibold mb-4 text-gray-800">Rincian Tagihan</h3>
 
                         @php
@@ -135,7 +130,7 @@
                             }
                         @endphp
 
-                        {{-- Tindakan Pasien --}}
+                <!-- Tindakan Pasien -->
                         @if ($tindakanPasien->isNotEmpty())
                             <div class="mb-4">
                                 <h4 class="text-md font-semibold text-gray-700 mb-2">Tindakan Pilihan Pasien</h4>
@@ -154,7 +149,7 @@
                             </div>
                         @endif
 
-                        {{-- Tindakan Tambahan Dokter --}}
+                        <!-- Tindakan Tambahan Dokter -->
                         @if ($tindakanDokter->isNotEmpty())
                             <div class="mb-4 pt-4 border-t border-dashed">
                                 <h4 class="text-md font-semibold text-gray-700 mb-2">Tindakan Tambahan Dokter</h4>
@@ -173,7 +168,7 @@
                             </div>
                         @endif
 
-                        {{-- Obat --}}
+                        <!-- Obat -->
                         @if ($rekamMedis->resep->isNotEmpty())
                             <div class="pt-4 mt-4 border-t border-dashed">
                                 <h4 class="text-md font-semibold text-gray-700 mb-2">Biaya Obat</h4>
@@ -190,7 +185,7 @@
                             </div>
                         @endif
 
-                        {{-- Subtotal --}}
+                        <!-- Subtotal -->
                         <div class="mt-4">
                             <div class="pt-4 mt-4 border-t border-dashed">
                                 <div class="flex justify-between items-center">
@@ -204,7 +199,7 @@
                             </div>
                         </div>
 
-                        {{-- Potongan --}}
+                        <!-- Potongan -->
                         @if ($rekamMedis->pemesanan->status_pasien == 'BPJS')
                             <div class="flex justify-between items-center text-red-600">
                                 <span>Potongan BPJS Tindakan</span>
@@ -221,7 +216,7 @@
                             </div>
                         @endif
 
-                        {{-- Total --}}
+                        <!-- Total -->
                         @if ($pembayaran)
                             <div class="flex justify-between items-center p-3 mt-4 bg-purple-50 rounded-lg">
                                 <span class="font-bold text-purple-800">Total Biaya Keseluruhan</span>
@@ -230,17 +225,17 @@
                                 </span>
                             </div>
                         @endif
-                    </div>
-                    {{-- AKHIR MODIFIKASI --}}
+                    </div> --}}
 
-                    {{-- Resep & Foto --}}
+                    <!-- Resep & Foto -->
                     @if ($rekamMedis->resep->isNotEmpty())
                         <div class="mt-6 border-t pt-6">
                             <h4 class="text-lg font-semibold mb-4 text-gray-800">Detail Resep Obat</h4>
                             <ul class="list-disc list-inside space-y-2 text-gray-600">
                                 @foreach ($rekamMedis->resep as $item)
                                     <li>
-                                        <strong>{{ $item->obat->nama_obat }}</strong> - {{ $item->jumlah }} {{ $item->obat->kemasan }}. 
+                                        <strong>{{ $item->obat->nama_obat }}</strong> - {{ $item->jumlah }}
+                                        {{ $item->obat->kemasan }}.
                                         Dosis: {{ $item->dosis }}. Instruksi: {{ $item->instruksi }}
                                     </li>
                                 @endforeach
@@ -248,9 +243,9 @@
                         </div>
                     @endif
 
-                    
 
-                    {{-- Tombol Kembali --}}
+
+                    <!-- Tombol Kembali -->
                     <div class="mt-8 border-t pt-6 text-right">
                         <a href="{{ route('pasien.pemesanan.index') }}"
                             class="text-purple-600 hover:text-purple-800 font-semibold">
