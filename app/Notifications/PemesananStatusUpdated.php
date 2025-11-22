@@ -37,20 +37,60 @@ class PemesananStatusUpdated extends Notification
      */
     public function toArray(object $notifiable): array
     {
-        // [MODIFIKASI] Data yang akan disimpan di kolom 'data' JSON
         $status = $this->pemesanan->status;
-        $pesan = "Status pemesanan Anda telah diperbarui menjadi '{$status}'.";
+        $namaPasien = $this->pemesanan->nama_pasien_booking;
+        $namaDokter = $this->pemesanan->dokter->user->name;
+        $tanggal = \Carbon\Carbon::parse($this->pemesanan->tanggal_pesan)->format('d/m/Y');
+        $pesan = '';
+        $url = '#';
 
-        if ($status === 'Dijadwalkan Ulang') {
-            $pesan = "Pemesanan Anda Dijadwalkan Ulang. Mohon konfirmasi jadwal baru di dashboard Anda.";
-        } elseif ($status === 'Dibatalkan') {
-            $pesan = "Pemesanan Anda tanggal {$this->pemesanan->tanggal_pesan} telah dibatalkan.";
+        // --- LOGIKA PESAN BERDASARKAN PERAN PENERIMA ---
+
+        if ($notifiable->peran == 'pasien') {
+            // NOTIF UNTUK PASIEN
+            $url = route('pasien.pemesanan.index');
+            if ($status == 'Dibatalkan Dokter') {
+                $pesan = "Pemesanan Anda tanggal $tanggal DIBATALKAN oleh dr. $namaDokter. Alasan: " . ($this->pemesanan->catatan_admin ?? '-');
+            } elseif ($status == 'Dikonfirmasi') {
+                $pesan = "Pemesanan Anda tanggal $tanggal telah DIKONFIRMASI. Nomor Antrian: {$this->pemesanan->nomor_antrian}.";
+            } elseif ($status == 'Menunggu Konfirmasi Pasien') { // Status khusus reschedule
+                $pesan = "Jadwal Anda diubah oleh klinik. Mohon konfirmasi jadwal baru di dashboard.";
+                $url = route('pasien.dashboard');
+            } else {
+                $pesan = "Status pemesanan Anda berubah menjadi '$status'.";
+            }
+
+        } elseif ($notifiable->peran == 'dokter') {
+            // NOTIF UNTUK DOKTER
+            $url = route('dokter.dashboard'); // Atau jadwal
+            if ($status == 'Dikonfirmasi') {
+                $pesan = "Jadwal Baru: Pasien $namaPasien dikonfirmasi untuk tanggal $tanggal.";
+            } elseif ($status == 'Dibatalkan') {
+                $pesan = "Pembatalan: Pasien $namaPasien membatalkan janji temu tanggal $tanggal.";
+            } elseif ($status == 'Dibatalkan Dokter') {
+                 // Dokter membatalkan sendiri, mungkin tidak butuh notif, tapi kalau mau:
+                 $pesan = "Anda membatalkan janji temu dengan $namaPasien tanggal $tanggal.";
+            }
+
+        } elseif ($notifiable->peran == 'admin') {
+            // NOTIF UNTUK ADMIN
+            $url = route('admin.pemesanan.edit', $this->pemesanan->id);
+            if ($status == 'Dikonfirmasi' && $this->pemesanan->nomor_antrian) { // Kasus Reschedule disetujui
+                $pesan = "Pasien $namaPasien MENYETUJUI jadwal baru tanggal $tanggal.";
+            } elseif ($status == 'Ditolak Pasien') {
+                $pesan = "Pasien $namaPasien MENOLAK jadwal baru. Harap hubungi pasien.";
+            } elseif ($status == 'Dibatalkan') {
+                $pesan = "Pasien $namaPasien membatalkan janji temu tanggal $tanggal.";
+            } elseif ($status == 'Dibatalkan Dokter') {
+                $pesan = "dr. $namaDokter membatalkan janji dengan $namaPasien. Alasan: " . ($this->pemesanan->catatan_admin ?? '-');
+            }
         }
 
         return [
             'pemesanan_id' => $this->pemesanan->id,
             'status' => $status,
             'pesan' => $pesan,
+            'url' => $url,
         ];
-    } 
+    }
 }

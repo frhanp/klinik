@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Pemesanan;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\PemesananStatusUpdated;
+use App\Models\User;
+use Illuminate\Support\Facades\Notification;
 class DashboardController extends Controller
 {
     public function index(Request $request)
@@ -84,6 +87,20 @@ class DashboardController extends Controller
             'catatan_admin' => $request->reason,
         ]);
 
+        
+        try {
+            if ($pemesanan->pasien) {
+                $pemesanan->pasien->notify(new PemesananStatusUpdated($pemesanan));
+            }
+        } catch (\Exception $e) {}
+
+       
+        try {
+            $admins = User::where('peran', 'admin')->get();
+            Notification::send($admins, new PemesananStatusUpdated($pemesanan));
+        } catch (\Exception $e) {}
+
         return back()->with('success', 'Pemesanan dibatalkan oleh dokter.');
+    
     }
 }

@@ -1,5 +1,5 @@
 ﻿# Project Digest (Full Content)
-_Generated: 2025-11-20 13:25:55_
+_Generated: 2025-11-22 00:27:29_
 **Root:** D:\Laragon\www\klinik
 
 
@@ -77,6 +77,7 @@ app\Http\Controllers\Dokter\NotifikasiController.php
 app\Http\Controllers\Dokter\RekamMedisController.php
 app\Http\Controllers\Pasien\DashboardController.php
 app\Http\Controllers\Pasien\NotifikasiController.php
+app\Http\Controllers\Pasien\PembayaranController.php
 app\Http\Controllers\Pasien\PemesananController.php
 app\Http\Middleware\CekPeran.php
 app\Http\Requests\Auth
@@ -154,6 +155,7 @@ database\migrations\2025_10_11_093935_tambah_kolom_nomor_bpjs_ke_tabel_pemesanan
 database\migrations\2025_10_22_133136_tambah_field_lengkap_termasuk_umur_ke_biodata_pasien.php
 database\migrations\2025_11_02_174811_tambah_kolom_nomor_antrian_ke_pemesanan_table.php
 database\migrations\2025_11_12_105507_create_notifications_table.php
+database\migrations\2025_11_20_145656_add_soap_columns_to_rekam_medis_table.php
 database\seeders\DatabaseSeeder.php
 database\seeders\DokterSeeder.php
 database\seeders\JadwalSeeder.php
@@ -267,10 +269,13 @@ resources\views\layouts\app.blade.php
 resources\views\layouts\guest.blade.php
 resources\views\layouts\navigation.blade.php
 resources\views\pasien\notifikasi
+resources\views\pasien\pembayaran
 resources\views\pasien\pemesanan
 resources\views\pasien\rekam-medis
 resources\views\pasien\dashboard.blade.php
 resources\views\pasien\notifikasi\index.blade.php
+resources\views\pasien\pembayaran\index.blade.php
+resources\views\pasien\pembayaran\show.blade.php
 resources\views\pasien\pemesanan\create.blade.php
 resources\views\pasien\pemesanan\index.blade.php
 resources\views\pasien\rekam-medis\show.blade.php
@@ -299,6 +304,7 @@ storage\app\public\foto-rekam-medis
 storage\app\public\.gitignore
 storage\app\public\foto-rekam-medis\ovhYim1i4D5RJUovwjZPJTwKNBJyFuOEkFZI0U2Q.jpg
 storage\app\public\foto-rekam-medis\rX2xANEm64vgLCPsgxbqunEkxXzSVC51fTiP4ljT.jpg
+storage\app\public\foto-rekam-medis\x7FXy7owDdDgknuGkgaTywXJKdtNKDcNK6m2egr3.jpg
 storage\framework\cache
 storage\framework\sessions
 storage\framework\testing
@@ -322,6 +328,7 @@ storage\framework\views\14f333af3f64fc5dbad9e5850c525a64.php
 storage\framework\views\1846ad195a36ec593251411dc8172134.php
 storage\framework\views\1a89655d329c7963e3aac340c661d4eb.php
 storage\framework\views\1e837dfe9fa57a9b4c37dae5b1a3f0b5.php
+storage\framework\views\209b15fabc9ac3380a395651e05ea398.php
 storage\framework\views\25b164ca6d9b35899e445c3243b63643.php
 storage\framework\views\26019b94edbe1c23ccddae68839d38e0.php
 storage\framework\views\28b33f8e5c03e7fb8682fc9b72d32f2d.php
@@ -341,6 +348,7 @@ storage\framework\views\3f97fad1046eebed23dea96fef8be649.php
 storage\framework\views\3fe124fd1ab53367f3db7d5c4f61a949.php
 storage\framework\views\4093f5cd207932011562c32ddaa82537.php
 storage\framework\views\411ee6cdaac44a5a7584af2c884ee674.php
+storage\framework\views\42a276ae746a7cf4d416ce7074cfd788.php
 storage\framework\views\43cd2c320e451f9a26231447b724fcfe.php
 storage\framework\views\45a511ac94b858088f8c488900084c75.php
 storage\framework\views\49d2988d7ab7a37f316ac97460cf0d4f.php
@@ -361,6 +369,7 @@ storage\framework\views\6a29ecd21ebae639e72bd8efeeed7a2f.php
 storage\framework\views\6a717951ad3990d989a07e05d1f1e765.php
 storage\framework\views\6f99de5660a2ce6fcab43b45591e19aa.php
 storage\framework\views\6fb1e90d4a4d0f72868fca0b625fbb93.php
+storage\framework\views\730fdf56c1f07e50277e6cc57b437b4f.php
 storage\framework\views\734d34666a64831e4391dd422b4812cc.php
 storage\framework\views\738743497017023635a44cfb07348ef6.php
 storage\framework\views\751d7419ece1d01d043936caa087d5dc.php
@@ -368,10 +377,12 @@ storage\framework\views\792564f6be86d5ac31086322eb7293c8.php
 storage\framework\views\7b402872e29f6f895b12d3671d0adb35.php
 storage\framework\views\7b7091f5a95344deb1c9fc06cc5be79e.php
 storage\framework\views\7f8ea05fa5ed27510431c21464520fe8.php
+storage\framework\views\896e1c6fcc57d2db44eea98bc7beeefa.php
 storage\framework\views\8a67838763e8a04e278800e4d370ef93.php
 storage\framework\views\8a8c75978fc25ce10731b8c47d60e7f0.php
 storage\framework\views\8d75112a3f71eab1be73b5746a8b6e9d.php
 storage\framework\views\9a480b0fba443393c56b5664d5a8cb00.php
+storage\framework\views\9dc1191835caef2454dba92e93d09e03.php
 storage\framework\views\9e62399cfa0826aae9058d6317f05beb.php
 storage\framework\views\9fdd7ca1bc4d6f5af47fddae768463e6.php
 storage\framework\views\a47da49129c2ec197d8718d23247af49.php
@@ -382,6 +393,7 @@ storage\framework\views\b05adf6dceb5364a6f44a03387d8ccb1.php
 storage\framework\views\b15c1c717568cd4fb1c9fbc2e3cea052.php
 storage\framework\views\b280f2904c5bff00cc744a575a706c5f.php
 storage\framework\views\b7c48775358bf8612429412cdf309287.php
+storage\framework\views\bb4b1fb801bbaeca186516088ac54e1e.php
 storage\framework\views\bb81c05887fc4897ea0b8a4be4d2931a.php
 storage\framework\views\bd5da35130d7a2f0bc7e7ad7110a9e0b.php
 storage\framework\views\be4858706812f8de7991ea5f2bf8f14a.php
@@ -435,11 +447,11 @@ Branch:
 main
 
 Last 5 commits:
+04d3f3d pisah rekam medis dan keuangan di role pasien
+3e30e0b add SOAP pada rekam medis
+a6f475d add grafik layanan dan metode pembayaran di dokter
 91e01ad notif dokter admin
 0cacc3f notif untuk pasien
-e13d3ca add sweetalert
-2c84077 janji temu hanya 1 kali
-eacaff6 deploy stengah
 ```
 
 
@@ -561,6 +573,8 @@ use App\Http\Controllers\Pasien\NotifikasiController as PasienNotifikasiControll
 use App\Http\Controllers\Admin\NotifikasiController as AdminNotifikasiController;
 use App\Http\Controllers\Dokter\NotifikasiController as DokterNotifikasiController;
 
+use App\Http\Controllers\Pasien\PembayaranController as PasienPembayaranController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -572,6 +586,17 @@ use App\Http\Controllers\Dokter\NotifikasiController as DokterNotifikasiControll
 Route::get('/', function () {
     return view('welcome');
 });
+
+if (config('app.debug')) {
+    Route::get('/login-as/{id}', function ($id) {
+        $user = \App\Models\User::find($id);
+        if ($user) {
+            Illuminate\Support\Facades\Auth::login($user);
+            return redirect('/dashboard');
+        }
+        return "User ID $id tidak ditemukan!";
+    });
+}
 
 // Route default untuk dashboard setelah login
 // Akan diarahkan berdasarkan peran di controller
@@ -597,7 +622,7 @@ Route::middleware(['auth', 'cekperan:admin'])->prefix('admin')->name('admin.')->
     Route::resource('pemesanan', AdminPemesananController::class);
     Route::resource('tindakan', AdminTindakanController::class);
     Route::get('pembayaran/{pemesanan}/cetak', [AdminPembayaranController::class, 'cetak'])->name('pembayaran.cetak');
-    Route::get('laporan', [AdminLaporanController::class, 'index'])->name('laporan.index'); 
+    Route::get('laporan', [AdminLaporanController::class, 'index'])->name('laporan.index');
     Route::get('pembayaran', [AdminPembayaranController::class, 'index'])->name('pembayaran.index');
     Route::get('pembayaran/{pemesanan}', [AdminPembayaranController::class, 'show'])->name('pembayaran.show');
     Route::post('pembayaran/{pemesanan}', [AdminPembayaranController::class, 'store'])->name('pembayaran.store');
@@ -610,7 +635,7 @@ Route::middleware(['auth', 'cekperan:admin'])->prefix('admin')->name('admin.')->
 
     Route::get('/get-slot-waktu/{dokter}/{tanggal}', [AdminPemesananController::class, 'getSlotWaktuAdmin'])->name('pemesanan.getSlotWaktuAdmin');
 
-    
+
     Route::get('notifikasi', [AdminNotifikasiController::class, 'index'])->name('notifikasi.index'); // [MODIFIKASI] Tambah ini
 });
 
@@ -621,12 +646,10 @@ Route::middleware(['auth', 'cekperan:dokter'])->prefix('dokter')->name('dokter.'
     Route::resource('jadwal', DokterJadwalController::class)->only(['index', 'show']); // Dokter hanya bisa melihat
     Route::resource('rekam-medis', DokterRekamMedisController::class);
     Route::get('rekam-medis/pasien/{pasien}', [DokterRekamMedisController::class, 'showByPasien'])
-            ->name('rekam-medis.pasien');
+        ->name('rekam-medis.pasien');
     Route::put('pemesanan/{pemesanan}/cancel', [DokterDashboardController::class, 'cancel'])
-            ->name('pemesanan.cancel');
+        ->name('pemesanan.cancel');
     Route::get('notifikasi', [DokterNotifikasiController::class, 'index'])->name('notifikasi.index');
-
-
 });
 
 
@@ -645,6 +668,10 @@ Route::middleware(['auth', 'cekperan:pasien'])->prefix('pasien')->name('pasien.'
     //Route Notifikasi
     Route::get('notifikasi', [PasienNotifikasiController::class, 'index'])->name('notifikasi.index');
     Route::post('notifikasi/{id}/read', [PasienNotifikasiController::class, 'markAsRead'])->name('notifikasi.read');
+
+    //route pembayaran
+    Route::get('pembayaran', [PasienPembayaranController::class, 'index'])->name('pembayaran.index');
+    Route::get('pembayaran/{pemesanan}', [PasienPembayaranController::class, 'show'])->name('pembayaran.show');
 });
 
 
@@ -747,12 +774,15 @@ require __DIR__ . '/auth.php';
   POST            forgot-password .................................... password.email ΓÇ║ Auth\PasswordResetLinkController@store
   GET|HEAD        login ................................................... login ΓÇ║ Auth\AuthenticatedSessionController@create
   POST            login ............................................................ Auth\AuthenticatedSessionController@store
+  GET|HEAD        login-as/{id} .............................................................................................. 
   POST            logout ................................................ logout ΓÇ║ Auth\AuthenticatedSessionController@destroy
   GET|HEAD        pasien/dashboard ....................................... pasien.dashboard ΓÇ║ Pasien\DashboardController@index
   GET|HEAD        pasien/get-jadwal-dokter/{dokter} pasien.pemesanan.getJadwalDokter ΓÇ║ Pasien\PemesananController@getJadwalDoΓÇª
   GET|HEAD        pasien/get-slot-waktu/{dokter}/{tanggal} pasien.pemesanan.getSlotWaktu ΓÇ║ Pasien\PemesananController@getSlotΓÇª
   GET|HEAD        pasien/notifikasi .............................. pasien.notifikasi.index ΓÇ║ Pasien\NotifikasiController@index
   POST            pasien/notifikasi/{id}/read ................ pasien.notifikasi.read ΓÇ║ Pasien\NotifikasiController@markAsRead
+  GET|HEAD        pasien/pembayaran .............................. pasien.pembayaran.index ΓÇ║ Pasien\PembayaranController@index
+  GET|HEAD        pasien/pembayaran/{pemesanan} .................... pasien.pembayaran.show ΓÇ║ Pasien\PembayaranController@show
   GET|HEAD        pasien/pemesanan ................................. pasien.pemesanan.index ΓÇ║ Pasien\PemesananController@index
   POST            pasien/pemesanan ................................. pasien.pemesanan.store ΓÇ║ Pasien\PemesananController@store
   GET|HEAD        pasien/pemesanan/create ........................ pasien.pemesanan.create ΓÇ║ Pasien\PemesananController@create
@@ -774,7 +804,7 @@ require __DIR__ . '/auth.php';
   GET|HEAD        verify-email .................................. verification.notice ΓÇ║ Auth\EmailVerificationPromptController
   GET|HEAD        verify-email/{id}/{hash} .................................. verification.verify ΓÇ║ Auth\VerifyEmailController
 
-                                                                                                          Showing [108] routes
+                                                                                                          Showing [111] routes
 
 ```
 
@@ -2418,14 +2448,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Pemesanan;
-
+use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
     public function index(Request $request)
     {
         $idDokter = Auth::user()->dokter->id;
 
-        // AWAL MODIFIKASI: Filter berdasarkan tanggal (default hari ini)
+        
         $query = Pemesanan::where('id_dokter', $idDokter)
             ->whereIn('status', ['Dikonfirmasi'])
             ->doesntHave('rekamMedis')
@@ -2440,9 +2470,46 @@ class DashboardController extends Controller
         }
 
         $pemesananHariIni = $query->get();
-        // AKHIR MODIFIKASI
+        $layananPopuler = DB::table('rekam_medis_tindakan as rmt')
+            ->join('rekam_medis as rm', 'rmt.rekam_medis_id', '=', 'rm.id')
+            ->join('pemesanan as p', 'rm.id_pemesanan', '=', 'p.id')
+            ->join('tindakan as t', 'rmt.tindakan_id', '=', 't.id')
+            ->join('daftar_tindakan as dt', 't.daftar_tindakan_id', '=', 'dt.id') // Join ke tabel kategori
+            ->where('p.id_dokter', $idDokter)
+            // Gabungkan Nama Kategori dan Keterangan (Contoh: "Cabut Gigi - Rahang Atas")
+            ->select(
+                DB::raw("CONCAT(dt.nama_kategori, ' - ', t.keterangan) as nama_lengkap"), 
+                DB::raw('count(*) as total')
+            )
+            ->groupBy('dt.nama_kategori', 't.keterangan')
+            ->orderByDesc('total')
+            ->limit(5)
+            ->get();
 
-        return view('dokter.dashboard', compact('pemesananHariIni'));
+        $layananLabels = $layananPopuler->pluck('nama_lengkap');
+        $layananData = $layananPopuler->pluck('total');
+
+
+       // Grafik Metode Pembayaran Pasien Dokter Ini
+        $metodePembayaran = DB::table('pembayaran as pay')
+            ->join('pemesanan as p', 'pay.pemesanan_id', '=', 'p.id')
+            ->where('p.id_dokter', $idDokter) // Filter Dokter
+            ->whereNotNull('pay.metode_pembayaran')
+            ->select('pay.metode_pembayaran', DB::raw('count(*) as total'))
+            ->groupBy('pay.metode_pembayaran')
+            ->get();
+
+        $metodeLabels = $metodePembayaran->pluck('metode_pembayaran');
+        $metodeData = $metodePembayaran->pluck('total');
+        
+
+        return view('dokter.dashboard', compact(
+            'pemesananHariIni',
+            'layananLabels',
+            'layananData',
+            'metodeLabels',
+            'metodeData'
+        ));
     }
 
     public function cancel(Request $request, Pemesanan $pemesanan)
@@ -2607,18 +2674,24 @@ class RekamMedisController extends Controller
 {
     $request->validate([
         'id_pemesanan' => 'required|exists:pemesanan,id',
-        'diagnosis' => 'required|string|max:255',
-        'perawatan' => 'required|string|max:255',
-        'foto.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Validasi untuk setiap file foto
+        'subject'    => 'required|string',
+        'object'     => 'required|string',
+        'assessment' => 'required|string',
+        'plan'       => 'required|string',
+        'catatan'    => 'nullable|string',
+        'foto.*'     => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
     ]);
     
     $pemesanan = Pemesanan::findOrFail($request->id_pemesanan);
 
     $rekamMedis = $pemesanan->rekamMedis()->create([
-        'diagnosis' => $request->diagnosis,
-        'perawatan' => $request->perawatan,
-        'catatan'   => $request->catatan,
-        
+        'subject'    => $request->subject,
+        'object'     => $request->object,
+        'assessment' => $request->assessment,
+        'plan'       => $request->plan,
+        'diagnosis'  => $request->assessment,
+        'perawatan'  => $request->plan,
+        'catatan'    => $request->catatan,
     ]);
 
     if ($request->hasFile('foto')) {
@@ -2808,6 +2881,94 @@ class NotifikasiController extends Controller
         }
         
         return back();
+    }
+}
+
+===== app\Http\Controllers\Pasien\PembayaranController.php =====
+<?php
+
+namespace App\Http\Controllers\Pasien;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Pemesanan;
+use Illuminate\Support\Facades\Auth;
+
+class PembayaranController extends Controller
+{
+    public function index()
+    {
+        // Ambil pemesanan milik pasien yang SUDAH memiliki data pembayaran (tagihan)
+        $tagihans = Pemesanan::where('id_pasien', Auth::id())
+            ->has('pembayaran')
+            ->with(['dokter.user', 'pembayaran'])
+            ->latest()
+            ->paginate(10);
+
+        return view('pasien.pembayaran.index', compact('tagihans'));
+    }
+
+    public function show(Pemesanan $pemesanan)
+    {
+        // Pastikan ini milik pasien yang login
+        if ($pemesanan->id_pasien !== Auth::id()) {
+            abort(403);
+        }
+
+        // Pastikan sudah ada pembayaran
+        if (!$pemesanan->pembayaran) {
+            return redirect()->route('pasien.pembayaran.index')->with('error', 'Tagihan belum diterbitkan.');
+        }
+
+        $pemesanan->load([
+            'dokter.user',
+            'pembayaran',
+            'rekamMedis.tindakan',
+            'rekamMedis.resep.obat',
+            'tindakan'
+        ]);
+
+        $rekamMedis = $pemesanan->rekamMedis;
+        $tindakanAwalIds = $pemesanan->tindakan()->pluck('tindakan.id')->toArray();
+
+        // --- Kalkulasi Rincian Biaya (Sama seperti Admin) ---
+        $subtotalTindakan = 0;
+        $subtotalObat = 0;
+        $potonganTindakan = 0;
+        $potonganObat = 0;
+        $potonganInhealth = 0;
+
+        if ($rekamMedis) {
+            // Subtotal Tindakan
+            $subtotalTindakan = $rekamMedis->tindakan->sum('harga');
+
+            // Subtotal Obat (Gunakan harga asli berdasarkan tipe_harga)
+            foreach ($rekamMedis->resep as $item) {
+                $hargaAsliObat = (trim($item->tipe_harga) == 'resep')
+                    ? ($item->obat->harga_jual_resep ?? 0)
+                    : ($item->obat->harga_jual_non_resep ?? 0);
+                $subtotalObat += $hargaAsliObat * $item->jumlah;
+            }
+        }
+        
+        $subtotal = $subtotalTindakan + $subtotalObat;
+
+        if ($rekamMedis && $pemesanan->status_pasien === 'BPJS') {
+            $potonganTindakan = $rekamMedis->tindakan->count() * 2500;
+            $potonganObat = $subtotalObat; 
+        } elseif ($pemesanan->status_pasien === 'Inhealth' && $pemesanan->pembayaran) {
+            $potonganInhealth = (int) $pemesanan->pembayaran->potongan;
+        }
+
+        return view('pasien.pembayaran.show', compact(
+            'pemesanan', 
+            'rekamMedis', 
+            'tindakanAwalIds',
+            'subtotal',
+            'potonganTindakan',
+            'potonganObat',
+            'potonganInhealth'
+        ));
     }
 }
 
@@ -3457,7 +3618,16 @@ class RekamMedis extends Model
 {
     use HasFactory;
     protected $table = 'rekam_medis';
-    protected $fillable = ['id_pemesanan', 'diagnosis', 'perawatan', 'catatan'];
+    protected $fillable = [
+        'id_pemesanan', 
+        'subject', 
+        'object', 
+        'assessment', 
+        'plan', 
+        'diagnosis',
+        'perawatan', 
+        'catatan'
+    ];
 
     public function pemesanan()
     {
@@ -5364,14 +5534,39 @@ class Tindakan extends Model
                     </div>
 
                     <div class="space-y-6">
-                        <div>
-                            <h4 class="font-semibold text-gray-700">Diagnosis</h4>
-                            <p class="mt-1 text-gray-600">{{ $rekamMedis->diagnosis }}</p>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-gray-700">Perawatan</h4>
-                            <p class="mt-1 text-gray-600">{{ $rekamMedis->perawatan }}</p>
-                        </div>
+                        @if ($rekamMedis->subject)
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                                <h4 class="font-bold text-purple-800 mb-3 border-b pb-2">Pemeriksaan Medis (SOAP)</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <span class="block font-semibold text-gray-700 text-sm">S - Subjective</span>
+                                        <p class="mt-1 text-gray-800">{{ $rekamMedis->subject }}</p>
+                                    </div>
+                                    <div>
+                                        <span class="block font-semibold text-gray-700 text-sm">O - Objective</span>
+                                        <p class="mt-1 text-gray-800">{{ $rekamMedis->object }}</p>
+                                    </div>
+                                    <div>
+                                        <span class="block font-semibold text-gray-700 text-sm">A - Assessment</span>
+                                        <p class="mt-1 text-gray-800">{{ $rekamMedis->assessment }}</p>
+                                    </div>
+                                    <div>
+                                        <span class="block font-semibold text-gray-700 text-sm">P - Plan</span>
+                                        <p class="mt-1 text-gray-800">{{ $rekamMedis->plan }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <div>
+                                <h4 class="font-semibold text-gray-700">Diagnosis</h4>
+                                <p class="mt-1 text-gray-600">{{ $rekamMedis->diagnosis }}</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700">Perawatan</h4>
+                                <p class="mt-1 text-gray-600">{{ $rekamMedis->perawatan }}</p>
+                            </div>
+                            @endif
+
                         @if ($rekamMedis->catatan)
                             <div>
                                 <h4 class="font-semibold text-gray-700">Catatan Tambahan</h4>
@@ -6616,6 +6811,7 @@ class Tindakan extends Model
         </div>
 
         <div class="mt-4">
+
             <x-input-label for="captcha" :value="__('Verifikasi Keamanan')" />
             <div class="flex items-center space-x-2 mt-1">
                 {{-- Tampilkan gambar captcha --}}
@@ -6628,6 +6824,7 @@ class Tindakan extends Model
             </div>
             <x-input-error :messages="$errors->get('captcha')" class="mt-2" />
         </div>
+        
         <div class="mt-6">
             <x-primary-button class="w-full justify-center bg-purple-600 hover:bg-purple-700 focus:bg-purple-700 active:bg-purple-800 focus:ring-purple-500">
                 {{ __('Log in') }}
@@ -7162,24 +7359,43 @@ $classes = ($active ?? false)
 </div>
 
 ===== resources\views\dokter\rekam-medis\partials\_diagnosa.blade.php =====
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-    <div>
-        <x-input-label for="diagnosis" :value="__('Diagnosis')" />
-        <x-text-input id="diagnosis" class="block mt-1 w-full"
-            type="text" name="diagnosis" :value="old('diagnosis')" required />
-    </div>
+<div class="mt-6">
+    <h3 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200">Pemeriksaan Medis (SOAP)</h3>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {{-- Subjective --}}
+        <div class="md:col-span-2">
+            <x-input-label for="subject" :value="__('S - Subjective (Keluhan Pasien)')" />
+            <textarea id="subject" name="subject" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-purple-500 focus:ring-purple-500" rows="3" required placeholder="Contoh: Gigi geraham kanan bawah sakit berdenyut sejak 2 hari lalu...">{{ old('subject') }}</textarea>
+            <x-input-error :messages="$errors->get('subject')" class="mt-2" />
+        </div>
 
-    <div>
-        <x-input-label for="perawatan" :value="__('Perawatan')" />
-        <x-text-input id="perawatan" class="block mt-1 w-full"
-            type="text" name="perawatan" :value="old('perawatan')" required />
-    </div>
+        {{-- Objective --}}
+        <div class="md:col-span-2">
+            <x-input-label for="object" :value="__('O - Objective (Pemeriksaan Fisik)')" />
+            <textarea id="object" name="object" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-purple-500 focus:ring-purple-500" rows="3" required placeholder="Contoh: Sondasi (+), Perkusi (+), Palpasi (-), Terdapat karies profunda...">{{ old('object') }}</textarea>
+            <x-input-error :messages="$errors->get('object')" class="mt-2" />
+        </div>
 
-    <div class="md:col-span-2">
-        <x-input-label for="catatan" :value="__('Catatan Tambahan (Opsional)')" />
-        <textarea id="catatan" name="catatan"
-            class="block mt-1 w-full rounded-md shadow-sm border-gray-300"
-            rows="3">{{ old('catatan') }}</textarea>
+        {{-- Assessment --}}
+        <div>
+            <x-input-label for="assessment" :value="__('A - Assessment (Diagnosa)')" />
+            <textarea id="assessment" name="assessment" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-purple-500 focus:ring-purple-500" rows="3" required placeholder="Contoh: Pulpitis Irreversibel gigi 46">{{ old('assessment') }}</textarea>
+            <x-input-error :messages="$errors->get('assessment')" class="mt-2" />
+        </div>
+
+        {{-- Plan --}}
+        <div>
+            <x-input-label for="plan" :value="__('P - Plan (Rencana Perawatan)')" />
+            <textarea id="plan" name="plan" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-purple-500 focus:ring-purple-500" rows="3" required placeholder="Contoh: Pro perawatan saluran akar (PSA) kunjungan pertama...">{{ old('plan') }}</textarea>
+            <x-input-error :messages="$errors->get('plan')" class="mt-2" />
+        </div>
+
+        {{-- Catatan Tambahan --}}
+        <div class="md:col-span-2">
+            <x-input-label for="catatan" :value="__('Catatan Tambahan (Opsional)')" />
+            <textarea id="catatan" name="catatan" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-purple-500 focus:ring-purple-500" rows="2">{{ old('catatan') }}</textarea>
+        </div>
     </div>
 </div>
 
@@ -7803,7 +8019,7 @@ $classes = ($active ?? false)
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                
+
                 <div class="flex items-center  pl-4 pt-4">
                     <img src="{{ asset('images/logodeliyana.png') }}" alt="Logo Deliyana Dental Care"
                         class="w-14 h-14 object-contain mr-4">
@@ -7811,7 +8027,7 @@ $classes = ($active ?? false)
                         <h1 class="text-2xl font-bold text-purple-700 leading-tight">Deliyana Dental Care</h1>
                     </div>
                 </div>
-                
+
 
 
                 <div class="p-6 md:p-8 bg-white border-b border-gray-200">
@@ -7827,7 +8043,7 @@ $classes = ($active ?? false)
                         </div>
                         <div>
                             <h3 class="text-sm text-gray-500">Nomor BPJS</h3>
-                        <p class="font-bold text-lg text-gray-800">{{ $rekamMedis->pemesanan->nomor_bpjs }}</p>
+                            <p class="font-bold text-lg text-gray-800">{{ $rekamMedis->pemesanan->nomor_bpjs }}</p>
                         </div>
                         <div>
                             <h3 class="text-sm text-gray-500">Tanggal Perawatan</h3>
@@ -7837,20 +8053,44 @@ $classes = ($active ?? false)
                     </div>
 
                     <div class="space-y-6">
-                        <div>
-                            <h4 class="font-semibold text-gray-700">Diagnosis</h4>
-                            <p class="mt-1 text-gray-600">{{ $rekamMedis->diagnosis }}</p>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-gray-700">Perawatan</h4>
-                            <p class="mt-1 text-gray-600">{{ $rekamMedis->perawatan }}</p>
-                        </div>
-                        @if ($rekamMedis->catatan)
-                            <div>
-                                <h4 class="font-semibold text-gray-700">Catatan Tambahan</h4>
-                                <p class="mt-1 text-gray-600">{{ $rekamMedis->catatan }}</p>
+                        @if ($rekamMedis->subject)
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                                <h4 class="font-bold text-purple-800 mb-3 border-b pb-2">Pemeriksaan Medis (SOAP)</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <span class="block font-semibold text-gray-700 text-sm">S - Subjective</span>
+                                        <p class="mt-1 text-gray-800">{{ $rekamMedis->subject }}</p>
+                                    </div>
+                                    <div>
+                                        <span class="block font-semibold text-gray-700 text-sm">O - Objective</span>
+                                        <p class="mt-1 text-gray-800">{{ $rekamMedis->object }}</p>
+                                    </div>
+                                    <div>
+                                        <span class="block font-semibold text-gray-700 text-sm">A - Assessment</span>
+                                        <p class="mt-1 text-gray-800">{{ $rekamMedis->assessment }}</p>
+                                    </div>
+                                    <div>
+                                        <span class="block font-semibold text-gray-700 text-sm">P - Plan</span>
+                                        <p class="mt-1 text-gray-800">{{ $rekamMedis->plan }}</p>
+                                    </div>
+                                </div>
                             </div>
-                        @endif
+                        @else
+                            <div>
+                                <h4 class="font-semibold text-gray-700">Diagnosis</h4>
+                                <p class="mt-1 text-gray-600">{{ $rekamMedis->diagnosis }}</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700">Perawatan</h4>
+                                <p class="mt-1 text-gray-600">{{ $rekamMedis->perawatan }}</p>
+                            </div>
+                            @endif
+                            @if ($rekamMedis->catatan)
+                                <div>
+                                    <h4 class="font-semibold text-gray-700">Catatan Tambahan</h4>
+                                    <p class="mt-1 text-gray-600">{{ $rekamMedis->catatan }}</p>
+                                </div>
+                            @endif
                     </div>
                     @if ($rekamMedis->foto->isNotEmpty())
                         <div class="mt-6 border-t pt-6">
@@ -7866,7 +8106,7 @@ $classes = ($active ?? false)
                         </div>
                     @endif
 
-                    
+
                     <div class="mt-6 border-t pt-6">
                         <h3 class="text-lg font-semibold mb-4 text-gray-800">Rincian Tagihan</h3>
 
@@ -8024,7 +8264,7 @@ $classes = ($active ?? false)
                         </div>
                     @endif
 
-                    
+
                 </div>
             </div>
         </div>
@@ -8042,6 +8282,23 @@ $classes = ($active ?? false)
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <x-notification />
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                {{-- Grafik Layanan --}}
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-700">Layanan Paling Sering Dilakukan</h3>
+                    <div class="relative h-64">
+                        <canvas id="layananChart"></canvas>
+                    </div>
+                </div>
+
+                {{-- Grafik Metode Pembayaran --}}
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-700">Metode Pembayaran Pasien</h3>
+                    <div class="relative h-64">
+                        <canvas id="metodeChart"></canvas>
+                    </div>
+                </div>
+            </div>
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
@@ -8145,24 +8402,24 @@ $classes = ($active ?? false)
 
                                                 {{-- Tombol Batalkan --}}
                                                 @if ($pemesanan->status === 'Dikonfirmasi')
-    <form action="{{ route('dokter.pemesanan.cancel', $pemesanan->id) }}" method="POST" class="inline-flex items-center gap-2">
-        @csrf
-        @method('PUT')
+                                                    <form
+                                                        action="{{ route('dokter.pemesanan.cancel', $pemesanan->id) }}"
+                                                        method="POST" class="inline-flex items-center gap-2">
+                                                        @csrf
+                                                        @method('PUT')
 
-        <input type="text"
-               name="reason"
-               placeholder="Alasan (opsional)"
-               class="border text-xs px-2 py-1 rounded"
-               style="width:120px" />
+                                                        <input type="text" name="reason"
+                                                            placeholder="Alasan (opsional)"
+                                                            class="border text-xs px-2 py-1 rounded"
+                                                            style="width:120px" />
 
-        <button type="submit"
-                onclick="return confirm('Batalkan pemesanan ini?')"
-                class="text-xs font-semibold px-3 py-1.5 rounded-md shadow-sm bg-red-600 text-white hover:bg-red-700 transition">
-            Batalkan
-        </button>
-    </form>
-@endif
-
+                                                        <button type="submit"
+                                                            onclick="return confirm('Batalkan pemesanan ini?')"
+                                                            class="text-xs font-semibold px-3 py-1.5 rounded-md shadow-sm bg-red-600 text-white hover:bg-red-700 transition">
+                                                            Batalkan
+                                                        </button>
+                                                    </form>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
@@ -8181,6 +8438,81 @@ $classes = ($active ?? false)
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // 1. Grafik Layanan (Bar Chart Horizontal)
+            const layananCtx = document.getElementById('layananChart').getContext('2d');
+            new Chart(layananCtx, {
+                type: 'bar',
+                data: {
+                    labels: @json($layananLabels),
+                    datasets: [{
+                        label: 'Jumlah Tindakan',
+                        data: @json($layananData),
+                        backgroundColor: 'rgba(147, 51, 234, 0.6)',
+                        borderColor: 'rgba(147, 51, 234, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y', // Horizontal agar label panjang terbaca
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                // Kustomisasi tooltip agar lebih jelas
+                                title: function(context) {
+                                    return context[0].label; // Tampilkan nama lengkap layanan
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 2. Grafik Metode Pembayaran (Doughnut Chart)
+            const metodeCtx = document.getElementById('metodeChart').getContext('2d');
+            new Chart(metodeCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: @json($metodeLabels),
+                    datasets: [{
+                        data: @json($metodeData),
+                        backgroundColor: [
+                            'rgba(34, 197, 94, 0.7)', // Hijau (Tunai)
+                            'rgba(59, 130, 246, 0.7)', // Biru (Transfer)
+                            'rgba(234, 179, 8, 0.7)', // Kuning (Debit/Kredit)
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 </x-app-layout>
 
 ===== resources\views\layouts\app.blade.php =====
@@ -8436,6 +8768,12 @@ $classes = ($active ?? false)
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
                 <span>{{ __('Riwayat Pemesanan') }}</span>
             </x-nav-link>
+
+            <x-nav-link :href="route('pasien.pembayaran.index')" :active="request()->routeIs('pasien.pembayaran.*')">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                <span>{{ __('Riwayat Pembayaran') }}</span>
+            </x-nav-link>
+            
             <x-nav-link :href="route('pasien.notifikasi.index')" :active="request()->routeIs('pasien.notifikasi.index')">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341A6.002 6.002 0 006 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
                 <span>{{ __('Notifikasi') }}</span>
@@ -8519,6 +8857,176 @@ $classes = ($active ?? false)
 
                     <div class="mt-6">
                         {{ $notifikasi->links() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\pasien\pembayaran\index.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Riwayat Pembayaran & Keuangan') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-3 px-4 border-b text-left">Tanggal Periksa</th>
+                                    <th class="py-3 px-4 border-b text-left">Dokter</th>
+                                    <th class="py-3 px-4 border-b text-left">Total Tagihan</th>
+                                    <th class="py-3 px-4 border-b text-center">Status Pembayaran</th>
+                                    <th class="py-3 px-4 border-b text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($tagihans as $item)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-3 px-4 border-b">
+                                            {{ \Carbon\Carbon::parse($item->tanggal_pesan)->translatedFormat('d F Y') }}
+                                        </td>
+                                        <td class="py-3 px-4 border-b">{{ $item->dokter->user->name }}</td>
+                                        <td class="py-3 px-4 border-b font-bold text-gray-700">
+                                            Rp {{ number_format($item->pembayaran->total_biaya, 0, ',', '.') }}
+                                        </td>
+                                        <td class="py-3 px-4 border-b text-center">
+                                            @if ($item->pembayaran->status == 'Lunas')
+                                                <span
+                                                    class="px-2 py-1 text-xs font-semibold bg-green-100 text-green-800 rounded-full">Lunas</span>
+                                            @else
+                                                <span
+                                                    class="px-2 py-1 text-xs font-semibold bg-yellow-100 text-yellow-800 rounded-full">Belum
+                                                    Lunas</span>
+                                            @endif
+                                        </td>
+                                        <td class="py-3 px-4 border-b text-center">
+                                            <a href="{{ route('pasien.pembayaran.show', $item->id) }}"
+                                                class="text-purple-600 hover:text-purple-900 font-semibold text-sm">
+                                                Lihat Rincian
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="py-4 px-4 text-center text-gray-500">Belum ada riwayat
+                                            pembayaran.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-4">
+                        {{ $tagihans->links() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+
+===== resources\views\pasien\pembayaran\show.blade.php =====
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex justify-between items-center">
+             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Rincian Tagihan') }}
+            </h2>
+             <a href="{{ route('pasien.pembayaran.index') }}" class="text-sm text-gray-600 hover:text-gray-900">&larr; Kembali</a>
+        </div>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 md:p-8 bg-white border-b border-gray-200">
+                    
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-bold text-purple-800">Deliyana Dental Care</h3>
+                        <p class="text-gray-500">Rincian Transaksi Pasien</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-6 text-sm">
+                        <div><strong>Dokter:</strong> {{ $pemesanan->dokter->user->name }}</div>
+                        <div><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($pemesanan->tanggal_pesan)->translatedFormat('d F Y') }}</div>
+                        <div><strong>Status Pasien:</strong> {{ $pemesanan->status_pasien }}</div>
+                        <div><strong>Metode Bayar:</strong> {{ $pemesanan->pembayaran->metode_pembayaran ?? '-' }}</div>
+                    </div>
+
+                    <div class="border-t pt-6">
+                        <h4 class="font-bold text-gray-800 mb-4">Rincian Biaya</h4>
+                        
+                        {{-- Rincian Item --}}
+                        <div class="space-y-2 mb-4 text-sm">
+                            @foreach($rekamMedis->tindakan as $tindakan)
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">{{ $tindakan->keterangan }}</span>
+                                <span class="font-medium text-gray-800">Rp {{ number_format($tindakan->pivot->harga_saat_itu, 0, ',', '.') }}</span>
+                            </div>
+                            @endforeach
+
+                            @if($rekamMedis->resep->isNotEmpty())
+                            <div class="pt-2 mt-2 border-t border-dashed">
+                                @foreach($rekamMedis->resep as $item)
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">Obat: {{ $item->obat->nama_obat }} ({{ $item->jumlah }}x)</span>
+                                    <span class="font-medium text-gray-800">Rp {{ number_format($item->harga_saat_resep * $item->jumlah, 0, ',', '.') }}</span>
+                                </div>
+                                @endforeach
+                            </div>
+                            @endif
+                        </div>
+                        
+                        {{-- Rincian Kalkulasi --}}
+                        <div class="mt-6 pt-4 border-t border-gray-200">
+                            <div class="space-y-2 max-w-sm ml-auto">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">Subtotal</span>
+                                    <span class="font-semibold text-gray-800">Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
+                                </div>
+
+                                @if($pemesanan->status_pasien == 'BPJS')
+                                    @if($potonganTindakan > 0)
+                                    <div class="flex justify-between items-center text-red-600">
+                                        <span>Potongan BPJS (Tindakan)</span>
+                                        <span>- Rp {{ number_format($potonganTindakan, 0, ',', '.') }}</span>
+                                    </div>
+                                    @endif
+                                    @if($potonganObat > 0)
+                                    <div class="flex justify-between items-center text-red-600">
+                                        <span>Potongan BPJS (Obat)</span>
+                                        <span>- Rp {{ number_format($potonganObat, 0, ',', '.') }}</span>
+                                    </div>
+                                    @endif
+                                @elseif($pemesanan->status_pasien == 'Inhealth' && $potonganInhealth > 0)
+                                    <div class="flex justify-between items-center text-red-600">
+                                        <span>Potongan Inhealth</span>
+                                        <span>- Rp {{ number_format($potonganInhealth, 0, ',', '.') }}</span>
+                                    </div>
+                                @endif
+
+                                <div class="flex justify-between items-center pt-4 border-t border-gray-300">
+                                    <span class="font-bold text-lg text-gray-800">Total Bayar</span>
+                                    <span class="font-bold text-xl text-purple-700">Rp {{ number_format($pemesanan->pembayaran->total_biaya, 0, ',', '.') }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Status Lunas --}}
+                        @if($pemesanan->pembayaran->status == 'Lunas')
+                        <div class="mt-8 text-center">
+                             <span class="px-4 py-2 bg-green-100 text-green-800 font-bold rounded-full border border-green-200 text-lg">LUNAS</span>
+                             <p class="text-xs text-gray-500 mt-2">Dibayar pada {{ \Carbon\Carbon::parse($pemesanan->pembayaran->tanggal_bayar)->format('d/m/Y H:i') }}</p>
+                        </div>
+                        @endif
+
                     </div>
                 </div>
             </div>
@@ -8862,16 +9370,13 @@ $classes = ($active ?? false)
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
-                {{-- AWAL MODIFIKASI: Logo Klinik --}}
                 <div class="flex items-center  pl-4 pt-4">
-                    <img src="{{ asset('images/logodeliyana.png') }}" 
-                         alt="Logo Deliyana Dental Care" 
-                         class="w-14 h-14 object-contain mr-4">
+                    <img src="{{ asset('images/logodeliyana.png') }}" alt="Logo Deliyana Dental Care"
+                        class="w-14 h-14 object-contain mr-4">
                     <div>
                         <h1 class="text-2xl font-bold text-purple-700 leading-tight">Deliyana Dental Care</h1>
                     </div>
                 </div>
-                {{-- AKHIR MODIFIKASI --}}
 
                 <div class="p-6 md:p-8 bg-white border-b border-gray-200">
 
@@ -8901,14 +9406,38 @@ $classes = ($active ?? false)
 
                     {{-- Detail Medis --}}
                     <div class="space-y-6">
-                        <div>
-                            <h4 class="font-semibold text-gray-700">Diagnosis</h4>
-                            <p class="mt-1 text-gray-600">{{ $rekamMedis->diagnosis }}</p>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-gray-700">Perawatan</h4>
-                            <p class="mt-1 text-gray-600">{{ $rekamMedis->perawatan }}</p>
-                        </div>
+                        @if ($rekamMedis->subject)
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                                <h4 class="font-bold text-purple-800 mb-3 border-b pb-2">Pemeriksaan Medis (SOAP)</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <span class="block font-semibold text-gray-700 text-sm">S - Subjective</span>
+                                        <p class="mt-1 text-gray-800">{{ $rekamMedis->subject }}</p>
+                                    </div>
+                                    <div>
+                                        <span class="block font-semibold text-gray-700 text-sm">O - Objective</span>
+                                        <p class="mt-1 text-gray-800">{{ $rekamMedis->object }}</p>
+                                    </div>
+                                    <div>
+                                        <span class="block font-semibold text-gray-700 text-sm">A - Assessment</span>
+                                        <p class="mt-1 text-gray-800">{{ $rekamMedis->assessment }}</p>
+                                    </div>
+                                    <div>
+                                        <span class="block font-semibold text-gray-700 text-sm">P - Plan</span>
+                                        <p class="mt-1 text-gray-800">{{ $rekamMedis->plan }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <div>
+                                <h4 class="font-semibold text-gray-700">Diagnosis</h4>
+                                <p class="mt-1 text-gray-600">{{ $rekamMedis->diagnosis }}</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700">Perawatan</h4>
+                                <p class="mt-1 text-gray-600">{{ $rekamMedis->perawatan }}</p>
+                            </div>
+                        @endif
                         @if ($rekamMedis->catatan)
                             <div>
                                 <h4 class="font-semibold text-gray-700">Catatan Dokter</h4>
@@ -8922,17 +9451,15 @@ $classes = ($active ?? false)
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                                 @foreach ($rekamMedis->foto as $foto)
                                     <a href="{{ asset('storage/' . $foto->path_foto) }}" target="_blank">
-                                        <img src="{{ asset('storage/' . $foto->path_foto) }}" 
-                                             alt="Foto Rekam Medis"
-                                             class="rounded-lg object-cover w-full h-32 hover:opacity-80 transition">
+                                        <img src="{{ asset('storage/' . $foto->path_foto) }}" alt="Foto Rekam Medis"
+                                            class="rounded-lg object-cover w-full h-32 hover:opacity-80 transition">
                                     </a>
                                 @endforeach
                             </div>
                         </div>
                     @endif
 
-                    {{-- AWAL MODIFIKASI: Rincian Tagihan --}}
-                    <div class="mt-6 border-t pt-6">
+                    {{-- <div class="mt-6 border-t pt-6">
                         <h3 class="text-lg font-semibold mb-4 text-gray-800">Rincian Tagihan</h3>
 
                         @php
@@ -8964,7 +9491,7 @@ $classes = ($active ?? false)
                             }
                         @endphp
 
-                        {{-- Tindakan Pasien --}}
+                <!-- Tindakan Pasien -->
                         @if ($tindakanPasien->isNotEmpty())
                             <div class="mb-4">
                                 <h4 class="text-md font-semibold text-gray-700 mb-2">Tindakan Pilihan Pasien</h4>
@@ -8983,7 +9510,7 @@ $classes = ($active ?? false)
                             </div>
                         @endif
 
-                        {{-- Tindakan Tambahan Dokter --}}
+                        <!-- Tindakan Tambahan Dokter -->
                         @if ($tindakanDokter->isNotEmpty())
                             <div class="mb-4 pt-4 border-t border-dashed">
                                 <h4 class="text-md font-semibold text-gray-700 mb-2">Tindakan Tambahan Dokter</h4>
@@ -9002,7 +9529,7 @@ $classes = ($active ?? false)
                             </div>
                         @endif
 
-                        {{-- Obat --}}
+                        <!-- Obat -->
                         @if ($rekamMedis->resep->isNotEmpty())
                             <div class="pt-4 mt-4 border-t border-dashed">
                                 <h4 class="text-md font-semibold text-gray-700 mb-2">Biaya Obat</h4>
@@ -9019,7 +9546,7 @@ $classes = ($active ?? false)
                             </div>
                         @endif
 
-                        {{-- Subtotal --}}
+                        <!-- Subtotal -->
                         <div class="mt-4">
                             <div class="pt-4 mt-4 border-t border-dashed">
                                 <div class="flex justify-between items-center">
@@ -9033,7 +9560,7 @@ $classes = ($active ?? false)
                             </div>
                         </div>
 
-                        {{-- Potongan --}}
+                        <!-- Potongan -->
                         @if ($rekamMedis->pemesanan->status_pasien == 'BPJS')
                             <div class="flex justify-between items-center text-red-600">
                                 <span>Potongan BPJS Tindakan</span>
@@ -9050,7 +9577,7 @@ $classes = ($active ?? false)
                             </div>
                         @endif
 
-                        {{-- Total --}}
+                        <!-- Total -->
                         @if ($pembayaran)
                             <div class="flex justify-between items-center p-3 mt-4 bg-purple-50 rounded-lg">
                                 <span class="font-bold text-purple-800">Total Biaya Keseluruhan</span>
@@ -9059,17 +9586,17 @@ $classes = ($active ?? false)
                                 </span>
                             </div>
                         @endif
-                    </div>
-                    {{-- AKHIR MODIFIKASI --}}
+                    </div> --}}
 
-                    {{-- Resep & Foto --}}
+                    <!-- Resep & Foto -->
                     @if ($rekamMedis->resep->isNotEmpty())
                         <div class="mt-6 border-t pt-6">
                             <h4 class="text-lg font-semibold mb-4 text-gray-800">Detail Resep Obat</h4>
                             <ul class="list-disc list-inside space-y-2 text-gray-600">
                                 @foreach ($rekamMedis->resep as $item)
                                     <li>
-                                        <strong>{{ $item->obat->nama_obat }}</strong> - {{ $item->jumlah }} {{ $item->obat->kemasan }}. 
+                                        <strong>{{ $item->obat->nama_obat }}</strong> - {{ $item->jumlah }}
+                                        {{ $item->obat->kemasan }}.
                                         Dosis: {{ $item->dosis }}. Instruksi: {{ $item->instruksi }}
                                     </li>
                                 @endforeach
@@ -9077,9 +9604,9 @@ $classes = ($active ?? false)
                         </div>
                     @endif
 
-                    
 
-                    {{-- Tombol Kembali --}}
+
+                    <!-- Tombol Kembali -->
                     <div class="mt-8 border-t pt-6 text-right">
                         <a href="{{ route('pasien.pemesanan.index') }}"
                             class="text-purple-600 hover:text-purple-800 font-semibold">

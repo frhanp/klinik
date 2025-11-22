@@ -24,9 +24,9 @@ class PemesananController extends Controller
     public function index()
     {
         $pemesanans = Pemesanan::where('id_pasien', Auth::id())
-        ->with(['dokter.user', 'jadwal']) // Eager load relasi
-        ->latest()
-        ->paginate(10);
+            ->with(['dokter.user', 'jadwal']) // Eager load relasi
+            ->latest()
+            ->paginate(10);
         return view('pasien.pemesanan.index', compact('pemesanans'));
     }
 
@@ -149,15 +149,15 @@ class PemesananController extends Controller
 
     public function create()
     {
-        
+
         $adaPemesananAktif = Pemesanan::where('id_pasien', Auth::id())
             ->whereIn('status', ['Dipesan', 'Dikonfirmasi', 'Menunggu Konfirmasi Pasien', 'Dijadwalkan Ulang'])
             ->exists();
-            
+
         if ($adaPemesananAktif) {
             return redirect()->route('pasien.dashboard')->with('error', 'Anda sudah memiliki janji temu aktif.');
         }
-        
+
 
         $dokters = Dokter::with('user')->get();
         $daftarTindakans = DaftarTindakan::with('tindakanItems')->orderBy('nama_kategori')->get();
@@ -169,11 +169,11 @@ class PemesananController extends Controller
         $adaPemesananAktif = Pemesanan::where('id_pasien', Auth::id())
             ->whereIn('status', ['Dipesan', 'Dikonfirmasi', 'Menunggu Konfirmasi Pasien', 'Dijadwalkan Ulang'])
             ->exists();
-            
+
         if ($adaPemesananAktif) {
             return redirect()->route('pasien.pemesanan.index')->with('error', 'Gagal membuat janji temu. Anda masih memiliki janji temu yang aktif.');
         }
-        
+
         $request->validate([
             // Validasi untuk data diri (Langkah 1)
             'nama_pasien_booking' => ['required', 'string', 'max:255'],
@@ -252,39 +252,59 @@ class PemesananController extends Controller
     }
 
     public function update(Request $request, Pemesanan $pemesanan)
-{
-    // Pastikan pemesanan memang milik pasien yang sedang login
-    if ($pemesanan->id_pasien !== Auth::id()) {
-        abort(403, 'Tidak memiliki akses.');
+    {
+        // Pastikan pemesanan memang milik pasien yang sedang login
+        if ($pemesanan->id_pasien !== Auth::id()) {
+            abort(403, 'Tidak memiliki akses.');
+        }
+
+        // Pasien menyetujui reschedule
+        if ($request->aksi == 'setuju_reschedule') {
+            // Hitung nomor antrian baru (sama seperti logika admin)
+            $maxAntrian = Pemesanan::where('id_dokter', $pemesanan->id_dokter)
+                ->where('tanggal_pesan', $pemesanan->tanggal_pesan)
+                ->whereIn('status', ['Dikonfirmasi', 'Selesai'])
+                ->max('nomor_antrian');
+
+            $pemesanan->update([
+                'status' => 'Dikonfirmasi',
+                'nomor_antrian' => $maxAntrian + 1
+            ]);
+
+            try {
+                $admins = User::where('peran', 'admin')->get();
+                Notification::send($admins, new PemesananStatusUpdated($pemesanan));
+            } catch (\Exception $e) {
+            }
+
+            // [MODIFIKASI] Notif ke DOKTER (Jadwal baru masuk)
+            try {
+                if ($pemesanan->dokter->user) {
+                    $pemesanan->dokter->user->notify(new PemesananStatusUpdated($pemesanan));
+                }
+            } catch (\Exception $e) {
+            }
+
+            return back()->with('success', 'Anda telah menyetujui jadwal baru.');
+        }
+
+        // Pasien menolak reschedule
+        if ($request->aksi == 'tolak_reschedule') {
+            $pemesanan->update([
+                'status' => 'Ditolak Pasien'
+            ]);
+
+            try {
+                $admins = User::where('peran', 'admin')->get();
+                Notification::send($admins, new PemesananStatusUpdated($pemesanan));
+            } catch (\Exception $e) {
+            }
+
+            return back()->with('error', 'Anda menolak jadwal baru. Silakan hubungi klinik.');
+        }
+
+        return back();
     }
-
-    // Pasien menyetujui reschedule
-    if ($request->aksi == 'setuju_reschedule') {
-        // Hitung nomor antrian baru (sama seperti logika admin)
-        $maxAntrian = Pemesanan::where('id_dokter', $pemesanan->id_dokter)
-            ->where('tanggal_pesan', $pemesanan->tanggal_pesan)
-            ->whereIn('status', ['Dikonfirmasi', 'Selesai'])
-            ->max('nomor_antrian');
-
-        $pemesanan->update([
-            'status' => 'Dikonfirmasi',
-            'nomor_antrian' => $maxAntrian + 1
-        ]);
-
-        return back()->with('success', 'Anda telah menyetujui jadwal baru.');
-    }
-
-    // Pasien menolak reschedule
-    if ($request->aksi == 'tolak_reschedule') {
-        $pemesanan->update([
-            'status' => 'Ditolak Pasien'
-        ]);
-
-        return back()->with('error', 'Anda menolak jadwal baru. Silakan hubungi klinik.');
-    }
-
-    return back()->with('info', 'Tidak ada perubahan.');
-}
 
     public function destroy(Pemesanan $pemesanan)
     {
@@ -293,7 +313,14 @@ class PemesananController extends Controller
 
         if (in_array($pemesanan->status, ['Dipesan', 'Dikonfirmasi'])) {
             $pemesanan->update(['status' => 'Dibatalkan']);
+            // [MODIFIKASI] Kirim Notif ke ADMIN (Pasien Batal)
+            try {
+                $admins = User::where('peran', 'admin')->get();
+                Notification::send($admins, new PemesananStatusUpdated($pemesanan));
+            } catch (\Exception $e) {
+            }
 
+            // Kirim Notif ke DOKTER (Jika sudah dikonfirmasi) - Sudah Ada
             if ($statusAsal == 'Dikonfirmasi') {
                 try {
                     $dokterUser = $pemesanan->dokter->user;
@@ -301,14 +328,11 @@ class PemesananController extends Controller
                         $dokterUser->notify(new PemesananStatusUpdated($pemesanan));
                     }
                 } catch (\Exception $e) {
-                    // Abaikan jika notif gagal
                 }
             }
             return redirect()->route('pasien.pemesanan.index')->with('success', 'Pemesanan berhasil dibatalkan.');
         }
 
-
-
-        return redirect()->route('pasien.pemesanan.index')->with('error', 'Pemesanan yang sudah selesai tidak dapat dibatalkan.');
+        return redirect()->route('pasien.pemesanan.index')->with('error', 'Gagal membatalkan.');
     }
 }
