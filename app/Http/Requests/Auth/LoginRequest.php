@@ -26,11 +26,19 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
-            'captcha' => ['required', 'captcha'],
         ];
+
+        // [MODIFIKASI] Wajibkan captcha HANYA jika:
+        // 1. BUKAN mode debug (Production)
+        // 2. DAN BUKAN mode testing (PHPUnit)
+        if (!config('app.debug') && !app()->runningUnitTests()) {
+            $rules['captcha'] = ['required', 'captcha'];
+        }
+
+        return $rules;
     }
 
     /**
@@ -81,6 +89,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('email')) . '|' . $this->ip());
     }
 }
