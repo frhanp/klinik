@@ -36,7 +36,7 @@
                     <h3 class="font-semibold text-lg mb-4">Filter Laporan</h3>
                     <form action="{{ route('admin.laporan.index') }}" method="GET">
                         {{-- [MODIFIKASI] Ubah grid layout untuk 5 item --}}
-                        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 items-end">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
                             <div>
                                 <x-input-label for="start_date" :value="__('Tanggal Mulai')" />
                                 <x-text-input type="date" id="start_date" name="start_date" class="mt-1 block w-full"
@@ -58,7 +58,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div>
+                            {{-- <div>
                                 <x-input-label for="status" :value="__('Status Janji')" />
                                 <select name="status" id="status"
                                     class="mt-1 block w-full rounded-md shadow-sm border-gray-300">
@@ -68,7 +68,7 @@
                                             {{ ucfirst($status) }}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
                             {{-- [MODIFIKASI] Tambahkan dropdown Status Pasien --}}
                             <div>
                                 <x-input-label for="status_pasien" :value="__('Status Pasien')" />
